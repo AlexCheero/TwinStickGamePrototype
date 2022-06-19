@@ -27,6 +27,10 @@ public class EnemyConvertible : ECSConvertible
         world.AddComponent(entity, new HealthComponent { health = _health });
         world.AddComponent(entity, new MeleeAttackReachComponent { distance = _meleeAttackReach });
         world.AddComponent(entity, new MeleeAttackComponent { previousAttackTime = -1, attackCD = _meleeAttackCD }) ;
-        world.AddComponent(entity, new MeleeDamageComponent { damage = _meleeDamage }) ;
+        world.AddComponent(entity, new MeleeDamageComponent { damage = _meleeDamage });
+
+        var view = GetComponent<EntityView>();
+        if (view != null)
+            view.Entity = world.GetById(entity);
     }
 }

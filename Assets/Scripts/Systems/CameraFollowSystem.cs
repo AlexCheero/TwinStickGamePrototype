@@ -22,6 +22,12 @@ public class CameraFollowSystem : EcsSystem
                 var transform = world.GetComponent<Transform>(entities[i]);
                 var targetTransform = world.GetComponent<TargetTransformComponent>(entities[i]).target;
 
+                if (targetTransform == null)
+                {
+                    world.RemoveComponent<TargetTransformComponent>(entities[i]);
+                    continue;
+                }
+
                 var newPosition = targetTransform.position;
                 newPosition += cameraSettings.direction * cameraSettings.distance;
                 transform.position = newPosition;

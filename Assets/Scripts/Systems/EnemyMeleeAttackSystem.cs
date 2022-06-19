@@ -21,8 +21,15 @@ public class EnemyMeleeAttackSystem : EcsSystem
 
     public override void Tick(EcsWorld world)
     {
-        int playerEntity = -1; ;
-        world.GetFilter(_playerFilterId).Iterate((entities, count) => playerEntity = entities[0]);
+        int playerEntity = -1;
+        world.GetFilter(_playerFilterId).Iterate((entities, count) =>
+        {
+            if (count > 0)
+                playerEntity = entities[0];
+        });
+
+        if (playerEntity < 0)
+            return;
 
         var targetTransform = world.GetComponent<Transform>(playerEntity);
 
@@ -42,9 +49,7 @@ public class EnemyMeleeAttackSystem : EcsSystem
                     continue;
 
                 var damage = world.GetComponent<MeleeDamageComponent>(entities[i]).damage;
-                //ref var targetHealth = ref world.GetComponent<HealthComponent>(playerEntity).health;
-                //targetHealth -= damage;
-                Debug.Log("Attack!");
+                Debug.Log("Enemy attack!");
                 world.GetComponent<HealthComponent>(playerEntity).health -= damage;
                 attackComponent.previousAttackTime = Time.time;
             }

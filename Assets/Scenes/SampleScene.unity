@@ -236,6 +236,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _speed: 10
   _health: 100
+  _meleeAttackReach: 3
+  _meleeAttackCD: 0
+  _meleeDamage: 50
 --- !u!54 &194225561
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -347,6 +350,7 @@ GameObject:
   - component: {fileID: 475356901}
   - component: {fileID: 475356899}
   - component: {fileID: 475356900}
+  - component: {fileID: 475356905}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Untagged
@@ -385,8 +389,8 @@ MonoBehaviour:
   _speed: 9
   _health: 100
   _meleeAttackReach: 2.5
-  _meleeAttackCD: 0.5
-  _meleeDamage: 25
+  _meleeAttackCD: 10
+  _meleeDamage: 10
 --- !u!136 &475356901
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -465,6 +469,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &475356905
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 475356898}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 257099d9ef336854a80f5c0594794196, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0

@@ -25,7 +25,10 @@ public class EnemyFollowSystem : EcsSystem
         if (_target == null)
         {
             world.GetFilter(_playerFilterId).Iterate((entities, count) =>
-                _target = world.GetComponent<Transform>(entities[0]));
+            {
+                if (count > 0)
+                    _target = world.GetComponent<Transform>(entities[0]);
+            });
         }
 
         if (_target == null)

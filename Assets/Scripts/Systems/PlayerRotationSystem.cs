@@ -26,6 +26,7 @@ public class PlayerRotationSystem : EcsSystem
 
         Ray ray = cam.ScreenPointToRay(Input.mousePosition);
         RaycastHit hit;
+        //TODO: remove physics and use point with same height as player
         if (!Physics.Raycast(ray, out hit, 100))
             return;
 
