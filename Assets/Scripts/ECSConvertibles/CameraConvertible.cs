@@ -25,10 +25,11 @@ public class CameraConvertible : ECSConvertible
         world.AddComponent(cameraEntity, new CameraSettingsComponent { direction = _direction, distance = _distance });
         world.AddComponent(cameraEntity, GetComponent<Camera>());
 
-        world.GetFilter(playerFilterId).Iterate((entities, count) =>
+        foreach (var entity in world.Enumerate(playerFilterId))
         {
-            var targetTransform = world.GetComponent<Transform>(entities[0]);
+            var targetTransform = world.GetComponent<Transform>(entity);
             world.AddComponent(cameraEntity, new TargetTransformComponent { target = targetTransform });
-        });
+            break;
+        }
     }
 }

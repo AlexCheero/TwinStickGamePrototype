@@ -14,25 +14,22 @@ public class CameraFollowSystem : EcsSystem
     //TODO: implement smoothing
     public override void Tick(EcsWorld world)
     {
-        world.GetFilter(_filterId).Iterate((entities, count) =>
+        foreach (var entity in world.Enumerate(_filterId))
         {
-            for (int i = 0; i < count; i++)
+            var cameraSettings = world.GetComponent<CameraSettingsComponent>(entity);
+            var transform = world.GetComponent<Transform>(entity);
+            var targetTransform = world.GetComponent<TargetTransformComponent>(entity).target;
+
+            if (targetTransform == null)
             {
-                var cameraSettings = world.GetComponent<CameraSettingsComponent>(entities[i]);
-                var transform = world.GetComponent<Transform>(entities[i]);
-                var targetTransform = world.GetComponent<TargetTransformComponent>(entities[i]).target;
-
-                if (targetTransform == null)
-                {
-                    world.RemoveComponent<TargetTransformComponent>(entities[i]);
-                    continue;
-                }
-
-                var newPosition = targetTransform.position;
-                newPosition += cameraSettings.direction * cameraSettings.distance;
-                transform.position = newPosition;
-                transform.LookAt(targetTransform);
+                world.RemoveComponent<TargetTransformComponent>(entity);
+                continue;
             }
-        });
+
+            var newPosition = targetTransform.position;
+            newPosition += cameraSettings.direction * cameraSettings.distance;
+            transform.position = newPosition;
+            transform.LookAt(targetTransform);
+        }
     }
 }

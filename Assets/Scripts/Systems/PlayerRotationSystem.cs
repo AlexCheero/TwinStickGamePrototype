@@ -16,8 +16,11 @@ public class PlayerRotationSystem : EcsSystem
     {
         //TODO: cache
         Camera cam = null;
-        world.GetFilter(_camFilterId).Iterate((entities, count) =>
-            cam = world.GetComponent<Camera>(entities[0]));
+        foreach (var entity in world.Enumerate(_camFilterId))
+        {
+            cam = world.GetComponent<Camera>(entity);
+            break;
+        }
 
 #if DEBUG
         if (cam == null)
@@ -30,16 +33,13 @@ public class PlayerRotationSystem : EcsSystem
         if (!Physics.Raycast(ray, out hit, 100))
             return;
 
-        world.GetFilter(_playerFilterId).Iterate((entities, count) =>
+        foreach (var entity in world.Enumerate(_playerFilterId))
         {
-            for (int i = 0; i < count; i++)
-            {
-                var transform = world.GetComponent<Transform>(entities[i]);
-                var direction = hit.point - transform.position;
-                direction.y = 0;
-                direction.Normalize();
-                transform.rotation = Quaternion.LookRotation(direction);
-            }
-        });
+            var transform = world.GetComponent<Transform>(entity);
+            var direction = hit.point - transform.position;
+            direction.y = 0;
+            direction.Normalize();
+            transform.rotation = Quaternion.LookRotation(direction);
+        }
     }
 }

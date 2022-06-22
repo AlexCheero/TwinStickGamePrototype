@@ -389,8 +389,8 @@ MonoBehaviour:
   _speed: 9
   _health: 100
   _meleeAttackReach: 2.5
-  _meleeAttackCD: 10
-  _meleeDamage: 10
+  _meleeAttackCD: 0.2
+  _meleeDamage: 25
 --- !u!136 &475356901
 CapsuleCollider:
   m_ObjectHideFlags: 0

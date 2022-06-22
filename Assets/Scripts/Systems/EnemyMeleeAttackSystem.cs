@@ -22,37 +22,34 @@ public class EnemyMeleeAttackSystem : EcsSystem
     public override void Tick(EcsWorld world)
     {
         int playerEntity = -1;
-        world.GetFilter(_playerFilterId).Iterate((entities, count) =>
+        foreach (var entity in world.Enumerate(_playerFilterId))
         {
-            if (count > 0)
-                playerEntity = entities[0];
-        });
+            playerEntity = entity;
+            break;
+        }
 
         if (playerEntity < 0)
             return;
 
         var targetTransform = world.GetComponent<Transform>(playerEntity);
 
-        world.GetFilter(_enemyFilterId).Iterate((entities, count) =>
+        foreach (var entity in world.Enumerate(_enemyFilterId))
         {
-            for (int i = 0; i < count; i++)
-            {
-                var transform = world.GetComponent<Transform>(entities[i]);
-                var attackReach = world.GetComponent<MeleeAttackReachComponent>(entities[i]).distance;
-                var distance = (targetTransform.position - transform.position).magnitude;
-                if (distance > attackReach)
-                    continue;
+            var transform = world.GetComponent<Transform>(entity);
+            var attackReach = world.GetComponent<MeleeAttackReachComponent>(entity).distance;
+            var distance = (targetTransform.position - transform.position).magnitude;
+            if (distance > attackReach)
+                continue;
 
-                ref var attackComponent = ref world.GetComponent<MeleeAttackComponent>(entities[i]);
-                var nextAttackTime = attackComponent.previousAttackTime + attackComponent.attackCD;
-                if (Time.time < nextAttackTime)
-                    continue;
+            ref var attackComponent = ref world.GetComponent<MeleeAttackComponent>(entity);
+            var nextAttackTime = attackComponent.previousAttackTime + attackComponent.attackCD;
+            if (Time.time < nextAttackTime)
+                continue;
 
-                var damage = world.GetComponent<MeleeDamageComponent>(entities[i]).damage;
-                Debug.Log("Enemy attack!");
-                world.GetComponent<HealthComponent>(playerEntity).health -= damage;
-                attackComponent.previousAttackTime = Time.time;
-            }
-        });
+            var damage = world.GetComponent<MeleeDamageComponent>(entity).damage;
+            Debug.Log("Enemy attack!");
+            world.GetComponent<HealthComponent>(playerEntity).health -= damage;
+            attackComponent.previousAttackTime = Time.time;
+        }
     }
 }
