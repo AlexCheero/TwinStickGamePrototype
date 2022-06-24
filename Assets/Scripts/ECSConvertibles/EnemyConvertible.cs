@@ -25,32 +25,28 @@ public class EnemyConvertible : ECSConvertible
     [SerializeField]
     private float _meleeDamage;
 
-    public override void ConvertToEntity(EcsWorld world)
+    protected override void AddComponents(EcsWorld world)
     {
-        var entity = world.Create();
-        world.AddTag<EnemyTag>(entity);
-        world.AddTag<MeleeWeaponHoldingTag>(entity);
-        world.AddComponent(entity, transform);
-        world.AddComponent(entity, new HealthComponent { health = _health });
-        world.AddComponent(entity, new AttackComponent { previousAttackTime = -1, attackCD = _meleeAttackCD }) ;
-        world.AddComponent(entity, new DamageComponent { damage = _meleeDamage });
+        var id = Entity.GetId();
+        world.AddTag<EnemyTag>(id);
+        world.AddTag<MeleeWeaponHoldingTag>(id);
+        world.AddComponent(id, transform);
+        world.AddComponent(id, new HealthComponent { health = _health });
+        world.AddComponent(id, new AttackComponent { previousAttackTime = -1, attackCD = _meleeAttackCD }) ;
+        world.AddComponent(id, new DamageComponent { damage = _meleeDamage });
 
-        AddTarget(world, entity);
+        AddTarget(world, id);
 
-        var speed = world.AddComponent(entity, new SpeedComponent { speed = _speed }).speed;
-        var angularSpeed = world.AddComponent(entity, new AngularSpeedComponent { speed = _angularSpeed }).speed;
-        var attackReach = world.AddComponent(entity, new ReachComponent { distance = _meleeAttackReach }).distance;
-        var acceleration = world.AddComponent(entity, new AccelerationComponent { acceleration = _acceleration }).acceleration;
+        var speed = world.AddComponent(id, new SpeedComponent { speed = _speed }).speed;
+        var angularSpeed = world.AddComponent(id, new AngularSpeedComponent { speed = _angularSpeed }).speed;
+        var attackReach = world.AddComponent(id, new ReachComponent { distance = _meleeAttackReach }).distance;
+        var acceleration = world.AddComponent(id, new AccelerationComponent { acceleration = _acceleration }).acceleration;
         
-        var navAgent = world.AddComponent(entity, GetComponent<NavMeshAgent>());
+        var navAgent = world.AddComponent(id, GetComponent<NavMeshAgent>());
         navAgent.speed = speed;
         navAgent.stoppingDistance = attackReach;
         navAgent.angularSpeed = angularSpeed;
         navAgent.acceleration = acceleration;
-
-        var view = GetComponent<EntityView>();
-        if (view != null)
-            view.Entity = world.GetById(entity);
     }
 
     private void AddTarget(EcsWorld world, int entity)

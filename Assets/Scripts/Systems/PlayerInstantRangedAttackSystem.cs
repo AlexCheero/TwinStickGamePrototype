@@ -37,7 +37,7 @@ public class PlayerInstantRangedAttackSystem : EcsSystem
             if (!Physics.Raycast(ray, out hit))
                 continue;
 
-            var targetView = hit.collider.gameObject.GetComponent<EntityView>();
+            var targetView = hit.collider.gameObject.GetComponent<ECSConvertible>();
             if (targetView == null)
                 continue;
 

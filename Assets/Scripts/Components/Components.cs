@@ -43,6 +43,11 @@ struct DamageComponent
     public float damage;
 }
 
+struct ProjectileWeapon
+{
+    public ProjectileConvertible projectile;
+}
+
 struct AttackComponent
 {
     public float previousAttackTime;
@@ -54,6 +59,7 @@ struct AttackComponent
 struct PlayerTag { }
 struct EnemyTag { }
 struct CameraTag { }
+struct Projectile { }
 struct InstantRangedWeaponHoldingTag { }
 struct ProjectileWeaponHoldingTag { }
 struct MeleeWeaponHoldingTag { }

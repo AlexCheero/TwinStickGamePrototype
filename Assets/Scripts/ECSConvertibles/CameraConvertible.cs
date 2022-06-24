@@ -9,7 +9,7 @@ public class CameraConvertible : ECSConvertible
     [SerializeField]
     private float _distance;
 
-    public override void ConvertToEntity(EcsWorld world)
+    protected override void AddComponents(EcsWorld world)
     {
         var playerFilterIdIncludes =
             new BitMask(
@@ -18,17 +18,17 @@ public class CameraConvertible : ECSConvertible
             );
         var playerFilterId = world.RegisterFilter(playerFilterIdIncludes);
 
-        var cameraEntity = world.Create();
-        world.AddTag<CameraTag>(cameraEntity);
-        world.AddComponent(cameraEntity, transform);
+        var id = Entity.GetId();
+        world.AddTag<CameraTag>(id);
+        world.AddComponent(id, transform);
         _direction.Normalize();
-        world.AddComponent(cameraEntity, new CameraSettingsComponent { direction = _direction, distance = _distance });
-        world.AddComponent(cameraEntity, GetComponent<Camera>());
+        world.AddComponent(id, new CameraSettingsComponent { direction = _direction, distance = _distance });
+        world.AddComponent(id, GetComponent<Camera>());
 
         foreach (var entity in world.Enumerate(playerFilterId))
         {
             var targetTransform = world.GetComponent<Transform>(entity);
-            world.AddComponent(cameraEntity, new TargetTransformComponent { target = targetTransform });
+            world.AddComponent(id, new TargetTransformComponent { target = targetTransform });
             break;
         }
     }
