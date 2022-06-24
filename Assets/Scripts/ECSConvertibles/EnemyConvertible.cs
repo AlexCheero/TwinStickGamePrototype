@@ -31,14 +31,14 @@ public class EnemyConvertible : ECSConvertible
         world.AddTag<EnemyTag>(entity);
         world.AddComponent(entity, transform);
         world.AddComponent(entity, new HealthComponent { health = _health });
-        world.AddComponent(entity, new MeleeAttackComponent { previousAttackTime = -1, attackCD = _meleeAttackCD }) ;
-        world.AddComponent(entity, new MeleeDamageComponent { damage = _meleeDamage });
+        world.AddComponent(entity, new AttackComponent { previousAttackTime = -1, attackCD = _meleeAttackCD }) ;
+        world.AddComponent(entity, new DamageComponent { damage = _meleeDamage });
 
         AddTarget(world, entity);
 
         var speed = world.AddComponent(entity, new SpeedComponent { speed = _speed }).speed;
         var angularSpeed = world.AddComponent(entity, new AngularSpeedComponent { speed = _angularSpeed }).speed;
-        var attackReach = world.AddComponent(entity, new MeleeAttackReachComponent { distance = _meleeAttackReach }).distance;
+        var attackReach = world.AddComponent(entity, new ReachComponent { distance = _meleeAttackReach }).distance;
         var acceleration = world.AddComponent(entity, new AccelerationComponent { acceleration = _acceleration }).acceleration;
         
         var navAgent = world.AddComponent(entity, GetComponent<NavMeshAgent>());

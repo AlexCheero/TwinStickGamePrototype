@@ -13,9 +13,9 @@ public class EnemyMeleeAttackSystem : EcsSystem
             new BitMask(
                 Id<EnemyTag>(),
                 Id<Transform>(),
-                Id<MeleeAttackReachComponent>(),
-                Id<MeleeDamageComponent>(),
-                Id<MeleeAttackComponent>()
+                Id<ReachComponent>(),
+                Id<DamageComponent>(),
+                Id<AttackComponent>()
                 ));
     }
 
@@ -36,17 +36,17 @@ public class EnemyMeleeAttackSystem : EcsSystem
         foreach (var entity in world.Enumerate(_enemyFilterId))
         {
             var transform = world.GetComponent<Transform>(entity);
-            var attackReach = world.GetComponent<MeleeAttackReachComponent>(entity).distance;
+            var attackReach = world.GetComponent<ReachComponent>(entity).distance;
             var distance = (targetTransform.position - transform.position).magnitude;
             if (distance > attackReach)
                 continue;
 
-            ref var attackComponent = ref world.GetComponent<MeleeAttackComponent>(entity);
+            ref var attackComponent = ref world.GetComponent<AttackComponent>(entity);
             var nextAttackTime = attackComponent.previousAttackTime + attackComponent.attackCD;
             if (Time.time < nextAttackTime)
                 continue;
 
-            var damage = world.GetComponent<MeleeDamageComponent>(entity).damage;
+            var damage = world.GetComponent<DamageComponent>(entity).damage;
             Debug.Log("Enemy attack!");
             world.GetComponent<HealthComponent>(playerEntity).health -= damage;
             attackComponent.previousAttackTime = Time.time;

@@ -11,9 +11,9 @@ public class PlayerMeleeAttackSystem : EcsSystem
             new BitMask(
                 Id<PlayerTag>(),
                 Id<Transform>(),
-                Id<MeleeAttackReachComponent>(),
-                Id<MeleeDamageComponent>(),
-                Id<MeleeAttackComponent>()
+                Id<ReachComponent>(),
+                Id<DamageComponent>(),
+                Id<AttackComponent>()
                 ));
     }
 
@@ -26,14 +26,14 @@ public class PlayerMeleeAttackSystem : EcsSystem
 
         foreach (var entity in world.Enumerate(_filterId))
         {
-            ref var attackComponent = ref world.GetComponent<MeleeAttackComponent>(entity);
+            ref var attackComponent = ref world.GetComponent<AttackComponent>(entity);
             var nextAttackTime = attackComponent.previousAttackTime + attackComponent.attackCD;
             if (Time.time < nextAttackTime)
                 continue;
 
             var transform = world.GetComponent<Transform>(entity);
             Ray ray = new Ray(transform.position, transform.forward);
-            var attackDistance = world.GetComponent<MeleeAttackReachComponent>(entity).distance;
+            var attackDistance = world.GetComponent<ReachComponent>(entity).distance;
             RaycastHit hit;
             if (!Physics.Raycast(ray, out hit, attackDistance))
                 continue;
@@ -52,7 +52,7 @@ public class PlayerMeleeAttackSystem : EcsSystem
 
             Debug.Log("Player hit!");
             world.GetComponent<HealthComponent>(targetEntityId).health -=
-                world.GetComponent<MeleeDamageComponent>(entity).damage;
+                world.GetComponent<DamageComponent>(entity).damage;
 
             attackComponent.previousAttackTime = Time.time;
         }

@@ -32,18 +32,18 @@ struct HealthComponent
     public float health;
 }
 
-struct MeleeAttackReachComponent
+struct ReachComponent
 {
     //it takes in account the radius of player and enemy
     public float distance;
 }
 
-struct MeleeDamageComponent
+struct DamageComponent
 {
     public float damage;
 }
 
-struct MeleeAttackComponent
+struct AttackComponent
 {
     public float previousAttackTime;
     public float attackCD;
