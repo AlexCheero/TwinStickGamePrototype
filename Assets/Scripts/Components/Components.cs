@@ -54,4 +54,7 @@ struct AttackComponent
 struct PlayerTag { }
 struct EnemyTag { }
 struct CameraTag { }
+struct InstantRangedWeaponHoldingTag { }
+struct ProjectileWeaponHoldingTag { }
+struct MeleeWeaponHoldingTag { }
 #endregion

@@ -22,6 +22,7 @@ public class PlayerConvertible : ECSConvertible
     {
         var entity = world.Create();
         world.AddTag<PlayerTag>(entity);
+        world.AddTag<InstantRangedWeaponHoldingTag>(entity);
         world.AddComponent(entity, transform);
         world.AddComponent(entity, new SpeedComponent { speed = _speed });
         world.AddComponent(entity, new HealthComponent { health = _health });

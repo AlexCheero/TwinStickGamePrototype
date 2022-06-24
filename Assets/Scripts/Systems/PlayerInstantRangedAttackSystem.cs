@@ -1,18 +1,17 @@
 using ECS;
 using UnityEngine;
 
-public class PlayerMeleeAttackSystem : EcsSystem
+public class PlayerInstantRangedAttackSystem : EcsSystem
 {
     private int _filterId;
 
-    public PlayerMeleeAttackSystem(EcsWorld world)
+    public PlayerInstantRangedAttackSystem(EcsWorld world)
     {
         _filterId = world.RegisterFilter(
             new BitMask(
                 Id<PlayerTag>(),
-                Id<MeleeWeaponHoldingTag>(),
+                Id<InstantRangedWeaponHoldingTag>(),
                 Id<Transform>(),
-                Id<ReachComponent>(),
                 Id<DamageComponent>(),
                 Id<AttackComponent>()
                 ));
@@ -25,7 +24,7 @@ public class PlayerMeleeAttackSystem : EcsSystem
 
         foreach (var entity in world.Enumerate(_filterId))
         {
-            Debug.Log("Player melee attack!");
+            Debug.Log("Player instant ranged attack!");
 
             ref var attackComponent = ref world.GetComponent<AttackComponent>(entity);
             var nextAttackTime = attackComponent.previousAttackTime + attackComponent.attackCD;
@@ -34,9 +33,8 @@ public class PlayerMeleeAttackSystem : EcsSystem
 
             var transform = world.GetComponent<Transform>(entity);
             Ray ray = new Ray(transform.position, transform.forward);
-            var attackDistance = world.GetComponent<ReachComponent>(entity).distance;
             RaycastHit hit;
-            if (!Physics.Raycast(ray, out hit, attackDistance))
+            if (!Physics.Raycast(ray, out hit))
                 continue;
 
             var targetView = hit.collider.gameObject.GetComponent<EntityView>();
@@ -51,7 +49,7 @@ public class PlayerMeleeAttackSystem : EcsSystem
             if (!world.Have<HealthComponent>(targetEntity.GetId()))
                 continue;
 
-            Debug.Log("Player melee hit!");
+            Debug.Log("Player instant ranged hit!");
             world.GetComponent<HealthComponent>(targetEntityId).health -=
                 world.GetComponent<DamageComponent>(entity).damage;
 

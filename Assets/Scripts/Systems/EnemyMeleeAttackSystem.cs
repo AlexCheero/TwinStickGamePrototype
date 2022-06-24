@@ -12,6 +12,7 @@ public class EnemyMeleeAttackSystem : EcsSystem
         _enemyFilterId = world.RegisterFilter(
             new BitMask(
                 Id<EnemyTag>(),
+                Id<MeleeWeaponHoldingTag>(),
                 Id<Transform>(),
                 Id<ReachComponent>(),
                 Id<DamageComponent>(),

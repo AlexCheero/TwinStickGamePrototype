@@ -29,6 +29,7 @@ public class EnemyConvertible : ECSConvertible
     {
         var entity = world.Create();
         world.AddTag<EnemyTag>(entity);
+        world.AddTag<MeleeWeaponHoldingTag>(entity);
         world.AddComponent(entity, transform);
         world.AddComponent(entity, new HealthComponent { health = _health });
         world.AddComponent(entity, new AttackComponent { previousAttackTime = -1, attackCD = _meleeAttackCD }) ;

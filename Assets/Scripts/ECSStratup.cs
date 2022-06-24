@@ -17,7 +17,8 @@ public class ECSStratup : MonoBehaviour
             new EnemyFollowSystem(_world),
             new HealthSystem(_world),
             new EnemyMeleeAttackSystem(_world),
-            new PlayerMeleeAttackSystem(_world)
+            new PlayerMeleeAttackSystem(_world),
+            new PlayerInstantRangedAttackSystem(_world)
         };
 
         //Register and Run init systems if needed
