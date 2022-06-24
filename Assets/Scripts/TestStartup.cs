@@ -98,122 +98,20 @@ public class System3 : BaseTestSystem
     }
 }
 
-public class System1_old : BaseTestSystem
-{
-    int _fltrId;
-
-    public System1_old(EcsWorld world)
-    {
-        _fltrId = world.RegisterFilter(new BitMask(Id<AddTag>(), Id<IntComp>()));
-    }
-
-    public override void Tick(EcsWorld world)
-    {
-        world.GetFilter(_fltrId).Iterate((entities, count) =>
-        {
-            for (int i = 0; i < count; i++)
-            {
-                world.GetComponent<IntComp>(entities[i]).i += 1;
-                if (world.Have<FloatComp>(entities[i]))
-                    world.GetComponent<FloatComp>(entities[i]).f += 0.1f;
-                DoHeavyStuff();
-            }
-        });
-    }
-}
-
-public class System2_old : BaseTestSystem
-{
-    int _fltrId;
-
-    public System2_old(EcsWorld world)
-    {
-        _fltrId = world.RegisterFilter(new BitMask(Id<SubtractTag>(), Id<FloatComp>()));
-    }
-
-    public override void Tick(EcsWorld world)
-    {
-        world.GetFilter(_fltrId).Iterate((entities, count) =>
-        {
-            for (int i = 0; i < count; i++)
-            {
-                world.GetComponent<FloatComp>(entities[i]).f -= 0.1f;
-                if (world.Have<IntComp>(entities[i]))
-                    world.GetComponent<IntComp>(entities[i]).i -= 1;
-                DoHeavyStuff();
-            }
-        });
-    }
-}
-
-public class System3_old : BaseTestSystem
-{
-    int _fltrId1;
-    int _fltrId2;
-
-    public System3_old(EcsWorld world)
-    {
-        _fltrId1 = world.RegisterFilter(new BitMask(Id<AddTag>()));
-        _fltrId2 = world.RegisterFilter(new BitMask(Id<SubtractTag>()));
-    }
-
-    public override void Tick(EcsWorld world)
-    {
-        world.GetFilter(_fltrId1).Iterate((entities, count) =>
-        {
-            for (int i = 0; i < count; i++)
-            {
-                if (world.Have<IntComp>(entities[i]) && world.GetComponent<IntComp>(entities[i]).i > 1000)
-                {
-                    world.RemoveComponent<AddTag>(entities[i]);
-                    world.AddTag<SubtractTag>(entities[i]);
-                }
-                DoHeavyStuff();
-            }
-        });
-
-        world.GetFilter(_fltrId2).Iterate((entities, count) =>
-        {
-            for (int i = 0; i < count; i++)
-            {
-                if (world.Have<FloatComp>(entities[i]) && world.GetComponent<FloatComp>(entities[i]).f <= 0)
-                {
-                    world.RemoveComponent<SubtractTag>(entities[i]);
-                    world.AddTag<AddTag>(entities[i]);
-                }
-                DoHeavyStuff();
-            }
-        });
-    }
-}
-
 public class TestStartup : MonoBehaviour
 {
-    public bool old = false;
     private EcsWorld _world;
     private EcsSystem[] _updateSystems;
 
     void Start()
     {
         _world = new EcsWorld();
-        if (old)
+        _updateSystems = new EcsSystem[]
         {
-            _updateSystems = new EcsSystem[]
-            {
-              new System1_old(_world),
-              new System2_old(_world),
-              new System3_old(_world)
-            };
-        }
-        else
-        {
-            _updateSystems = new EcsSystem[]
-            {
-              new System1(_world),
-              new System2(_world),
-              new System3(_world)
-            };
-        }
+          new System1(_world),
+          new System2(_world),
+          new System3(_world)
+        };
 
         for (int i = 0; i < 300; i++)
         {
