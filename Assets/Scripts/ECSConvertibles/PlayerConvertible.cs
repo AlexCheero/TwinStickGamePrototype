@@ -1,7 +1,7 @@
 using ECS;
 using UnityEngine;
 
-public class CharacterConvertible : ECSConvertible
+public class PlayerConvertible : ECSConvertible
 {
     [SerializeField]
     private float _speed;
