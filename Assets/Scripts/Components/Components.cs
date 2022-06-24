@@ -6,6 +6,16 @@ struct SpeedComponent
     public float speed;
 }
 
+struct AngularSpeedComponent
+{
+    public float speed;
+}
+
+struct AccelerationComponent
+{
+    public float acceleration;
+}
+
 struct TargetTransformComponent
 {
     public Transform target;

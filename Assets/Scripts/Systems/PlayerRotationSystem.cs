@@ -28,15 +28,20 @@ public class PlayerRotationSystem : EcsSystem
 #endif
 
         Ray ray = cam.ScreenPointToRay(Input.mousePosition);
-        RaycastHit hit;
-        //TODO: remove physics and use point with same height as player
-        if (!Physics.Raycast(ray, out hit, 100))
-            return;
 
         foreach (var entity in world.Enumerate(_playerFilterId))
         {
             var transform = world.GetComponent<Transform>(entity);
-            var direction = hit.point - transform.position;
+            var t = (transform.position.y - ray.origin.y) / ray.direction.y;
+            var x = ray.origin.x + t * ray.direction.x;
+            var z = ray.origin.z + t * ray.direction.z;
+
+            var point = new Vector3(x, transform.position.y, z);
+            //don't rotate if mouse points to player to prevent jerking
+            if ((point - transform.position).sqrMagnitude < 0.3f)
+                continue;
+
+            var direction = point - transform.position;
             direction.y = 0;
             direction.Normalize();
             transform.rotation = Quaternion.LookRotation(direction);
