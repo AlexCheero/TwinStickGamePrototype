@@ -4,7 +4,6 @@ using UnityEngine.AI;
 
 public class EnemyFollowSystem : EcsSystem
 {
-    private int _playerFilterId;
     private int _enemyFilterId;
 
     public EnemyFollowSystem(EcsWorld world)
