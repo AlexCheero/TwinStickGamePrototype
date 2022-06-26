@@ -1,4 +1,6 @@
+using Components;
 using ECS;
+using Tags;
 using UnityEngine;
 
 public class PlayerInstantRangedAttackSystem : EcsSystem
@@ -34,6 +36,8 @@ public class PlayerInstantRangedAttackSystem : EcsSystem
             var transform = world.GetComponent<Transform>(entity);
             Ray ray = new Ray(transform.position, transform.forward);
             RaycastHit hit;
+            //TODO: use non alloc version everywhere where Raycast is used
+            //but make sure that non alloc version can catch the nearest object
             if (!Physics.Raycast(ray, out hit))
                 continue;
 

@@ -1,4 +1,6 @@
+using Components;
 using ECS;
+using Tags;
 using UnityEngine;
 
 public class PlayerConvertible : ECSConvertible
@@ -20,9 +22,9 @@ public class PlayerConvertible : ECSConvertible
     {
         var id = Entity.GetId();
         world.AddTag<PlayerTag>(id);
-        //world.AddTag<InstantRangedWeaponHoldingTag>(id);
+        world.AddTag<InstantRangedWeaponHoldingTag>(id);
         //world.AddTag<MeleeWeaponHoldingTag>(id);
-        world.AddTag<ProjectileWeaponHoldingTag>(id);
+        //world.AddTag<ProjectileWeaponHoldingTag>(id);
         world.AddComponent(id, transform);
         world.AddComponent(id, new SpeedComponent { speed = _speed });
         world.AddComponent(id, new HealthComponent { health = _health });

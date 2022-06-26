@@ -14,7 +14,7 @@ public class ECSStratup : MonoBehaviour
             new PlayerMovementSystem(_world),
             new CameraFollowSystem(_world),
             new PlayerRotationSystem(_world),
-            new EnemyFollowSystem(_world),
+            //new EnemyFollowSystem(_world),
             new HealthSystem(_world),
             new EnemyMeleeAttackSystem(_world),
             new PlayerMeleeAttackSystem(_world),
@@ -22,11 +22,14 @@ public class ECSStratup : MonoBehaviour
             new PlayerProjectileAttackSystem(_world)
         };
 
-        //Register and Run init systems if needed
-
         //TODO: implement EntityView with custom inspector and use it instead of ECSConvertible
         foreach (var convertible in FindObjectsOfType<ECSConvertible>())
             convertible.ConvertToEntity(_world);
+
+        //Register and Run init systems if needed
+
+        foreach (var view in FindObjectsOfType<EntityView>())
+            view.InitAsEntity(_world);
     }
 
     void Update()
