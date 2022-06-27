@@ -16,7 +16,7 @@ public enum EFieldType
 [Serializable]
 public struct ComponentFieldMeta
 {
-    //TODO: refine different access modifiers for UNITY_EDITOR
+    //TODO: define different access modifiers for UNITY_EDITOR (and hide some getters)
     public EFieldType Type;
     public string Name;
     public string _valueRepresentation;
@@ -139,6 +139,13 @@ public class EntityView : MonoBehaviour
 
     public int MetasLength { get => _metas.Length; }
     public ref ComponentMeta GetMeta(int i) => ref _metas[i];
+    public void RemoveMetaAt(int idx)
+    {
+        var newLength = _metas.Length - 1;
+        for (int i = idx; i < newLength; i++)
+            _metas[i] = _metas[i + 1];
+        Array.Resize(ref _metas, newLength);
+    }
 
     public void InitAsEntity(EcsWorld world)
     {

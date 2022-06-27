@@ -2,6 +2,7 @@ using System;
 using System.Linq;
 using System.Reflection;
 using UnityEditor;
+using UnityEditor.SceneManagement;
 using UnityEditor.UIElements;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -11,12 +12,21 @@ using UnityEngine.UIElements;
 public class EntityView_Inspector : Editor
 {
     private static string[] componentTypeNames;
+    private static string[] tagTypeNames;
+
+    private bool _addExpanded;
+
+    private void SetDirty() => EditorSceneManager.MarkSceneDirty(EditorSceneManager.GetActiveScene());
 
     static EntityView_Inspector()
     {
         var componentTypes = Assembly.GetAssembly(typeof(EntityView)).GetTypes()
             .Where((t) => t.Namespace == "Components").ToArray();
         componentTypeNames = Array.ConvertAll(componentTypes, (t) => t.Name);
+
+        var tagTypes = Assembly.GetAssembly(typeof(EntityView)).GetTypes()
+            .Where((t) => t.Namespace == "Tags").ToArray();
+        tagTypeNames = Array.ConvertAll(tagTypes, (t) => t.Name);
     }
 
     public override void OnInspectorGUI()
@@ -28,38 +38,76 @@ public class EntityView_Inspector : Editor
 
         var view = (EntityView)target;
 
-        bool shouldAddComponent = GUILayout.Button(new GUIContent("+"), GUILayout.ExpandWidth(false));
-        if (shouldAddComponent)
+        if (GUILayout.Button(new GUIContent("+"), GUILayout.ExpandWidth(false)))
+            _addExpanded = !_addExpanded;
+        if (_addExpanded)
         {
+            EditorGUILayout.BeginVertical();
 
+            EditorGUILayout.LabelField("Components:");
+            GUILayout.Space(10);
+            foreach (var componentName in componentTypeNames)
+                DrawAddButton(componentName);
+
+            GUILayout.Space(10);
+
+            EditorGUILayout.LabelField("Tags:");
+            GUILayout.Space(10);
+            foreach (var tagName in tagTypeNames)
+                DrawAddButton(tagName);
+
+            GUILayout.Space(10);
+
+            EditorGUILayout.EndVertical();
         }
 
         for (int i = 0; i < view.MetasLength; i++)
+        {
+            EditorGUILayout.BeginHorizontal();
+
             DrawComponent(ref view.GetMeta(i));
+
+            //TODO: delete button moves outside of the screen when foldout is expanded
+            //component delete button
+            if (GUILayout.Button(new GUIContent("-"), GUILayout.ExpandWidth(false)))
+            {
+                view.RemoveMetaAt(i);
+                i--;
+                SetDirty();
+            }
+
+            EditorGUILayout.EndHorizontal();
+        }
+    }
+
+    private void DrawAddButton(string componentName)
+    {
+        EditorGUILayout.BeginHorizontal();
+
+        EditorGUILayout.LabelField(componentName);
+        bool shouldComponent = GUILayout.Button(new GUIContent("+"), GUILayout.ExpandWidth(false));
+        if (shouldComponent)
+        {
+            _addExpanded = false;
+
+        }
+
+        EditorGUILayout.EndHorizontal();
     }
 
     private static void DrawComponent(ref ComponentMeta meta)
     {
-        EditorGUILayout.BeginHorizontal();
+        EditorGUILayout.BeginVertical();
         {
-            EditorGUILayout.BeginVertical();
+            meta.IsExpanded = EditorGUILayout.BeginFoldoutHeaderGroup(meta.IsExpanded, meta.ComponentName);
+            if (meta.IsExpanded)
             {
-                meta.IsExpanded = EditorGUILayout.BeginFoldoutHeaderGroup(meta.IsExpanded, meta.ComponentName);
-                if (meta.IsExpanded)
-                {
-                    for (int i = 0; i <meta.Fields.Length; i++)
-                        DrawField(ref meta.Fields[i]);
-                }
-                EditorGUILayout.EndFoldoutHeaderGroup();
+                for (int i = 0; i < meta.Fields.Length; i++)
+                    DrawField(ref meta.Fields[i]);
             }
-            EditorGUILayout.EndVertical();
-
-            //TODO: delete button moves outside of the screen when foldout is expanded
-            //component delete button
-            bool shouldRemoveComponent = GUILayout.Button(new GUIContent("-"), GUILayout.ExpandWidth(false));
-
+            EditorGUILayout.EndFoldoutHeaderGroup();
         }
-        EditorGUILayout.EndHorizontal();
+        EditorGUILayout.EndVertical();
     }
 
     private static void DrawField(ref ComponentFieldMeta fieldMeta)
