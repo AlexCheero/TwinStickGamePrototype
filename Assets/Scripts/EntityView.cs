@@ -13,8 +13,9 @@ public enum EFieldType
     //TODO: can't determine type of field when adding in inspector, so add just as "Component",
     //      and then determine in wether prefab or scene go in inspector
     //TODO: maybe could just load EntityView, instead of generic components
-    SceneGO,//if go.scene.IsValid() then make a hierarchy by traversing all parents
-    Prefab//else find the prefab path
+    //SceneGO,//if go.scene.IsValid() then make a hierarchy by traversing all parents
+    //Prefab//else find the prefab path
+    GO
 }
 
 [Serializable]
@@ -24,6 +25,7 @@ public struct ComponentFieldMeta
     public EFieldType Type;
     public string Name;
     public string ValueRepresentation;
+    public GameObject GO;
 
     public object GetValue()
     {
@@ -38,13 +40,29 @@ public struct ComponentFieldMeta
                 return float.Parse(ValueRepresentation);
             case EFieldType.Vec3:
                 return ParseVector3(ValueRepresentation);
-            //TODO: not working properly
-            //case EFieldType.SceneGO:
-            //    return ParseSceneGO(_valueRepresentation);
-            //case EFieldType.Prefab:
-            //    return ParsePrefab(_valueRepresentation);
+            case EFieldType.GO:
+                return GO;
             default:
+                Debug.LogError("Wrong field meta Type");
                 return null;
+        }
+    }
+
+    public void SetValue(object value)
+    {
+        switch (Type)
+        {
+            case EFieldType.Int:
+                break;
+            case EFieldType.Float:
+                break;
+            case EFieldType.Vec3:
+                break;
+            case EFieldType.GO:
+                break;
+            default:
+                Debug.LogError("Wrong field meta Type");
+                break;
         }
     }
 
@@ -129,6 +147,7 @@ public struct ComponentMeta
 
 public class EntityView : MonoBehaviour
 {
+    //TODO: maybe use type names as is and get rid of EFieldType enum
     public static readonly Dictionary<string, EFieldType> NameToFieldTypeMap = new Dictionary<string, EFieldType>
     {
         { "Single", EFieldType.Float },
@@ -189,7 +208,12 @@ public class EntityView : MonoBehaviour
         for (int i = 0; i < fields.Length; i++)
         {
             var field = fields[i];
-            EFieldType metaFieldType = NameToFieldTypeMap[field.FieldType.Name];
+            var fieldTypeName = field.FieldType.Name;
+            EFieldType metaFieldType;
+            if (NameToFieldTypeMap.ContainsKey(fieldTypeName))
+                metaFieldType = NameToFieldTypeMap[field.FieldType.Name];
+            else
+                metaFieldType = EFieldType.GO;
 
             result[i] = new ComponentFieldMeta
             {
@@ -213,6 +237,8 @@ public class EntityView : MonoBehaviour
         return null;
     }
 
+    private static readonly object[] EmptyParams = { };
+    private static readonly object[] GetComponentParams = { null, null };
     public void InitAsEntity(EcsWorld world)
     {
         _world = world;
@@ -240,11 +266,26 @@ public class EntityView : MonoBehaviour
                     continue;
 
                 var fieldInfo = compType.GetField(field.Name);
-                fieldInfo.SetValue(componentObj, value);
+                switch (field.Type)
+                {
+                    case EFieldType.Float:
+                    case EFieldType.Int:
+                    case EFieldType.Vec3:
+                        fieldInfo.SetValue(componentObj, value);
+                        break;
+                    case EFieldType.GO:
+                        MethodInfo getUnityComponentInfo = typeof(GameObject).GetMethod("GetComponent");
+                        getUnityComponentInfo = addComponentInfo.MakeGenericMethod(fieldInfo.FieldType);
+                        getUnityComponentInfo.Invoke(field.GO, EmptyParams);
+                        break;
+                }
+                
             }
 
             //TODO: if can't invoke with null arg implement second AddComponentNoReturn without second argument
-            addComponentInfoGen.Invoke(_world, new object[] { _entity.GetId(), componentObj });
+            GetComponentParams[0] = _entity.GetId();
+            GetComponentParams[1] = componentObj;
+            addComponentInfoGen.Invoke(_world, GetComponentParams);
         }
     }
 }

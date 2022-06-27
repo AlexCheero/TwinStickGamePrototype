@@ -120,17 +120,20 @@ public class EntityView_Inspector : Editor
             switch (fieldMeta.Type)
             {
                 case EFieldType.Int:
-                    EditorGUILayout.IntField(valueObject != null ? (int)valueObject : default(int));
+                    var intValue = valueObject != null ? (int)valueObject : default(int);
+                    fieldMeta.SetValue(EditorGUILayout.IntField(intValue));
                     break;
                 case EFieldType.Float:
-                    EditorGUILayout.FloatField(valueObject != null ? (float)valueObject : default(float));
+                    var floatValue = valueObject != null ? (float)valueObject : default(float);
+                    fieldMeta.SetValue(EditorGUILayout.FloatField(floatValue));
                     break;
                 case EFieldType.Vec3:
-                    EditorGUILayout.Vector3Field("", valueObject != null ? (Vector3)valueObject : default(Vector3));
+                    var vec3Value = valueObject != null ? (Vector3)valueObject : default(Vector3);
+                    fieldMeta.SetValue(EditorGUILayout.Vector3Field("", vec3Value));
                     break;
-                case EFieldType.SceneGO:
-                    break;
-                case EFieldType.Prefab:
+                case EFieldType.GO://TODO: try to create field with specified unity component type
+                    var obj = valueObject != null ? (GameObject)valueObject : null;
+                    fieldMeta.SetValue(EditorGUILayout.ObjectField("", obj, typeof(GameObject), true));
                     break;
             }
         }
