@@ -16,16 +16,17 @@ public class EntityView_Inspector : Editor
 
     private bool _addExpanded;
 
-    private void SetDirty() => EditorSceneManager.MarkSceneDirty(EditorSceneManager.GetActiveScene());
+    private void SetSceneDirty() => EditorSceneManager.MarkSceneDirty(EditorSceneManager.GetActiveScene());
+    private EntityView View { get => (EntityView)target; }
 
     static EntityView_Inspector()
     {
         var componentTypes = Assembly.GetAssembly(typeof(EntityView)).GetTypes()
-            .Where((t) => t.Namespace == "Components").ToArray();
+            .Where((t) => t.Namespace == EntityView.Components).ToArray();
         componentTypeNames = Array.ConvertAll(componentTypes, (t) => t.Name);
 
         var tagTypes = Assembly.GetAssembly(typeof(EntityView)).GetTypes()
-            .Where((t) => t.Namespace == "Tags").ToArray();
+            .Where((t) => t.Namespace == EntityView.Tags).ToArray();
         tagTypeNames = Array.ConvertAll(tagTypes, (t) => t.Name);
     }
 
@@ -36,28 +37,18 @@ public class EntityView_Inspector : Editor
 
         serializedObject.Update();
 
-        var view = (EntityView)target;
+        var view = View;
 
         if (GUILayout.Button(new GUIContent("+"), GUILayout.ExpandWidth(false)))
             _addExpanded = !_addExpanded;
         if (_addExpanded)
         {
             EditorGUILayout.BeginVertical();
-
-            EditorGUILayout.LabelField("Components:");
-            GUILayout.Space(10);
-            foreach (var componentName in componentTypeNames)
-                DrawAddButton(componentName);
-
-            GUILayout.Space(10);
-
-            EditorGUILayout.LabelField("Tags:");
-            GUILayout.Space(10);
-            foreach (var tagName in tagTypeNames)
-                DrawAddButton(tagName);
-
-            GUILayout.Space(10);
-
+                DrawComponentsList(true);
+                GUILayout.Space(10);
+                
+                DrawComponentsList(false);
+                GUILayout.Space(10);
             EditorGUILayout.EndVertical();
         }
 
@@ -73,14 +64,22 @@ public class EntityView_Inspector : Editor
             {
                 view.RemoveMetaAt(i);
                 i--;
-                SetDirty();
+                SetSceneDirty();
             }
 
             EditorGUILayout.EndHorizontal();
         }
     }
 
-    private void DrawAddButton(string componentName)
+    private void DrawComponentsList(bool isDataComponents)
+    {
+        EditorGUILayout.LabelField((isDataComponents ? EntityView.Components : EntityView.Tags) + ':');
+        GUILayout.Space(10);
+        foreach (var componentName in componentTypeNames)
+            DrawAddButton(componentName, isDataComponents);
+    }
+
+    private void DrawAddButton(string componentName, bool isDataComponents)
     {
         EditorGUILayout.BeginHorizontal();
 
@@ -90,11 +89,13 @@ public class EntityView_Inspector : Editor
         {
             _addExpanded = false;
 
+            View.AddComponent(componentName);
         }
 
         EditorGUILayout.EndHorizontal();
     }
 
+    //TODO: implement drag'n'drop for components
     private static void DrawComponent(ref ComponentMeta meta)
     {
         EditorGUILayout.BeginVertical();
@@ -119,13 +120,13 @@ public class EntityView_Inspector : Editor
             switch (fieldMeta.Type)
             {
                 case EFieldType.Int:
-                    EditorGUILayout.IntField((int)valueObject);
+                    EditorGUILayout.IntField(valueObject != null ? (int)valueObject : default(int));
                     break;
                 case EFieldType.Float:
-                    EditorGUILayout.FloatField((float)valueObject);
+                    EditorGUILayout.FloatField(valueObject != null ? (float)valueObject : default(float));
                     break;
                 case EFieldType.Vec3:
-                    EditorGUILayout.Vector3Field("", (Vector3)valueObject);
+                    EditorGUILayout.Vector3Field("", valueObject != null ? (Vector3)valueObject : default(Vector3));
                     break;
                 case EFieldType.SceneGO:
                     break;

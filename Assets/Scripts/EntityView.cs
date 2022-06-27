@@ -1,5 +1,7 @@
 using ECS;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
 using UnityEngine;
 
@@ -8,6 +10,8 @@ public enum EFieldType
     Int,
     Float,
     Vec3,
+    //TODO: can't determine type of field when adding in inspector, so add just as "Component",
+    //      and then determine in wether prefab or scene go in inspector
     //TODO: maybe could just load EntityView, instead of generic components
     SceneGO,//if go.scene.IsValid() then make a hierarchy by traversing all parents
     Prefab//else find the prefab path
@@ -19,25 +23,26 @@ public struct ComponentFieldMeta
     //TODO: define different access modifiers for UNITY_EDITOR (and hide some getters)
     public EFieldType Type;
     public string Name;
-    public string _valueRepresentation;
+    public string ValueRepresentation;
 
     public object GetValue()
     {
-        if (_valueRepresentation == null || _valueRepresentation.Length == 0)
+        if (ValueRepresentation == null || ValueRepresentation.Length == 0)
             return null;
 
         switch (Type)
         {
             case EFieldType.Int:
-                return int.Parse(_valueRepresentation);
+                return int.Parse(ValueRepresentation);
             case EFieldType.Float:
-                return float.Parse(_valueRepresentation);
+                return float.Parse(ValueRepresentation);
             case EFieldType.Vec3:
-                return ParseVector3(_valueRepresentation);
-            case EFieldType.SceneGO:
-                return ParseSceneGO(_valueRepresentation);
-            case EFieldType.Prefab:
-                return ParsePrefab(_valueRepresentation);
+                return ParseVector3(ValueRepresentation);
+            //TODO: not working properly
+            //case EFieldType.SceneGO:
+            //    return ParseSceneGO(_valueRepresentation);
+            //case EFieldType.Prefab:
+            //    return ParsePrefab(_valueRepresentation);
             default:
                 return null;
         }
@@ -124,19 +129,31 @@ public struct ComponentMeta
 
 public class EntityView : MonoBehaviour
 {
+    public static readonly Dictionary<string, EFieldType> NameToFieldTypeMap = new Dictionary<string, EFieldType>
+    {
+        { "Single", EFieldType.Float },
+        { "Vector3", EFieldType.Vec3 },
+        { "Int32", EFieldType.Int },
+    };
+
+    public static readonly string Components = "Components";
+    public static readonly string Tags = "Tags";
+
     private Entity _entity;
     private EcsWorld _world;
 
-    private string _assemblyName;
+    private static Type[] _componentTypes;
 
-    void Awake()
+    static EntityView()
     {
-        _assemblyName = typeof(EntityView).Assembly.FullName;
+        _componentTypes = Assembly.GetAssembly(typeof(EntityView)).GetTypes()
+            .Where((t) => t.Namespace == Components || t.Namespace == Tags).ToArray();
     }
 
     [SerializeField]
     private ComponentMeta[] _metas;
 
+#if UNITY_EDITOR
     public int MetasLength { get => _metas.Length; }
     public ref ComponentMeta GetMeta(int i) => ref _metas[i];
     public void RemoveMetaAt(int idx)
@@ -145,6 +162,55 @@ public class EntityView : MonoBehaviour
         for (int i = idx; i < newLength; i++)
             _metas[i] = _metas[i + 1];
         Array.Resize(ref _metas, newLength);
+    }
+
+    public void AddComponent(string componentName)
+    {
+        foreach (var meta in _metas)
+        {
+            if (meta.ComponentName == componentName)
+                return;
+        }
+
+        Array.Resize(ref _metas, _metas.Length + 1);
+        _metas[_metas.Length - 1] = new ComponentMeta
+        {
+            ComponentName = componentName,
+            Fields = GetComponentFields(componentName),
+            IsExpanded = false
+        };
+    }
+
+    public ComponentFieldMeta[] GetComponentFields(string componentName)
+    {
+        var compType = GetComponentTypeByName(componentName);
+        var fields = compType.GetFields();
+        var result = new ComponentFieldMeta[fields.Length];
+        for (int i = 0; i < fields.Length; i++)
+        {
+            var field = fields[i];
+            EFieldType metaFieldType = NameToFieldTypeMap[field.FieldType.Name];
+
+            result[i] = new ComponentFieldMeta
+            {
+                Type = metaFieldType,
+                Name = field.Name,
+                ValueRepresentation = string.Empty
+            };
+        }
+        return result;
+    }
+#endif
+
+    private Type GetComponentTypeByName(string componentName)
+    {
+        foreach (var compType in _componentTypes)
+        {
+            if (compType.Name == componentName)
+                return compType;
+        }
+
+        return null;
     }
 
     public void InitAsEntity(EcsWorld world)
@@ -156,21 +222,19 @@ public class EntityView : MonoBehaviour
 
         MethodInfo addComponentInfo = typeof(EcsWorld).GetMethod("AddComponentNoReturn");
 
-        //var meta = new ComponentMeta();
-        //meta.ComponentName = "SpeedComponent";
         foreach (var meta in _metas)
         {
-            var compType = Type.GetType(meta.ComponentName);
+            var compType = GetComponentTypeByName(meta.ComponentName);
+#if DEBUG
+            if (compType == null)
+                throw new Exception("can't find component type");
+#endif
             MethodInfo addComponentInfoGen = addComponentInfo.MakeGenericMethod(compType);
 
-            //TODO: try to remove postfix from component and tag types and spawn handle with specified namespace
-            var componentObjectHandle = Activator.CreateInstance(_assemblyName, meta.ComponentName);
-            var componentObj = componentObjectHandle.Unwrap();
+            var componentObj = Activator.CreateInstance(compType);
 
             foreach (var field in meta.Fields)
             {
-                //var propInfo = compType.GetField("speed");
-                //propInfo.SetValue(componentObj, 0407);
                 var value = field.GetValue();
                 if (value == null)
                     continue;

@@ -1,5 +1,6 @@
 using UnityEngine;
 
+//TODO: remove prefixes
 namespace Components
 {
     struct SpeedComponent
