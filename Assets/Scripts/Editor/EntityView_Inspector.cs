@@ -76,23 +76,21 @@ public class EntityView_Inspector : Editor
         EditorGUILayout.LabelField((isDataComponents ? EntityView.Components : EntityView.Tags) + ':');
         GUILayout.Space(10);
         foreach (var componentName in componentTypeNames)
-            DrawAddButton(componentName, isDataComponents);
-    }
-
-    private void DrawAddButton(string componentName, bool isDataComponents)
-    {
-        EditorGUILayout.BeginHorizontal();
-
-        EditorGUILayout.LabelField(componentName);
-        bool shouldComponent = GUILayout.Button(new GUIContent("+"), GUILayout.ExpandWidth(false));
-        if (shouldComponent)
         {
-            _addExpanded = false;
+            EditorGUILayout.BeginHorizontal();
 
-            View.AddComponent(componentName);
+            //TODO: add lines between components for readability
+            EditorGUILayout.LabelField(componentName);
+            bool shouldComponent = GUILayout.Button(new GUIContent("+"), GUILayout.ExpandWidth(false));
+            if (shouldComponent)
+            {
+                _addExpanded = false;
+
+                View.AddComponent(componentName);
+            }
+
+            EditorGUILayout.EndHorizontal();
         }
-
-        EditorGUILayout.EndHorizontal();
     }
 
     //TODO: implement drag'n'drop for components
@@ -117,24 +115,27 @@ public class EntityView_Inspector : Editor
         {
             EditorGUILayout.LabelField(fieldMeta.Name);
             var valueObject = fieldMeta.GetValue();
-            switch (fieldMeta.Type)
+
+            if (fieldMeta.TypeName == typeof(int).Name)
             {
-                case EFieldType.Int:
-                    var intValue = valueObject != null ? (int)valueObject : default(int);
-                    fieldMeta.SetValue(EditorGUILayout.IntField(intValue));
-                    break;
-                case EFieldType.Float:
-                    var floatValue = valueObject != null ? (float)valueObject : default(float);
-                    fieldMeta.SetValue(EditorGUILayout.FloatField(floatValue));
-                    break;
-                case EFieldType.Vec3:
-                    var vec3Value = valueObject != null ? (Vector3)valueObject : default(Vector3);
-                    fieldMeta.SetValue(EditorGUILayout.Vector3Field("", vec3Value));
-                    break;
-                case EFieldType.GO://TODO: try to create field with specified unity component type
-                    var obj = valueObject != null ? (GameObject)valueObject : null;
-                    fieldMeta.SetValue(EditorGUILayout.ObjectField("", obj, typeof(GameObject), true));
-                    break;
+                var intValue = valueObject != null ? (int)valueObject : default(int);
+                fieldMeta.SetValue(EditorGUILayout.IntField(intValue));
+            }
+            else if (fieldMeta.TypeName == typeof(float).Name)
+            {
+                var floatValue = valueObject != null ? (float)valueObject : default(float);
+                fieldMeta.SetValue(EditorGUILayout.FloatField(floatValue));
+            }
+            else if (fieldMeta.TypeName == typeof(Vector3).Name)
+            {
+                var vec3Value = valueObject != null ? (Vector3)valueObject : default(Vector3);
+                fieldMeta.SetValue(EditorGUILayout.Vector3Field("", vec3Value));
+            }
+            else if (fieldMeta.TypeName == typeof(Component).Name)
+            {
+                var type = valueObject.GetType();
+                var obj = valueObject != null ? (Component)valueObject : null;
+                fieldMeta.SetValue(EditorGUILayout.ObjectField("", obj, type, true));
             }
         }
         EditorGUILayout.EndHorizontal();

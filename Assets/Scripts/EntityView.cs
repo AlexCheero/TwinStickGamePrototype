@@ -1,69 +1,55 @@
 using ECS;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Reflection;
 using UnityEngine;
-
-public enum EFieldType
-{
-    Int,
-    Float,
-    Vec3,
-    //TODO: can't determine type of field when adding in inspector, so add just as "Component",
-    //      and then determine in wether prefab or scene go in inspector
-    //TODO: maybe could just load EntityView, instead of generic components
-    //SceneGO,//if go.scene.IsValid() then make a hierarchy by traversing all parents
-    //Prefab//else find the prefab path
-    GO
-}
 
 [Serializable]
 public struct ComponentFieldMeta
 {
     //TODO: define different access modifiers for UNITY_EDITOR (and hide some getters)
-    public EFieldType Type;
     public string TypeName;
     public string Name;
     public string ValueRepresentation;
-    public GameObject GO;
+    public Component UnityComponent;
 
     public object GetValue()
     {
         if (ValueRepresentation == null || ValueRepresentation.Length == 0)
             return null;
 
-        switch (Type)
+        if (TypeName == typeof(int).Name)
+            return int.Parse(ValueRepresentation);
+        else if (TypeName == typeof(float).Name)
+            return float.Parse(ValueRepresentation, CultureInfo.InvariantCulture);
+        else if (TypeName == typeof(Vector3).Name)
+            return ParseVector3(ValueRepresentation);
+        else if (TypeName == typeof(Component).Name)
+            return UnityComponent;
+        else
         {
-            case EFieldType.Int:
-                return int.Parse(ValueRepresentation);
-            case EFieldType.Float:
-                return float.Parse(ValueRepresentation);
-            case EFieldType.Vec3:
-                return ParseVector3(ValueRepresentation);
-            case EFieldType.GO:
-                return GO;
-            default:
-                Debug.LogError("Wrong field meta Type");
-                return null;
+            Debug.LogError("Wrong field meta Type");
+            return null;
         }
     }
 
     public void SetValue(object value)
     {
-        switch (Type)
+        Debug.LogWarning("Not implemented yet!");
+        if (TypeName == typeof(int).Name)
+            return;
+        else if (TypeName == typeof(float).Name)
+            return;
+        else if (TypeName == typeof(Vector3).Name)
+            return;
+        else if (TypeName == typeof(Component).Name)
+            return;
+        else
         {
-            case EFieldType.Int:
-                break;
-            case EFieldType.Float:
-                break;
-            case EFieldType.Vec3:
-                break;
-            case EFieldType.GO:
-                break;
-            default:
-                Debug.LogError("Wrong field meta Type");
-                break;
+            Debug.LogError("Wrong field meta Type");
+            return;
         }
     }
 
@@ -148,12 +134,11 @@ public struct ComponentMeta
 
 public class EntityView : MonoBehaviour
 {
-    //TODO: maybe use type names as is and get rid of EFieldType enum
-    public static readonly Dictionary<string, EFieldType> NameToFieldTypeMap = new Dictionary<string, EFieldType>
+    public static readonly HashSet<string> FieldTypeNames = new HashSet<string>
     {
-        { typeof(float).Name, EFieldType.Float },
-        { typeof(Vector3).Name, EFieldType.Vec3 },
-        { typeof(int).Name, EFieldType.Int },
+        typeof(int).Name,
+        typeof(float).Name,
+        typeof(Vector3).Name,
     };
 
     public static readonly string Components = "Components";
@@ -210,15 +195,15 @@ public class EntityView : MonoBehaviour
         {
             var field = fields[i];
             var fieldTypeName = field.FieldType.Name;
-            EFieldType metaFieldType;
-            if (NameToFieldTypeMap.ContainsKey(fieldTypeName))
-                metaFieldType = NameToFieldTypeMap[field.FieldType.Name];
+            string metaFieldTypeName;
+            if (FieldTypeNames.Contains(fieldTypeName))
+                metaFieldTypeName = fieldTypeName;
             else
-                metaFieldType = EFieldType.GO;
+                metaFieldTypeName = typeof(Component).Name;
 
             result[i] = new ComponentFieldMeta
             {
-                Type = metaFieldType,
+                TypeName = metaFieldTypeName,
                 Name = field.Name,
                 ValueRepresentation = string.Empty
             };
@@ -238,7 +223,6 @@ public class EntityView : MonoBehaviour
         return null;
     }
 
-    private static readonly object[] EmptyParams = { };
     private static readonly object[] GetComponentParams = { null, null };
     public void InitAsEntity(EcsWorld world)
     {
@@ -267,20 +251,7 @@ public class EntityView : MonoBehaviour
                     continue;
 
                 var fieldInfo = compType.GetField(field.Name);
-                switch (field.Type)
-                {
-                    case EFieldType.Float:
-                    case EFieldType.Int:
-                    case EFieldType.Vec3:
-                        fieldInfo.SetValue(componentObj, value);
-                        break;
-                    case EFieldType.GO:
-                        MethodInfo getUnityComponentInfo = typeof(GameObject).GetMethod("GetComponent");
-                        getUnityComponentInfo = addComponentInfo.MakeGenericMethod(fieldInfo.FieldType);
-                        getUnityComponentInfo.Invoke(field.GO, EmptyParams);
-                        break;
-                }
-                
+                fieldInfo.SetValue(componentObj, value);
             }
 
             //TODO: if can't invoke with null arg implement second AddComponentNoReturn without second argument
