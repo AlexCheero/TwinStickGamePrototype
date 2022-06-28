@@ -23,6 +23,7 @@ public struct ComponentFieldMeta
 {
     //TODO: define different access modifiers for UNITY_EDITOR (and hide some getters)
     public EFieldType Type;
+    public string TypeName;
     public string Name;
     public string ValueRepresentation;
     public GameObject GO;
@@ -150,9 +151,9 @@ public class EntityView : MonoBehaviour
     //TODO: maybe use type names as is and get rid of EFieldType enum
     public static readonly Dictionary<string, EFieldType> NameToFieldTypeMap = new Dictionary<string, EFieldType>
     {
-        { "Single", EFieldType.Float },
-        { "Vector3", EFieldType.Vec3 },
-        { "Int32", EFieldType.Int },
+        { typeof(float).Name, EFieldType.Float },
+        { typeof(Vector3).Name, EFieldType.Vec3 },
+        { typeof(int).Name, EFieldType.Int },
     };
 
     public static readonly string Components = "Components";

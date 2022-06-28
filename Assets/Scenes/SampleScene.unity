@@ -267,18 +267,24 @@ MonoBehaviour:
   _metas:
   - ComponentName: SpeedComponent
     Fields:
-    - Type: 1
+    - Type: 0
+      TypeName: 
       Name: speed
-      _valueRepresentation: 9
+      ValueRepresentation: 
+      GO: {fileID: 0}
     IsExpanded: 0
   - ComponentName: CameraSettingsComponent
     Fields:
     - Type: 2
+      TypeName: 
       Name: direction
-      _valueRepresentation: 0 0 0
+      ValueRepresentation: 
+      GO: {fileID: 0}
     - Type: 1
+      TypeName: 
       Name: distance
-      _valueRepresentation: 20
+      ValueRepresentation: 
+      GO: {fileID: 0}
     IsExpanded: 0
 --- !u!1 &963194225
 GameObject:
