@@ -16,6 +16,7 @@ public class CameraFollowSystem : EcsSystem
     //TODO: implement smoothing
     public override void Tick(EcsWorld world)
     {
+        //TODO: rename entity to id in all existing systems
         foreach (var entity in world.Enumerate(_filterId))
         {
             var cameraSettings = world.GetComponent<CameraSettingsComponent>(entity);

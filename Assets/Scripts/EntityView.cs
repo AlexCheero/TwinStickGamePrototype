@@ -106,7 +106,7 @@ public class EntityView : MonoBehaviour
     public const string Components = "Components";
     public const string Tags = "Tags";
 
-    private Entity _entity;
+    public Entity Entity { get; private set; }
     private EcsWorld _world;
 
     public static Type[] EcsComponentTypes;
@@ -120,7 +120,7 @@ public class EntityView : MonoBehaviour
     }
 
     [SerializeField]
-    private ComponentMeta[] _metas;
+    private ComponentMeta[] _metas = new ComponentMeta[0];
 
 #if UNITY_EDITOR
     public int MetasLength { get => _metas.Length; }
@@ -223,7 +223,7 @@ public class EntityView : MonoBehaviour
         _world = world;
 
         var entityId = _world.Create();
-        _entity = _world.GetById(entityId);
+        Entity = _world.GetById(entityId);
 
         MethodInfo addComponentInfo = typeof(EcsWorld).GetMethod("AddComponentNoReturn");
         MethodInfo addTagInfo = typeof(EcsWorld).GetMethod("AddTag");
@@ -239,7 +239,7 @@ public class EntityView : MonoBehaviour
                 componentObj = meta.UnityComponent;
                 addMethodInfo = addComponentInfo.MakeGenericMethod(meta.UnityComponent.GetType());
                 addParams = AddComponentParams;
-                addParams[0] = _entity.GetId();
+                addParams[0] = Entity.GetId();
                 addParams[1] = componentObj;
             }
             else if (meta.Fields.Length > 0)
@@ -263,7 +263,7 @@ public class EntityView : MonoBehaviour
                     fieldInfo.SetValue(componentObj, value);
                 }
                 addParams = AddComponentParams;
-                addParams[0] = _entity.GetId();
+                addParams[0] = Entity.GetId();
                 addParams[1] = componentObj;
             }
             else
@@ -276,7 +276,7 @@ public class EntityView : MonoBehaviour
                 addMethodInfo = addTagInfo.MakeGenericMethod(compType);
                 componentObj = Activator.CreateInstance(compType);
                 addParams = AddTagParams;
-                addParams[0] = _entity.GetId();
+                addParams[0] = Entity.GetId();
             }
 
             //TODO: if can't invoke with null arg implement second AddComponentNoReturn without second argument

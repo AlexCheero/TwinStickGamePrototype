@@ -123,86 +123,6 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 23800000, guid: 38ff75cc6f212cf42956d0b15370ede7, type: 2}
---- !u!1 &417065383
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 417065385}
-  - component: {fileID: 417065384}
-  m_Layer: 0
-  m_Name: EntityView
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &417065384
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 417065383}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bd67fbb5415272440ad8bbd0def578db, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _metas:
-  - ComponentName: Components.TargetTransformComponent
-    Fields:
-    - TypeName: UnityEngine.Transform
-      Name: target
-      ValueRepresentation: 
-      UnityComponent: {fileID: 8791500836224088978}
-    UnityComponent: {fileID: 0}
-    IsExpanded: 0
-  - ComponentName: Components.SpeedComponent
-    Fields:
-    - TypeName: System.Single
-      Name: speed
-      ValueRepresentation: 9
-      UnityComponent: {fileID: 0}
-    UnityComponent: {fileID: 0}
-    IsExpanded: 0
-  - ComponentName: Components.CameraSettingsComponent
-    Fields:
-    - TypeName: UnityEngine.Vector3
-      Name: direction
-      ValueRepresentation: 1 2 3
-      UnityComponent: {fileID: 0}
-    - TypeName: System.Single
-      Name: distance
-      ValueRepresentation: 20.5
-      UnityComponent: {fileID: 0}
-    UnityComponent: {fileID: 0}
-    IsExpanded: 0
-  - ComponentName: Tags.PlayerTag
-    Fields: []
-    UnityComponent: {fileID: 0}
-    IsExpanded: 0
-  - ComponentName: UnityEngine.Transform
-    Fields: []
-    UnityComponent: {fileID: 417065385}
-    IsExpanded: 0
---- !u!4 &417065385
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 417065383}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.14432834, y: 2.6209812, z: 17.874393}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 7
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &464289677
 GameObject:
   m_ObjectHideFlags: 0
@@ -338,7 +258,7 @@ GameObject:
   - component: {fileID: 963194228}
   - component: {fileID: 963194227}
   - component: {fileID: 963194226}
-  - component: {fileID: 963194229}
+  - component: {fileID: 963194230}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -411,7 +331,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 33.525, y: 0, z: 0}
---- !u!114 &963194229
+--- !u!114 &963194230
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -420,11 +340,34 @@ MonoBehaviour:
   m_GameObject: {fileID: 963194225}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9b130e41a80dd6242a3938b05f899b7d, type: 3}
+  m_Script: {fileID: 11500000, guid: bd67fbb5415272440ad8bbd0def578db, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _direction: {x: 1, y: 1, z: -1}
-  _distance: 15
+  _metas:
+  - ComponentName: Tags.CameraTag
+    Fields: []
+    UnityComponent: {fileID: 0}
+    IsExpanded: 0
+  - ComponentName: UnityEngine.Transform
+    Fields: []
+    UnityComponent: {fileID: 963194228}
+    IsExpanded: 0
+  - ComponentName: Components.CameraSettingsComponent
+    Fields:
+    - TypeName: UnityEngine.Vector3
+      Name: direction
+      ValueRepresentation: 1 1 -1
+      UnityComponent: {fileID: 0}
+    - TypeName: System.Single
+      Name: distance
+      ValueRepresentation: 15
+      UnityComponent: {fileID: 0}
+    UnityComponent: {fileID: 0}
+    IsExpanded: 0
+  - ComponentName: UnityEngine.Camera
+    Fields: []
+    UnityComponent: {fileID: 963194227}
+    IsExpanded: 0
 --- !u!1 &1241560775
 GameObject:
   m_ObjectHideFlags: 0
@@ -738,8 +681,3 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bb06379d853144440a09367ba455fae2, type: 3}
---- !u!4 &8791500836224088978 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 8791500836367506950, guid: bb06379d853144440a09367ba455fae2, type: 3}
-  m_PrefabInstance: {fileID: 8791500836224088977}
-  m_PrefabAsset: {fileID: 0}

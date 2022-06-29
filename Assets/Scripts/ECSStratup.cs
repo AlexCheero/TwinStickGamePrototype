@@ -1,4 +1,6 @@
+using Components;
 using ECS;
+using Tags;
 using UnityEngine;
 
 public class ECSStratup : MonoBehaviour
@@ -9,6 +11,14 @@ public class ECSStratup : MonoBehaviour
     void Start()
     {
         _world = new EcsWorld();
+
+        //all filters should be registered before adding any components
+        //therefore all systems should be created before initing EntityViews
+        EcsSystem[] initSystems = new EcsSystem[]
+        {
+            new InitCameraSystem(_world)
+        };
+
         _updateSystems = new EcsSystem[]
         {
             new PlayerMovementSystem(_world),
@@ -26,10 +36,12 @@ public class ECSStratup : MonoBehaviour
         foreach (var convertible in FindObjectsOfType<ECSConvertible>())
             convertible.ConvertToEntity(_world);
 
-        //Register and Run init systems if needed
-
         foreach (var view in FindObjectsOfType<EntityView>())
             view.InitAsEntity(_world);
+
+        //call init systems after initing all the start entities
+        foreach (var system in initSystems)
+            system.Tick(_world);
     }
 
     void Update()
