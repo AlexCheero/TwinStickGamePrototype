@@ -71,14 +71,7 @@ public struct ComponentFieldMeta//TODO: handle case when some ref types used as 
             }
         }
 
-        //return previousRepresentation != ValueRepresentation || previousComponent != UnityComponent;
-        bool changed = previousRepresentation != ValueRepresentation || previousComponent != UnityComponent;
-        if (changed)
-        {
-            int a = 0;
-        }
-
-        return changed;
+        return previousRepresentation != ValueRepresentation || previousComponent != UnityComponent;
     }
 #endif
 
