@@ -217,6 +217,7 @@ public class EntityView : MonoBehaviour
     }
 
     private static readonly object[] AddComponentParams = { null, null };
+    private static readonly object[] AddTagParams = { null };
     public void InitAsEntity(EcsWorld world)
     {
         _world = world;
@@ -225,24 +226,30 @@ public class EntityView : MonoBehaviour
         _entity = _world.GetById(entityId);
 
         MethodInfo addComponentInfo = typeof(EcsWorld).GetMethod("AddComponentNoReturn");
+        MethodInfo addTagInfo = typeof(EcsWorld).GetMethod("AddTag");
 
         foreach (var meta in _metas)
         {
             object componentObj;
-            MethodInfo addComponentInfoGen;
+            MethodInfo addMethodInfo;
+            object[] addParams;
+            //TODO: to much copypaste here, refactor
             if (meta.UnityComponent != null)
             {
                 componentObj = meta.UnityComponent;
-                addComponentInfoGen = addComponentInfo.MakeGenericMethod(meta.UnityComponent.GetType());
+                addMethodInfo = addComponentInfo.MakeGenericMethod(meta.UnityComponent.GetType());
+                addParams = AddComponentParams;
+                addParams[0] = _entity.GetId();
+                addParams[1] = componentObj;
             }
-            else
+            else if (meta.Fields.Length > 0)
             {
                 var compType = GetEcsComponentTypeByName(meta.ComponentName);
 #if DEBUG
                 if (compType == null)
                     throw new Exception("can't find component type");
 #endif
-                addComponentInfoGen = addComponentInfo.MakeGenericMethod(compType);
+                addMethodInfo = addComponentInfo.MakeGenericMethod(compType);
 
                 componentObj = Activator.CreateInstance(compType);
 
@@ -255,12 +262,25 @@ public class EntityView : MonoBehaviour
                     var fieldInfo = compType.GetField(field.Name);
                     fieldInfo.SetValue(componentObj, value);
                 }
+                addParams = AddComponentParams;
+                addParams[0] = _entity.GetId();
+                addParams[1] = componentObj;
+            }
+            else
+            {
+                var compType = GetEcsComponentTypeByName(meta.ComponentName);
+#if DEBUG
+                if (compType == null)
+                    throw new Exception("can't find component type");
+#endif
+                addMethodInfo = addTagInfo.MakeGenericMethod(compType);
+                componentObj = Activator.CreateInstance(compType);
+                addParams = AddTagParams;
+                addParams[0] = _entity.GetId();
             }
 
             //TODO: if can't invoke with null arg implement second AddComponentNoReturn without second argument
-            AddComponentParams[0] = _entity.GetId();
-            AddComponentParams[1] = componentObj;
-            addComponentInfoGen.Invoke(_world, AddComponentParams);
+            addMethodInfo.Invoke(_world, addParams);
         }
     }
 }
