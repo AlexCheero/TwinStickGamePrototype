@@ -153,25 +153,25 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _metas:
-  - ComponentName: SpeedComponent
+  - ComponentName: Components.CameraSettingsComponent
     Fields:
-    - TypeName: Single
-      Name: speed
-      ValueRepresentation: 10
-      UnityComponent: {fileID: 0}
-    IsExpanded: 1
-  - ComponentName: CameraSettingsComponent
-    Fields:
-    - TypeName: Vector3
+    - TypeName: UnityEngine.Vector3
       Name: direction
-      ValueRepresentation: 5 4 3
+      ValueRepresentation: 1 2 3
       UnityComponent: {fileID: 0}
-    - TypeName: Single
+    - TypeName: System.Single
       Name: distance
-      ValueRepresentation: 206
+      ValueRepresentation: 205
       UnityComponent: {fileID: 0}
     IsExpanded: 1
-  - ComponentName: TargetTransformComponent
+  - ComponentName: Components.SpeedComponent
+    Fields:
+    - TypeName: System.Single
+      Name: speed
+      ValueRepresentation: 9
+      UnityComponent: {fileID: 0}
+    IsExpanded: 1
+  - ComponentName: Components.TargetTransformComponent
     Fields:
     - TypeName: UnityEngine.Transform
       Name: target

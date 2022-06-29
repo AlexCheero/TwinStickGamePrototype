@@ -10,6 +10,8 @@ using UnityEngine.UIElements;
 [CustomEditor(typeof(EntityView))]
 public class EntityView_Inspector : Editor
 {
+    private const string UnityComponents = "UnityComponents";
+
     private static string[] componentTypeNames;
     private static string[] tagTypeNames;
 
@@ -22,8 +24,8 @@ public class EntityView_Inspector : Editor
         _viewComponentTypeNames = new string[length];
         for (int i = 0, j = 0; i < viewComponents.Length && j < length; i++, j++)
         {
-            var typeName = viewComponents[i].GetType().Name;
-            if (typeName == "EntityView")//skip EntityView
+            var typeName = viewComponents[i].GetType().FullName;
+            if (typeName == typeof(EntityView).Name)//skip EntityView
             {
                 i++;
                 continue;
@@ -43,11 +45,11 @@ public class EntityView_Inspector : Editor
     {
         var componentTypes = Assembly.GetAssembly(typeof(EntityView)).GetTypes()
             .Where((t) => t.Namespace == EntityView.Components).ToArray();
-        componentTypeNames = Array.ConvertAll(componentTypes, (t) => t.Name);
+        componentTypeNames = Array.ConvertAll(componentTypes, (t) => t.FullName);
 
         var tagTypes = Assembly.GetAssembly(typeof(EntityView)).GetTypes()
             .Where((t) => t.Namespace == EntityView.Tags).ToArray();
-        tagTypeNames = Array.ConvertAll(tagTypes, (t) => t.Name);
+        tagTypeNames = Array.ConvertAll(tagTypes, (t) => t.FullName);
     }
 
     public override void OnInspectorGUI()
@@ -69,7 +71,7 @@ public class EntityView_Inspector : Editor
                 GUILayout.Space(10);
                 DrawComponentsList(EntityView.Tags, tagTypeNames);
                 GUILayout.Space(10);
-                DrawComponentsList("ViewComponents", _viewComponentTypeNames);
+                DrawComponentsList(UnityComponents, _viewComponentTypeNames);
                 GUILayout.Space(10);
             EditorGUILayout.EndVertical();
         }
@@ -93,6 +95,8 @@ public class EntityView_Inspector : Editor
         }
     }
 
+    private string GetComponentUIName(string fullName) => fullName.Substring(fullName.LastIndexOf('.') + 1);
+
     private void DrawComponentsList(string label, string[] components)
     {
         EditorGUILayout.LabelField(label + ':');
@@ -103,7 +107,7 @@ public class EntityView_Inspector : Editor
 
             //TODO: add lines between components for readability
             //      or remove "+" button and make buttons with component names on it
-            EditorGUILayout.LabelField(componentName);
+            EditorGUILayout.LabelField(GetComponentUIName(componentName));
             bool tryAdd = GUILayout.Button(new GUIContent("+"), GUILayout.ExpandWidth(false));
             if (tryAdd)
             {
@@ -121,7 +125,7 @@ public class EntityView_Inspector : Editor
     {
         EditorGUILayout.BeginVertical();
         {
-            meta.IsExpanded = EditorGUILayout.BeginFoldoutHeaderGroup(meta.IsExpanded, meta.ComponentName);
+            meta.IsExpanded = EditorGUILayout.BeginFoldoutHeaderGroup(meta.IsExpanded, GetComponentUIName(meta.ComponentName));
             if (meta.IsExpanded)
             {
                 for (int i = 0; i < meta.Fields.Length; i++)
@@ -139,19 +143,18 @@ public class EntityView_Inspector : Editor
             EditorGUILayout.LabelField(fieldMeta.Name);
             var valueObject = fieldMeta.GetValue();
 
-            bool setDirty = false;
-
-            if (fieldMeta.TypeName == typeof(int).Name)
+            bool setDirty;
+            if (fieldMeta.TypeName == typeof(int).FullName)
             {
                 var intValue = valueObject != null ? (int)valueObject : default(int);
                 setDirty = fieldMeta.SetValue(EditorGUILayout.IntField(intValue));
             }
-            else if (fieldMeta.TypeName == typeof(float).Name)
+            else if (fieldMeta.TypeName == typeof(float).FullName)
             {
                 var floatValue = valueObject != null ? (float)valueObject : default(float);
                 setDirty = fieldMeta.SetValue(EditorGUILayout.FloatField(floatValue));
             }
-            else if (fieldMeta.TypeName == typeof(Vector3).Name)
+            else if (fieldMeta.TypeName == typeof(Vector3).FullName)
             {
                 var vec3Value = valueObject != null ? (Vector3)valueObject : default(Vector3);
                 setDirty = fieldMeta.SetValue(EditorGUILayout.Vector3Field("", vec3Value));

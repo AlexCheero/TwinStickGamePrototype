@@ -18,11 +18,11 @@ public struct ComponentFieldMeta//TODO: handle case when some ref types used as 
     {
         bool isRepresentationNotEmpty = ValueRepresentation != null && ValueRepresentation.Length > 0;
         //TODO: move all these typeof to single place, possibly to implement code generation in future
-        if (TypeName == typeof(int).Name)
+        if (TypeName == typeof(int).FullName)
             return isRepresentationNotEmpty ? int.Parse(ValueRepresentation) : 0;
-        else if (TypeName == typeof(float).Name)
+        else if (TypeName == typeof(float).FullName)
             return isRepresentationNotEmpty ? float.Parse(ValueRepresentation, CultureInfo.InvariantCulture) : 0;
-        else if (TypeName == typeof(Vector3).Name)
+        else if (TypeName == typeof(Vector3).FullName)
             return isRepresentationNotEmpty ? ParseVector3(ValueRepresentation) : Vector3.zero;
         else
         {
@@ -45,12 +45,12 @@ public struct ComponentFieldMeta//TODO: handle case when some ref types used as 
         var previousRepresentation = ValueRepresentation;
         var previousComponent = UnityComponent;
         
-        if (TypeName == typeof(int).Name ||
-            TypeName == typeof(float).Name)
+        if (TypeName == typeof(int).FullName ||
+            TypeName == typeof(float).FullName)
         {
             ValueRepresentation = value.ToString();
         }
-        else if (TypeName == typeof(Vector3).Name)
+        else if (TypeName == typeof(Vector3).FullName)
         {
             var vec = (Vector3)value;
             ValueRepresentation = vec.x + " " + vec.y + " " + vec.z;
@@ -99,8 +99,8 @@ public struct ComponentMeta
 
 public class EntityView : MonoBehaviour
 {
-    public static readonly string Components = "Components";
-    public static readonly string Tags = "Tags";
+    public const string Components = "Components";
+    public const string Tags = "Tags";
 
     private Entity _entity;
     private EcsWorld _world;
@@ -163,7 +163,7 @@ public class EntityView : MonoBehaviour
 
             result[i] = new ComponentFieldMeta
             {
-                TypeName = fieldType.FullName,//TODO: use FullName everywhere for consistency
+                TypeName = fieldType.FullName,
                 Name = field.Name,
                 ValueRepresentation = string.Empty,
                 UnityComponent = null
@@ -177,7 +177,7 @@ public class EntityView : MonoBehaviour
     {
         foreach (var compType in ComponentTypes)
         {
-            if (compType.Name == componentName)
+            if (compType.FullName == componentName)
                 return compType;
         }
 
