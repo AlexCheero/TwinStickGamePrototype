@@ -6,7 +6,7 @@ using System.Reflection;
 using UnityEngine;
 
 [Serializable]
-public struct ComponentFieldMeta//TODO: handle case when some ref types used as component
+public struct ComponentFieldMeta
 {
     //TODO: define different access modifiers for UNITY_EDITOR (and hide some getters)
     public string TypeName;

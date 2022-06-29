@@ -7,6 +7,7 @@ using UnityEngine;
 using UnityEngine.UIElements;
 
 
+//TODO: implement runtime fileds update
 [CustomEditor(typeof(EntityView))]
 public class EntityView_Inspector : Editor
 {
@@ -97,8 +98,6 @@ public class EntityView_Inspector : Editor
 
     private string GetComponentUIName(string fullName) => fullName.Substring(fullName.LastIndexOf('.') + 1);
 
-    //TODO: try to use null instead
-    private static readonly object[] getComponentInvokeParams = new object[0];
     private void DrawComponentsList(string label, string[] components)
     {
         EditorGUILayout.LabelField(label + ':');
@@ -118,7 +117,7 @@ public class EntityView_Inspector : Editor
                 if (EntityView.IsUnityComponent(type))
                 {
                     MethodInfo getComponentInfo = typeof(EntityView).GetMethod("GetComponent", new Type[] { }).MakeGenericMethod(type);
-                    var component = (Component)getComponentInfo.Invoke(View, getComponentInvokeParams);
+                    var component = (Component)getComponentInfo.Invoke(View, null);
                     if (View.AddUnityComponent(component))
                         SetSceneDirty();
                 }
