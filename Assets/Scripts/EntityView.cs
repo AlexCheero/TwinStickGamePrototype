@@ -7,7 +7,7 @@ using System.Reflection;
 using UnityEngine;
 
 [Serializable]
-public struct ComponentFieldMeta
+public struct ComponentFieldMeta//TODO: handle case when some ref types used as component
 {
     //TODO: define different access modifiers for UNITY_EDITOR (and hide some getters)
     public string TypeName;
@@ -17,21 +17,26 @@ public struct ComponentFieldMeta
 
     public object GetValue()
     {
-        if (ValueRepresentation == null || ValueRepresentation.Length == 0)
-            return null;
-
+        bool isRepresentationNotEmpty = ValueRepresentation != null && ValueRepresentation.Length > 0;
+        //TODO: move all these typeof to single place, possibly to implement code generation in future
         if (TypeName == typeof(int).Name)
-            return int.Parse(ValueRepresentation);
+            return isRepresentationNotEmpty ? int.Parse(ValueRepresentation) : 0;
         else if (TypeName == typeof(float).Name)
-            return float.Parse(ValueRepresentation, CultureInfo.InvariantCulture);
+            return isRepresentationNotEmpty ? float.Parse(ValueRepresentation, CultureInfo.InvariantCulture) : 0;
         else if (TypeName == typeof(Vector3).Name)
-            return ParseVector3(ValueRepresentation);
-        else if (TypeName == typeof(Component).Name)
-            return UnityComponent;
+            return isRepresentationNotEmpty ? ParseVector3(ValueRepresentation) : Vector3.zero;
         else
         {
-            Debug.LogError("Wrong field meta Type");
-            return null;
+            var type = typeof(Component).Assembly.GetType(TypeName);
+            if (typeof(Component).IsAssignableFrom(type))
+            {
+                return UnityComponent;
+            }
+            else
+            {
+                Debug.LogError("Wrong field meta Type");
+                return null;
+            }
         }
     }
 
@@ -44,12 +49,18 @@ public struct ComponentFieldMeta
             return;
         else if (TypeName == typeof(Vector3).Name)
             return;
-        else if (TypeName == typeof(Component).Name)
-            return;
         else
         {
-            Debug.LogError("Wrong field meta Type");
-            return;
+            var type = typeof(Component).Assembly.GetType(TypeName);
+            if (typeof(Component).IsAssignableFrom(type))
+            {
+                UnityComponent = (Component)value;
+            }
+            else
+            {
+                Debug.LogError("Wrong field meta Type");
+                return;
+            }
         }
     }
 
@@ -134,24 +145,17 @@ public struct ComponentMeta
 
 public class EntityView : MonoBehaviour
 {
-    public static readonly HashSet<string> FieldTypeNames = new HashSet<string>
-    {
-        typeof(int).Name,
-        typeof(float).Name,
-        typeof(Vector3).Name,
-    };
-
     public static readonly string Components = "Components";
     public static readonly string Tags = "Tags";
 
     private Entity _entity;
     private EcsWorld _world;
 
-    private static Type[] _componentTypes;
+    public static Type[] ComponentTypes;
 
     static EntityView()
     {
-        _componentTypes = Assembly.GetAssembly(typeof(EntityView)).GetTypes()
+        ComponentTypes = Assembly.GetAssembly(typeof(EntityView)).GetTypes()
             .Where((t) => t.Namespace == Components || t.Namespace == Tags).ToArray();
     }
 
@@ -181,12 +185,12 @@ public class EntityView : MonoBehaviour
         _metas[_metas.Length - 1] = new ComponentMeta
         {
             ComponentName = componentName,
-            Fields = GetComponentFields(componentName),
+            Fields = GetComponentTypeFields(componentName),
             IsExpanded = false
         };
     }
 
-    public ComponentFieldMeta[] GetComponentFields(string componentName)
+    public ComponentFieldMeta[] GetComponentTypeFields(string componentName)
     {
         var compType = GetComponentTypeByName(componentName);
         var fields = compType.GetFields();
@@ -194,27 +198,28 @@ public class EntityView : MonoBehaviour
         for (int i = 0; i < fields.Length; i++)
         {
             var field = fields[i];
-            var fieldTypeName = field.FieldType.Name;
-            string metaFieldTypeName;
-            if (FieldTypeNames.Contains(fieldTypeName))
-                metaFieldTypeName = fieldTypeName;
-            else
-                metaFieldTypeName = typeof(Component).Name;
+            var fieldType = field.FieldType;
+            if (!fieldType.IsValueType && !typeof(Component).IsAssignableFrom(fieldType))
+            {
+                Debug.LogError("wrong component field type. fields should only be pods or derives UnityEngine.Component");
+                return new ComponentFieldMeta[0];
+            }
 
             result[i] = new ComponentFieldMeta
             {
-                TypeName = metaFieldTypeName,
+                TypeName = fieldType.FullName,
                 Name = field.Name,
-                ValueRepresentation = string.Empty
+                ValueRepresentation = string.Empty,
+                UnityComponent = null
             };
         }
         return result;
     }
 #endif
 
-    private Type GetComponentTypeByName(string componentName)
+    private static Type GetComponentTypeByName(string componentName)
     {
-        foreach (var compType in _componentTypes)
+        foreach (var compType in ComponentTypes)
         {
             if (compType.Name == componentName)
                 return compType;

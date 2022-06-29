@@ -131,9 +131,9 @@ public class EntityView_Inspector : Editor
                 var vec3Value = valueObject != null ? (Vector3)valueObject : default(Vector3);
                 fieldMeta.SetValue(EditorGUILayout.Vector3Field("", vec3Value));
             }
-            else if (fieldMeta.TypeName == typeof(Component).Name)
+            else
             {
-                var type = valueObject.GetType();
+                var type = typeof(Component).Assembly.GetType(fieldMeta.TypeName);
                 var obj = valueObject != null ? (Component)valueObject : null;
                 fieldMeta.SetValue(EditorGUILayout.ObjectField("", obj, type, true));
             }
