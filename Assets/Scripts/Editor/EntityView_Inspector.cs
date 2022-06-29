@@ -3,7 +3,6 @@ using System.Linq;
 using System.Reflection;
 using UnityEditor;
 using UnityEditor.SceneManagement;
-using UnityEditor.UIElements;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -14,8 +13,26 @@ public class EntityView_Inspector : Editor
     private static string[] componentTypeNames;
     private static string[] tagTypeNames;
 
-    //TODO: make cached getter
-    private string[] ViewComponentTypeNames { get => null; }
+    private string[] _viewComponentTypeNames;
+
+    public override VisualElement CreateInspectorGUI()
+    {
+        var viewComponents = View.GetComponents<Component>();
+        var length = viewComponents.Length - 1;
+        _viewComponentTypeNames = new string[length];
+        for (int i = 0, j = 0; i < viewComponents.Length && j < length; i++, j++)
+        {
+            var typeName = viewComponents[i].GetType().Name;
+            if (typeName == "EntityView")//skip EntityView
+            {
+                i++;
+                continue;
+            }
+            _viewComponentTypeNames[j] = typeName;
+        }
+
+        return base.CreateInspectorGUI();
+    }
 
     private bool _addListExpanded;
 
@@ -51,6 +68,8 @@ public class EntityView_Inspector : Editor
                 DrawComponentsList(EntityView.Components, componentTypeNames);
                 GUILayout.Space(10);
                 DrawComponentsList(EntityView.Tags, tagTypeNames);
+                GUILayout.Space(10);
+                DrawComponentsList("ViewComponents", _viewComponentTypeNames);
                 GUILayout.Space(10);
             EditorGUILayout.EndVertical();
         }
