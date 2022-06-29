@@ -1,6 +1,5 @@
 using ECS;
 using System;
-using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Reflection;
@@ -40,15 +39,22 @@ public struct ComponentFieldMeta//TODO: handle case when some ref types used as 
         }
     }
 
-    public void SetValue(object value)
+#if UNITY_EDITOR
+    public bool SetValue(object value)
     {
-        Debug.LogWarning("Not implemented yet!");
-        if (TypeName == typeof(int).Name)
-            return;
-        else if (TypeName == typeof(float).Name)
-            return;
+        var previousRepresentation = ValueRepresentation;
+        var previousComponent = UnityComponent;
+        
+        if (TypeName == typeof(int).Name ||
+            TypeName == typeof(float).Name)
+        {
+            ValueRepresentation = value.ToString();
+        }
         else if (TypeName == typeof(Vector3).Name)
-            return;
+        {
+            var vec = (Vector3)value;
+            ValueRepresentation = vec.x + " " + vec.y + " " + vec.z;
+        }
         else
         {
             var type = typeof(Component).Assembly.GetType(TypeName);
@@ -59,64 +65,12 @@ public struct ComponentFieldMeta//TODO: handle case when some ref types used as 
             else
             {
                 Debug.LogError("Wrong field meta Type");
-                return;
             }
         }
+
+        return previousRepresentation != ValueRepresentation || previousComponent != UnityComponent;
     }
-
-    private Component ParsePrefab(string representation)
-    {
-        //loaded resource should be in Resources folder
-        var typeNameAndPath = representation.Split(' ');
-        var typeName = typeNameAndPath[0];
-        var path = typeNameAndPath[1];
-        var go = Resources.Load<GameObject>(path);
-        return go.GetComponent(typeName);
-    }
-
-    private Component ParseSceneGO(string representation)
-    {
-        var typeNameAndHierarchy = representation.Split(' ');
-        var typeName = typeNameAndHierarchy[0];
-        var sceneHierarchy = typeNameAndHierarchy[1].Split('/');
-        GameObject go = null;
-        foreach (var gameObj in GameObject.FindObjectsOfType<GameObject>())
-        {
-            if (gameObj.name == sceneHierarchy[0] && gameObj.transform.parent == null)
-            {
-                go = gameObj;
-                break;
-            }
-        }
-        if (go == null)
-        {
-            Debug.LogError("can't find object hierarchy root");
-            return null;
-        }
-
-        int hierarchyIdx = 1;
-        while (hierarchyIdx < sceneHierarchy.Length)
-        {
-            bool isFound = false;
-            foreach (Transform childTransform in go.transform)
-            {
-                if (childTransform.gameObject.name == sceneHierarchy[hierarchyIdx])
-                {
-                    go = childTransform.gameObject;
-                    hierarchyIdx++;
-                    isFound = true;
-                    break;
-                }
-            }
-
-            if (!isFound)
-            {
-                Debug.LogError("can't find object in hierarchy by name");
-                return null;
-            }
-        }
-        return go.GetComponent(typeName);
-    }
+#endif
 
     private Vector3 ParseVector3(string representation)
     {
@@ -207,7 +161,7 @@ public class EntityView : MonoBehaviour
 
             result[i] = new ComponentFieldMeta
             {
-                TypeName = fieldType.FullName,
+                TypeName = fieldType.FullName,//TODO: use FullName everywhere for consistency
                 Name = field.Name,
                 ValueRepresentation = string.Empty,
                 UnityComponent = null

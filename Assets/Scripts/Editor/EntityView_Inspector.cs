@@ -39,7 +39,7 @@ public class EntityView_Inspector : Editor
 
         var view = View;
 
-        if (GUILayout.Button(new GUIContent("+"), GUILayout.ExpandWidth(false)))
+        if (GUILayout.Button(new GUIContent(_addExpanded ? "Shrink components list" : "Expand components list"), GUILayout.ExpandWidth(false)))
             _addExpanded = !_addExpanded;
         if (_addExpanded)
         {
@@ -94,7 +94,7 @@ public class EntityView_Inspector : Editor
     }
 
     //TODO: implement drag'n'drop for components
-    private static void DrawComponent(ref ComponentMeta meta)
+    private void DrawComponent(ref ComponentMeta meta)
     {
         EditorGUILayout.BeginVertical();
         {
@@ -109,34 +109,39 @@ public class EntityView_Inspector : Editor
         EditorGUILayout.EndVertical();
     }
 
-    private static void DrawField(ref ComponentFieldMeta fieldMeta)
+    private void DrawField(ref ComponentFieldMeta fieldMeta)
     {
         EditorGUILayout.BeginHorizontal();
         {
             EditorGUILayout.LabelField(fieldMeta.Name);
             var valueObject = fieldMeta.GetValue();
 
+            bool setDirty = false;
+
             if (fieldMeta.TypeName == typeof(int).Name)
             {
                 var intValue = valueObject != null ? (int)valueObject : default(int);
-                fieldMeta.SetValue(EditorGUILayout.IntField(intValue));
+                setDirty = fieldMeta.SetValue(EditorGUILayout.IntField(intValue));
             }
             else if (fieldMeta.TypeName == typeof(float).Name)
             {
                 var floatValue = valueObject != null ? (float)valueObject : default(float);
-                fieldMeta.SetValue(EditorGUILayout.FloatField(floatValue));
+                setDirty = fieldMeta.SetValue(EditorGUILayout.FloatField(floatValue));
             }
             else if (fieldMeta.TypeName == typeof(Vector3).Name)
             {
                 var vec3Value = valueObject != null ? (Vector3)valueObject : default(Vector3);
-                fieldMeta.SetValue(EditorGUILayout.Vector3Field("", vec3Value));
+                setDirty = fieldMeta.SetValue(EditorGUILayout.Vector3Field("", vec3Value));
             }
             else
             {
                 var type = typeof(Component).Assembly.GetType(fieldMeta.TypeName);
                 var obj = valueObject != null ? (Component)valueObject : null;
-                fieldMeta.SetValue(EditorGUILayout.ObjectField("", obj, type, true));
+                setDirty = fieldMeta.SetValue(EditorGUILayout.ObjectField("", obj, type, true));
             }
+
+            if (setDirty)
+                SetSceneDirty();
         }
         EditorGUILayout.EndHorizontal();
     }
