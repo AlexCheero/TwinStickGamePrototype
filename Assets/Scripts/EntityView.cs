@@ -45,10 +45,13 @@ public struct ComponentFieldMeta//TODO: handle case when some ref types used as 
         var previousRepresentation = ValueRepresentation;
         var previousComponent = UnityComponent;
         
-        if (TypeName == typeof(int).FullName ||
-            TypeName == typeof(float).FullName)
+        if (TypeName == typeof(int).FullName)
         {
             ValueRepresentation = value.ToString();
+        }
+        else if (TypeName == typeof(float).FullName)
+        {
+            ValueRepresentation = ((float)value).ToString(CultureInfo.InvariantCulture);
         }
         else if (TypeName == typeof(Vector3).FullName)
         {
@@ -68,7 +71,14 @@ public struct ComponentFieldMeta//TODO: handle case when some ref types used as 
             }
         }
 
-        return previousRepresentation != ValueRepresentation || previousComponent != UnityComponent;
+        //return previousRepresentation != ValueRepresentation || previousComponent != UnityComponent;
+        bool changed = previousRepresentation != ValueRepresentation || previousComponent != UnityComponent;
+        if (changed)
+        {
+            int a = 0;
+        }
+
+        return changed;
     }
 #endif
 

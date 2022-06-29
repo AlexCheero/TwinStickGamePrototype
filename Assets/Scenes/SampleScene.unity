@@ -161,7 +161,7 @@ MonoBehaviour:
       UnityComponent: {fileID: 0}
     - TypeName: System.Single
       Name: distance
-      ValueRepresentation: 205
+      ValueRepresentation: 20.5
       UnityComponent: {fileID: 0}
     IsExpanded: 1
   - ComponentName: Components.SpeedComponent
