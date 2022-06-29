@@ -95,6 +95,7 @@ public struct ComponentMeta
 {
     public string ComponentName;
     public ComponentFieldMeta[] Fields;
+    public Component UnityComponent;
 #if UNITY_EDITOR
     public bool IsExpanded;
 #endif
@@ -109,6 +110,8 @@ public class EntityView : MonoBehaviour
     private EcsWorld _world;
 
     public static Type[] EcsComponentTypes;
+
+    public static bool IsUnityComponent(Type type) => typeof(Component).IsAssignableFrom(type);
 
     static EntityView()
     {
@@ -130,35 +133,61 @@ public class EntityView : MonoBehaviour
         Array.Resize(ref _metas, newLength);
     }
 
-    public bool AddComponent(string componentName)
+    private bool HaveComponent(string componentName)
     {
         foreach (var meta in _metas)
         {
             if (meta.ComponentName == componentName)
-                return false;
+                return true;
         }
+
+        return false;
+    }
+
+    public bool AddComponent(string componentName)
+    {
+        if (HaveComponent(componentName))
+            return false;
 
         Array.Resize(ref _metas, _metas.Length + 1);
         _metas[_metas.Length - 1] = new ComponentMeta
         {
             ComponentName = componentName,
-            Fields = GetComponentTypeFields(componentName),
+            Fields = GetEcsComponentTypeFields(componentName),
             IsExpanded = false
         };
 
         return true;
     }
 
-    public ComponentFieldMeta[] GetComponentTypeFields(string componentName)
+    public bool AddUnityComponent(Component component)
+    {
+        var fullName = component.GetType().FullName;
+        if (HaveComponent(fullName))
+            return false;
+
+        Array.Resize(ref _metas, _metas.Length + 1);
+        _metas[_metas.Length - 1] = new ComponentMeta
+        {
+            ComponentName = fullName,
+            UnityComponent = component
+        };
+        return true;
+    }
+
+    public ComponentFieldMeta[] GetEcsComponentTypeFields(string componentName)
     {
         var compType = GetEcsComponentTypeByName(componentName);
+        if (IsUnityComponent(compType))
+            return null;
+        
         var fields = compType.GetFields();
         var result = new ComponentFieldMeta[fields.Length];
         for (int i = 0; i < fields.Length; i++)
         {
             var field = fields[i];
             var fieldType = field.FieldType;
-            if (!fieldType.IsValueType && !typeof(Component).IsAssignableFrom(fieldType))
+            if (!fieldType.IsValueType && !IsUnityComponent(fieldType))
             {
                 Debug.LogError("wrong component field type. fields should only be pods or derives UnityEngine.Component");
                 return new ComponentFieldMeta[0];
@@ -187,7 +216,7 @@ public class EntityView : MonoBehaviour
         return null;
     }
 
-    private static readonly object[] GetComponentParams = { null, null };
+    private static readonly object[] AddComponentParams = { null, null };
     public void InitAsEntity(EcsWorld world)
     {
         _world = world;
@@ -199,29 +228,39 @@ public class EntityView : MonoBehaviour
 
         foreach (var meta in _metas)
         {
-            var compType = GetEcsComponentTypeByName(meta.ComponentName);
-#if DEBUG
-            if (compType == null)
-                throw new Exception("can't find component type");
-#endif
-            MethodInfo addComponentInfoGen = addComponentInfo.MakeGenericMethod(compType);
-
-            var componentObj = Activator.CreateInstance(compType);
-
-            foreach (var field in meta.Fields)
+            object componentObj;
+            MethodInfo addComponentInfoGen;
+            if (meta.UnityComponent != null)
             {
-                var value = field.GetValue();
-                if (value == null)
-                    continue;
+                componentObj = meta.UnityComponent;
+                addComponentInfoGen = addComponentInfo.MakeGenericMethod(meta.UnityComponent.GetType());
+            }
+            else
+            {
+                var compType = GetEcsComponentTypeByName(meta.ComponentName);
+#if DEBUG
+                if (compType == null)
+                    throw new Exception("can't find component type");
+#endif
+                addComponentInfoGen = addComponentInfo.MakeGenericMethod(compType);
 
-                var fieldInfo = compType.GetField(field.Name);
-                fieldInfo.SetValue(componentObj, value);
+                componentObj = Activator.CreateInstance(compType);
+
+                foreach (var field in meta.Fields)
+                {
+                    var value = field.GetValue();
+                    if (value == null)
+                        continue;
+
+                    var fieldInfo = compType.GetField(field.Name);
+                    fieldInfo.SetValue(componentObj, value);
+                }
             }
 
             //TODO: if can't invoke with null arg implement second AddComponentNoReturn without second argument
-            GetComponentParams[0] = _entity.GetId();
-            GetComponentParams[1] = componentObj;
-            addComponentInfoGen.Invoke(_world, GetComponentParams);
+            AddComponentParams[0] = _entity.GetId();
+            AddComponentParams[1] = componentObj;
+            addComponentInfoGen.Invoke(_world, AddComponentParams);
         }
     }
 }

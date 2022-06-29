@@ -159,14 +159,16 @@ MonoBehaviour:
       Name: target
       ValueRepresentation: 
       UnityComponent: {fileID: 8791500836224088978}
-    IsExpanded: 1
+    UnityComponent: {fileID: 0}
+    IsExpanded: 0
   - ComponentName: Components.SpeedComponent
     Fields:
     - TypeName: System.Single
       Name: speed
       ValueRepresentation: 9
       UnityComponent: {fileID: 0}
-    IsExpanded: 1
+    UnityComponent: {fileID: 0}
+    IsExpanded: 0
   - ComponentName: Components.CameraSettingsComponent
     Fields:
     - TypeName: UnityEngine.Vector3
@@ -177,9 +179,15 @@ MonoBehaviour:
       Name: distance
       ValueRepresentation: 20.5
       UnityComponent: {fileID: 0}
-    IsExpanded: 1
+    UnityComponent: {fileID: 0}
+    IsExpanded: 0
   - ComponentName: Tags.PlayerTag
     Fields: []
+    UnityComponent: {fileID: 0}
+    IsExpanded: 0
+  - ComponentName: UnityEngine.Transform
+    Fields: []
+    UnityComponent: {fileID: 417065385}
     IsExpanded: 0
 --- !u!4 &417065385
 Transform:

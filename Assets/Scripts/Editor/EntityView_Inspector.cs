@@ -97,6 +97,8 @@ public class EntityView_Inspector : Editor
 
     private string GetComponentUIName(string fullName) => fullName.Substring(fullName.LastIndexOf('.') + 1);
 
+    //TODO: try to use null instead
+    private static readonly object[] getComponentInvokeParams = new object[0];
     private void DrawComponentsList(string label, string[] components)
     {
         EditorGUILayout.LabelField(label + ':');
@@ -112,8 +114,19 @@ public class EntityView_Inspector : Editor
             if (tryAdd)
             {
                 _addListExpanded = false;
-                if (View.AddComponent(componentName))
-                    SetSceneDirty();
+                var type = typeof(Component).Assembly.GetType(componentName);
+                if (EntityView.IsUnityComponent(type))
+                {
+                    MethodInfo getComponentInfo = typeof(EntityView).GetMethod("GetComponent", new Type[] { }).MakeGenericMethod(type);
+                    var component = (Component)getComponentInfo.Invoke(View, getComponentInvokeParams);
+                    if (View.AddUnityComponent(component))
+                        SetSceneDirty();
+                }
+                else
+                {
+                    if (View.AddComponent(componentName))
+                        SetSceneDirty();
+                }
             }
 
             EditorGUILayout.EndHorizontal();
@@ -127,7 +140,7 @@ public class EntityView_Inspector : Editor
         {
             //TODO: draw tags without arrow
             meta.IsExpanded = EditorGUILayout.BeginFoldoutHeaderGroup(meta.IsExpanded, GetComponentUIName(meta.ComponentName));
-            if (meta.IsExpanded)
+            if (meta.IsExpanded && meta.Fields != null)
             {
                 for (int i = 0; i < meta.Fields.Length; i++)
                     DrawField(ref meta.Fields[i]);
