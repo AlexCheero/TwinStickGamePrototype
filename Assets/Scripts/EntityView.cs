@@ -108,11 +108,11 @@ public class EntityView : MonoBehaviour
     private Entity _entity;
     private EcsWorld _world;
 
-    public static Type[] ComponentTypes;
+    public static Type[] EcsComponentTypes;
 
     static EntityView()
     {
-        ComponentTypes = Assembly.GetAssembly(typeof(EntityView)).GetTypes()
+        EcsComponentTypes = typeof(EntityView).Assembly.GetTypes()
             .Where((t) => t.Namespace == Components || t.Namespace == Tags).ToArray();
     }
 
@@ -151,7 +151,7 @@ public class EntityView : MonoBehaviour
 
     public ComponentFieldMeta[] GetComponentTypeFields(string componentName)
     {
-        var compType = GetComponentTypeByName(componentName);
+        var compType = GetEcsComponentTypeByName(componentName);
         var fields = compType.GetFields();
         var result = new ComponentFieldMeta[fields.Length];
         for (int i = 0; i < fields.Length; i++)
@@ -176,9 +176,9 @@ public class EntityView : MonoBehaviour
     }
 #endif
 
-    private static Type GetComponentTypeByName(string componentName)
+    private static Type GetEcsComponentTypeByName(string componentName)
     {
-        foreach (var compType in ComponentTypes)
+        foreach (var compType in EcsComponentTypes)
         {
             if (compType.FullName == componentName)
                 return compType;
@@ -199,7 +199,7 @@ public class EntityView : MonoBehaviour
 
         foreach (var meta in _metas)
         {
-            var compType = GetComponentTypeByName(meta.ComponentName);
+            var compType = GetEcsComponentTypeByName(meta.ComponentName);
 #if DEBUG
             if (compType == null)
                 throw new Exception("can't find component type");

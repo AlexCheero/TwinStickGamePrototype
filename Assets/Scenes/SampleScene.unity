@@ -153,6 +153,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _metas:
+  - ComponentName: Components.TargetTransformComponent
+    Fields:
+    - TypeName: UnityEngine.Transform
+      Name: target
+      ValueRepresentation: 
+      UnityComponent: {fileID: 8791500836224088978}
+    IsExpanded: 1
+  - ComponentName: Components.SpeedComponent
+    Fields:
+    - TypeName: System.Single
+      Name: speed
+      ValueRepresentation: 9
+      UnityComponent: {fileID: 0}
+    IsExpanded: 1
   - ComponentName: Components.CameraSettingsComponent
     Fields:
     - TypeName: UnityEngine.Vector3
@@ -164,20 +178,9 @@ MonoBehaviour:
       ValueRepresentation: 20.5
       UnityComponent: {fileID: 0}
     IsExpanded: 1
-  - ComponentName: Components.SpeedComponent
-    Fields:
-    - TypeName: System.Single
-      Name: speed
-      ValueRepresentation: 9
-      UnityComponent: {fileID: 0}
-    IsExpanded: 1
-  - ComponentName: Components.TargetTransformComponent
-    Fields:
-    - TypeName: UnityEngine.Transform
-      Name: target
-      ValueRepresentation: 
-      UnityComponent: {fileID: 8791500836224088978}
-    IsExpanded: 1
+  - ComponentName: Tags.PlayerTag
+    Fields: []
+    IsExpanded: 0
 --- !u!4 &417065385
 Transform:
   m_ObjectHideFlags: 0

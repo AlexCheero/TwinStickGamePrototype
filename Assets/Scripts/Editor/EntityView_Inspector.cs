@@ -125,6 +125,7 @@ public class EntityView_Inspector : Editor
     {
         EditorGUILayout.BeginVertical();
         {
+            //TODO: draw tags without arrow
             meta.IsExpanded = EditorGUILayout.BeginFoldoutHeaderGroup(meta.IsExpanded, GetComponentUIName(meta.ComponentName));
             if (meta.IsExpanded)
             {
