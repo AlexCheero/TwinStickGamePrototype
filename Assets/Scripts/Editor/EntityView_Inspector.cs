@@ -14,7 +14,10 @@ public class EntityView_Inspector : Editor
     private static string[] componentTypeNames;
     private static string[] tagTypeNames;
 
-    private bool _addExpanded;
+    //TODO: make cached getter
+    private string[] ViewComponentTypeNames { get => null; }
+
+    private bool _addListExpanded;
 
     private void SetSceneDirty() => EditorSceneManager.MarkSceneDirty(EditorSceneManager.GetActiveScene());
     private EntityView View { get => (EntityView)target; }
@@ -39,15 +42,15 @@ public class EntityView_Inspector : Editor
 
         var view = View;
 
-        if (GUILayout.Button(new GUIContent(_addExpanded ? "Shrink components list" : "Expand components list"), GUILayout.ExpandWidth(false)))
-            _addExpanded = !_addExpanded;
-        if (_addExpanded)
+        var ecsListText = _addListExpanded ? "Shrink components list" : "Expand components list";
+        if (GUILayout.Button(new GUIContent(ecsListText), GUILayout.ExpandWidth(false)))
+            _addListExpanded = !_addListExpanded;
+        if (_addListExpanded)
         {
             EditorGUILayout.BeginVertical();
-                DrawComponentsList(true);
+                DrawComponentsList(EntityView.Components, componentTypeNames);
                 GUILayout.Space(10);
-                
-                DrawComponentsList(false);
+                DrawComponentsList(EntityView.Tags, tagTypeNames);
                 GUILayout.Space(10);
             EditorGUILayout.EndVertical();
         }
@@ -71,22 +74,23 @@ public class EntityView_Inspector : Editor
         }
     }
 
-    private void DrawComponentsList(bool isDataComponents)
+    private void DrawComponentsList(string label, string[] components)
     {
-        EditorGUILayout.LabelField((isDataComponents ? EntityView.Components : EntityView.Tags) + ':');
+        EditorGUILayout.LabelField(label + ':');
         GUILayout.Space(10);
-        foreach (var componentName in componentTypeNames)
+        foreach (var componentName in components)
         {
             EditorGUILayout.BeginHorizontal();
 
             //TODO: add lines between components for readability
+            //      or remove "+" button and make buttons with component names on it
             EditorGUILayout.LabelField(componentName);
-            bool shouldComponent = GUILayout.Button(new GUIContent("+"), GUILayout.ExpandWidth(false));
-            if (shouldComponent)
+            bool tryAdd = GUILayout.Button(new GUIContent("+"), GUILayout.ExpandWidth(false));
+            if (tryAdd)
             {
-                _addExpanded = false;
-
-                View.AddComponent(componentName);
+                _addListExpanded = false;
+                if (View.AddComponent(componentName))
+                    SetSceneDirty();
             }
 
             EditorGUILayout.EndHorizontal();

@@ -127,12 +127,12 @@ public class EntityView : MonoBehaviour
         Array.Resize(ref _metas, newLength);
     }
 
-    public void AddComponent(string componentName)
+    public bool AddComponent(string componentName)
     {
         foreach (var meta in _metas)
         {
             if (meta.ComponentName == componentName)
-                return;
+                return false;
         }
 
         Array.Resize(ref _metas, _metas.Length + 1);
@@ -142,6 +142,8 @@ public class EntityView : MonoBehaviour
             Fields = GetComponentTypeFields(componentName),
             IsExpanded = false
         };
+
+        return true;
     }
 
     public ComponentFieldMeta[] GetComponentTypeFields(string componentName)
