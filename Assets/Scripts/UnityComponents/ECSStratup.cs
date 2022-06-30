@@ -19,6 +19,8 @@ public class ECSStratup : MonoBehaviour
             new InitEnemySystem(_world)
         };
 
+        //TODO: implement custom inspector to arrange systems from editor
+        //TODO: implement script to generate boilerplate
         _updateSystems = new EcsSystem[]
         {
             new PlayerMovementSystem(_world),
