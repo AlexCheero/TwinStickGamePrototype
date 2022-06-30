@@ -1,5 +1,6 @@
 using ECS;
 using System;
+using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Reflection;
@@ -113,12 +114,20 @@ public class EntityView : MonoBehaviour
 
     public static Type[] EcsComponentTypes;
 
+    public static Type[] UnityComponentTypes;
+
     public static bool IsUnityComponent(Type type) => typeof(Component).IsAssignableFrom(type);
 
     static EntityView()
     {
         EcsComponentTypes = typeof(EntityView).Assembly.GetTypes()
             .Where((t) => t.Namespace == Components || t.Namespace == Tags).ToArray();
+
+        var types = new List<Type>();
+        foreach (var assembly in AppDomain.CurrentDomain.GetAssemblies())
+            //types.AddRange(assembly.GetTypes().Where((t) => t.Namespace != Components && t.Namespace != Tags));
+            types.AddRange(assembly.GetTypes().Where((t) => typeof(Component).IsAssignableFrom(t)));
+        UnityComponentTypes = types.ToArray();
     }
 
     [SerializeField]
@@ -206,6 +215,17 @@ public class EntityView : MonoBehaviour
         return result;
     }
 #endif
+
+    //TODO: move such methods to some helper class
+    public static Type GetTypeByName(string typeName)
+    {
+        foreach (var type in UnityComponentTypes)
+        {
+            if (type.FullName == typeName)
+                return type;
+        }
+        return null;
+    }
 
     private static Type GetEcsComponentTypeByName(string componentName)
     {

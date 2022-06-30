@@ -7,6 +7,7 @@ using UnityEngine.UIElements;
 
 
 //TODO: implement runtime fileds update
+//TODO: implement search bar for components
 [CustomEditor(typeof(EntityView))]
 public class EntityView_Inspector : Editor
 {
@@ -112,7 +113,9 @@ public class EntityView_Inspector : Editor
             if (tryAdd)
             {
                 _addListExpanded = false;
-                var type = typeof(Component).Assembly.GetType(componentName);
+                //var type = typeof(Component).Assembly.GetType(componentName);
+                //TODO: check all the places where types should be searched
+                var type = EntityView.GetTypeByName(componentName);
                 if (EntityView.IsUnityComponent(type))
                 {
                     MethodInfo getComponentInfo = typeof(EntityView).GetMethod("GetComponent", new Type[] { }).MakeGenericMethod(type);
