@@ -108,6 +108,8 @@ public class EntityView : MonoBehaviour
 
     public Entity Entity { get; private set; }
     private EcsWorld _world;
+    public int Id { get => Entity.GetId(); }
+    public int Version { get => Entity.GetVersion(); }
 
     public static Type[] EcsComponentTypes;
 
@@ -133,7 +135,7 @@ public class EntityView : MonoBehaviour
         Array.Resize(ref _metas, newLength);
     }
 
-    private bool HaveComponent(string componentName)
+    private bool HaveComponentWithName(string componentName)
     {
         foreach (var meta in _metas)
         {
@@ -146,7 +148,7 @@ public class EntityView : MonoBehaviour
 
     public bool AddComponent(string componentName)
     {
-        if (HaveComponent(componentName))
+        if (HaveComponentWithName(componentName))
             return false;
 
         Array.Resize(ref _metas, _metas.Length + 1);
@@ -163,7 +165,7 @@ public class EntityView : MonoBehaviour
     public bool AddUnityComponent(Component component)
     {
         var fullName = component.GetType().FullName;
-        if (HaveComponent(fullName))
+        if (HaveComponentWithName(fullName))
             return false;
 
         Array.Resize(ref _metas, _metas.Length + 1);
@@ -218,7 +220,7 @@ public class EntityView : MonoBehaviour
 
     private static readonly object[] AddComponentParams = { null, null };
     private static readonly object[] AddTagParams = { null };
-    public void InitAsEntity(EcsWorld world)
+    public int InitAsEntity(EcsWorld world)
     {
         _world = world;
 
@@ -239,7 +241,7 @@ public class EntityView : MonoBehaviour
                 componentObj = meta.UnityComponent;
                 addMethodInfo = addComponentInfo.MakeGenericMethod(meta.UnityComponent.GetType());
                 addParams = AddComponentParams;
-                addParams[0] = Entity.GetId();
+                addParams[0] = Id;
                 addParams[1] = componentObj;
             }
             else if (meta.Fields.Length > 0)
@@ -263,7 +265,7 @@ public class EntityView : MonoBehaviour
                     fieldInfo.SetValue(componentObj, value);
                 }
                 addParams = AddComponentParams;
-                addParams[0] = Entity.GetId();
+                addParams[0] = Id;
                 addParams[1] = componentObj;
             }
             else
@@ -276,11 +278,23 @@ public class EntityView : MonoBehaviour
                 addMethodInfo = addTagInfo.MakeGenericMethod(compType);
                 componentObj = Activator.CreateInstance(compType);
                 addParams = AddTagParams;
-                addParams[0] = Entity.GetId();
+                addParams[0] = Id;
             }
 
             //TODO: if can't invoke with null arg implement second AddComponentNoReturn without second argument
             addMethodInfo.Invoke(_world, addParams);
         }
+
+        return entityId;
+    }
+
+    public bool Have<T>() => _world.Have<T>(Id);
+
+    public ref T GetEcsComponent<T>() => ref _world.GetComponent<T>(Id);
+
+    public void DeleteSelf()
+    {
+        _world.Delete(Id);
+        Destroy(gameObject);
     }
 }

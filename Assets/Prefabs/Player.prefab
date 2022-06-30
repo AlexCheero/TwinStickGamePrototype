@@ -116,7 +116,7 @@ MonoBehaviour:
   _meleeAttackReach: 3
   _meleeAttackCD: 0
   _meleeDamage: 50
-  _projectile: {fileID: 4099900456874055660, guid: 686182d33b1769d439280800cb7e16af, type: 3}
+  _projectile: {fileID: 3664940373391034528, guid: 686182d33b1769d439280800cb7e16af, type: 3}
 --- !u!54 &8791500836367506952
 Rigidbody:
   m_ObjectHideFlags: 0

@@ -33,7 +33,8 @@ public class PlayerProjectileAttackSystem : EcsSystem
             var instantiationPosition = transform.position + transform.forward * 2.0f; //instantiation before the player
             //TODO: use pools
             var projectileInstance = Object.Instantiate(projectileObj, instantiationPosition, transform.rotation);
-            var projectileEntity = projectileInstance.ConvertToEntity(world);
+            //var projectileEntity = projectileInstance.ConvertToEntity(world);
+            var projectileEntity = projectileInstance.InitAsEntity(world);
             var speed = world.GetComponent<SpeedComponent>(projectileEntity).speed;
             projectileInstance.GetComponent<Rigidbody>().AddForce(transform.forward * speed);//TODO: try different force types
         }

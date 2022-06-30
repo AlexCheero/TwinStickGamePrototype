@@ -16,15 +16,15 @@ public class PlayerConvertible : ECSConvertible
     [SerializeField]
     private float _meleeDamage;
     [SerializeField]
-    private ProjectileConvertible _projectile;
+    private ProjectileCollision _projectile;
 
     protected override void AddComponents(EcsWorld world)
     {
         var id = Entity.GetId();
         world.AddTag<PlayerTag>(id);
-        world.AddTag<InstantRangedWeaponHoldingTag>(id);
+        //world.AddTag<InstantRangedWeaponHoldingTag>(id);
         //world.AddTag<MeleeWeaponHoldingTag>(id);
-        //world.AddTag<ProjectileWeaponHoldingTag>(id);
+        world.AddTag<ProjectileWeaponHoldingTag>(id);
         world.AddComponent(id, transform);
         world.AddComponent(id, new SpeedComponent { speed = _speed });
         world.AddComponent(id, new HealthComponent { health = _health });

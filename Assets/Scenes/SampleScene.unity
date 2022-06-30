@@ -351,7 +351,7 @@ MonoBehaviour:
   - ComponentName: UnityEngine.Transform
     Fields: []
     UnityComponent: {fileID: 963194228}
-    IsExpanded: 0
+    IsExpanded: 1
   - ComponentName: Components.CameraSettingsComponent
     Fields:
     - TypeName: UnityEngine.Vector3
@@ -363,7 +363,7 @@ MonoBehaviour:
       ValueRepresentation: 15
       UnityComponent: {fileID: 0}
     UnityComponent: {fileID: 0}
-    IsExpanded: 0
+    IsExpanded: 1
   - ComponentName: UnityEngine.Camera
     Fields: []
     UnityComponent: {fileID: 963194227}

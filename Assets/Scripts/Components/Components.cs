@@ -47,7 +47,7 @@ namespace Components
 
     struct ProjectileWeapon
     {
-        public ProjectileConvertible projectile;
+        public ProjectileCollision projectile;
     }
 
     struct AttackComponent
