@@ -113,9 +113,7 @@ public class EntityView_Inspector : Editor
             if (tryAdd)
             {
                 _addListExpanded = false;
-                //var type = typeof(Component).Assembly.GetType(componentName);
-                //TODO: check all the places where types should be searched
-                var type = EntityView.GetTypeByName(componentName);
+                var type = EntityView.GetUnityComponentTypeByName(componentName);
                 if (EntityView.IsUnityComponent(type))
                 {
                     MethodInfo getComponentInfo = typeof(EntityView).GetMethod("GetComponent", new Type[] { }).MakeGenericMethod(type);
@@ -176,7 +174,7 @@ public class EntityView_Inspector : Editor
             }
             else
             {
-                var type = typeof(Component).Assembly.GetType(fieldMeta.TypeName);
+                var type = EntityView.GetUnityComponentTypeByName(fieldMeta.TypeName);
                 var obj = valueObject != null ? (Component)valueObject : null;
                 setDirty = fieldMeta.SetValue(EditorGUILayout.ObjectField("", obj, type, true));
             }

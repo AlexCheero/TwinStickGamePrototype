@@ -27,7 +27,7 @@ public struct ComponentFieldMeta
             return isRepresentationNotEmpty ? ParseVector3(ValueRepresentation) : Vector3.zero;
         else
         {
-            var type = typeof(Component).Assembly.GetType(TypeName);
+            var type = EntityView.GetUnityComponentTypeByName(TypeName);
             if (typeof(Component).IsAssignableFrom(type))
             {
                 return UnityComponent;
@@ -61,7 +61,7 @@ public struct ComponentFieldMeta
         }
         else
         {
-            var type = typeof(Component).Assembly.GetType(TypeName);
+            var type = EntityView.GetUnityComponentTypeByName(TypeName);
             if (typeof(Component).IsAssignableFrom(type))
             {
                 UnityComponent = (Component)value;
@@ -217,7 +217,7 @@ public class EntityView : MonoBehaviour
 #endif
 
     //TODO: move such methods to some helper class
-    public static Type GetTypeByName(string typeName)
+    public static Type GetUnityComponentTypeByName(string typeName)
     {
         foreach (var type in UnityComponentTypes)
         {
