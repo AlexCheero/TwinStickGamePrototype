@@ -39,7 +39,7 @@ public class EntityView_Inspector : Editor
 
     private bool _addListExpanded;
 
-    private void SetSceneDirty() => EditorSceneManager.MarkSceneDirty(EditorSceneManager.GetActiveScene());
+    private void SetTargetDirty() => EditorUtility.SetDirty(target);
     private EntityView View { get => (EntityView)target; }
 
     static EntityView_Inspector()
@@ -89,7 +89,7 @@ public class EntityView_Inspector : Editor
             {
                 view.RemoveMetaAt(i);
                 i--;
-                SetSceneDirty();
+                SetTargetDirty();
             }
 
             EditorGUILayout.EndHorizontal();
@@ -119,12 +119,12 @@ public class EntityView_Inspector : Editor
                     MethodInfo getComponentInfo = typeof(EntityView).GetMethod("GetComponent", new Type[] { }).MakeGenericMethod(type);
                     var component = (Component)getComponentInfo.Invoke(View, null);
                     if (View.AddUnityComponent(component))
-                        SetSceneDirty();
+                        SetTargetDirty();
                 }
                 else
                 {
                     if (View.AddComponent(componentName))
-                        SetSceneDirty();
+                        SetTargetDirty();
                 }
             }
 
@@ -180,7 +180,7 @@ public class EntityView_Inspector : Editor
             }
 
             if (setDirty)
-                SetSceneDirty();
+                SetTargetDirty();
         }
         EditorGUILayout.EndHorizontal();
     }
