@@ -1,6 +1,4 @@
-using Components;
 using ECS;
-using Tags;
 using UnityEngine;
 
 public class ECSStratup : MonoBehaviour
@@ -16,7 +14,9 @@ public class ECSStratup : MonoBehaviour
         //therefore all systems should be created before initing EntityViews
         EcsSystem[] initSystems = new EcsSystem[]
         {
-            new InitCameraSystem(_world)
+            new InitCameraSystem(_world),
+            new InitResetAttackTimeSystem(_world),
+            new InitEnemySystem(_world)
         };
 
         _updateSystems = new EcsSystem[]
@@ -24,7 +24,7 @@ public class ECSStratup : MonoBehaviour
             new PlayerMovementSystem(_world),
             new CameraFollowSystem(_world),
             new PlayerRotationSystem(_world),
-            //new EnemyFollowSystem(_world),
+            new EnemyFollowSystem(_world),
             new HealthSystem(_world),
             new EnemyMeleeAttackSystem(_world),
             new PlayerMeleeAttackSystem(_world),

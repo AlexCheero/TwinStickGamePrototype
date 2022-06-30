@@ -123,9 +123,9 @@ public class EntityView : MonoBehaviour
         EcsComponentTypes = typeof(EntityView).Assembly.GetTypes()
             .Where((t) => t.Namespace == Components || t.Namespace == Tags).ToArray();
 
+        //TODO: could cause troubles with nested assemlies
         var types = new List<Type>();
         foreach (var assembly in AppDomain.CurrentDomain.GetAssemblies())
-            //types.AddRange(assembly.GetTypes().Where((t) => t.Namespace != Components && t.Namespace != Tags));
             types.AddRange(assembly.GetTypes().Where((t) => typeof(Component).IsAssignableFrom(t)));
         UnityComponentTypes = types.ToArray();
     }

@@ -6,6 +6,7 @@ using UnityEngine;
 using UnityEngine.UIElements;
 
 
+//TODO: hide some components fields that shouldn't be visible in inspector such as AttackComponent.previousAttackTime
 //TODO: implement runtime fileds update
 //TODO: implement search bar for components
 [CustomEditor(typeof(EntityView))]

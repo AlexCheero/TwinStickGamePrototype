@@ -94,8 +94,8 @@ GameObject:
   - component: {fileID: 3981269079167589357}
   - component: {fileID: 3981269079167589358}
   - component: {fileID: 3981269079167589352}
-  - component: {fileID: 3981269079167589359}
   - component: {fileID: 3981269079167589345}
+  - component: {fileID: 732556081377220061}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Untagged
@@ -197,25 +197,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 80
   m_CollisionDetection: 0
---- !u!114 &3981269079167589359
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3981269079167589353}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 07d4aef55a6ae364c950b83b45e4a5be, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _speed: 9
-  _angularSpeed: 2880
-  _acceleration: 20
-  _health: 100
-  _meleeAttackReach: 2.5
-  _meleeAttackCD: 0.2
-  _meleeDamage: 25
 --- !u!195 &3981269079167589345
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -238,3 +219,100 @@ NavMeshAgent:
   m_BaseOffset: 1
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
+--- !u!114 &732556081377220061
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3981269079167589353}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bd67fbb5415272440ad8bbd0def578db, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _metas:
+  - ComponentName: Tags.EnemyTag
+    Fields: []
+    UnityComponent: {fileID: 0}
+    IsExpanded: 0
+  - ComponentName: Tags.MeleeWeaponHoldingTag
+    Fields: []
+    UnityComponent: {fileID: 0}
+    IsExpanded: 0
+  - ComponentName: Components.HealthComponent
+    Fields:
+    - TypeName: System.Single
+      Name: health
+      ValueRepresentation: 100
+      UnityComponent: {fileID: 0}
+    UnityComponent: {fileID: 0}
+    IsExpanded: 0
+  - ComponentName: Components.AttackComponent
+    Fields:
+    - TypeName: System.Single
+      Name: previousAttackTime
+      ValueRepresentation: -1
+      UnityComponent: {fileID: 0}
+    - TypeName: System.Single
+      Name: attackCD
+      ValueRepresentation: 0.2
+      UnityComponent: {fileID: 0}
+    UnityComponent: {fileID: 0}
+    IsExpanded: 0
+  - ComponentName: Components.DamageComponent
+    Fields:
+    - TypeName: System.Single
+      Name: damage
+      ValueRepresentation: 25
+      UnityComponent: {fileID: 0}
+    UnityComponent: {fileID: 0}
+    IsExpanded: 0
+  - ComponentName: Components.SpeedComponent
+    Fields:
+    - TypeName: System.Single
+      Name: speed
+      ValueRepresentation: 9
+      UnityComponent: {fileID: 0}
+    UnityComponent: {fileID: 0}
+    IsExpanded: 0
+  - ComponentName: Components.AngularSpeedComponent
+    Fields:
+    - TypeName: System.Single
+      Name: speed
+      ValueRepresentation: 2880
+      UnityComponent: {fileID: 0}
+    UnityComponent: {fileID: 0}
+    IsExpanded: 0
+  - ComponentName: Components.ReachComponent
+    Fields:
+    - TypeName: System.Single
+      Name: distance
+      ValueRepresentation: 2.5
+      UnityComponent: {fileID: 0}
+    UnityComponent: {fileID: 0}
+    IsExpanded: 0
+  - ComponentName: Components.AccelerationComponent
+    Fields:
+    - TypeName: System.Single
+      Name: acceleration
+      ValueRepresentation: 20
+      UnityComponent: {fileID: 0}
+    UnityComponent: {fileID: 0}
+    IsExpanded: 0
+  - ComponentName: UnityEngine.AI.NavMeshAgent
+    Fields: []
+    UnityComponent: {fileID: 3981269079167589345}
+    IsExpanded: 0
+  - ComponentName: Components.TargetTransformComponent
+    Fields:
+    - TypeName: UnityEngine.Transform
+      Name: target
+      ValueRepresentation: 
+      UnityComponent: {fileID: 0}
+    UnityComponent: {fileID: 0}
+    IsExpanded: 0
+  - ComponentName: UnityEngine.Transform
+    Fields: []
+    UnityComponent: {fileID: 3981269079167589347}
+    IsExpanded: 0
