@@ -12,8 +12,8 @@ GameObject:
   - component: {fileID: 8791500836367506951}
   - component: {fileID: 8791500836367506948}
   - component: {fileID: 8791500836367506949}
-  - component: {fileID: 8791500836367506953}
   - component: {fileID: 8791500836367506952}
+  - component: {fileID: 5277610905655307547}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -99,24 +99,6 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &8791500836367506953
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8791500836367506946}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 406409fc932699e4484114b8ba09782a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _speed: 10
-  _health: 100
-  _meleeAttackReach: 3
-  _meleeAttackCD: 0
-  _meleeDamage: 50
-  _projectile: {fileID: 3664940373391034528, guid: 686182d33b1769d439280800cb7e16af, type: 3}
 --- !u!54 &8791500836367506952
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -133,6 +115,83 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 80
   m_CollisionDetection: 0
+--- !u!114 &5277610905655307547
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8791500836367506946}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bd67fbb5415272440ad8bbd0def578db, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _metas:
+  - ComponentName: Tags.PlayerTag
+    Fields: []
+    UnityComponent: {fileID: 0}
+    IsExpanded: 0
+  - ComponentName: Tags.MeleeWeaponHoldingTag
+    Fields: []
+    UnityComponent: {fileID: 0}
+    IsExpanded: 0
+  - ComponentName: UnityEngine.Transform
+    Fields: []
+    UnityComponent: {fileID: 8791500836367506950}
+    IsExpanded: 0
+  - ComponentName: Components.SpeedComponent
+    Fields:
+    - TypeName: System.Single
+      Name: speed
+      ValueRepresentation: 10
+      UnityComponent: {fileID: 0}
+    UnityComponent: {fileID: 0}
+    IsExpanded: 1
+  - ComponentName: Components.HealthComponent
+    Fields:
+    - TypeName: System.Single
+      Name: health
+      ValueRepresentation: 150
+      UnityComponent: {fileID: 0}
+    UnityComponent: {fileID: 0}
+    IsExpanded: 1
+  - ComponentName: Components.ReachComponent
+    Fields:
+    - TypeName: System.Single
+      Name: distance
+      ValueRepresentation: 3
+      UnityComponent: {fileID: 0}
+    UnityComponent: {fileID: 0}
+    IsExpanded: 1
+  - ComponentName: Components.AttackComponent
+    Fields:
+    - TypeName: System.Single
+      Name: previousAttackTime
+      ValueRepresentation: -1
+      UnityComponent: {fileID: 0}
+    - TypeName: System.Single
+      Name: attackCD
+      ValueRepresentation: 0.1
+      UnityComponent: {fileID: 0}
+    UnityComponent: {fileID: 0}
+    IsExpanded: 1
+  - ComponentName: Components.DamageComponent
+    Fields:
+    - TypeName: System.Single
+      Name: damage
+      ValueRepresentation: 50
+      UnityComponent: {fileID: 0}
+    UnityComponent: {fileID: 0}
+    IsExpanded: 1
+  - ComponentName: Components.ProjectileWeapon
+    Fields:
+    - TypeName: ProjectileCollision
+      Name: projectile
+      ValueRepresentation: 
+      UnityComponent: {fileID: 3664940373391034528, guid: 686182d33b1769d439280800cb7e16af, type: 3}
+    UnityComponent: {fileID: 0}
+    IsExpanded: 1
 --- !u!1 &8791500836585612155
 GameObject:
   m_ObjectHideFlags: 0

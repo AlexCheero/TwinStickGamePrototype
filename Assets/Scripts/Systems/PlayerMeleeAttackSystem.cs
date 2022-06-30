@@ -41,7 +41,7 @@ public class PlayerMeleeAttackSystem : EcsSystem
             if (!Physics.Raycast(ray, out hit, attackDistance))
                 continue;
 
-            var targetView = hit.collider.gameObject.GetComponent<ECSConvertible>();
+            var targetView = hit.collider.gameObject.GetComponent<EntityView>();
             if (targetView == null)
                 continue;
 

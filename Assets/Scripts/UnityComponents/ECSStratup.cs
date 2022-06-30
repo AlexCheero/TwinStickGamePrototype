@@ -32,10 +32,6 @@ public class ECSStratup : MonoBehaviour
             new PlayerProjectileAttackSystem(_world)
         };
 
-        //TODO: implement EntityView with custom inspector and use it instead of ECSConvertible
-        foreach (var convertible in FindObjectsOfType<ECSConvertible>())
-            convertible.ConvertToEntity(_world);
-
         foreach (var view in FindObjectsOfType<EntityView>())
             view.InitAsEntity(_world);
 
