@@ -48,9 +48,9 @@ public class PlayerMeleeAttackSystem : EcsSystem
             if (overlapCount <= 0)
                 continue;
 
-            //TODO: choose what base type could be added as component in inspector
-            //var playersCollider = world.GetComponent<Collider>(id);
-            var playerCollider = transform.gameObject.GetComponent<Collider>();
+            //TODO: allow to choose what base type could be added as component in inspector
+            //      to be able to assign just Collider component
+            var playerCollider = world.GetComponent<CapsuleCollider>(id);
             var angle = world.GetComponent<ViewAngle>(id).angle;
             overlapCount = MoveAllSuitableCollidersToFront(world, _overlapResults, overlapCount, playerCollider, angle);
             if (overlapCount <= 0)

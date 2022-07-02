@@ -26,18 +26,13 @@ public class EnemyMeleeAttackSystem : EcsSystem
     {
         foreach (var id in world.Enumerate(_enemyFilterId))
         {
-            var targetTransform = world.GetComponent<TargetEntityComponent>(id).target;
-            //TODO: probably GameObject.GetComponent<> is too expensive for update
-            //      and I should change TargetTransformComponent to TargetEntityComponent
-            var targetView = targetTransform.gameObject.GetComponent<EntityView>();
-            if (targetView == null)
-                continue;
-
+            var targetView = world.GetComponent<TargetEntityComponent>(id).target;
+            
             var transform = world.GetComponent<Transform>(id);
-            var position = world.GetComponent<Transform>(id).position;
+            var position = transform.position;
 
             var playerFwd = transform.forward;
-            var targetPos = targetTransform.transform.position;
+            var targetPos = targetView.transform.position;
             var toTargetDir = (targetPos - position).normalized;
             var angleToTarget = Vector3.Angle(playerFwd, toTargetDir);
             var viewAngle = world.GetComponent<ViewAngle>(id).angle;

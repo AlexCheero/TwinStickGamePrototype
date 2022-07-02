@@ -147,7 +147,7 @@ MonoBehaviour:
       ValueRepresentation: 10
       UnityComponent: {fileID: 0}
     UnityComponent: {fileID: 0}
-    IsExpanded: 1
+    IsExpanded: 0
   - ComponentName: Components.HealthComponent
     Fields:
     - TypeName: System.Single
@@ -155,7 +155,7 @@ MonoBehaviour:
       ValueRepresentation: 150
       UnityComponent: {fileID: 0}
     UnityComponent: {fileID: 0}
-    IsExpanded: 1
+    IsExpanded: 0
   - ComponentName: Components.ReachComponent
     Fields:
     - TypeName: System.Single
@@ -163,7 +163,7 @@ MonoBehaviour:
       ValueRepresentation: 3
       UnityComponent: {fileID: 0}
     UnityComponent: {fileID: 0}
-    IsExpanded: 1
+    IsExpanded: 0
   - ComponentName: Components.AttackComponent
     Fields:
     - TypeName: System.Single
@@ -175,7 +175,7 @@ MonoBehaviour:
       ValueRepresentation: 0.1
       UnityComponent: {fileID: 0}
     UnityComponent: {fileID: 0}
-    IsExpanded: 1
+    IsExpanded: 0
   - ComponentName: Components.DamageComponent
     Fields:
     - TypeName: System.Single
@@ -183,7 +183,7 @@ MonoBehaviour:
       ValueRepresentation: 50
       UnityComponent: {fileID: 0}
     UnityComponent: {fileID: 0}
-    IsExpanded: 1
+    IsExpanded: 0
   - ComponentName: Components.ProjectileWeapon
     Fields:
     - TypeName: ProjectileCollision
@@ -191,7 +191,7 @@ MonoBehaviour:
       ValueRepresentation: 
       UnityComponent: {fileID: 3664940373391034528, guid: 686182d33b1769d439280800cb7e16af, type: 3}
     UnityComponent: {fileID: 0}
-    IsExpanded: 1
+    IsExpanded: 0
   - ComponentName: Components.ViewAngle
     Fields:
     - TypeName: System.Single
@@ -199,7 +199,11 @@ MonoBehaviour:
       ValueRepresentation: 120
       UnityComponent: {fileID: 0}
     UnityComponent: {fileID: 0}
-    IsExpanded: 1
+    IsExpanded: 0
+  - ComponentName: UnityEngine.CapsuleCollider
+    Fields: []
+    UnityComponent: {fileID: 8791500836367506949}
+    IsExpanded: 0
 --- !u!1 &8791500836585612155
 GameObject:
   m_ObjectHideFlags: 0
