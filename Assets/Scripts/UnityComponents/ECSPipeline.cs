@@ -16,7 +16,8 @@ public class ECSPipeline : MonoBehaviour
         {
             new InitCameraSystem(_world),
             new InitResetAttackTimeSystem(_world),
-            new InitEnemySystem(_world)
+            new InitEnemySystem(_world),
+            new InitPlayerColliderSystem(_world)
         };
 
         //TODO: implement custom inspector to arrange systems from editor

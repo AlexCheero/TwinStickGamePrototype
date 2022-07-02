@@ -25,15 +25,7 @@ public class EntityView_Inspector : Editor
         var length = viewComponents.Length - 1;
         _viewComponentTypeNames = new string[length];
         for (int i = 0, j = 0; i < viewComponents.Length && j < length; i++, j++)
-        {
-            var typeName = viewComponents[i].GetType().FullName;
-            if (typeName == typeof(EntityView).Name)//skip EntityView
-            {
-                i++;
-                continue;
-            }
-            _viewComponentTypeNames[j] = typeName;
-        }
+            _viewComponentTypeNames[j] = viewComponents[i].GetType().FullName;
 
         return base.CreateInspectorGUI();
     }

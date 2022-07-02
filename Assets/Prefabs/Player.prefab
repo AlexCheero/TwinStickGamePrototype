@@ -200,10 +200,6 @@ MonoBehaviour:
       UnityComponent: {fileID: 0}
     UnityComponent: {fileID: 0}
     IsExpanded: 0
-  - ComponentName: UnityEngine.CapsuleCollider
-    Fields: []
-    UnityComponent: {fileID: 8791500836367506949}
-    IsExpanded: 0
 --- !u!1 &8791500836585612155
 GameObject:
   m_ObjectHideFlags: 0
