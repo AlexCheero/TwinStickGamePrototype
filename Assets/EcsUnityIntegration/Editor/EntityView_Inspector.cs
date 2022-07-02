@@ -48,9 +48,6 @@ public class EntityView_Inspector : Editor
 
     public override void OnInspectorGUI()
     {
-        //base.OnInspectorGUI();
-        //return;
-
         serializedObject.Update();
 
         var view = View;
