@@ -18,39 +18,59 @@ public class EnemyMeleeAttackSystem : EcsSystem
                 Id<Transform>(),
                 Id<ReachComponent>(),
                 Id<DamageComponent>(),
-                Id<AttackComponent>()
+                Id<AttackComponent>(),
+                Id<ViewAngle>()
                 ));
     }
 
     public override void Tick(EcsWorld world)
     {
         int playerEntity = -1;
-        foreach (var entity in world.Enumerate(_playerFilterId))
+        foreach (var id in world.Enumerate(_playerFilterId))
         {
-            playerEntity = entity;
+            playerEntity = id;
             break;
         }
 
         if (playerEntity < 0)
             return;
 
-        var targetTransform = world.GetComponent<Transform>(playerEntity);
+        var targetPos = world.GetComponent<Transform>(playerEntity).position;
 
-        foreach (var entity in world.Enumerate(_enemyFilterId))
+        foreach (var id in world.Enumerate(_enemyFilterId))
         {
-            var transform = world.GetComponent<Transform>(entity);
-            var attackReach = world.GetComponent<ReachComponent>(entity).distance;
-            var distance = (targetTransform.position - transform.position).magnitude;
+            var transform = world.GetComponent<Transform>(id);
+            var position = world.GetComponent<Transform>(id).position;
+
+            var playerFwd = transform.forward;
+            var toTargetDir = (targetPos - position).normalized;
+            var angleToTarget = Vector3.Angle(playerFwd, toTargetDir);
+            var viewAngle = world.GetComponent<ViewAngle>(id).angle;
+            if (angleToTarget > viewAngle / 2)
+                continue;
+
+            var attackReach = world.GetComponent<ReachComponent>(id).distance;
+            var distance = (targetPos - position).magnitude;
             if (distance > attackReach)
                 continue;
 
-            ref var attackComponent = ref world.GetComponent<AttackComponent>(entity);
+            if (!Physics.Raycast(position, targetPos - position, out RaycastHit hit, attackReach))
+                continue;
+
+            var hitColliderView = hit.collider.gameObject.GetComponent<EntityView>();
+            if (hitColliderView == null)
+                continue;
+
+            if (hitColliderView.Id != playerEntity)
+                continue;
+
+            ref var attackComponent = ref world.GetComponent<AttackComponent>(id);
             var nextAttackTime = attackComponent.previousAttackTime + attackComponent.attackCD;
             if (Time.time < nextAttackTime)
                 continue;
 
-            var damage = world.GetComponent<DamageComponent>(entity).damage;
             Debug.Log("Enemy attack!");
+            var damage = world.GetComponent<DamageComponent>(id).damage;
             world.GetComponent<HealthComponent>(playerEntity).health -= damage;
             attackComponent.previousAttackTime = Time.time;
         }
