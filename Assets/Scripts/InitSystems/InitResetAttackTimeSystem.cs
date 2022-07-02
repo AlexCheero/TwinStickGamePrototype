@@ -1,6 +1,7 @@
 ﻿using Components;
 using ECS;
 
+[InitSystem]
 public class InitResetAttackTimeSystem : EcsSystem
 {
     private int _filterId;

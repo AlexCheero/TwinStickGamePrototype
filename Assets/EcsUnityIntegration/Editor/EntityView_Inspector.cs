@@ -1,5 +1,4 @@
 using System;
-using System.Linq;
 using System.Reflection;
 using UnityEditor;
 using UnityEngine;
@@ -18,6 +17,9 @@ public class EntityView_Inspector : Editor
     private static string[] tagTypeNames;
 
     private string[] _viewComponentTypeNames;
+    private bool _addListExpanded;
+
+    private EntityView View { get => (EntityView)target; }
 
     public override VisualElement CreateInspectorGUI()
     {
@@ -30,43 +32,29 @@ public class EntityView_Inspector : Editor
         return base.CreateInspectorGUI();
     }
 
-    private bool _addListExpanded;
-
-    private void SetTargetDirty() => EditorUtility.SetDirty(target);
-    private EntityView View { get => (EntityView)target; }
-
     static EntityView_Inspector()
     {
-        var componentTypes = Assembly.GetAssembly(typeof(EntityView)).GetTypes()
-            .Where((t) => t.Namespace == EntityView.Components).ToArray();
-        componentTypeNames = Array.ConvertAll(componentTypes, (t) => t.FullName);
-
-        var tagTypes = Assembly.GetAssembly(typeof(EntityView)).GetTypes()
-            .Where((t) => t.Namespace == EntityView.Tags).ToArray();
-        tagTypeNames = Array.ConvertAll(tagTypes, (t) => t.FullName);
+        componentTypeNames = InspectorHelper.GetTypeNames<EntityView>((t) => t.Namespace == EntityView.Components);
+        tagTypeNames = InspectorHelper.GetTypeNames<EntityView>((t) => t.Namespace == EntityView.Tags);
     }
 
     public override void OnInspectorGUI()
     {
         serializedObject.Update();
 
-        var view = View;
-
-        var ecsListText = _addListExpanded ? "Shrink components list" : "Expand components list";
-        if (GUILayout.Button(new GUIContent(ecsListText), GUILayout.ExpandWidth(false)))
-            _addListExpanded = !_addListExpanded;
-        if (_addListExpanded)
+        var listDatas = new AddListData[]
         {
-            EditorGUILayout.BeginVertical();
-                DrawComponentsList(EntityView.Components, componentTypeNames);
-                GUILayout.Space(10);
-                DrawComponentsList(EntityView.Tags, tagTypeNames);
-                GUILayout.Space(10);
-                DrawComponentsList(UnityComponents, _viewComponentTypeNames);
-                GUILayout.Space(10);
-            EditorGUILayout.EndVertical();
-        }
+            new AddListData { Caption = EntityView.Components, Items = componentTypeNames },
+            new AddListData { Caption = EntityView.Tags, Items = tagTypeNames },
+            new AddListData { Caption = UnityComponents, Items = _viewComponentTypeNames }
+        };
+        InspectorHelper.DrawAddLists(ref _addListExpanded,
+                                    "Shrink components list",
+                                    "Expand components list",
+                                    listDatas,
+                                    OnAddComponent);
 
+        var view = View;
         for (int i = 0; i < view.MetasLength; i++)
         {
             EditorGUILayout.BeginHorizontal();
@@ -79,46 +67,28 @@ public class EntityView_Inspector : Editor
             {
                 view.RemoveMetaAt(i);
                 i--;
-                SetTargetDirty();
+                EditorUtility.SetDirty(target);
             }
 
             EditorGUILayout.EndHorizontal();
         }
     }
 
-    private string GetComponentUIName(string fullName) => fullName.Substring(fullName.LastIndexOf('.') + 1);
-
-    private void DrawComponentsList(string label, string[] components)
+    private void OnAddComponent(string componentName)
     {
-        EditorGUILayout.LabelField(label + ':');
-        GUILayout.Space(10);
-        foreach (var componentName in components)
+        _addListExpanded = false;
+        var type = EntityView.GetUnityComponentTypeByName(componentName);
+        if (EntityView.IsUnityComponent(type))
         {
-            EditorGUILayout.BeginHorizontal();
-
-            //TODO: add lines between components for readability
-            //      or remove "+" button and make buttons with component names on it
-            EditorGUILayout.LabelField(GetComponentUIName(componentName));
-            bool tryAdd = GUILayout.Button(new GUIContent("+"), GUILayout.ExpandWidth(false));
-            if (tryAdd)
-            {
-                _addListExpanded = false;
-                var type = EntityView.GetUnityComponentTypeByName(componentName);
-                if (EntityView.IsUnityComponent(type))
-                {
-                    MethodInfo getComponentInfo = typeof(EntityView).GetMethod("GetComponent", new Type[] { }).MakeGenericMethod(type);
-                    var component = (Component)getComponentInfo.Invoke(View, null);
-                    if (View.AddUnityComponent(component))
-                        SetTargetDirty();
-                }
-                else
-                {
-                    if (View.AddComponent(componentName))
-                        SetTargetDirty();
-                }
-            }
-
-            EditorGUILayout.EndHorizontal();
+            MethodInfo getComponentInfo = typeof(EntityView).GetMethod("GetComponent", new Type[] { }).MakeGenericMethod(type);
+            var component = (Component)getComponentInfo.Invoke(View, null);
+            if (View.AddUnityComponent(component))
+                EditorUtility.SetDirty(target);
+        }
+        else
+        {
+            if (View.AddComponent(componentName))
+                EditorUtility.SetDirty(target);
         }
     }
 
@@ -128,7 +98,7 @@ public class EntityView_Inspector : Editor
         EditorGUILayout.BeginVertical();
         {
             //TODO: draw tags without arrow
-            meta.IsExpanded = EditorGUILayout.BeginFoldoutHeaderGroup(meta.IsExpanded, GetComponentUIName(meta.ComponentName));
+            meta.IsExpanded = EditorGUILayout.BeginFoldoutHeaderGroup(meta.IsExpanded, InspectorHelper.GetTypeUIName(meta.ComponentName));
             if (meta.IsExpanded && meta.Fields != null)
             {
                 for (int i = 0; i < meta.Fields.Length; i++)
@@ -170,7 +140,7 @@ public class EntityView_Inspector : Editor
             }
 
             if (setDirty)
-                SetTargetDirty();
+                EditorUtility.SetDirty(target);
         }
         EditorGUILayout.EndHorizontal();
     }

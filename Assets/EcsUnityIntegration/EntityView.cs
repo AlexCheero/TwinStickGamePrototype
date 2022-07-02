@@ -112,9 +112,9 @@ public class EntityView : MonoBehaviour
     public int Id { get => Entity.GetId(); }
     public int Version { get => Entity.GetVersion(); }
 
-    public static Type[] EcsComponentTypes;
+    private static Type[] EcsComponentTypes;
 
-    public static Type[] UnityComponentTypes;
+    private static Type[] UnityComponentTypes;
 
     public static bool IsUnityComponent(Type type) => typeof(Component).IsAssignableFrom(type);
 

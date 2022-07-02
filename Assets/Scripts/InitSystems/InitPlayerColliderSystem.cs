@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using Tags;
 using UnityEngine;
 
+[InitSystem]
 public class InitPlayerColliderSystem : EcsSystem
 {
     private int _filterId;

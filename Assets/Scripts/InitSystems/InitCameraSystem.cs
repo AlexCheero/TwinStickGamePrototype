@@ -2,6 +2,7 @@ using Components;
 using ECS;
 using Tags;
 
+[InitSystem]
 public class InitCameraSystem : EcsSystem
 {
     private int _camFilterId;

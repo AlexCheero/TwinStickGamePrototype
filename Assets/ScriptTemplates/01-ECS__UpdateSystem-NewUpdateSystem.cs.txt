@@ -1,5 +1,6 @@
 using ECS;
 
+[UpdateSystem]
 public class #SCRIPTNAME# : EcsSystem
 {
     private int _filterId;
