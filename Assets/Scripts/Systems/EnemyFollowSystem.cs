@@ -25,11 +25,6 @@ public class EnemyFollowSystem : EcsSystem
         {
             var navAgent = world.GetComponent<NavMeshAgent>(entity);
             var target = world.GetComponent<TargetTransformComponent>(entity).target;
-            if (target == null)
-            {
-                world.RemoveComponent<TargetTransformComponent>(entity);
-                continue;
-            }
 
             const float sqrMargin = 0.1f;
             if ((navAgent.destination - target.position).sqrMagnitude > sqrMargin)
