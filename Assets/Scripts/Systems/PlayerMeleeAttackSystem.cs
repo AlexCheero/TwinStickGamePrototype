@@ -19,7 +19,8 @@ public class PlayerMeleeAttackSystem : EcsSystem
                 Id<Transform>(),
                 Id<ReachComponent>(),
                 Id<DamageComponent>(),
-                Id<AttackComponent>()
+                Id<AttackComponent>(),
+                Id<ViewAngle>()
                 ));
 
         _overlapResults = new Collider[OverlapsCount];
@@ -49,11 +50,13 @@ public class PlayerMeleeAttackSystem : EcsSystem
 
             //TODO: choose what base type could be added as component in inspector
             //var playersCollider = world.GetComponent<Collider>(id);
-            var playersCollider = transform.gameObject.GetComponent<Collider>();
-            overlapCount = MoveAllSuitableCollidersToFront(world, _overlapResults, overlapCount, playersCollider);
+            var playerCollider = transform.gameObject.GetComponent<Collider>();
+            var angle = world.GetComponent<ViewAngle>(id).angle;
+            overlapCount = MoveAllSuitableCollidersToFront(world, _overlapResults, overlapCount, playerCollider, angle);
             if (overlapCount <= 0)
                 continue;
 
+            //TODO: sort by cw/ccw for side attacks and by min angle for front attack
             SortCollidersByDistance(_overlapResults, position, overlapCount);
 
             for (int i = 0; i < overlapCount; i++)
@@ -62,7 +65,11 @@ public class PlayerMeleeAttackSystem : EcsSystem
                 if (Physics.Raycast(position, targetPos - position, out RaycastHit hit, attackDistance) &&
                     hit.collider == _overlapResults[i])
                 {
-                    Debug.Log("Have hit!");
+                    Debug.Log("Player melee hit!");
+                    var targetId = hit.collider.gameObject.GetComponent<EntityView>().Id;
+                    world.GetComponent<HealthComponent>(targetId).health -= world.GetComponent<DamageComponent>(id).damage;
+                    
+                    //TODO: remove break if area attack needed
                     break;
                 }
             }
@@ -85,13 +92,23 @@ public class PlayerMeleeAttackSystem : EcsSystem
         return true;
     }
 
-    private int MoveAllSuitableCollidersToFront(EcsWorld world, Collider[] colliders, int count, Collider except)
+    private int MoveAllSuitableCollidersToFront(EcsWorld world,
+                                                Collider[] colliders,
+                                                int count,
+                                                Collider playerCollider,
+                                                float viewAngle)
     {
         int suitableCount = 0;
         for (int i = 0; i < count; i++)
         {
-            //TODO: add angle check
-            if (!IsValidView(world, colliders[i]) || colliders[i] == except)
+            var playerTransform = playerCollider.transform;
+            var playerFwd = playerTransform.forward;
+            var toTargetDir = (colliders[i].transform.position - playerTransform.position).normalized;
+            var angleToTarget = Vector3.Angle(playerFwd, toTargetDir);
+            if (angleToTarget > viewAngle / 2)
+                continue;
+
+            if (!IsValidView(world, colliders[i]) || colliders[i] == playerCollider)
                 continue;
 
             var temp = colliders[suitableCount];

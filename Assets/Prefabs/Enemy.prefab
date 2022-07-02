@@ -316,3 +316,11 @@ MonoBehaviour:
     Fields: []
     UnityComponent: {fileID: 3981269079167589347}
     IsExpanded: 0
+  - ComponentName: Components.ViewAngle
+    Fields:
+    - TypeName: System.Single
+      Name: angle
+      ValueRepresentation: 100
+      UnityComponent: {fileID: 0}
+    UnityComponent: {fileID: 0}
+    IsExpanded: 1

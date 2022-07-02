@@ -192,6 +192,14 @@ MonoBehaviour:
       UnityComponent: {fileID: 3664940373391034528, guid: 686182d33b1769d439280800cb7e16af, type: 3}
     UnityComponent: {fileID: 0}
     IsExpanded: 1
+  - ComponentName: Components.ViewAngle
+    Fields:
+    - TypeName: System.Single
+      Name: angle
+      ValueRepresentation: 120
+      UnityComponent: {fileID: 0}
+    UnityComponent: {fileID: 0}
+    IsExpanded: 1
 --- !u!1 &8791500836585612155
 GameObject:
   m_ObjectHideFlags: 0

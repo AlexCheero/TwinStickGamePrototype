@@ -40,6 +40,11 @@ namespace Components
         public float distance;
     }
 
+    struct ViewAngle
+    {
+        public float angle;
+    }
+
     struct DamageComponent
     {
         public float damage;
