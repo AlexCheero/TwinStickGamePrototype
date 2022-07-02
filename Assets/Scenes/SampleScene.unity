@@ -247,6 +247,17 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
+--- !u!114 &900338452 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5277610905655307547, guid: bb06379d853144440a09367ba455fae2, type: 3}
+  m_PrefabInstance: {fileID: 8791500836224088977}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bd67fbb5415272440ad8bbd0def578db, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &963194225
 GameObject:
   m_ObjectHideFlags: 0
@@ -363,11 +374,19 @@ MonoBehaviour:
       ValueRepresentation: 15
       UnityComponent: {fileID: 0}
     UnityComponent: {fileID: 0}
-    IsExpanded: 1
+    IsExpanded: 0
   - ComponentName: UnityEngine.Camera
     Fields: []
     UnityComponent: {fileID: 963194227}
     IsExpanded: 0
+  - ComponentName: Components.TargetEntityComponent
+    Fields:
+    - TypeName: EntityView
+      Name: target
+      ValueRepresentation: 
+      UnityComponent: {fileID: 900338452}
+    UnityComponent: {fileID: 0}
+    IsExpanded: 1
 --- !u!1 &1241560775
 GameObject:
   m_ObjectHideFlags: 0
@@ -429,11 +448,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!4 &1379189457 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 8791500836367506950, guid: bb06379d853144440a09367ba455fae2, type: 3}
-  m_PrefabInstance: {fileID: 8791500836224088977}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1921702350
 GameObject:
   m_ObjectHideFlags: 0
@@ -540,7 +554,7 @@ GameObject:
   - component: {fileID: 2020709258}
   - component: {fileID: 2020709257}
   m_Layer: 0
-  m_Name: ECSStartup
+  m_Name: ECSPipeline
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -580,9 +594,9 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 732556081377220061, guid: d37b12af1cfd70c4bb98301fc00ad2b1, type: 3}
-      propertyPath: _metas.Array.data[10].Fields.Array.data[0].UnityComponent
+      propertyPath: _metas.Array.data[12].Fields.Array.data[0].UnityComponent
       value: 
-      objectReference: {fileID: 1379189457}
+      objectReference: {fileID: 900338452}
     - target: {fileID: 3981269079167589347, guid: d37b12af1cfd70c4bb98301fc00ad2b1, type: 3}
       propertyPath: m_RootOrder
       value: 5

@@ -9,7 +9,7 @@ public class CameraFollowSystem : EcsSystem
 
     public CameraFollowSystem(EcsWorld world)
     {
-        _filterId = world.RegisterFilter(new BitMask(Id<CameraTag>(), Id<Transform>(), Id<TargetTransformComponent>(),
+        _filterId = world.RegisterFilter(new BitMask(Id<CameraTag>(), Id<Transform>(), Id<TargetEntityComponent>(),
             Id<CameraSettingsComponent>()));
     }
 
@@ -21,7 +21,7 @@ public class CameraFollowSystem : EcsSystem
         {
             var cameraSettings = world.GetComponent<CameraSettingsComponent>(entity);
             var transform = world.GetComponent<Transform>(entity);
-            var targetTransform = world.GetComponent<TargetTransformComponent>(entity).target;
+            var targetTransform = world.GetComponent<TargetEntityComponent>(entity).target.transform;
 
             var newPosition = targetTransform.position;
             newPosition += cameraSettings.direction * cameraSettings.distance;

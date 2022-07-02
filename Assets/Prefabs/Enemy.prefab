@@ -235,7 +235,7 @@ MonoBehaviour:
   - ComponentName: Tags.EnemyTag
     Fields: []
     UnityComponent: {fileID: 0}
-    IsExpanded: 0
+    IsExpanded: 1
   - ComponentName: Tags.MeleeWeaponHoldingTag
     Fields: []
     UnityComponent: {fileID: 0}
@@ -259,7 +259,7 @@ MonoBehaviour:
       ValueRepresentation: 0.2
       UnityComponent: {fileID: 0}
     UnityComponent: {fileID: 0}
-    IsExpanded: 1
+    IsExpanded: 0
   - ComponentName: Components.DamageComponent
     Fields:
     - TypeName: System.Single
@@ -304,14 +304,6 @@ MonoBehaviour:
     Fields: []
     UnityComponent: {fileID: 3981269079167589345}
     IsExpanded: 0
-  - ComponentName: Components.TargetTransformComponent
-    Fields:
-    - TypeName: UnityEngine.Transform
-      Name: target
-      ValueRepresentation: 
-      UnityComponent: {fileID: 0}
-    UnityComponent: {fileID: 0}
-    IsExpanded: 1
   - ComponentName: UnityEngine.Transform
     Fields: []
     UnityComponent: {fileID: 3981269079167589347}
@@ -321,6 +313,14 @@ MonoBehaviour:
     - TypeName: System.Single
       Name: angle
       ValueRepresentation: 100
+      UnityComponent: {fileID: 0}
+    UnityComponent: {fileID: 0}
+    IsExpanded: 0
+  - ComponentName: Components.TargetEntityComponent
+    Fields:
+    - TypeName: EntityView
+      Name: target
+      ValueRepresentation: 
       UnityComponent: {fileID: 0}
     UnityComponent: {fileID: 0}
     IsExpanded: 0

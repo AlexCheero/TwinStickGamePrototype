@@ -1,7 +1,7 @@
 using ECS;
 using UnityEngine;
 
-public class ECSStratup : MonoBehaviour
+public class ECSPipeline : MonoBehaviour
 {
     private EcsWorld _world;
     private EcsSystem[] _updateSystems;
@@ -23,7 +23,7 @@ public class ECSStratup : MonoBehaviour
         //TODO: implement script to generate boilerplate
         _updateSystems = new EcsSystem[]
         {
-            new CleanupTargetTransformSystem(_world),
+            new CleanupTargetEntitySystem(_world),
             new PlayerMovementSystem(_world),
             new CameraFollowSystem(_world),
             new PlayerRotationSystem(_world),

@@ -14,7 +14,7 @@ public class EnemyFollowSystem : EcsSystem
             new BitMask(
                 Id<EnemyTag>(),
                 Id<NavMeshAgent>(),
-                Id<TargetTransformComponent>(),
+                Id<TargetEntityComponent>(),
                 Id<Transform>()
                 ));
     }
@@ -24,16 +24,16 @@ public class EnemyFollowSystem : EcsSystem
         foreach (var entity in world.Enumerate(_enemyFilterId))
         {
             var navAgent = world.GetComponent<NavMeshAgent>(entity);
-            var target = world.GetComponent<TargetTransformComponent>(entity).target;
+            var targetPostion = world.GetComponent<TargetEntityComponent>(entity).target.transform.position;
 
             const float sqrMargin = 0.1f;
-            if ((navAgent.destination - target.position).sqrMagnitude > sqrMargin)
+            if ((navAgent.destination - targetPostion).sqrMagnitude > sqrMargin)
             {
-                navAgent.SetDestination(target.position);
+                navAgent.SetDestination(targetPostion);
             }
             
             var transform = world.GetComponent<Transform>(entity);
-            var direction = (target.position - transform.position).normalized;
+            var direction = (targetPostion - transform.position).normalized;
             transform.rotation = Quaternion.LookRotation(direction);
         }
     }

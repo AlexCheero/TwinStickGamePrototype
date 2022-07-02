@@ -18,9 +18,9 @@ namespace Components
         public float acceleration;
     }
 
-    struct TargetTransformComponent
+    struct TargetEntityComponent
     {
-        public Transform target;
+        public EntityView target;
     }
 
     struct CameraSettingsComponent
