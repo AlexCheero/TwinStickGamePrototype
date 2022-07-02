@@ -95,7 +95,7 @@ public class ECSPipeline : MonoBehaviour
             systems[i] = (EcsSystem)Activator.CreateInstance(systemType, systemCtorParams);
         }
 
-        return null;
+        return systems;
     }
 
     //TODO: duplicated from EntityView
@@ -110,6 +110,7 @@ public class ECSPipeline : MonoBehaviour
         return null;
     }
 
+#if UNITY_EDITOR
     public bool AddSystem(string systemName, int systemCategory)
     {
         if (systemCategory == 0)
@@ -125,7 +126,7 @@ public class ECSPipeline : MonoBehaviour
     private bool AddSystem(string systemName, ref string[] systems)
     {
         if (systems == null)
-            systems = new string[1];
+            systems = new string[0];
 
         foreach (var sysName in systems)
             if (systemName == sysName) return false;
@@ -135,4 +136,5 @@ public class ECSPipeline : MonoBehaviour
 
         return true;
     }
+#endif
 }
