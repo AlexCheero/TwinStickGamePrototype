@@ -6,7 +6,9 @@ using UnityEngine;
 public class PlayerMeleeAttackSystem : EcsSystem
 {
     private int _filterId;
-    private Collider[] _physResults;
+
+    private const int OverlapsCount = 16;
+    private Collider[] _overlapResults;
 
     public PlayerMeleeAttackSystem(EcsWorld world)
     {
@@ -20,7 +22,7 @@ public class PlayerMeleeAttackSystem : EcsSystem
                 Id<AttackComponent>()
                 ));
 
-        _physResults = new Collider[4];
+        _overlapResults = new Collider[OverlapsCount];
     }
 
     public override void Tick(EcsWorld world)
@@ -39,53 +41,94 @@ public class PlayerMeleeAttackSystem : EcsSystem
 
             var transform = world.GetComponent<Transform>(id);
             var attackDistance = world.GetComponent<ReachComponent>(id).distance;
-            var overlapCount = Physics.OverlapSphereNonAlloc(transform.position, attackDistance, _physResults);
+            var position = transform.position;
+            //TODO: set masks for physics
+            var overlapCount = Physics.OverlapSphereNonAlloc(position, attackDistance * 1000, _overlapResults);
             if (overlapCount <= 0)
                 continue;
 
+            //TODO: choose what base type could be added as component in inspector
+            //var playersCollider = world.GetComponent<Collider>(id);
+            var playersCollider = transform.gameObject.GetComponent<Collider>();
+            overlapCount = MoveAllSuitableCollidersToFront(world, _overlapResults, overlapCount, playersCollider);
+            if (overlapCount <= 0)
+                continue;
+
+            SortCollidersByDistance(_overlapResults, position, overlapCount);
+
             for (int i = 0; i < overlapCount; i++)
             {
-                Vector3 targetPos;
-                if (IsEntityViewWithHealth(world, _physResults[i], id, out targetPos) < 0)
-                    continue;
-
-                var ray = new Ray(transform.position, (targetPos - transform.position).normalized);
-                if (!Physics.Raycast(ray, out RaycastHit hit, attackDistance))
-                    continue;
-
-                var targetId = IsEntityViewWithHealth(world, hit.collider, id, out targetPos);
-                if (targetId < 0)
-                    continue;
-
-                Debug.Log("Player melee hit!");
-                world.GetComponent<HealthComponent>(targetId).health -=
-                    world.GetComponent<DamageComponent>(id).damage;
-
-                attackComponent.previousAttackTime = Time.time;
-                
-                //TODO: implement cw/ccw sort for side attacks and min angle with fwd for straight attacks
-                //      or loop through all for area attacks
-                break;
+                var targetPos = _overlapResults[i].transform.position;
+                if (Physics.Raycast(position, targetPos - position, out RaycastHit hit, attackDistance) &&
+                    hit.collider == _overlapResults[i])
+                {
+                    Debug.Log("Have hit!");
+                    break;
+                }
             }
         }
     }
 
-    private int IsEntityViewWithHealth(EcsWorld world, Collider collider, int attackerId, out Vector3 position)
+    private bool IsValidView(EcsWorld world, Collider collider)
     {
-        position = Vector3.zero;
         var targetView = collider.gameObject.GetComponent<EntityView>();
         if (targetView == null)
-            return -1;
+            return false;
 
         var targetEntity = targetView.Entity;
         if (!world.IsEntityValid(targetEntity))
-            return -1;
+            return false;
 
-        var targetId = targetEntity.GetId();
-        if (!world.Have<HealthComponent>(targetId))
-            return -1;
+        if (!world.Have<HealthComponent>(targetEntity.GetId()))
+            return false;
 
-        position = targetView.transform.position;
-        return targetId;
+        return true;
+    }
+
+    private int MoveAllSuitableCollidersToFront(EcsWorld world, Collider[] colliders, int count, Collider except)
+    {
+        int suitableCount = 0;
+        for (int i = 0; i < count; i++)
+        {
+            //TODO: add angle check
+            if (!IsValidView(world, colliders[i]) || colliders[i] == except)
+                continue;
+
+            var temp = colliders[suitableCount];
+            colliders[suitableCount] = colliders[i];
+            colliders[i] = temp;
+            suitableCount++;
+        }
+
+        return suitableCount;
+    }
+
+    private void SortCollidersByDistance(Collider[] colliders, Vector3 to, int count)
+    {
+        for (int i = 0; i < count; i++)
+        {
+            var iInversed = count - 1 - i;
+            for (int j = 0; j < count; j++)
+            {
+                var sqDistance1 = (colliders[i].transform.position - to).sqrMagnitude;
+                var sqDistance2 = (colliders[j].transform.position - to).sqrMagnitude;
+                if (sqDistance1 < sqDistance2)
+                {
+                    var temp = colliders[j];
+                    colliders[j] = colliders[i];
+                    colliders[i] = temp;
+                }
+
+                var jInversed = count - 1 - j;
+                var sqDistance3 = (colliders[iInversed].transform.position - to).sqrMagnitude;
+                var sqDistance4 = (colliders[jInversed].transform.position - to).sqrMagnitude;
+                if (sqDistance3 > sqDistance4)
+                {
+                    var temp = colliders[jInversed];
+                    colliders[jInversed] = colliders[iInversed];
+                    colliders[iInversed] = temp;
+                }
+            }
+        }
     }
 }
