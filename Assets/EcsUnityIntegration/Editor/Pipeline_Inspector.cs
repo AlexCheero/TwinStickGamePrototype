@@ -68,6 +68,57 @@ public class Pipeline_Inspector : Editor
         //===================================
 
         var pipeline = Pipeline;
+
+        DrawSystemCategory(ESystemCategory.Init);
+        DrawSystemCategory(ESystemCategory.Update);
+        DrawSystemCategory(ESystemCategory.FixedUpdate);
+    }
+
+    private void DrawSystemCategory(ESystemCategory category)
+    {
+        GUILayout.Space(10);
+        EditorGUILayout.LabelField(category.ToString());
+
+        var pipeline = Pipeline;
+
+        string[] systems;
+        bool[] switches;
+        switch (category)
+        {
+            case ESystemCategory.Init:
+                systems = pipeline._initSystemTypeNames;
+                switches = pipeline._initSwitches;
+                break;
+            case ESystemCategory.Update:
+                systems = pipeline._updateSystemTypeNames;
+                switches = pipeline._updateSwitches;
+                break;
+            case ESystemCategory.FixedUpdate:
+                systems = pipeline._fixedUpdateSystemTypeNames;
+                switches = pipeline._fixedUpdateSwitches;
+                break;
+            default:
+                return;
+        }
+
+        for (int i = 0; i < systems.Length; i++)
+        {
+            EditorGUILayout.BeginHorizontal();
+
+            EditorGUILayout.LabelField(systems[i]);
+            bool newState = EditorGUILayout.Toggle(switches[i]);
+            if (newState != switches[i])
+                EditorUtility.SetDirty(target);
+            switches[i] = newState;
+            if (GUILayout.Button(new GUIContent("-"), GUILayout.ExpandWidth(false)))
+            {
+                Pipeline.RemoveMetaAt(category, i);
+                i--;
+                EditorUtility.SetDirty(target);
+            }
+
+            EditorGUILayout.EndHorizontal();
+        }
     }
 
     private void OnAddSystem(string systemName, ESystemCategory systemCategory)
