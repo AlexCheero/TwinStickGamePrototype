@@ -6,6 +6,10 @@ using System.Reflection;
 using UnityEditor;
 using UnityEngine;
 
+public class InitSystemAttribute : Attribute { }
+public class UpdateSystemAttribute : Attribute { }
+public class FixedUpdateSystemAttribute : Attribute { }
+
 public enum ESystemCategory
 {
     Init = 0,
