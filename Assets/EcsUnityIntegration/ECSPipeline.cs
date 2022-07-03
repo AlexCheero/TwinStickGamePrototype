@@ -35,32 +35,6 @@ public class ECSPipeline : MonoBehaviour
         _initSystems = CreateSystemsByNames(_initSystemTypeNames, systemCtorParams);
         _updateSystems = CreateSystemsByNames(_updateSystemTypeNames, systemCtorParams);
         _fixedUpdateSystems = CreateSystemsByNames(_fixedUpdateSystemTypeNames, systemCtorParams);
-        
-        /*
-        //all filters should be registered before adding any components
-        //therefore all systems should be created before initing EntityViews
-        _initSystems = new EcsSystem[]
-        {
-            new InitCameraSystem(_world),
-            new InitResetAttackTimeSystem(_world),
-            new InitEnemySystem(_world),
-            new InitPlayerColliderSystem(_world)
-        };
-
-        _updateSystems = new EcsSystem[]
-        {
-            new CleanupTargetEntitySystem(_world),
-            new PlayerMovementSystem(_world),
-            new CameraFollowSystem(_world),
-            new PlayerRotationSystem(_world),
-            new EnemyFollowSystem(_world),
-            new HealthSystem(_world),
-            new EnemyMeleeAttackSystem(_world),
-            new PlayerMeleeAttackSystem(_world),
-            new PlayerInstantRangedAttackSystem(_world),
-            new PlayerProjectileAttackSystem(_world)
-        };
-        */
 
         foreach (var view in FindObjectsOfType<EntityView>())
             view.InitAsEntity(_world);
