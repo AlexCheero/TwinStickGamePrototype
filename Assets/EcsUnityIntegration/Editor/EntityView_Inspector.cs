@@ -34,25 +34,28 @@ public class EntityView_Inspector : Editor
 
     static EntityView_Inspector()
     {
-        componentTypeNames = InspectorHelper.GetTypeNames<EntityView>((t) => t.Namespace == EntityView.Components);
-        tagTypeNames = InspectorHelper.GetTypeNames<EntityView>((t) => t.Namespace == EntityView.Tags);
+        componentTypeNames = IntegrationHelper.GetTypeNames<EntityView>((t) => t.Namespace == IntegrationHelper.Components);
+        tagTypeNames = IntegrationHelper.GetTypeNames<EntityView>((t) => t.Namespace == IntegrationHelper.Tags);
     }
 
     public override void OnInspectorGUI()
     {
         serializedObject.Update();
 
-        var listDatas = new AddListData[]
+        var listText = _addListExpanded ? "Shrink components list" : "Expand components list";
+        if (GUILayout.Button(new GUIContent(listText), GUILayout.ExpandWidth(false)))
+            _addListExpanded = !_addListExpanded;
+        if (_addListExpanded)
         {
-            new AddListData { Caption = EntityView.Components, Items = componentTypeNames },
-            new AddListData { Caption = EntityView.Tags, Items = tagTypeNames },
-            new AddListData { Caption = UnityComponents, Items = _viewComponentTypeNames }
-        };
-        InspectorHelper.DrawAddLists(ref _addListExpanded,
-                                    "Shrink components list",
-                                    "Expand components list",
-                                    listDatas,
-                                    OnAddComponent);
+            EditorGUILayout.BeginVertical();
+                IntegrationHelper.DrawAddList(IntegrationHelper.Components, componentTypeNames, OnAddComponent);
+                GUILayout.Space(10);
+                IntegrationHelper.DrawAddList(IntegrationHelper.Tags, tagTypeNames, OnAddComponent);
+                GUILayout.Space(10);
+                IntegrationHelper.DrawAddList(UnityComponents, _viewComponentTypeNames, OnAddComponent);
+                GUILayout.Space(10);
+            EditorGUILayout.EndVertical();
+        }
 
         var view = View;
         for (int i = 0; i < view.MetasLength; i++)
@@ -77,7 +80,7 @@ public class EntityView_Inspector : Editor
     private void OnAddComponent(string componentName)
     {
         _addListExpanded = false;
-        var type = EntityView.GetUnityComponentTypeByName(componentName);
+        var type = IntegrationHelper.GetTypeByName(componentName, EGatheredTypeCategory.UnityComponent);
         if (EntityView.IsUnityComponent(type))
         {
             MethodInfo getComponentInfo = typeof(EntityView).GetMethod("GetComponent", new Type[] { }).MakeGenericMethod(type);
@@ -98,7 +101,7 @@ public class EntityView_Inspector : Editor
         EditorGUILayout.BeginVertical();
         {
             //TODO: draw tags without arrow
-            meta.IsExpanded = EditorGUILayout.BeginFoldoutHeaderGroup(meta.IsExpanded, InspectorHelper.GetTypeUIName(meta.ComponentName));
+            meta.IsExpanded = EditorGUILayout.BeginFoldoutHeaderGroup(meta.IsExpanded, IntegrationHelper.GetTypeUIName(meta.ComponentName));
             if (meta.IsExpanded && meta.Fields != null)
             {
                 for (int i = 0; i < meta.Fields.Length; i++)
@@ -134,7 +137,7 @@ public class EntityView_Inspector : Editor
             }
             else
             {
-                var type = EntityView.GetUnityComponentTypeByName(fieldMeta.TypeName);
+                var type = IntegrationHelper.GetTypeByName(fieldMeta.TypeName, EGatheredTypeCategory.UnityComponent);
                 var obj = valueObject != null ? (Component)valueObject : null;
                 setDirty = fieldMeta.SetValue(EditorGUILayout.ObjectField("", obj, type, true));
             }

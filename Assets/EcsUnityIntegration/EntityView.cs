@@ -27,7 +27,7 @@ public struct ComponentFieldMeta
             return isRepresentationNotEmpty ? ParseVector3(ValueRepresentation) : Vector3.zero;
         else
         {
-            var type = EntityView.GetUnityComponentTypeByName(TypeName);
+            var type = IntegrationHelper.GetTypeByName(TypeName, EGatheredTypeCategory.UnityComponent);
             if (typeof(Component).IsAssignableFrom(type))
             {
                 return UnityComponent;
@@ -61,7 +61,7 @@ public struct ComponentFieldMeta
         }
         else
         {
-            var type = EntityView.GetUnityComponentTypeByName(TypeName);
+            var type = IntegrationHelper.GetTypeByName(TypeName, EGatheredTypeCategory.UnityComponent);
             if (typeof(Component).IsAssignableFrom(type))
             {
                 UnityComponent = (Component)value;
@@ -104,31 +104,12 @@ public struct ComponentMeta
 
 public class EntityView : MonoBehaviour
 {
-    public const string Components = "Components";
-    public const string Tags = "Tags";
-
     public Entity Entity { get; private set; }
     private EcsWorld _world;
     public int Id { get => Entity.GetId(); }
     public int Version { get => Entity.GetVersion(); }
 
-    private static Type[] EcsComponentTypes;
-
-    private static Type[] UnityComponentTypes;
-
     public static bool IsUnityComponent(Type type) => typeof(Component).IsAssignableFrom(type);
-
-    static EntityView()
-    {
-        EcsComponentTypes = typeof(EntityView).Assembly.GetTypes()
-            .Where((t) => t.Namespace == Components || t.Namespace == Tags).ToArray();
-
-        //TODO: could cause troubles with nested assemlies
-        var types = new List<Type>();
-        foreach (var assembly in AppDomain.CurrentDomain.GetAssemblies())
-            types.AddRange(assembly.GetTypes().Where((t) => typeof(Component).IsAssignableFrom(t)));
-        UnityComponentTypes = types.ToArray();
-    }
 
     [SerializeField]
     private ComponentMeta[] _metas = new ComponentMeta[0];
@@ -188,7 +169,7 @@ public class EntityView : MonoBehaviour
 
     public ComponentFieldMeta[] GetEcsComponentTypeFields(string componentName)
     {
-        var compType = GetEcsComponentTypeByName(componentName);
+        var compType = IntegrationHelper.GetTypeByName(componentName, EGatheredTypeCategory.EcsComponent);
         if (IsUnityComponent(compType))
             return null;
         
@@ -215,28 +196,6 @@ public class EntityView : MonoBehaviour
         return result;
     }
 #endif
-
-    //TODO: move such methods to some helper class
-    public static Type GetUnityComponentTypeByName(string typeName)
-    {
-        foreach (var type in UnityComponentTypes)
-        {
-            if (type.FullName == typeName)
-                return type;
-        }
-        return null;
-    }
-
-    private static Type GetEcsComponentTypeByName(string componentName)
-    {
-        foreach (var compType in EcsComponentTypes)
-        {
-            if (compType.FullName == componentName)
-                return compType;
-        }
-
-        return null;
-    }
 
     private static readonly object[] AddComponentParams = { null, null };
     private static readonly object[] AddTagParams = { null };
@@ -266,7 +225,7 @@ public class EntityView : MonoBehaviour
             }
             else if (meta.Fields.Length > 0)
             {
-                var compType = GetEcsComponentTypeByName(meta.ComponentName);
+                var compType = IntegrationHelper.GetTypeByName(meta.ComponentName, EGatheredTypeCategory.EcsComponent);
 #if DEBUG
                 if (compType == null)
                     throw new Exception("can't find component type");
@@ -290,7 +249,7 @@ public class EntityView : MonoBehaviour
             }
             else
             {
-                var compType = GetEcsComponentTypeByName(meta.ComponentName);
+                var compType = IntegrationHelper.GetTypeByName(meta.ComponentName, EGatheredTypeCategory.EcsComponent);
 #if DEBUG
                 if (compType == null)
                     throw new Exception("can't find component type");

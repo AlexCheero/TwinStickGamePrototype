@@ -19,25 +19,15 @@ public class ECSPipeline : MonoBehaviour
     [SerializeField]
     public string[] _fixedUpdateSystemTypeNames;
 
-    private static Type[] SystemTypes;
-
-    static ECSPipeline()
-    {
-        //TODO: move all the type gathers to helper class
-        SystemTypes = typeof(EcsSystem).Assembly.GetTypes()
-            //TODO: duplicated from Pipeline_Inspector move to helper class
-            .Where((type) => type != typeof(EcsSystem) && typeof(EcsSystem).IsAssignableFrom(type)).ToArray();
-    }
-
     void Start()
     {
         _world = new EcsWorld();
 
-        var systemCtorParams = new object[] { _world };
-        _initSystems = CreateSystemsByNames(_initSystemTypeNames, systemCtorParams);
-        _updateSystems = CreateSystemsByNames(_updateSystemTypeNames, systemCtorParams);
-        _fixedUpdateSystems = CreateSystemsByNames(_fixedUpdateSystemTypeNames, systemCtorParams);
-        /*
+        //var systemCtorParams = new object[] { _world };
+        //_initSystems = CreateSystemsByNames(_initSystemTypeNames, systemCtorParams);
+        //_updateSystems = CreateSystemsByNames(_updateSystemTypeNames, systemCtorParams);
+        //_fixedUpdateSystems = CreateSystemsByNames(_fixedUpdateSystemTypeNames, systemCtorParams);
+        
         //all filters should be registered before adding any components
         //therefore all systems should be created before initing EntityViews
         _initSystems = new EcsSystem[]
@@ -48,7 +38,6 @@ public class ECSPipeline : MonoBehaviour
             new InitPlayerColliderSystem(_world)
         };
 
-        //TODO: implement custom inspector to arrange systems from editor
         _updateSystems = new EcsSystem[]
         {
             new CleanupTargetEntitySystem(_world),
@@ -62,7 +51,6 @@ public class ECSPipeline : MonoBehaviour
             new PlayerInstantRangedAttackSystem(_world),
             new PlayerProjectileAttackSystem(_world)
         };
-        */
 
         foreach (var view in FindObjectsOfType<EntityView>())
             view.InitAsEntity(_world);
@@ -87,7 +75,7 @@ public class ECSPipeline : MonoBehaviour
 
         for (int i = 0; i < names.Length; i++)
         {
-            var systemType = GetSystemTypeByName(names[i]);
+            var systemType = IntegrationHelper.GetTypeByName(names[i], EGatheredTypeCategory.System);
 #if DEBUG
             if (systemType == null)
                 throw new Exception("can't find system type");
@@ -98,29 +86,20 @@ public class ECSPipeline : MonoBehaviour
         return systems;
     }
 
-    //TODO: duplicated from EntityView
-    private static Type GetSystemTypeByName(string systemName)
-    {
-        foreach (var compType in SystemTypes)
-        {
-            if (compType.FullName == systemName)
-                return compType;
-        }
-
-        return null;
-    }
-
 #if UNITY_EDITOR
-    public bool AddSystem(string systemName, int systemCategory)
+    public bool AddSystem(string systemName, ESystemCategory systemCategory)
     {
-        if (systemCategory == 0)
-            return AddSystem(systemName, ref _initSystemTypeNames);
-        else if (systemCategory == 1)
-            return AddSystem(systemName, ref _updateSystemTypeNames);
-        else if (systemCategory == 2)
-            return AddSystem(systemName, ref _fixedUpdateSystemTypeNames);
-        else
-            return false;
+        switch (systemCategory)
+        {
+            case ESystemCategory.Init:
+                return AddSystem(systemName, ref _initSystemTypeNames);
+            case ESystemCategory.Update:
+                return AddSystem(systemName, ref _updateSystemTypeNames);
+            case ESystemCategory.FixedUpdate:
+                return AddSystem(systemName, ref _fixedUpdateSystemTypeNames);
+            default:
+                return false;
+        }
     }
 
     private bool AddSystem(string systemName, ref string[] systems)

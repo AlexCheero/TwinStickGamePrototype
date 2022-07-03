@@ -17,64 +17,64 @@ public class Pipeline_Inspector : Editor
 
     private bool _addListExpanded;
 
+    private ECSPipeline Pipeline { get => (ECSPipeline)target; }
+
     static Pipeline_Inspector()
     {
-        initSystemTypeNames = InspectorHelper.GetTypeNames<ECSPipeline>(
-            (t) => IsSystemType(t) && InspectorHelper.HaveAttribute<InitSystemAttribute>(t));
+        initSystemTypeNames = IntegrationHelper.GetTypeNames<ECSPipeline>(
+            (t) => IsSystemType(t) && IntegrationHelper.HaveAttribute<InitSystemAttribute>(t));
 
-        updateSystemTypeNames = InspectorHelper.GetTypeNames<ECSPipeline>(
+        updateSystemTypeNames = IntegrationHelper.GetTypeNames<ECSPipeline>(
             //basically consider system without attribute as update system is added only for consistency
             (t) =>
             {
                 if (!IsSystemType(t))
                     return false;
 
-                if (InspectorHelper.HaveAttribute<UpdateSystemAttribute>(t))
+                if (IntegrationHelper.HaveAttribute<UpdateSystemAttribute>(t))
                     return true;
 
-                var haveNoOtherAttributes = !InspectorHelper.HaveAttribute<InitSystemAttribute>(t);
-                haveNoOtherAttributes &= !InspectorHelper.HaveAttribute<FixedUpdateSystemAttribute>(t);
+                var haveNoOtherAttributes = !IntegrationHelper.HaveAttribute<InitSystemAttribute>(t);
+                haveNoOtherAttributes &= !IntegrationHelper.HaveAttribute<FixedUpdateSystemAttribute>(t);
                 return haveNoOtherAttributes;
             });
 
-        fixedUpdateSystemTypeNames = InspectorHelper.GetTypeNames<ECSPipeline>(
-            (t) => IsSystemType(t) && InspectorHelper.HaveAttribute<FixedUpdateSystemAttribute>(t));
+        fixedUpdateSystemTypeNames = IntegrationHelper.GetTypeNames<ECSPipeline>(
+            (t) => IsSystemType(t) && IntegrationHelper.HaveAttribute<FixedUpdateSystemAttribute>(t));
     }
 
     private static bool IsSystemType(Type type) => type != typeof(EcsSystem) && typeof(EcsSystem).IsAssignableFrom(type);
 
-    //TODO: Draw current pipeline systems
     public override void OnInspectorGUI()
     {
-        //var listDatas = new AddListData[]
-        //{
-        //    new AddListData { Caption = InitSystems, Items = initSystemTypeNames },
-        //    new AddListData { Caption = UpdateSystems, Items = updateSystemTypeNames },
-        //    new AddListData { Caption = FixedSystems, Items = fixedUpdateSystemTypeNames }
-        //};
-        //InspectorHelper.DrawAddLists(ref _addListExpanded, "Shrink systems list", "Expand systems list", listDatas, OnAddSystem);
-
         var listText = _addListExpanded ? "Shrink systems list" : "Expand systems list";
         if (GUILayout.Button(new GUIContent(listText), GUILayout.ExpandWidth(false)))
             _addListExpanded = !_addListExpanded;
         if (_addListExpanded)
         {
             EditorGUILayout.BeginVertical();
-                InspectorHelper.DrawAddList(InitSystems, initSystemTypeNames, (name) => OnAddSystem(name, 0));
+                IntegrationHelper.DrawAddList(InitSystems, initSystemTypeNames,
+                    (name) => OnAddSystem(name, ESystemCategory.Init));
                 GUILayout.Space(10);
-                InspectorHelper.DrawAddList(UpdateSystems, updateSystemTypeNames, (name) => OnAddSystem(name, 1));
+                IntegrationHelper.DrawAddList(UpdateSystems, updateSystemTypeNames,
+                    (name) => OnAddSystem(name, ESystemCategory.Update));
                 GUILayout.Space(10);
-                InspectorHelper.DrawAddList(FixedSystems, fixedUpdateSystemTypeNames, (name) => OnAddSystem(name, 2));
+                IntegrationHelper.DrawAddList(FixedSystems, fixedUpdateSystemTypeNames,
+                    (name) => OnAddSystem(name, ESystemCategory.FixedUpdate));
                 GUILayout.Space(10);
             EditorGUILayout.EndVertical();
         }
+
+        //===================================
+
+        var pipeline = Pipeline;
     }
 
-    private void OnAddSystem(string systemName, int systemCategory/*TODO: huge hack rewrite*/)
+    private void OnAddSystem(string systemName, ESystemCategory systemCategory)
     {
         _addListExpanded = false;
 
-        var pipeline = (ECSPipeline)target;
+        var pipeline = Pipeline;
         if (pipeline.AddSystem(systemName, systemCategory))
             EditorUtility.SetDirty(target);
     }
