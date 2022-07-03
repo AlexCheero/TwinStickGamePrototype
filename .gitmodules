@@ -1,3 +1,6 @@
 [submodule "Assets/Scripts/ECS"]
 	path = Assets/Scripts/ECS
 	url = https://github.com/AlexCheero/ECS.git
+[submodule "Assets/Scripts/EcsUnityIntegration"]
+	path = Assets/Scripts/EcsUnityIntegration
+	url = ../EcsUnityIntegration
