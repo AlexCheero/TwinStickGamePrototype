@@ -572,6 +572,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e1c2fa02a23382f498f98d66ac07f58c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _initSystemTypeNames:
+  - InitCameraSystem
+  - InitResetAttackTimeSystem
+  - InitEnemySystem
+  - InitPlayerColliderSystem
+  _updateSystemTypeNames:
+  - CleanupTargetEntitySystem
+  - PlayerMovementSystem
+  - CameraFollowSystem
+  - PlayerRotationSystem
+  - EnemyFollowSystem
+  - HealthSystem
+  - EnemyMeleeAttackSystem
+  - PlayerMeleeAttackSystem
+  - PlayerInstantRangedAttackSystem
+  - PlayerProjectileAttackSystem
+  _fixedUpdateSystemTypeNames: []
+  _initSwitches: 01010101
+  _updateSwitches: 01010101010101010101
+  _fixedUpdateSwitches: 
 --- !u!4 &2020709258
 Transform:
   m_ObjectHideFlags: 0

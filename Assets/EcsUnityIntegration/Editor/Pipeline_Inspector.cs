@@ -65,10 +65,6 @@ public class Pipeline_Inspector : Editor
             EditorGUILayout.EndVertical();
         }
 
-        //===================================
-
-        var pipeline = Pipeline;
-
         DrawSystemCategory(ESystemCategory.Init);
         DrawSystemCategory(ESystemCategory.Update);
         DrawSystemCategory(ESystemCategory.FixedUpdate);
@@ -76,11 +72,7 @@ public class Pipeline_Inspector : Editor
 
     private void DrawSystemCategory(ESystemCategory category)
     {
-        GUILayout.Space(10);
-        EditorGUILayout.LabelField(category.ToString());
-
         var pipeline = Pipeline;
-
         string[] systems;
         bool[] switches;
         switch (category)
@@ -100,6 +92,12 @@ public class Pipeline_Inspector : Editor
             default:
                 return;
         }
+
+        if (systems.Length == 0)
+            return;
+
+        GUILayout.Space(10);
+        EditorGUILayout.LabelField(category.ToString());
 
         for (int i = 0; i < systems.Length; i++)
         {
