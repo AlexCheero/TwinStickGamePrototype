@@ -147,5 +147,39 @@ public class ECSPipeline : MonoBehaviour
         }
         Array.Resize(ref systems, newLength);
     }
+
+    public bool Move(ESystemCategory systemCategory, int idx, bool up)
+    {
+        switch (systemCategory)
+        {
+            case ESystemCategory.Init:
+                return Move(idx, up, _initSystemTypeNames, _initSwitches);
+            case ESystemCategory.Update:
+                return Move(idx, up, _updateSystemTypeNames, _updateSwitches);
+            case ESystemCategory.FixedUpdate:
+                return Move(idx, up, _fixedUpdateSystemTypeNames, _fixedUpdateSwitches);
+            default:
+                return false;
+        }
+    }
+
+    private bool Move(int idx, bool up, string[] systems, bool[] switches)
+    {
+        //var newIdx = up ? idx + 1 : idx - 1;
+        //TODO: no idea why it works like that, but have to invert indices to move systems properly
+        var newIdx = up ? idx - 1 : idx + 1;
+        if (newIdx < 0 || newIdx > systems.Length - 1)
+            return false;
+
+        var tempName = systems[newIdx];
+        systems[newIdx] = systems[idx];
+        systems[idx] = tempName;
+
+        var tempSwitch = switches[newIdx];
+        switches[newIdx] = switches[idx];
+        switches[idx] = tempSwitch;
+
+        return true;
+    }
 #endif
 }

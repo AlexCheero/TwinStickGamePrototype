@@ -75,6 +75,7 @@ public class Pipeline_Inspector : Editor
         var pipeline = Pipeline;
         string[] systems;
         bool[] switches;
+        //TODO: this switch duplicated in ECSPipeline, refactor
         switch (category)
         {
             case ESystemCategory.Init:
@@ -113,6 +114,17 @@ public class Pipeline_Inspector : Editor
                 Pipeline.RemoveMetaAt(category, i);
                 i--;
                 EditorUtility.SetDirty(target);
+            }
+
+            if (GUILayout.Button(new GUIContent("^"), GUILayout.ExpandWidth(false)))
+            {
+                if (Pipeline.Move(category, i, true))
+                    EditorUtility.SetDirty(target);
+            }
+            if (GUILayout.Button(new GUIContent("v"), GUILayout.ExpandWidth(false)))
+            {
+                if (Pipeline.Move(category, i, false))
+                    EditorUtility.SetDirty(target);
             }
 
             EditorGUILayout.EndHorizontal();
