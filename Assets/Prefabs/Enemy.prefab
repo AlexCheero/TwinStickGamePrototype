@@ -256,10 +256,10 @@ MonoBehaviour:
       UnityComponent: {fileID: 0}
     - TypeName: System.Single
       Name: attackCD
-      ValueRepresentation: 0.2
+      ValueRepresentation: 0.75
       UnityComponent: {fileID: 0}
     UnityComponent: {fileID: 0}
-    IsExpanded: 0
+    IsExpanded: 1
   - ComponentName: Components.DamageComponent
     Fields:
     - TypeName: System.Single
