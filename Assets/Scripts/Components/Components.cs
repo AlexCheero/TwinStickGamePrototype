@@ -60,6 +60,11 @@ namespace Components
         public float previousAttackTime;
         public float attackCD;
     }
+
+    struct AddHealth
+    {
+        public float healthAmount;
+    }
 }
 
 namespace Tags

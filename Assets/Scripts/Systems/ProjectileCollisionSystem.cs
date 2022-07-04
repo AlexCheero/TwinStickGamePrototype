@@ -22,13 +22,11 @@ public class ProjectileCollisionSystem : EcsSystem
     {
         foreach (var id in world.Enumerate(_filterId))
         {
-            Debug.Log("process projectile collision");
             var collidedEntity = world.GetComponent<CollisionWith>(id).entity;
             var collidedId = collidedEntity.GetId();
             //TODO: check what will be if remove component and then delete entity
             //if (!world.IsEntityValid(collidedEntity))
             //    world.RemoveComponent<CollisionWith>(id);
-            var isValid = world.IsEntityValid(collidedEntity);
             if (world.IsEntityValid(collidedEntity) && world.Have<HealthComponent>(collidedId))
             {
                 world.GetComponent<HealthComponent>(collidedId).health -=
