@@ -1,7 +1,6 @@
 using Components;
 using ECS;
-using System.Collections.Generic;
-using UnityEngine;
+using Tags;
 
 public class HealthSystem : EcsSystem
 {
@@ -14,15 +13,13 @@ public class HealthSystem : EcsSystem
 
     public override void Tick(EcsWorld world)
     {
-        foreach (var entity in world.Enumerate(_filterId))
+        foreach (var id in world.Enumerate(_filterId))
         {
-            var health = world.GetComponent<HealthComponent>(entity).health;
+            var health = world.GetComponent<HealthComponent>(id).health;
             if (health > 0)
                 continue;
 
-            if (world.Have<Transform>(entity))
-                Object.Destroy(world.GetComponent<Transform>(entity).gameObject);
-            world.Delete(entity);
+            world.AddTag<DeadTag>(id);
         }
     }
 }

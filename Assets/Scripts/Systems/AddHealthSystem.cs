@@ -1,7 +1,6 @@
 using Components;
 using ECS;
 using Tags;
-using UnityEngine;
 
 [UpdateSystem]
 public class AddHealthSystem : EcsSystem
@@ -13,8 +12,7 @@ public class AddHealthSystem : EcsSystem
         _filterId = world.RegisterFilter(new BitMask(Id<Pickup>(),
             Id<AddHealth>(),
             Id<DeleteOnCollision>(),
-            Id<CollisionWith>(),
-            Id<Transform>()
+            Id<CollisionWith>()
             ));
     }
 
@@ -29,8 +27,7 @@ public class AddHealthSystem : EcsSystem
                 world.GetComponent<HealthComponent>(collidedId).health +=
                     world.GetComponent<AddHealth>(id).healthAmount;
 
-                Object.Destroy(world.GetComponent<Transform>(id).gameObject);
-                world.Delete(id);
+                world.AddTag<DeadTag>(id);
             }
         }
     }

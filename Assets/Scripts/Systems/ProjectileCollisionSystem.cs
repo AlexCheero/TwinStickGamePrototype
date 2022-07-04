@@ -1,7 +1,6 @@
 using Components;
 using ECS;
 using Tags;
-using UnityEngine;
 
 [UpdateSystem]
 public class ProjectileCollisionSystem : EcsSystem
@@ -13,8 +12,7 @@ public class ProjectileCollisionSystem : EcsSystem
         _filterId = world.RegisterFilter(new BitMask(
             Id<Projectile>(),
             Id<DeleteOnCollision>(),
-            Id<CollisionWith>(),
-            Id<Transform>()
+            Id<CollisionWith>()
             ));
     }
 
@@ -30,8 +28,7 @@ public class ProjectileCollisionSystem : EcsSystem
                     world.GetComponent<DamageComponent>(id).damage;
             }
 
-            Object.Destroy(world.GetComponent<Transform>(id).gameObject);
-            world.Delete(id);
+            world.AddTag<DeadTag>(id);
         }
     }
 }
