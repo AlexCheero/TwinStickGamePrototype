@@ -132,10 +132,6 @@ MonoBehaviour:
     Fields: []
     UnityComponent: {fileID: 0}
     IsExpanded: 0
-  - ComponentName: Tags.MeleeWeaponHoldingTag
-    Fields: []
-    UnityComponent: {fileID: 0}
-    IsExpanded: 0
   - ComponentName: UnityEngine.Transform
     Fields: []
     UnityComponent: {fileID: 8791500836367506950}
@@ -184,14 +180,6 @@ MonoBehaviour:
       UnityComponent: {fileID: 0}
     UnityComponent: {fileID: 0}
     IsExpanded: 0
-  - ComponentName: Components.ProjectileWeapon
-    Fields:
-    - TypeName: ProjectileCollision
-      Name: projectile
-      ValueRepresentation: 
-      UnityComponent: {fileID: 3664940373391034528, guid: 686182d33b1769d439280800cb7e16af, type: 3}
-    UnityComponent: {fileID: 0}
-    IsExpanded: 0
   - ComponentName: Components.ViewAngle
     Fields:
     - TypeName: System.Single
@@ -200,6 +188,18 @@ MonoBehaviour:
       UnityComponent: {fileID: 0}
     UnityComponent: {fileID: 0}
     IsExpanded: 0
+  - ComponentName: Tags.ProjectileWeaponHoldingTag
+    Fields: []
+    UnityComponent: {fileID: 0}
+    IsExpanded: 0
+  - ComponentName: Components.ProjectileWeapon
+    Fields:
+    - TypeName: EntityView
+      Name: projectile
+      ValueRepresentation: 
+      UnityComponent: {fileID: 1208674615227005423, guid: 686182d33b1769d439280800cb7e16af, type: 3}
+    UnityComponent: {fileID: 0}
+    IsExpanded: 1
 --- !u!1 &8791500836585612155
 GameObject:
   m_ObjectHideFlags: 0

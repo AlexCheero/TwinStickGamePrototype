@@ -23,20 +23,23 @@ public class PlayerProjectileAttackSystem : EcsSystem
         if (!Input.GetMouseButtonDown(0))
             return;
 
-        foreach (var entity in world.Enumerate(_filterId))
+        foreach (var id in world.Enumerate(_filterId))
         {
             Debug.Log("Player projectile attack!");
 
-            var transform = world.GetComponent<Transform>(entity);
-            var projectileObj = world.GetComponent<ProjectileWeapon>(entity).projectile;
+            var transform = world.GetComponent<Transform>(id);
+            var projectileObj = world.GetComponent<ProjectileWeapon>(id).projectile;
 
             var instantiationPosition = transform.position + transform.forward * 2.0f; //instantiation before the player
             //TODO: use pools
-            var projectileInstance = Object.Instantiate(projectileObj, instantiationPosition, transform.rotation);
-            //var projectileEntity = projectileInstance.ConvertToEntity(world);
-            var projectileEntity = projectileInstance.InitAsEntity(world);
-            var speed = world.GetComponent<SpeedComponent>(projectileEntity).speed;
-            projectileInstance.GetComponent<Rigidbody>().AddForce(transform.forward * speed);//TODO: try different force types
+            var projectileView = Object.Instantiate(projectileObj, instantiationPosition, transform.rotation);
+            var projectileId = projectileView.InitAsEntity(world);
+#if DEBUG
+            if (!world.Have<Projectile>(projectileId))
+                throw new System.Exception("projectileView have no Projectile tag");
+#endif
+            var speed = world.GetComponent<SpeedComponent>(projectileId).speed;
+            projectileView.GetComponent<Rigidbody>().AddForce(transform.forward * speed);//TODO: try different force types
         }
     }
 }

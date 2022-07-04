@@ -52,7 +52,7 @@ namespace Components
 
     struct ProjectileWeapon
     {
-        public ProjectileCollision projectile;
+        public EntityView projectile;
     }
 
     struct AttackComponent
@@ -68,7 +68,10 @@ namespace Tags
     struct EnemyTag { }
     struct CameraTag { }
     struct Projectile { }
+    struct Pickup { }
     struct InstantRangedWeaponHoldingTag { }
     struct ProjectileWeaponHoldingTag { }
     struct MeleeWeaponHoldingTag { }
+    struct DeleteOnCollision { }
+    struct DeadTag { }
 }

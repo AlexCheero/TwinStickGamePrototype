@@ -60,7 +60,6 @@ public class EnemyMeleeAttackSystem : EcsSystem
             if (Time.time < nextAttackTime)
                 continue;
 
-            Debug.Log("Enemy attack!");
             var damage = world.GetComponent<DamageComponent>(id).damage;
             world.GetComponent<HealthComponent>(targetView.Id).health -= damage;
             attackComponent.previousAttackTime = Time.time;
