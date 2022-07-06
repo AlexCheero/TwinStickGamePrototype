@@ -588,15 +588,15 @@ MonoBehaviour:
   - PlayerMeleeAttackSystem
   - PlayerInstantRangedAttackSystem
   - PlayerProjectileAttackSystem
-  - DeleteDeadSystem
   _fixedUpdateSystemTypeNames: []
   _reactiveSystemTypeNames:
   - OnHealthPickupCollisionSystem
   - OnProjectileCollisionSystem
+  - OnDeadSystem
   _initSwitches: 01010101
   _updateSwitches: 01010101010101010101010101
   _fixedUpdateSwitches: 
-  _reactiveSwitches: 0101
+  _reactiveSwitches: 010101
 --- !u!4 &2020709258
 Transform:
   m_ObjectHideFlags: 0

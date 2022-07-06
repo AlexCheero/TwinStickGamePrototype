@@ -9,11 +9,10 @@ public static class OnProjectileCollisionSystem
         ComponentMeta<Projectile>.Id,
         ComponentMeta<DeleteOnCollision>.Id
         );
-    private static BitMask _excludes;
 
     public static void Tick(EcsWorld world, int id)
     {
-        if (world.CheckAgainstMasks(id, _includes, _excludes))
+        if (world.CheckAgainstMasks(id, _includes))
         {
             var collidedEntity = world.GetComponent<CollisionWith>(id).entity;
             var collidedId = collidedEntity.GetId();
