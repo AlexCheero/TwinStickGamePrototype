@@ -593,10 +593,12 @@ MonoBehaviour:
   - OnHealthPickupCollisionSystem
   - OnProjectileCollisionSystem
   - OnDeadSystem
+  - OnTakeMeleeSystem
+  - OnMeleePickupCollision
   _initSwitches: 01010101
   _updateSwitches: 01010101010101010101010101
   _fixedUpdateSwitches: 
-  _reactiveSwitches: 010101
+  _reactiveSwitches: 0101010101
 --- !u!4 &2020709258
 Transform:
   m_ObjectHideFlags: 0
@@ -668,6 +670,63 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 256b44f5599036642be9e98c4d00bd20, type: 3}
+--- !u!1001 &3664448495495249344
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 3664448495812512443, guid: ad7edac66c30d5242b82465c91f64363, type: 3}
+      propertyPath: m_Name
+      value: MeleePickup
+      objectReference: {fileID: 0}
+    - target: {fileID: 3664448495812512447, guid: ad7edac66c30d5242b82465c91f64363, type: 3}
+      propertyPath: m_RootOrder
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 3664448495812512447, guid: ad7edac66c30d5242b82465c91f64363, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 20.184492
+      objectReference: {fileID: 0}
+    - target: {fileID: 3664448495812512447, guid: ad7edac66c30d5242b82465c91f64363, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 2.04
+      objectReference: {fileID: 0}
+    - target: {fileID: 3664448495812512447, guid: ad7edac66c30d5242b82465c91f64363, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 13.001353
+      objectReference: {fileID: 0}
+    - target: {fileID: 3664448495812512447, guid: ad7edac66c30d5242b82465c91f64363, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3664448495812512447, guid: ad7edac66c30d5242b82465c91f64363, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3664448495812512447, guid: ad7edac66c30d5242b82465c91f64363, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3664448495812512447, guid: ad7edac66c30d5242b82465c91f64363, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3664448495812512447, guid: ad7edac66c30d5242b82465c91f64363, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3664448495812512447, guid: ad7edac66c30d5242b82465c91f64363, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3664448495812512447, guid: ad7edac66c30d5242b82465c91f64363, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: ad7edac66c30d5242b82465c91f64363, type: 3}
 --- !u!1001 &3981269079642244363
 PrefabInstance:
   m_ObjectHideFlags: 0
