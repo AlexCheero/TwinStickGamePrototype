@@ -26,38 +26,21 @@ public static class OnWeaponPickupCollision
 
     public static void Tick(EcsWorld world, int id)
     {
-        if (world.CheckAgainstMasks(id, _meleeIncludes))
-        {
-            var collidedEntity = world.GetComponent<CollisionWith>(id).entity;
-            var collidedId = collidedEntity.GetId();
-            if (world.IsEntityValid(collidedEntity) && world.Have<PlayerTag>(collidedId))
-            {
-                if (!world.Have<MeleeWeaponHoldingTag>(collidedId))
-                    world.AddTag<MeleeWeaponHoldingTag>(collidedId);
-                world.AddTag<DeadTag>(id);
-            }
-        }
+        Tick<MeleeWeaponHoldingTag>(world, id, _meleeIncludes);
+        Tick<InstantRangedWeaponHoldingTag>(world, id, _instantIncludes);
+        Tick<ProjectileWeaponHoldingTag>(world, id, _projectileIncludes);
+    }
 
-        if (world.CheckAgainstMasks(id, _instantIncludes))
+    private static void Tick<T>(EcsWorld world, int id, BitMask includes)
+    {
+        if (world.CheckAgainstMasks(id, includes))
         {
             var collidedEntity = world.GetComponent<CollisionWith>(id).entity;
             var collidedId = collidedEntity.GetId();
             if (world.IsEntityValid(collidedEntity) && world.Have<PlayerTag>(collidedId))
             {
-                if (!world.Have<InstantRangedWeaponHoldingTag>(collidedId))
-                    world.AddTag<InstantRangedWeaponHoldingTag>(collidedId);
-                world.AddTag<DeadTag>(id);
-            }
-        }
-
-        if (world.CheckAgainstMasks(id, _projectileIncludes))
-        {
-            var collidedEntity = world.GetComponent<CollisionWith>(id).entity;
-            var collidedId = collidedEntity.GetId();
-            if (world.IsEntityValid(collidedEntity) && world.Have<PlayerTag>(collidedId))
-            {
-                if (!world.Have<ProjectileWeaponHoldingTag>(collidedId))
-                    world.AddTag<ProjectileWeaponHoldingTag>(collidedId);
+                if (!world.Have<T>(collidedId))
+                    world.AddTag<T>(collidedId);
                 world.AddTag<DeadTag>(id);
             }
         }
