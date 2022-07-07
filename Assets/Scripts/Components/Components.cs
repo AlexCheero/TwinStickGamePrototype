@@ -69,9 +69,13 @@ namespace Tags
     struct CameraTag { }
     struct Projectile { }
     struct Pickup { }
-    struct InstantRangedWeaponHoldingTag { }
-    struct ProjectileWeaponHoldingTag { }
-    struct MeleeWeaponHoldingTag { }
     struct DeleteOnCollision { }
     struct DeadTag { }
+
+    [MutualyExclusive(typeof(ProjectileWeaponHoldingTag), typeof(MeleeWeaponHoldingTag))]
+    struct InstantRangedWeaponHoldingTag { }
+    [MutualyExclusive(typeof(InstantRangedWeaponHoldingTag), typeof(MeleeWeaponHoldingTag))]
+    struct ProjectileWeaponHoldingTag { }
+    [MutualyExclusive(typeof(InstantRangedWeaponHoldingTag), typeof(ProjectileWeaponHoldingTag))]
+    struct MeleeWeaponHoldingTag { }
 }
