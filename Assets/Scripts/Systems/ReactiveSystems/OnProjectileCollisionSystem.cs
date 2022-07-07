@@ -16,7 +16,9 @@ public static class OnProjectileCollisionSystem
         {
             var collidedEntity = world.GetComponent<CollisionWith>(id).entity;
             var collidedId = collidedEntity.GetId();
-            if (world.IsEntityValid(collidedEntity) && world.Have<HealthComponent>(collidedId))
+            if (world.IsEntityValid(collidedEntity) &&
+                world.Have<HealthComponent>(collidedId) &&
+                !world.Have<Pickup>(collidedId))
             {
                 world.GetComponent<HealthComponent>(collidedId).health -=
                     world.GetComponent<DamageComponent>(id).damage;

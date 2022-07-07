@@ -84,7 +84,8 @@ public class PlayerMeleeAttackSystem : EcsSystem
         if (!world.IsEntityValid(targetEntity))
             return false;
 
-        if (!world.Have<HealthComponent>(targetEntity.GetId()))
+        var tagetId = targetEntity.GetId();
+        if (!world.Have<HealthComponent>(tagetId) || world.Have<Pickup>(tagetId))
             return false;
 
         return true;

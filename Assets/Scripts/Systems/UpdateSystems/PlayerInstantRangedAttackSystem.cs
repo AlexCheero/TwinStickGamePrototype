@@ -50,7 +50,7 @@ public class PlayerInstantRangedAttackSystem : EcsSystem
                 continue;
 
             var targetEntityId = targetEntity.GetId();
-            if (!world.Have<HealthComponent>(targetEntity.GetId()))
+            if (!world.Have<HealthComponent>(targetEntityId) || world.Have<Pickup>(targetEntityId))
                 continue;
 
             Debug.Log("Player instant ranged hit!");
