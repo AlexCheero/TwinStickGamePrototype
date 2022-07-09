@@ -34,8 +34,6 @@ public class PlayerProjectileAttackSystem : EcsSystem
             var projectileObj = world.GetComponent<ProjectileWeapon>(id).projectile;
 
             var instantiationPosition = transform.position + transform.forward * 2.0f; //instantiation before the player
-            //TODO: use pools
-            //var projectileView = Object.Instantiate(projectileObj, instantiationPosition, transform.rotation);
             var projectileView = _projectilePool.Get<EntityView>(instantiationPosition, transform.rotation);
             var projectileId = projectileView.InitAsEntity(world);
 #if DEBUG

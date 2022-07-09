@@ -8,9 +8,9 @@ public class ObjectPool : MonoBehaviour
     [SerializeField]
     private int _initialCount;
     [SerializeField]
-    private GameObject _prototype;
+    private PoolItem _prototype;
     [SerializeField]
-    private GameObject[] _objects;
+    private PoolItem[] _objects;
     private int _firstAvailable = 0;
 
 #if UNITY_EDITOR
@@ -59,7 +59,7 @@ public class ObjectPool : MonoBehaviour
         var obj = _objects[_firstAvailable];
         obj.transform.position = position;
         obj.transform.rotation = rotation;
-        obj.SetActive(true);
+        obj.gameObject.SetActive(true);
         _firstAvailable++;
         return obj.GetComponent<T>();
     }
@@ -82,6 +82,13 @@ public class ObjectPool : MonoBehaviour
     private void AddNew(int idx)
     {
         _objects[idx] = Instantiate(_prototype, transform);
-        _objects[idx].SetActive(false);
+        _objects[idx].Pool = this;
+        _objects[idx].gameObject.SetActive(false);
+    }
+
+    public void ReturnItem(PoolItem item)
+    {
+        item.gameObject.SetActive(false);
+        item.transform.parent = transform;
     }
 }
