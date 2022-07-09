@@ -82,13 +82,32 @@ public class ObjectPool : MonoBehaviour
     private void AddNew(int idx)
     {
         _objects[idx] = Instantiate(_prototype, transform);
-        _objects[idx].Pool = this;
+        _objects[idx].AddToPool(this, idx);
         _objects[idx].gameObject.SetActive(false);
     }
 
     public void ReturnItem(PoolItem item)
     {
+#if DEBUG
+        //TODO: check if items is copy of _prototype
+
+        if (_firstAvailable == 0)
+            throw new Exception("pool have no active items but something is returned");
+#endif
         item.gameObject.SetActive(false);
         item.transform.parent = transform;
+
+        _firstAvailable--;
+        if (item.Idx < _firstAvailable)
+        {
+            var temp = _objects[_firstAvailable];
+            _objects[_firstAvailable] = item;
+            _objects[item.Idx] = temp;
+            item.AddToPool(this, _firstAvailable);
+        }
+#if DEBUG
+        else if (item.Idx > _firstAvailable)
+            throw new Exception("gap between item.Idx and _firstAvailable");
+#endif
     }
 }

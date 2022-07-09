@@ -12,9 +12,7 @@ public static class OnDeadSystem
     {
         //must be checked before other Transforms
         if (world.CheckAgainstMasks(id, _poolItemIncludes))
-        {
-
-        }
+            world.GetComponent<PoolItem>(id).ReturnToPool();
         else if (world.CheckAgainstMasks(id, _transformIncludes))
             Object.Destroy(world.GetComponent<Transform>(id).gameObject);
         world.Delete(id);
