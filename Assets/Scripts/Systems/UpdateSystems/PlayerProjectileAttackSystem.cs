@@ -6,6 +6,7 @@ using UnityEngine;
 public class PlayerProjectileAttackSystem : EcsSystem
 {
     private int _filterId;
+    private ObjectPool _projectilePool;
 
     public PlayerProjectileAttackSystem(EcsWorld world)
     {
@@ -16,6 +17,8 @@ public class PlayerProjectileAttackSystem : EcsSystem
                 Id<ProjectileWeapon>(),
                 Id<Transform>()
                 ));
+
+        _projectilePool = GameObject.Find("ProjectilePool").GetComponent<ObjectPool>();
     }
 
     public override void Tick(EcsWorld world)
@@ -32,7 +35,8 @@ public class PlayerProjectileAttackSystem : EcsSystem
 
             var instantiationPosition = transform.position + transform.forward * 2.0f; //instantiation before the player
             //TODO: use pools
-            var projectileView = Object.Instantiate(projectileObj, instantiationPosition, transform.rotation);
+            //var projectileView = Object.Instantiate(projectileObj, instantiationPosition, transform.rotation);
+            var projectileView = _projectilePool.Get<EntityView>(instantiationPosition, transform.rotation);
             var projectileId = projectileView.InitAsEntity(world);
 #if DEBUG
             if (!world.Have<Projectile>(projectileId))
