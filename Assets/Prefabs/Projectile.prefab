@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 5255205013985186556}
   - component: {fileID: 7035452463639037533}
   - component: {fileID: 4443661290508678105}
+  - component: {fileID: 4859373069663518881}
   - component: {fileID: 1208674615227005423}
   m_Layer: 0
   m_Name: Projectile
@@ -113,6 +114,20 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &4859373069663518881
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9013914151320266381}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 92f4fda690b09b742be5dd8fa8519d7f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _pool: {fileID: 0}
+  _idx: 0
 --- !u!114 &1208674615227005423
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -153,4 +168,8 @@ MonoBehaviour:
   - ComponentName: Tags.DeleteOnCollision
     Fields: []
     UnityComponent: {fileID: 0}
+    IsExpanded: 0
+  - ComponentName: PoolItem
+    Fields: []
+    UnityComponent: {fileID: 4859373069663518881}
     IsExpanded: 0
