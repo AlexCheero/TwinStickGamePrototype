@@ -65,6 +65,11 @@ namespace Components
     {
         public float time;
     }
+
+    struct Ammo
+    {
+        public int amount;
+    }
 }
 
 namespace Tags

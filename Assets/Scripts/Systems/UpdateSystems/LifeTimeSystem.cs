@@ -20,7 +20,7 @@ public class LifeTimeSystem : EcsSystem
             ref var time = ref world.GetComponent<LifeTime>(id).time;
             time -= Time.deltaTime;
             if (time <= 0)
-                world.AddTag<DeadTag>(id);
+                world.Add<DeadTag>(id);
         }
     }
 }

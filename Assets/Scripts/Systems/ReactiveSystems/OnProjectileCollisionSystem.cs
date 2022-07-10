@@ -24,7 +24,7 @@ public static class OnProjectileCollisionSystem
                     world.GetComponent<DamageComponent>(id).damage;
             }
 
-            world.AddTag<DeadTag>(id);
+            world.Add<DeadTag>(id);
         }
     }
 }

@@ -40,8 +40,16 @@ public static class OnWeaponPickupCollision
             if (world.IsEntityValid(collidedEntity) && world.Have<PlayerTag>(collidedId))
             {
                 if (!world.Have<T>(collidedId))
-                    world.AddTag<T>(collidedId);
-                world.AddTag<DeadTag>(id);
+                    world.Add<T>(collidedId);
+                if (world.Have<Ammo>(id))
+                {
+                    var amount = world.GetComponent<Ammo>(id).amount;
+                    if (world.Have<Ammo>(collidedId))
+                        world.GetComponent<Ammo>(collidedId).amount = amount;
+                    else
+                        world.AddComponent(collidedId, new Ammo { amount = amount });
+                }
+                world.Add<DeadTag>(id);
             }
         }
     }

@@ -22,7 +22,7 @@ public static class OnHealthPickupCollisionSystem
                 world.GetComponent<HealthComponent>(collidedId).health +=
                     world.GetComponent<HealthComponent>(id).health;
 
-                world.AddTag<DeadTag>(id);
+                world.Add<DeadTag>(id);
             }
         }
     }

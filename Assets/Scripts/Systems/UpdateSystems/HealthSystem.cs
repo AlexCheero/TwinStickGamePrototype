@@ -34,7 +34,7 @@ public class HealthSystem : EcsSystem
             if (health > 0)
                 continue;
 
-            world.AddTag<DeadTag>(id);
+            world.Add<DeadTag>(id);
         }
     }
 }
