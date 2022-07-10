@@ -1,6 +1,4 @@
 using ECS;
-using System.Collections;
-using System.Collections.Generic;
 using Tags;
 using UnityEngine;
 
@@ -19,8 +17,10 @@ public class InitPlayerColliderSystem : EcsSystem
         foreach (var id in world.Enumerate(_filterId))
         {
             var go = world.GetComponent<Transform>(id).gameObject;
+            //TODO: add ability to choose base class of UnityComponent when added to EntityView in custom inspector
+            //      to be able to add Collider instead of CapsuleCollider to Player and delete this system
             var collider = go.GetComponent<Collider>();
-            world.AddComponent(id, collider);
+            world.Add(id, collider);
         }
     }
 }
