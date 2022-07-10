@@ -105,9 +105,5 @@ public class ObjectPool : MonoBehaviour
             _objects[item.Idx] = temp;
             item.AddToPool(this, _firstAvailable);
         }
-#if DEBUG
-        else if (item.Idx > _firstAvailable)
-            throw new Exception("gap between item.Idx and _firstAvailable");
-#endif
     }
 }

@@ -173,3 +173,15 @@ MonoBehaviour:
     Fields: []
     UnityComponent: {fileID: 4859373069663518881}
     IsExpanded: 0
+  - ComponentName: Components.LifeTime
+    Fields:
+    - TypeName: System.Single
+      Name: time
+      ValueRepresentation: 5
+      UnityComponent: {fileID: 0}
+    UnityComponent: {fileID: 0}
+    IsExpanded: 1
+  - ComponentName: UnityEngine.Rigidbody
+    Fields: []
+    UnityComponent: {fileID: 4443661290508678105}
+    IsExpanded: 0
