@@ -200,6 +200,14 @@ MonoBehaviour:
       UnityComponent: {fileID: 1208674615227005423, guid: 686182d33b1769d439280800cb7e16af, type: 3}
     UnityComponent: {fileID: 0}
     IsExpanded: 1
+  - ComponentName: Components.Ammo
+    Fields:
+    - TypeName: System.Int32
+      Name: amount
+      ValueRepresentation: 10
+      UnityComponent: {fileID: 0}
+    UnityComponent: {fileID: 0}
+    IsExpanded: 1
 --- !u!1 &8791500836585612155
 GameObject:
   m_ObjectHideFlags: 0

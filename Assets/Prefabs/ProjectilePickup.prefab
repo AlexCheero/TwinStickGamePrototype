@@ -125,3 +125,11 @@ MonoBehaviour:
     Fields: []
     UnityComponent: {fileID: 0}
     IsExpanded: 0
+  - ComponentName: Components.Ammo
+    Fields:
+    - TypeName: System.Int32
+      Name: amount
+      ValueRepresentation: 10
+      UnityComponent: {fileID: 0}
+    UnityComponent: {fileID: 0}
+    IsExpanded: 1
