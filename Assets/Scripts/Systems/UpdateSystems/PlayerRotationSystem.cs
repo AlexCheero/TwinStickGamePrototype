@@ -17,9 +17,9 @@ public class PlayerRotationSystem : EcsSystem
     {
         //TODO: cache
         Camera cam = null;
-        foreach (var entity in world.Enumerate(_camFilterId))
+        foreach (var id in world.Enumerate(_camFilterId))
         {
-            cam = world.GetComponent<Camera>(entity);
+            cam = world.GetComponent<Camera>(id);
             break;
         }
 
@@ -30,9 +30,9 @@ public class PlayerRotationSystem : EcsSystem
 
         Ray ray = cam.ScreenPointToRay(Input.mousePosition);
 
-        foreach (var entity in world.Enumerate(_playerFilterId))
+        foreach (var id in world.Enumerate(_playerFilterId))
         {
-            var transform = world.GetComponent<Transform>(entity);
+            var transform = world.GetComponent<Transform>(id);
             var t = (transform.position.y - ray.origin.y) / ray.direction.y;
             var x = ray.origin.x + t * ray.direction.x;
             var z = ray.origin.z + t * ray.direction.z;

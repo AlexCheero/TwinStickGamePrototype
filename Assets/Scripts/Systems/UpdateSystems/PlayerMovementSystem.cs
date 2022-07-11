@@ -18,9 +18,9 @@ sealed class PlayerMovementSystem : EcsSystem
     {
         //TODO: cache
         Camera cam = null;
-        foreach (var entity in world.Enumerate(_camFilterId))
+        foreach (var id in world.Enumerate(_camFilterId))
         {
-            cam = world.GetComponent<Camera>(entity);
+            cam = world.GetComponent<Camera>(id);
             break;
         }
 
@@ -49,10 +49,10 @@ sealed class PlayerMovementSystem : EcsSystem
             moveDir -= camRightFlat;
         moveDir.Normalize();
 
-        foreach (var entity in world.Enumerate(_playerFilterId))
+        foreach (var id in world.Enumerate(_playerFilterId))
         {
-            var transform = world.GetComponent<Transform>(entity);
-            moveDir *= Time.deltaTime * world.GetComponent<SpeedComponent>(entity).speed;
+            var transform = world.GetComponent<Transform>(id);
+            moveDir *= Time.deltaTime * world.GetComponent<SpeedComponent>(id).speed;
             transform.Translate(moveDir, Space.World);
         }
     }

@@ -21,10 +21,10 @@ public class EnemyFollowSystem : EcsSystem
 
     public override void Tick(EcsWorld world)
     {
-        foreach (var entity in world.Enumerate(_enemyFilterId))
+        foreach (var id in world.Enumerate(_enemyFilterId))
         {
-            var navAgent = world.GetComponent<NavMeshAgent>(entity);
-            var targetPostion = world.GetComponent<TargetEntityComponent>(entity).target.transform.position;
+            var navAgent = world.GetComponent<NavMeshAgent>(id);
+            var targetPostion = world.GetComponent<TargetEntityComponent>(id).target.transform.position;
 
             const float sqrMargin = 0.1f;
             if ((navAgent.destination - targetPostion).sqrMagnitude > sqrMargin)
@@ -32,7 +32,7 @@ public class EnemyFollowSystem : EcsSystem
                 navAgent.SetDestination(targetPostion);
             }
             
-            var transform = world.GetComponent<Transform>(entity);
+            var transform = world.GetComponent<Transform>(id);
             var direction = (targetPostion - transform.position).normalized;
             transform.rotation = Quaternion.LookRotation(direction);
         }

@@ -15,13 +15,13 @@ public class InitEnemySystem : EcsSystem
 
     public override void Tick(EcsWorld world)
     {
-        foreach (var enemyEntity in world.Enumerate(_filterId))
+        foreach (var id in world.Enumerate(_filterId))
         {
-            var navAgent = world.GetComponent<NavMeshAgent>(enemyEntity);
-            navAgent.speed = world.GetComponent<SpeedComponent>(enemyEntity).speed;
-            navAgent.stoppingDistance = world.GetComponent<ReachComponent>(enemyEntity).distance;
-            navAgent.angularSpeed = world.GetComponent<AngularSpeedComponent>(enemyEntity).speed;
-            navAgent.acceleration = world.GetComponent<AccelerationComponent>(enemyEntity).acceleration;
+            var navAgent = world.GetComponent<NavMeshAgent>(id);
+            navAgent.speed = world.GetComponent<SpeedComponent>(id).speed;
+            navAgent.stoppingDistance = world.GetComponent<ReachComponent>(id).distance;
+            navAgent.angularSpeed = world.GetComponent<AngularSpeedComponent>(id).speed;
+            navAgent.acceleration = world.GetComponent<AccelerationComponent>(id).acceleration;
         }
     }
 }
