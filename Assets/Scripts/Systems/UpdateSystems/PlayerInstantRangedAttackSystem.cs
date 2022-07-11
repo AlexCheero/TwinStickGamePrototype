@@ -15,7 +15,8 @@ public class PlayerInstantRangedAttackSystem : EcsSystem
                 Id<InstantRangedWeaponHoldingTag>(),
                 Id<Transform>(),
                 Id<DamageComponent>(),
-                Id<AttackComponent>()
+                Id<AttackComponent>(),
+                Id<Ammo>()
                 ));
     }
 
@@ -24,17 +25,26 @@ public class PlayerInstantRangedAttackSystem : EcsSystem
         if (!Input.GetMouseButtonDown(0))
             return;
 
-        foreach (var entity in world.Enumerate(_filterId))
+        foreach (var id in world.Enumerate(_filterId))
         {
-            ref var attackComponent = ref world.GetComponentByRef<AttackComponent>(entity);
+            ref var attackComponent = ref world.GetComponentByRef<AttackComponent>(id);
             var nextAttackTime = attackComponent.previousAttackTime + attackComponent.attackCD;
             if (Time.time < nextAttackTime)
                 continue;
             attackComponent.previousAttackTime = Time.time;
 
+#if DEBUG
+            if (world.GetComponent<Ammo>(id).amount <= 0)
+                throw new System.Exception("ammo amount is <= 0. have ammo component: " + world.Have<Ammo>(id));
+#endif
+
+            var newAmmo = world.GetComponent<Ammo>(id);
+            newAmmo.amount--;
+            world.SetComponent(id, newAmmo);
+
             Debug.Log("Player instant ranged attack!");
 
-            var transform = world.GetComponent<Transform>(entity);
+            var transform = world.GetComponent<Transform>(id);
             Ray ray = new Ray(transform.position, transform.forward);
             RaycastHit hit;
             //TODO: use non alloc version everywhere where Raycast is used
@@ -56,7 +66,7 @@ public class PlayerInstantRangedAttackSystem : EcsSystem
 
             Debug.Log("Player instant ranged hit!");
             world.GetComponentByRef<HealthComponent>(targetEntityId).health -=
-                world.GetComponent<DamageComponent>(entity).damage;
+                world.GetComponent<DamageComponent>(id).damage;
         }
     }
 }

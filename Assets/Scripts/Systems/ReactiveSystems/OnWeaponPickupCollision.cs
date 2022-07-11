@@ -45,7 +45,10 @@ public static class OnWeaponPickupCollision
                 {
                     var amount = world.GetComponent<Ammo>(id).amount;
                     if (world.Have<Ammo>(collidedId))
-                        world.GetComponentByRef<Ammo>(collidedId).amount = amount;
+                    {
+                        var ammo = new Ammo { amount = amount };
+                        world.SetComponent(collidedId, ammo);
+                    }
                     else
                         world.Add(collidedId, new Ammo { amount = amount });
                 }
