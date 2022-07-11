@@ -28,10 +28,11 @@ public class PlayerInstantRangedAttackSystem : EcsSystem
         {
             Debug.Log("Player instant ranged attack!");
 
-            ref var attackComponent = ref world.GetComponent<AttackComponent>(entity);
+            ref var attackComponent = ref world.GetComponentByRef<AttackComponent>(entity);
             var nextAttackTime = attackComponent.previousAttackTime + attackComponent.attackCD;
             if (Time.time < nextAttackTime)
                 continue;
+            attackComponent.previousAttackTime = Time.time;
 
             var transform = world.GetComponent<Transform>(entity);
             Ray ray = new Ray(transform.position, transform.forward);
@@ -54,10 +55,8 @@ public class PlayerInstantRangedAttackSystem : EcsSystem
                 continue;
 
             Debug.Log("Player instant ranged hit!");
-            world.GetComponent<HealthComponent>(targetEntityId).health -=
+            world.GetComponentByRef<HealthComponent>(targetEntityId).health -=
                 world.GetComponent<DamageComponent>(entity).damage;
-
-            attackComponent.previousAttackTime = Time.time;
         }
     }
 }

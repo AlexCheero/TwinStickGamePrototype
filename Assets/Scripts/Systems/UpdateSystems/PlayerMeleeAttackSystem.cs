@@ -35,10 +35,11 @@ public class PlayerMeleeAttackSystem : EcsSystem
         {
             Debug.Log("Player melee attack!");
 
-            ref var attackComponent = ref world.GetComponent<AttackComponent>(id);
+            ref var attackComponent = ref world.GetComponentByRef<AttackComponent>(id);
             var nextAttackTime = attackComponent.previousAttackTime + attackComponent.attackCD;
             if (Time.time < nextAttackTime)
                 continue;
+            attackComponent.previousAttackTime = Time.time;
 
             var transform = world.GetComponent<Transform>(id);
             var attackDistance = world.GetComponent<ReachComponent>(id).distance;
@@ -65,7 +66,7 @@ public class PlayerMeleeAttackSystem : EcsSystem
                 {
                     Debug.Log("Player melee hit!");
                     var targetId = hit.collider.gameObject.GetComponent<EntityView>().Id;
-                    world.GetComponent<HealthComponent>(targetId).health -= world.GetComponent<DamageComponent>(id).damage;
+                    world.GetComponentByRef<HealthComponent>(targetId).health -= world.GetComponent<DamageComponent>(id).damage;
                     
                     //TODO: remove break if area attack needed
                     break;

@@ -17,7 +17,7 @@ public class LifeTimeSystem : EcsSystem
     {
         foreach (var id in world.Enumerate(_filterId))
         {
-            ref var time = ref world.GetComponent<LifeTime>(id).time;
+            ref var time = ref world.GetComponentByRef<LifeTime>(id).time;
             time -= Time.deltaTime;
             if (time <= 0)
                 world.Add<DeadTag>(id);

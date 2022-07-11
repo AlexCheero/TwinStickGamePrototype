@@ -20,7 +20,7 @@ public static class OnProjectileCollisionSystem
                 world.Have<HealthComponent>(collidedId) &&
                 !world.Have<Pickup>(collidedId))
             {
-                world.GetComponent<HealthComponent>(collidedId).health -=
+                world.GetComponentByRef<HealthComponent>(collidedId).health -=
                     world.GetComponent<DamageComponent>(id).damage;
             }
 

@@ -55,13 +55,13 @@ public class EnemyMeleeAttackSystem : EcsSystem
             if (hitColliderView.Id != targetView.Id)
                 continue;
 
-            ref var attackComponent = ref world.GetComponent<AttackComponent>(id);
+            ref var attackComponent = ref world.GetComponentByRef<AttackComponent>(id);
             var nextAttackTime = attackComponent.previousAttackTime + attackComponent.attackCD;
             if (Time.time < nextAttackTime)
                 continue;
 
             var damage = world.GetComponent<DamageComponent>(id).damage;
-            world.GetComponent<HealthComponent>(targetView.Id).health -= damage;
+            world.GetComponentByRef<HealthComponent>(targetView.Id).health -= damage;
             attackComponent.previousAttackTime = Time.time;
         }
     }

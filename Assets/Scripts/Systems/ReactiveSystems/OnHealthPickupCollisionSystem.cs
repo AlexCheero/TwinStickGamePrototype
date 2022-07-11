@@ -19,7 +19,7 @@ public static class OnHealthPickupCollisionSystem
             var collidedId = collidedEntity.GetId();
             if (world.IsEntityValid(collidedEntity) && world.Have<HealthComponent>(collidedId))
             {
-                world.GetComponent<HealthComponent>(collidedId).health +=
+                world.GetComponentByRef<HealthComponent>(collidedId).health +=
                     world.GetComponent<HealthComponent>(id).health;
 
                 world.Add<DeadTag>(id);

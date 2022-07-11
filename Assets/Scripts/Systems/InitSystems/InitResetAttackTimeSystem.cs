@@ -14,6 +14,6 @@ public class InitResetAttackTimeSystem : EcsSystem
     public override void Tick(EcsWorld world)
     {
         foreach (var id in world.Enumerate(_filterId))
-            world.GetComponent<AttackComponent>(id).previousAttackTime = -1;
+            world.GetComponentByRef<AttackComponent>(id).previousAttackTime = -1;
     }
 }
