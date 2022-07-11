@@ -44,6 +44,12 @@ public class EnemyMeleeAttackSystem : EcsSystem
             if (distance > attackReach)
                 continue;
 
+            ref var attackComponent = ref world.GetComponentByRef<AttackComponent>(id);
+            var nextAttackTime = attackComponent.previousAttackTime + attackComponent.attackCD;
+            if (Time.time < nextAttackTime)
+                continue;
+            attackComponent.previousAttackTime = Time.time;
+
             if (!Physics.Raycast(position, targetPos - position, out RaycastHit hit, attackReach))
                 continue;
 
@@ -51,18 +57,11 @@ public class EnemyMeleeAttackSystem : EcsSystem
             if (hitColliderView == null)
                 continue;
 
-
             if (hitColliderView.Id != targetView.Id)
-                continue;
-
-            ref var attackComponent = ref world.GetComponentByRef<AttackComponent>(id);
-            var nextAttackTime = attackComponent.previousAttackTime + attackComponent.attackCD;
-            if (Time.time < nextAttackTime)
                 continue;
 
             var damage = world.GetComponent<DamageComponent>(id).damage;
             world.GetComponentByRef<HealthComponent>(targetView.Id).health -= damage;
-            attackComponent.previousAttackTime = Time.time;
         }
     }
 }

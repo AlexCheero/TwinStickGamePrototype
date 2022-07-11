@@ -26,13 +26,13 @@ public class PlayerInstantRangedAttackSystem : EcsSystem
 
         foreach (var entity in world.Enumerate(_filterId))
         {
-            Debug.Log("Player instant ranged attack!");
-
             ref var attackComponent = ref world.GetComponentByRef<AttackComponent>(entity);
             var nextAttackTime = attackComponent.previousAttackTime + attackComponent.attackCD;
             if (Time.time < nextAttackTime)
                 continue;
             attackComponent.previousAttackTime = Time.time;
+
+            Debug.Log("Player instant ranged attack!");
 
             var transform = world.GetComponent<Transform>(entity);
             Ray ray = new Ray(transform.position, transform.forward);

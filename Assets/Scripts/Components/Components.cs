@@ -66,8 +66,7 @@ namespace Components
         public float time;
     }
 
-    [ObservableChange]
-    struct Ammo
+    public struct Ammo
     {
         public int amount;
     }

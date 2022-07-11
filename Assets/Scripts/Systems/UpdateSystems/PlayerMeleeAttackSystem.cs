@@ -33,13 +33,13 @@ public class PlayerMeleeAttackSystem : EcsSystem
 
         foreach (var id in world.Enumerate(_filterId))
         {
-            Debug.Log("Player melee attack!");
-
             ref var attackComponent = ref world.GetComponentByRef<AttackComponent>(id);
             var nextAttackTime = attackComponent.previousAttackTime + attackComponent.attackCD;
             if (Time.time < nextAttackTime)
                 continue;
             attackComponent.previousAttackTime = Time.time;
+
+            Debug.Log("Player melee attack!");
 
             var transform = world.GetComponent<Transform>(id);
             var attackDistance = world.GetComponent<ReachComponent>(id).distance;

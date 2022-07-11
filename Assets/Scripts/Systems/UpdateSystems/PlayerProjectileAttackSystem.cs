@@ -15,6 +15,8 @@ public class PlayerProjectileAttackSystem : EcsSystem
                 Id<PlayerTag>(),
                 Id<ProjectileWeaponHoldingTag>(),
                 Id<ProjectileWeapon>(),
+                Id<AttackComponent>(),
+                Id<Ammo>(),
                 Id<Transform>()
                 ));
 
@@ -28,6 +30,17 @@ public class PlayerProjectileAttackSystem : EcsSystem
 
         foreach (var id in world.Enumerate(_filterId))
         {
+            ref var attackComponent = ref world.GetComponentByRef<AttackComponent>(id);
+            var nextAttackTime = attackComponent.previousAttackTime + attackComponent.attackCD;
+            if (Time.time < nextAttackTime)
+                continue;
+            attackComponent.previousAttackTime = Time.time;
+
+#if DEBUG
+            if (world.GetComponent<Ammo>(id).amount <= 0)
+                throw new System.Exception("ammo amount is <= 0. have ammo component: " + world.Have<Ammo>(id));
+#endif
+
             Debug.Log("Player projectile attack!");
 
             var transform = world.GetComponent<Transform>(id);
@@ -42,6 +55,10 @@ public class PlayerProjectileAttackSystem : EcsSystem
 #endif
             var speed = world.GetComponent<SpeedComponent>(projectileId).speed;
             projectileView.GetComponent<Rigidbody>().AddForce(transform.forward * speed);//TODO: try different force types
+
+            var newAmmo = world.GetComponent<Ammo>(id);
+            newAmmo.amount--;
+            world.SetComponent(id, newAmmo);
         }
     }
 }
