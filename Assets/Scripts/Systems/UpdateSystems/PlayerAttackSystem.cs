@@ -25,7 +25,6 @@ public class PlayerAttackSystem : EcsSystem
             if (!world.IsEntityValid(weaponEntity))
                 throw new System.Exception("invalid weapon entity");
 #endif
-            var transform = world.GetComponent<Transform>(id);
             var weaponId = weaponEntity.GetId();
 
 #if DEBUG
@@ -33,8 +32,8 @@ public class PlayerAttackSystem : EcsSystem
                 throw new System.Exception("please clean Attack component from weapon");
 #endif
 
-            var shot = new Attack { position = transform.position, direction = transform.forward };
-            world.Add(weaponId, shot);
+            var transform = world.GetComponent<Transform>(id);
+            world.Add(weaponId, new Attack { position = transform.position, direction = transform.forward });
         }
     }
 }

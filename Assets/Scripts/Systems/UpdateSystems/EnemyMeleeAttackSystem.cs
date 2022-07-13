@@ -14,8 +14,6 @@ public class EnemyMeleeAttackSystem : EcsSystem
                 Id<EnemyTag>(),
                 Id<Transform>(),
                 Id<ReachComponent>(),
-                Id<DamageComponent>(),
-                Id<AttackCooldown>(),
                 Id<ViewAngle>(),
                 Id<TargetEntityComponent>()
                 ));
@@ -43,24 +41,17 @@ public class EnemyMeleeAttackSystem : EcsSystem
             if (distance > attackReach)
                 continue;
 
-            ref var attackCD = ref world.GetComponentByRef<AttackCooldown>(id);
-            var nextAttackTime = attackCD.previousAttackTime + attackCD.attackCD;
-            if (Time.time < nextAttackTime)
-                continue;
-            attackCD.previousAttackTime = Time.time;
-
-            if (!Physics.Raycast(position, targetPos - position, out RaycastHit hit, attackReach))
-                continue;
-
-            var hitColliderView = hit.collider.gameObject.GetComponent<EntityView>();
-            if (hitColliderView == null)
-                continue;
-
-            if (hitColliderView.Id != targetView.Id)
-                continue;
-
-            var damage = world.GetComponent<DamageComponent>(id).damage;
-            world.GetComponentByRef<HealthComponent>(targetView.Id).health -= damage;
+            var weaponEntity = world.GetComponentByRef<CurrentWeapon>(id).entity;
+#if DEBUG
+            if (!world.IsEntityValid(weaponEntity))
+                throw new System.Exception("invalid weapon entity");
+#endif
+            var weaponId = weaponEntity.GetId();
+#if DEBUG
+            if (world.Have<Attack>(weaponId))
+                throw new System.Exception("please clean Attack component from weapon");
+#endif
+            world.Add(weaponId, new Attack { position = transform.position, direction = transform.forward });
         }
     }
 }

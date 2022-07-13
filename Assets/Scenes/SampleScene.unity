@@ -1965,10 +1965,10 @@ MonoBehaviour:
   - CameraFollowSystem
   - PlayerRotationSystem
   - EnemyFollowSystem
-  - EnemyMeleeAttackSystem
   - HealthSystem
   - LifeTimeSystem
   - PlayerAttackSystem
+  - EnemyMeleeAttackSystem
   - AttackCDSystem
   - MeleeAttackSystem
   - RangedAttackSystem
@@ -1982,7 +1982,7 @@ MonoBehaviour:
   _fixedUpdateSystemTypeNames: []
   _reactiveSystemTypeNames: []
   _initSwitches: 0101010101
-  _updateSwitches: 01010101000001010101010101010101010101010101010101
+  _updateSwitches: 01010101010101010101010101010101010101010101010101
   _fixedUpdateSwitches: 
   _reactiveSwitches: 010101010101010101
 --- !u!4 &2020709258
