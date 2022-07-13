@@ -28,6 +28,10 @@ public class HealthPickupCollisionSystem : EcsSystem
 
                 world.Add<DeadTag>(id);
             }
+            else
+            {
+                world.Remove<CollisionWith>(id);
+            }
         }
     }
 }
