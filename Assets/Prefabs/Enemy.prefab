@@ -242,6 +242,7 @@ MonoBehaviour:
       Name: health
       ValueRepresentation: 100
       UnityComponent: {fileID: 0}
+      Preset: {fileID: 0}
     UnityComponent: {fileID: 0}
     IsExpanded: 0
   - ComponentName: Components.SpeedComponent
@@ -250,6 +251,7 @@ MonoBehaviour:
       Name: speed
       ValueRepresentation: 9
       UnityComponent: {fileID: 0}
+      Preset: {fileID: 0}
     UnityComponent: {fileID: 0}
     IsExpanded: 0
   - ComponentName: Components.AngularSpeedComponent
@@ -258,6 +260,7 @@ MonoBehaviour:
       Name: speed
       ValueRepresentation: 2880
       UnityComponent: {fileID: 0}
+      Preset: {fileID: 0}
     UnityComponent: {fileID: 0}
     IsExpanded: 0
   - ComponentName: Components.ReachComponent
@@ -266,6 +269,7 @@ MonoBehaviour:
       Name: distance
       ValueRepresentation: 2.5
       UnityComponent: {fileID: 0}
+      Preset: {fileID: 0}
     UnityComponent: {fileID: 0}
     IsExpanded: 0
   - ComponentName: Components.AccelerationComponent
@@ -274,6 +278,7 @@ MonoBehaviour:
       Name: acceleration
       ValueRepresentation: 20
       UnityComponent: {fileID: 0}
+      Preset: {fileID: 0}
     UnityComponent: {fileID: 0}
     IsExpanded: 0
   - ComponentName: UnityEngine.AI.NavMeshAgent
@@ -290,6 +295,7 @@ MonoBehaviour:
       Name: angle
       ValueRepresentation: 100
       UnityComponent: {fileID: 0}
+      Preset: {fileID: 0}
     UnityComponent: {fileID: 0}
     IsExpanded: 0
   - ComponentName: Components.TargetEntityComponent
@@ -298,5 +304,6 @@ MonoBehaviour:
       Name: target
       ValueRepresentation: 
       UnityComponent: {fileID: 0}
+      Preset: {fileID: 0}
     UnityComponent: {fileID: 0}
     IsExpanded: 0

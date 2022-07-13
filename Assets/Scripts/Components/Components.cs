@@ -82,6 +82,11 @@ namespace Components
         public Vector3 position;
         public Vector3 direction;
     }
+
+    struct DefaultWeapon
+    {
+        public EntityPreset preset;
+    }
 }
 
 namespace Tags
