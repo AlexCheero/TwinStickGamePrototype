@@ -1,3 +1,4 @@
+using ECS;
 using UnityEngine;
 
 //TODO: remove prefixes
@@ -45,17 +46,17 @@ namespace Components
         public float angle;
     }
 
+    struct AttackAngle
+    {
+        public float angle;
+    }
+
     struct DamageComponent
     {
         public float damage;
     }
 
-    struct ProjectileWeapon
-    {
-        public EntityView projectile;
-    }
-
-    struct AttackComponent
+    struct AttackCooldown
     {
         public float previousAttackTime;
         public float attackCD;
@@ -70,6 +71,17 @@ namespace Components
     {
         public int amount;
     }
+
+    struct CurrentWeapon
+    {
+        public Entity entity;
+    }
+
+    struct Attack
+    {
+        public Vector3 position;
+        public Vector3 direction;
+    }
 }
 
 namespace Tags
@@ -81,6 +93,10 @@ namespace Tags
     struct Pickup { }
     struct DeleteOnCollision { }
     struct DeadTag { }
+    struct MeleeWeapon { }
+    struct RangedWeapon { }
+    struct ProjectileWeapon { }
+    struct Weapon { }
 
     [MutualyExclusive(typeof(ProjectileWeaponHoldingTag), typeof(MeleeWeaponHoldingTag))]
     struct InstantRangedWeaponHoldingTag { }

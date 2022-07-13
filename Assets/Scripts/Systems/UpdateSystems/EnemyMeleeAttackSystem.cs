@@ -16,7 +16,7 @@ public class EnemyMeleeAttackSystem : EcsSystem
                 Id<Transform>(),
                 Id<ReachComponent>(),
                 Id<DamageComponent>(),
-                Id<AttackComponent>(),
+                Id<AttackCooldown>(),
                 Id<ViewAngle>(),
                 Id<TargetEntityComponent>()
                 ));
@@ -44,11 +44,11 @@ public class EnemyMeleeAttackSystem : EcsSystem
             if (distance > attackReach)
                 continue;
 
-            ref var attackComponent = ref world.GetComponentByRef<AttackComponent>(id);
-            var nextAttackTime = attackComponent.previousAttackTime + attackComponent.attackCD;
+            ref var attackCD = ref world.GetComponentByRef<AttackCooldown>(id);
+            var nextAttackTime = attackCD.previousAttackTime + attackCD.attackCD;
             if (Time.time < nextAttackTime)
                 continue;
-            attackComponent.previousAttackTime = Time.time;
+            attackCD.previousAttackTime = Time.time;
 
             if (!Physics.Raycast(position, targetPos - position, out RaycastHit hit, attackReach))
                 continue;

@@ -8,12 +8,12 @@ public class InitResetAttackTimeSystem : EcsSystem
 
     public InitResetAttackTimeSystem(EcsWorld world)
     {
-        _filterId = world.RegisterFilter(new BitMask(Id<AttackComponent>()));
+        _filterId = world.RegisterFilter(new BitMask(Id<AttackCooldown>()));
     }
 
     public override void Tick(EcsWorld world)
     {
         foreach (var id in world.Enumerate(_filterId))
-            world.GetComponentByRef<AttackComponent>(id).previousAttackTime = -1;
+            world.GetComponentByRef<AttackCooldown>(id).previousAttackTime = -1;
     }
 }

@@ -1943,9 +1943,8 @@ MonoBehaviour:
   - HealthSystem
   - EnemyMeleeAttackSystem
   - PlayerMeleeAttackSystem
-  - PlayerInstantRangedAttackSystem
-  - PlayerProjectileAttackSystem
   - LifeTimeSystem
+  - PlayerAttackSystem
   _fixedUpdateSystemTypeNames: []
   _reactiveSystemTypeNames:
   - OnHealthPickupCollisionSystem
@@ -1953,10 +1952,11 @@ MonoBehaviour:
   - OnDeadSystem
   - OnWeaponPickupCollision
   - OnAmmoChangedSystem
+  - OnAttackSystem
   _initSwitches: 01010101
-  _updateSwitches: 0101010101010101010101010101
+  _updateSwitches: 010101010001000101010101010101
   _fixedUpdateSwitches: 
-  _reactiveSwitches: 01010101010101
+  _reactiveSwitches: 010101010101010101
 --- !u!4 &2020709258
 Transform:
   m_ObjectHideFlags: 0
@@ -2278,7 +2278,7 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 732556081377220061, guid: d37b12af1cfd70c4bb98301fc00ad2b1, type: 3}
-      propertyPath: _metas.Array.data[12].Fields.Array.data[0].UnityComponent
+      propertyPath: _metas.Array.data[11].Fields.Array.data[0].UnityComponent
       value: 
       objectReference: {fileID: 900338452}
     - target: {fileID: 3981269079167589347, guid: d37b12af1cfd70c4bb98301fc00ad2b1, type: 3}
