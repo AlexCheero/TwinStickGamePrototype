@@ -236,23 +236,11 @@ MonoBehaviour:
     Fields: []
     UnityComponent: {fileID: 0}
     IsExpanded: 1
-  - ComponentName: Tags.MeleeWeaponHoldingTag
-    Fields: []
-    UnityComponent: {fileID: 0}
-    IsExpanded: 0
   - ComponentName: Components.HealthComponent
     Fields:
     - TypeName: System.Single
       Name: health
       ValueRepresentation: 100
-      UnityComponent: {fileID: 0}
-    UnityComponent: {fileID: 0}
-    IsExpanded: 0
-  - ComponentName: Components.DamageComponent
-    Fields:
-    - TypeName: System.Single
-      Name: damage
-      ValueRepresentation: 25
       UnityComponent: {fileID: 0}
     UnityComponent: {fileID: 0}
     IsExpanded: 0

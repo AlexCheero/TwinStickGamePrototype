@@ -1940,9 +1940,8 @@ MonoBehaviour:
   - CameraFollowSystem
   - PlayerRotationSystem
   - EnemyFollowSystem
-  - HealthSystem
   - EnemyMeleeAttackSystem
-  - PlayerMeleeAttackSystem
+  - HealthSystem
   - LifeTimeSystem
   - PlayerAttackSystem
   _fixedUpdateSystemTypeNames: []
@@ -1954,7 +1953,7 @@ MonoBehaviour:
   - OnAmmoChangedSystem
   - OnAttackSystem
   _initSwitches: 01010101
-  _updateSwitches: 010101010001000101010101010101
+  _updateSwitches: 010101010000010101010101010101
   _fixedUpdateSwitches: 
   _reactiveSwitches: 010101010101010101
 --- !u!4 &2020709258
@@ -2278,7 +2277,7 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 732556081377220061, guid: d37b12af1cfd70c4bb98301fc00ad2b1, type: 3}
-      propertyPath: _metas.Array.data[11].Fields.Array.data[0].UnityComponent
+      propertyPath: _metas.Array.data[9].Fields.Array.data[0].UnityComponent
       value: 
       objectReference: {fileID: 900338452}
     - target: {fileID: 3981269079167589347, guid: d37b12af1cfd70c4bb98301fc00ad2b1, type: 3}

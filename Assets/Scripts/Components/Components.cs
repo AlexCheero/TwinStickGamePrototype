@@ -97,11 +97,4 @@ namespace Tags
     struct RangedWeapon { }
     struct ProjectileWeapon { }
     struct Weapon { }
-
-    [MutualyExclusive(typeof(ProjectileWeaponHoldingTag), typeof(MeleeWeaponHoldingTag))]
-    struct InstantRangedWeaponHoldingTag { }
-    [MutualyExclusive(typeof(InstantRangedWeaponHoldingTag), typeof(MeleeWeaponHoldingTag))]
-    struct ProjectileWeaponHoldingTag { }
-    [MutualyExclusive(typeof(InstantRangedWeaponHoldingTag), typeof(ProjectileWeaponHoldingTag))]
-    struct MeleeWeaponHoldingTag { }
 }

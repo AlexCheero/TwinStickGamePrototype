@@ -37,17 +37,17 @@ public static class OnAttackSystem
 
         ref var attackCD = ref world.GetComponentByRef<AttackCooldown>(id);
         var nextAttackTime = attackCD.previousAttackTime + attackCD.attackCD;
-        if (Time.time < nextAttackTime)
-            return;
+        if (Time.time >= nextAttackTime)
+        {
+            attackCD.previousAttackTime = Time.time;
 
-        attackCD.previousAttackTime = Time.time;
-
-        if (world.CheckAgainstMasks(id, _meleeIncludes))
-            MeleeAttack(world, id);
-        else if(world.CheckAgainstMasks(id, _rangedIncludes))
-            RangedAttack(world, id);
-        else if (world.CheckAgainstMasks(id, _projIncludes))
-            ProjectileAttack(world, id);
+            if (world.CheckAgainstMasks(id, _meleeIncludes))
+                MeleeAttack(world, id);
+            else if (world.CheckAgainstMasks(id, _rangedIncludes))
+                RangedAttack(world, id);
+            else if (world.CheckAgainstMasks(id, _projIncludes))
+                ProjectileAttack(world, id);
+        }
 
         world.RemoveComponent<Attack>(id);
     }
