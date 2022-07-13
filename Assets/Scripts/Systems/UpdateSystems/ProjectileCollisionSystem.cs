@@ -1,18 +1,20 @@
-using ECS;
 using Components;
+using ECS;
 using Tags;
 
-[ReactiveSystem(EReactionType.OnAdd, typeof(CollisionWith))]
-public static class OnProjectileCollisionSystem
+[UpdateSystem]
+public class ProjectileCollisionSystem : EcsSystem
 {
-    private static BitMask _includes = new BitMask(
-        ComponentMeta<Projectile>.Id,
-        ComponentMeta<DeleteOnCollision>.Id
-        );
+    private int _filterId;
 
-    public static void Tick(EcsWorld world, int id)
+    public ProjectileCollisionSystem(EcsWorld world)
     {
-        if (world.CheckAgainstMasks(id, _includes))
+        _filterId = world.RegisterFilter(new BitMask(Id<Projectile>(), Id<DeleteOnCollision>(), Id<CollisionWith>()));
+    }
+
+    public override void Tick(EcsWorld world)
+    {
+        foreach (var id in world.Enumerate(_filterId))
         {
             var collidedEntity = world.GetComponent<CollisionWith>(id).entity;
             var collidedId = collidedEntity.GetId();

@@ -1,18 +1,24 @@
-using ECS;
 using Components;
+using ECS;
 using Tags;
 using UnityEngine;
 
-[ReactiveSystem(EReactionType.OnAdd, typeof(CollisionWith))]
-public static class OnWeaponPickupCollision
+[UpdateSystem]
+public class WeaponPickupCollisionSystem : EcsSystem
 {
-    private static BitMask _includes = new BitMask(ComponentMeta<Pickup>.Id,
-                                                   ComponentMeta<Weapon>.Id,
-                                                   ComponentMeta<Transform>.Id);
+    private int _filterId;
 
-    public static void Tick(EcsWorld world, int id)
+    public WeaponPickupCollisionSystem(EcsWorld world)
     {
-        if (world.CheckAgainstMasks(id, _includes))
+        _filterId = world.RegisterFilter(new BitMask(Id<CollisionWith>(),
+                                                     Id<Pickup>(),
+                                                     Id<Weapon>(),
+                                                     Id<Transform>()));
+    }
+
+    public override void Tick(EcsWorld world)
+    {
+        foreach (var id in world.Enumerate(_filterId))
         {
             Debug.Log("new weapon picked up");
             var collidedEntity = world.GetComponent<CollisionWith>(id).entity;

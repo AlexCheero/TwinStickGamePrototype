@@ -1944,16 +1944,20 @@ MonoBehaviour:
   - HealthSystem
   - LifeTimeSystem
   - PlayerAttackSystem
+  - AttackCDSystem
+  - MeleeAttackSystem
+  - RangedAttackSystem
+  - ProjectileAttackSystem
+  - AttackCleanupSystem
+  - ProjectileCollisionSystem
+  - AmmoCountSystem
+  - HealthPickupCollisionSystem
+  - WeaponPickupCollisionSystem
+  - DeleteDeadSystem
   _fixedUpdateSystemTypeNames: []
-  _reactiveSystemTypeNames:
-  - OnHealthPickupCollisionSystem
-  - OnProjectileCollisionSystem
-  - OnDeadSystem
-  - OnWeaponPickupCollision
-  - OnAmmoChangedSystem
-  - OnAttackSystem
+  _reactiveSystemTypeNames: []
   _initSwitches: 01010101
-  _updateSwitches: 010101010000010101010101010101
+  _updateSwitches: 01010101000001010101010101010101010101010101010101
   _fixedUpdateSwitches: 
   _reactiveSwitches: 010101010101010101
 --- !u!4 &2020709258
