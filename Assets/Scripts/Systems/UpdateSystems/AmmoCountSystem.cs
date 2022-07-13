@@ -16,7 +16,7 @@ public class AmmoCountSystem : EcsSystem
         foreach (var id in world.Enumerate(_filterId))
         {
             if (world.GetComponent<Ammo>(id).amount <= 0)
-                world.RemoveComponent<Ammo>(id);
+                world.Remove<Ammo>(id);
         }
     }
 }

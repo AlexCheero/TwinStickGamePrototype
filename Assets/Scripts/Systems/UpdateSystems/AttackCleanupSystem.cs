@@ -15,7 +15,7 @@ public class AttackCleanupSystem : EcsSystem
     {
         foreach (var id in world.Enumerate(_filterId))
         {
-            world.RemoveComponent<Attack>(id);
+            world.Remove<Attack>(id);
         }
     }
 }

@@ -28,7 +28,7 @@ public class WeaponPickupCollisionSystem : EcsSystem
             {
                 world.GetOrAddComponentRef<CurrentWeapon>(collidedId).entity = world.GetById(id);
                 Object.Destroy(world.GetComponent<Transform>(id).gameObject);
-                world.RemoveComponent<Transform>(id);
+                world.Remove<Transform>(id);
             }
         }
     }

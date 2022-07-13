@@ -24,7 +24,7 @@ public class AttackCDSystem : EcsSystem
             ref var attackCD = ref world.GetComponentByRef<AttackCooldown>(id);
             var nextAttackTime = attackCD.previousAttackTime + attackCD.attackCD;
             if (Time.time < nextAttackTime)
-                world.RemoveComponent<Attack>(id);
+                world.Remove<Attack>(id);
             else
                 attackCD.previousAttackTime = Time.time;
         }

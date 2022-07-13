@@ -17,7 +17,7 @@ public class CleanupTargetEntitySystem : EcsSystem
             var target = world.GetComponent<TargetEntityComponent>(id).target;
             if (target == null || !world.IsEntityValid(target.Entity))
             {
-                world.RemoveComponent<TargetEntityComponent>(id);
+                world.Remove<TargetEntityComponent>(id);
                 continue;
             }
         }
