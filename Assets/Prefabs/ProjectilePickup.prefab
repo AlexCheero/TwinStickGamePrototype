@@ -91,7 +91,7 @@ BoxCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1896602290991745285}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
@@ -123,6 +123,7 @@ MonoBehaviour:
       Name: amount
       ValueRepresentation: 10
       UnityComponent: {fileID: 0}
+      Preset: {fileID: 0}
     UnityComponent: {fileID: 0}
     IsExpanded: 0
   - ComponentName: Tags.ProjectileWeapon
@@ -135,10 +136,12 @@ MonoBehaviour:
       Name: previousAttackTime
       ValueRepresentation: 0
       UnityComponent: {fileID: 0}
+      Preset: {fileID: 0}
     - TypeName: System.Single
       Name: attackCD
       ValueRepresentation: 0.5
       UnityComponent: {fileID: 0}
+      Preset: {fileID: 0}
     UnityComponent: {fileID: 0}
     IsExpanded: 1
   - ComponentName: Tags.Weapon

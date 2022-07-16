@@ -93,6 +93,11 @@ namespace Components
     {
         public EntityPreset preset;
     }
+
+    struct PlayerVelocityComponent
+    {
+        public Vector3 velocity;
+    }
 }
 
 namespace Tags

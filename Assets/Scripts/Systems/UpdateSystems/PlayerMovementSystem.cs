@@ -12,7 +12,7 @@ sealed class PlayerMovementSystem : EcsSystem
     public PlayerMovementSystem(EcsWorld world)
     {
         _camFilterId = world.RegisterFilter(new BitMask(Id<CameraTag>(), Id<Transform>()));
-        _playerFilterId = world.RegisterFilter(new BitMask(Id<PlayerTag>(), Id<Transform>(), Id<SpeedComponent>()));
+        _playerFilterId = world.RegisterFilter(new BitMask(Id<PlayerTag>(), Id<SpeedComponent>(), Id<PlayerVelocityComponent>()));
     }
 
     public override void Tick(EcsWorld world)
@@ -52,9 +52,8 @@ sealed class PlayerMovementSystem : EcsSystem
 
         foreach (var id in world.Enumerate(_playerFilterId))
         {
-            var transform = world.GetComponent<Transform>(id);
-            moveDir *= Time.deltaTime * world.GetComponent<SpeedComponent>(id).speed;
-            transform.Translate(moveDir, Space.World);
+            world.GetComponentByRef<PlayerVelocityComponent>(id).velocity =
+                moveDir * world.GetComponent<SpeedComponent>(id).speed;
         }
     }
 }

@@ -1977,7 +1977,8 @@ MonoBehaviour:
   - AmmoCountSystem
   - AttackCleanupSystem
   - DeleteDeadSystem
-  _fixedUpdateSystemTypeNames: []
+  _fixedUpdateSystemTypeNames:
+  - ApplyPlayerVelocitySystem
   _lateFixedUpdateSystemTypeNames:
   - ProjectileCollisionSystem
   - HealthPickupCollisionSystem
@@ -1988,7 +1989,7 @@ MonoBehaviour:
   _initSwitches: 01010101010101010101
   _updateSwitches: 01010101010101010101010101010101010101010101010101010101
   _lateUpdateSwitches: 010101
-  _fixedUpdateSwitches: 
+  _fixedUpdateSwitches: 0101
   _lateFixedUpdateSwitches: 0101010101
   _reactiveSwitches: 010101010101010101
 --- !u!4 &2020709258

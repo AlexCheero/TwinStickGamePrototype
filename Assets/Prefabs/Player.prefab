@@ -180,6 +180,19 @@ MonoBehaviour:
       UnityComponent: {fileID: 0}
       Preset: {fileID: 11400000, guid: 9f3956faf2ec2944e902deadab675db9, type: 2}
     UnityComponent: {fileID: 0}
+    IsExpanded: 0
+  - ComponentName: UnityEngine.Rigidbody
+    Fields: []
+    UnityComponent: {fileID: 8791500836367506952}
+    IsExpanded: 0
+  - ComponentName: Components.PlayerVelocityComponent
+    Fields:
+    - TypeName: UnityEngine.Vector3
+      Name: velocity
+      ValueRepresentation: 0 0 0
+      UnityComponent: {fileID: 0}
+      Preset: {fileID: 0}
+    UnityComponent: {fileID: 0}
     IsExpanded: 1
 --- !u!1 &8791500836585612155
 GameObject:
