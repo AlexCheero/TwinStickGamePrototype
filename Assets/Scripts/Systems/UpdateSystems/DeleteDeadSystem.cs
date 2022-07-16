@@ -2,7 +2,7 @@ using ECS;
 using Tags;
 using UnityEngine;
 
-[System(ESystemCategory.LateUpdate)]
+[System(ESystemCategory.LateUpdate, ESystemCategory.LateFixedUpdate)]
 public class DeleteDeadSystem : EcsSystem
 {
     private int _poolItemfilterId;

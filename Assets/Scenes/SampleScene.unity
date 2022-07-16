@@ -1983,12 +1983,13 @@ MonoBehaviour:
   - HealthPickupCollisionSystem
   - WeaponPickupCollisionSystem
   - CollisionCleanupSystem
+  - DeleteDeadSystem
   _reactiveSystemTypeNames: []
   _initSwitches: 01010101010101010101
   _updateSwitches: 010101010101010101010101010101010101010101010101010101
   _lateUpdateSwitches: 010101
   _fixedUpdateSwitches: 
-  _lateFixedUpdateSwitches: 01010101
+  _lateFixedUpdateSwitches: 0101010101
   _reactiveSwitches: 010101010101010101
 --- !u!4 &2020709258
 Transform:
