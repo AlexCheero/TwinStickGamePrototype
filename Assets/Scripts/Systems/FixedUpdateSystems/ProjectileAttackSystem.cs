@@ -7,15 +7,12 @@ using UnityEngine;
 public class ProjectileAttackSystem : EcsSystem
 {
     private int _filterId;
-    private ObjectPool _projectilePool;
 
     public ProjectileAttackSystem(EcsWorld world)
     {
         _filterId = world.RegisterFilter(new BitMask(Id<Attack>(),
                                                      Id<ProjectileWeapon>(),
                                                      Id<Ammo>()));
-
-        _projectilePool = GameObject.Find("ProjectilePool").GetComponent<ObjectPool>();
     }
 
     public override void Tick(EcsWorld world)
@@ -30,7 +27,7 @@ public class ProjectileAttackSystem : EcsSystem
             var attack = world.GetComponent<Attack>(id);
 
             var instantiationPosition = attack.position + attack.direction * 2.0f; //instantiation before the player
-            var projectileView = _projectilePool.Get<EntityView>(instantiationPosition, Quaternion.identity);
+            var projectileView = PoolManager.Get("ProjectilePool").Get<EntityView>(instantiationPosition, Quaternion.identity);
             var projectileId = projectileView.InitAsEntity(world);
 #if DEBUG
             if (!world.Have<Projectile>(projectileId))
