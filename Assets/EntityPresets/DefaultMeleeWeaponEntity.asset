@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 12b1dc98d75fed842a60027f55761e69, type: 3}
-  m_Name: DefaultMeleeEntity
+  m_Name: DefaultMeleeWeaponEntity
   m_EditorClassIdentifier: 
   _metas:
   - ComponentName: Tags.MeleeWeapon
@@ -21,7 +21,7 @@ MonoBehaviour:
     Fields:
     - TypeName: System.Single
       Name: previousAttackTime
-      ValueRepresentation: 0
+      ValueRepresentation: -1
       UnityComponent: {fileID: 0}
       Preset: {fileID: 0}
     - TypeName: System.Single

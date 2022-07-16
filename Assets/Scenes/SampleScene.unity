@@ -1968,7 +1968,7 @@ MonoBehaviour:
   - HealthSystem
   - LifeTimeSystem
   - PlayerAttackSystem
-  - EnemyMeleeAttackSystem
+  - EnemyAttackSystem
   - AttackCDSystem
   - MeleeAttackSystem
   - RangedAttackSystem
@@ -1986,7 +1986,7 @@ MonoBehaviour:
   - DeleteDeadSystem
   _reactiveSystemTypeNames: []
   _initSwitches: 01010101010101010101
-  _updateSwitches: 010101010101010101010101010101010101010101010101010101
+  _updateSwitches: 01010101010101010101010101010101010101010101010101010101
   _lateUpdateSwitches: 010101
   _fixedUpdateSwitches: 
   _lateFixedUpdateSwitches: 0101010101

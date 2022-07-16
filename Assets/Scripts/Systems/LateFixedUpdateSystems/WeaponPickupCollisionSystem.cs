@@ -27,6 +27,8 @@ public class WeaponPickupCollisionSystem : EcsSystem
                 world.Have<PlayerTag>(collidedId))
             {
                 world.GetOrAddComponentRef<CurrentWeapon>(collidedId).entity = world.GetById(id);
+                var attackReach = world.Have<ReachComponent>(id) ? world.GetComponent<ReachComponent>(id).distance : float.PositiveInfinity;
+                world.GetOrAddComponentRef<AttackReachComponent>(collidedId).distance = attackReach;
                 Object.Destroy(world.GetComponent<Transform>(id).gameObject);
                 world.Remove<Transform>(id);
             }

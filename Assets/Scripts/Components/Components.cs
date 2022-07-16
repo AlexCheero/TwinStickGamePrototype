@@ -41,6 +41,12 @@ namespace Components
         public float distance;
     }
 
+    struct AttackReachComponent
+    {
+        //it takes in account the radius of player and enemy
+        public float distance;
+    }
+
     struct ViewAngle
     {
         public float angle;

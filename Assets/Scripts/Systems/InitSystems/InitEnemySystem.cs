@@ -19,7 +19,7 @@ public class InitEnemySystem : EcsSystem
         {
             var navAgent = world.GetComponent<NavMeshAgent>(id);
             navAgent.speed = world.GetComponent<SpeedComponent>(id).speed;
-            navAgent.stoppingDistance = world.GetComponent<ReachComponent>(id).distance;
+            navAgent.stoppingDistance = world.GetComponent<AttackReachComponent>(id).distance;
             navAgent.angularSpeed = world.GetComponent<AngularSpeedComponent>(id).speed;
             navAgent.acceleration = world.GetComponent<AccelerationComponent>(id).acceleration;
         }

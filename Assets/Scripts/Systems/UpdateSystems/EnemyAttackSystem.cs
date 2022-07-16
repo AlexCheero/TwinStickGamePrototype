@@ -4,25 +4,23 @@ using Tags;
 using UnityEngine;
 
 [System(ESystemCategory.Update)]
-public class EnemyMeleeAttackSystem : EcsSystem
+public class EnemyAttackSystem : EcsSystem
 {
-    private int _enemyFilterId;
+    private int _filterId;
 
-    public EnemyMeleeAttackSystem(EcsWorld world)
+    public EnemyAttackSystem(EcsWorld world)
     {
-        _enemyFilterId = world.RegisterFilter(
-            new BitMask(
-                Id<EnemyTag>(),
-                Id<Transform>(),
-                Id<ReachComponent>(),
-                Id<ViewAngle>(),
-                Id<TargetEntityComponent>()
-                ));
+        _filterId = world.RegisterFilter(new BitMask(Id<EnemyTag>(),
+                                                          Id<Transform>(),
+                                                          Id<AttackReachComponent>(),
+                                                          Id<ViewAngle>(),
+                                                          Id<CurrentWeapon>(),
+                                                          Id<TargetEntityComponent>()));
     }
 
     public override void Tick(EcsWorld world)
     {
-        foreach (var id in world.Enumerate(_enemyFilterId))
+        foreach (var id in world.Enumerate(_filterId))
         {
             var targetView = world.GetComponent<TargetEntityComponent>(id).target;
             
@@ -37,7 +35,7 @@ public class EnemyMeleeAttackSystem : EcsSystem
             if (angleToTarget > viewAngle / 2)
                 continue;
 
-            var attackReach = world.GetComponent<ReachComponent>(id).distance;
+            var attackReach = world.GetComponent<AttackReachComponent>(id).distance;
             var distance = (targetPos - position).magnitude;
             if (distance > attackReach)
                 continue;
