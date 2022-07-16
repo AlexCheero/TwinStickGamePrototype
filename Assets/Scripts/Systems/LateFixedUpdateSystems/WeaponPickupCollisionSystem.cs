@@ -30,11 +30,6 @@ public class WeaponPickupCollisionSystem : EcsSystem
                 Object.Destroy(world.GetComponent<Transform>(id).gameObject);
                 world.Remove<Transform>(id);
             }
-            else
-            {
-                //TODO: move to cleanup system in pickup systems group
-                world.Remove<CollisionWith>(id);
-            }
         }
     }
 }
