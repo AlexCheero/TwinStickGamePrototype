@@ -1,5 +1,7 @@
 using Components;
 using ECS;
+using Tags;
+using UnityEngine;
 
 [System(ESystemCategory.LateUpdate)]
 public class AttackCleanupSystem : EcsSystem
@@ -8,14 +10,12 @@ public class AttackCleanupSystem : EcsSystem
 
     public AttackCleanupSystem(EcsWorld world)
     {
-        _filterId = world.RegisterFilter(new BitMask(Id<Attack>()));
+        _filterId = world.RegisterFilter(new BitMask(Id<Attack>()), new BitMask(Id<ProjectileWeapon>()));
     }
 
     public override void Tick(EcsWorld world)
     {
         foreach (var id in world.Enumerate(_filterId))
-        {
             world.Remove<Attack>(id);
-        }
     }
 }

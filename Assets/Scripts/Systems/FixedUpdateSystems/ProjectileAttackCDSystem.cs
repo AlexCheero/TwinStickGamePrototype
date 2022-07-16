@@ -3,19 +3,15 @@ using ECS;
 using Tags;
 using UnityEngine;
 
-/*
- * this system should go before any specific attack system and after any attack triggering system
- * e.g. PlayerAttackSystem, EnemyAttackSystem, ***AttackCDSystem***, MeleeAttackSYstem, RangeAttackSystem, ProjectileAttackSystem
- */
-
-[System(ESystemCategory.Update)]
-public class AttackCDSystem : EcsSystem
+//choose system type here
+[System(ESystemCategory.FixedUpdate)]
+public class ProjectileAttackCDSystem : EcsSystem
 {
     private int _filterId;
 
-    public AttackCDSystem(EcsWorld world)
+    public ProjectileAttackCDSystem(EcsWorld world)
     {
-        _filterId = world.RegisterFilter(new BitMask(Id<Attack>(), Id<AttackCooldown>()), new BitMask(Id<ProjectileWeapon>()));
+        _filterId = world.RegisterFilter(new BitMask(Id<Attack>(), Id<AttackCooldown>(), Id<ProjectileWeapon>()));
     }
 
     public override void Tick(EcsWorld world)
@@ -24,6 +20,7 @@ public class AttackCDSystem : EcsSystem
         {
             ref var attackCD = ref world.GetComponentByRef<AttackCooldown>(id);
             var nextAttackTime = attackCD.previousAttackTime + attackCD.attackCD;
+
             if (Time.time < nextAttackTime)
                 world.Remove<Attack>(id);
             else

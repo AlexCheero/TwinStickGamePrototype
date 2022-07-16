@@ -3,7 +3,7 @@ using ECS;
 using Tags;
 using UnityEngine;
 
-[System(ESystemCategory.Update)]
+[System(ESystemCategory.FixedUpdate)]
 public class ProjectileAttackSystem : EcsSystem
 {
     private int _filterId;
@@ -13,8 +13,7 @@ public class ProjectileAttackSystem : EcsSystem
     {
         _filterId = world.RegisterFilter(new BitMask(Id<Attack>(),
                                                      Id<ProjectileWeapon>(),
-                                                     Id<Ammo>(),
-                                                     Id<AttackCooldown>()));
+                                                     Id<Ammo>()));
 
         _projectilePool = GameObject.Find("ProjectilePool").GetComponent<ObjectPool>();
     }

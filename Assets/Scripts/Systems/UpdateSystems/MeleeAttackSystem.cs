@@ -17,8 +17,7 @@ public class MeleeAttackSystem : EcsSystem
                                                      Id<MeleeWeapon>(),
                                                      Id<DamageComponent>(),
                                                      Id<ReachComponent>(),
-                                                     Id<AttackAngle>(),
-                                                     Id<AttackCooldown>()));
+                                                     Id<AttackAngle>()));
 
         _overlapResults = new Collider[OverlapsCount];
     }

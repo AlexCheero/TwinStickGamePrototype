@@ -13,8 +13,7 @@ public class RangedAttackSystem : EcsSystem
         _filterId = world.RegisterFilter(new BitMask(Id<Attack>(),
                                                      Id<RangedWeapon>(),
                                                      Id<Ammo>(),
-                                                     Id<DamageComponent>(),
-                                                     Id<AttackCooldown>()));
+                                                     Id<DamageComponent>()));
     }
 
     public override void Tick(EcsWorld world)

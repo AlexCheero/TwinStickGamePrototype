@@ -1972,25 +1972,27 @@ MonoBehaviour:
   - AttackCDSystem
   - MeleeAttackSystem
   - RangedAttackSystem
-  - ProjectileAttackSystem
   _lateUpdateSystemTypeNames:
   - AmmoCountSystem
   - AttackCleanupSystem
   - DeleteDeadSystem
   _fixedUpdateSystemTypeNames:
   - ApplyPlayerVelocitySystem
+  - ProjectileAttackCDSystem
+  - ProjectileAttackSystem
   _lateFixedUpdateSystemTypeNames:
   - ProjectileCollisionSystem
   - HealthPickupCollisionSystem
   - WeaponPickupCollisionSystem
   - CollisionCleanupSystem
   - DeleteDeadSystem
+  - ProjectileAttackCleanupSystem
   _reactiveSystemTypeNames: []
   _initSwitches: 01010101010101010101
   _updateSwitches: 01010101010101010101010101010101010101010101010101010101
   _lateUpdateSwitches: 010101
-  _fixedUpdateSwitches: 0101
-  _lateFixedUpdateSwitches: 0101010101
+  _fixedUpdateSwitches: 01010101
+  _lateFixedUpdateSwitches: 010101010101
   _reactiveSwitches: 010101010101010101
 --- !u!4 &2020709258
 Transform:
@@ -2480,6 +2482,10 @@ PrefabInstance:
     - target: {fileID: 1896602290991745285, guid: f0b795638ef2dc84185acde7f6a4186b, type: 3}
       propertyPath: m_Name
       value: ProjectilePickup
+      objectReference: {fileID: 0}
+    - target: {fileID: 4161576124969941030, guid: f0b795638ef2dc84185acde7f6a4186b, type: 3}
+      propertyPath: _metas.Array.data[4].Fields.Array.data[1].ValueRepresentation
+      value: 0.5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f0b795638ef2dc84185acde7f6a4186b, type: 3}
