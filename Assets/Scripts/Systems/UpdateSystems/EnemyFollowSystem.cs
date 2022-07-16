@@ -4,6 +4,7 @@ using Tags;
 using UnityEngine;
 using UnityEngine.AI;
 
+[System(ESystemCategory.Update)]
 public class EnemyFollowSystem : EcsSystem
 {
     private int _enemyFilterId;

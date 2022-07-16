@@ -1,7 +1,7 @@
 using Components;
 using ECS;
 
-[UpdateSystem]
+[System(ESystemCategory.Update)]
 public class AttackCleanupSystem : EcsSystem
 {
     private int _filterId;

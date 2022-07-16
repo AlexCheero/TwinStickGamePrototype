@@ -7,7 +7,7 @@ using UnityEngine;
  * e.g. PlayerAttackSystem, EnemyAttackSystem, ***AttackCDSystem***, MeleeAttackSYstem, RangeAttackSystem, ProjectileAttackSystem
  */
 
-[UpdateSystem]
+[System(ESystemCategory.Update)]
 public class AttackCDSystem : EcsSystem
 {
     private int _filterId;

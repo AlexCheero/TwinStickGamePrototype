@@ -3,7 +3,7 @@ using ECS;
 using Tags;
 using UnityEngine.AI;
 
-[InitSystem]
+[System(ESystemCategory.Init)]
 public class InitEnemySystem : EcsSystem
 {
     private int _filterId;

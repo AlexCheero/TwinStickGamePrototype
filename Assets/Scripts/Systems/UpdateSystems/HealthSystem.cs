@@ -3,6 +3,7 @@ using ECS;
 using Tags;
 using UnityEngine;
 
+[System(ESystemCategory.Update)]
 public class HealthSystem : EcsSystem
 {
     private int _filterId;

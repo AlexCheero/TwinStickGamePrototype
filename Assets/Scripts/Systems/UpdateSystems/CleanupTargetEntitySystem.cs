@@ -1,6 +1,7 @@
 using Components;
 using ECS;
 
+[System(ESystemCategory.Update)]
 public class CleanupTargetEntitySystem : EcsSystem
 {
     private int _filterId;

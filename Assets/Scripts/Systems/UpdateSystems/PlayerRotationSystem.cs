@@ -2,6 +2,7 @@ using ECS;
 using Tags;
 using UnityEngine;
 
+[System(ESystemCategory.Update)]
 public class PlayerRotationSystem : EcsSystem
 {
     private int _camFilterId;

@@ -3,6 +3,7 @@ using ECS;
 using Tags;
 using UnityEngine;
 
+[System(ESystemCategory.Update)]
 sealed class PlayerMovementSystem : EcsSystem
 {
     private int _camFilterId;

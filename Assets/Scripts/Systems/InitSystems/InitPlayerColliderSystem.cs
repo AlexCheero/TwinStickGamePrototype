@@ -2,7 +2,7 @@ using ECS;
 using Tags;
 using UnityEngine;
 
-[InitSystem]
+[System(ESystemCategory.Init)]
 public class InitPlayerColliderSystem : EcsSystem
 {
     private int _filterId;

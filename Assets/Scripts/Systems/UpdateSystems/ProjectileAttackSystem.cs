@@ -3,7 +3,7 @@ using ECS;
 using Tags;
 using UnityEngine;
 
-[UpdateSystem]
+[System(ESystemCategory.Update)]
 public class ProjectileAttackSystem : EcsSystem
 {
     private int _filterId;

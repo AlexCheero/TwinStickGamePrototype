@@ -3,6 +3,7 @@ using ECS;
 using Tags;
 using UnityEngine;
 
+[System(ESystemCategory.Update)]
 public class EnemyMeleeAttackSystem : EcsSystem
 {
     private int _enemyFilterId;

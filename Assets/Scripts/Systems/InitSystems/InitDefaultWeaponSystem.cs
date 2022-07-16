@@ -1,7 +1,7 @@
 using Components;
 using ECS;
 
-[InitSystem]
+[System(ESystemCategory.Init)]
 public class InitDefaultWeaponSystem : EcsSystem
 {
     private int _filterId;
