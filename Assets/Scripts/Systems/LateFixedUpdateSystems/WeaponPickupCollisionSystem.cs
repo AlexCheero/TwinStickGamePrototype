@@ -3,7 +3,7 @@ using ECS;
 using Tags;
 using UnityEngine;
 
-[System(ESystemCategory.Update)]
+[System(ESystemCategory.LateFixedUpdate)]
 public class WeaponPickupCollisionSystem : EcsSystem
 {
     private int _filterId;

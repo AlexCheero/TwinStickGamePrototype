@@ -2,7 +2,7 @@ using Components;
 using ECS;
 using Tags;
 
-[System(ESystemCategory.Update)]
+[System(ESystemCategory.LateFixedUpdate)]
 public class HealthPickupCollisionSystem : EcsSystem
 {
     private int _filterId;
