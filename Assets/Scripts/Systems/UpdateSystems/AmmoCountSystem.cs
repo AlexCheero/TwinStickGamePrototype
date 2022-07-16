@@ -1,7 +1,7 @@
 using Components;
 using ECS;
 
-[System(ESystemCategory.Update)]
+[System(ESystemCategory.LateUpdate)]
 public class AmmoCountSystem : EcsSystem
 {
     private int _filterId;

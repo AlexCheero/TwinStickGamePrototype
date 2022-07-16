@@ -1973,10 +1973,10 @@ MonoBehaviour:
   - MeleeAttackSystem
   - RangedAttackSystem
   - ProjectileAttackSystem
-  - AttackCleanupSystem
+  _lateUpdateSystemTypeNames:
   - AmmoCountSystem
+  - AttackCleanupSystem
   - DeleteDeadSystem
-  _lateUpdateSystemTypeNames: []
   _fixedUpdateSystemTypeNames: []
   _lateFixedUpdateSystemTypeNames:
   - ProjectileCollisionSystem
@@ -1986,7 +1986,7 @@ MonoBehaviour:
   _reactiveSystemTypeNames: []
   _initSwitches: 01010101010101010101
   _updateSwitches: 010101010101010101010101010101010101010101010101010101
-  _lateUpdateSwitches: 
+  _lateUpdateSwitches: 010101
   _fixedUpdateSwitches: 
   _lateFixedUpdateSwitches: 01010101
   _reactiveSwitches: 010101010101010101
