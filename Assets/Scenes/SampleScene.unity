@@ -1958,7 +1958,6 @@ MonoBehaviour:
   - InitDefaultWeaponSystem
   - InitResetAttackTimeSystem
   - InitEnemySystem
-  - InitPlayerColliderSystem
   _updateSystemTypeNames:
   - CleanupTargetEntitySystem
   - PlayerMovementSystem
