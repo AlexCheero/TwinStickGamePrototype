@@ -98,6 +98,11 @@ namespace Components
     {
         public Vector3 velocity;
     }
+
+    struct NextWaypointIdx
+    {
+        public int idx;
+    }
 }
 
 namespace Tags
