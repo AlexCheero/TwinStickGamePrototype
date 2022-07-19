@@ -15,7 +15,7 @@ public class AttackCDSystem : EcsSystem
 
     public AttackCDSystem(EcsWorld world)
     {
-        _filterId = world.RegisterFilter(new BitMask(Id<Attack>(), Id<AttackCooldown>()), new BitMask(Id<ProjectileWeapon>()));
+        _filterId = world.RegisterFilter(new BitMask(Id<Attack>(), Id<AttackCooldown>()));
     }
 
     public override void Tick(EcsWorld world)
