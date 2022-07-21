@@ -35,6 +35,12 @@ namespace Components
         public float health;
     }
 
+    struct HealthLimitsComponent
+    {
+        public float initialHealth;
+        public float maxHealth;
+    }
+
     struct ReachComponent
     {
         //it takes in account the radius of player and enemy
@@ -103,6 +109,11 @@ namespace Components
     {
         public int idx;
     }
+
+    struct UtilityCurvesComponent
+    {
+        public UtilityCurves curves;
+    }
 }
 
 namespace Tags
@@ -118,4 +129,8 @@ namespace Tags
     struct RangedWeapon { }
     struct ProjectileWeapon { }
     struct Weapon { }
+
+    struct PatrolAction { }
+    struct ChaseAction { }
+    struct FleeAction { }
 }

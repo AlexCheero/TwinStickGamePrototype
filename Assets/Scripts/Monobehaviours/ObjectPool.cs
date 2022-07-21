@@ -45,6 +45,8 @@ public class ObjectPool : MonoBehaviour
     }
 #endif
 
+    public T GetPrototype<T>() where T : MonoBehaviour => _prototype.GetComponent<T>();
+
     public T Get<T>() where T : MonoBehaviour => Get<T>(Vector3.zero, Quaternion.identity);
 
     public T Get<T>(Vector3 position, Quaternion rotation) where T : MonoBehaviour
