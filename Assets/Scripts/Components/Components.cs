@@ -70,6 +70,8 @@ namespace Components
 
     struct AttackCooldown
     {
+        [HiddenInspector]
+        [DefaultValue(-1)]
         public float previousAttackTime;
         public float attackCD;
     }

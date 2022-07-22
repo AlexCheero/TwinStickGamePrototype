@@ -2383,7 +2383,6 @@ MonoBehaviour:
   _initSystemTypeNames:
   - InitCameraSystem
   - InitDefaultWeaponSystem
-  - InitResetAttackTimeSystem
   - InitEnemySystem
   - StartPatrolSystem
   - InitEntityViewPoolsSystem
