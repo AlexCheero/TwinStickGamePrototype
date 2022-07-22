@@ -2403,7 +2403,6 @@ MonoBehaviour:
   - RangedAttackSystem
   - ProjectileAttackSystem
   _lateUpdateSystemTypeNames:
-  - AmmoCountSystem
   - AttackCleanupSystem
   - DeleteDeadSystem
   _fixedUpdateSystemTypeNames:

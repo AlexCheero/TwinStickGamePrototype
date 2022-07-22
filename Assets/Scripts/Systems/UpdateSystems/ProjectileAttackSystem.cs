@@ -19,7 +19,12 @@ public class ProjectileAttackSystem : EcsSystem
     {
         foreach (var id in world.Enumerate(_filterId))
         {
+            ref var ammo = ref world.GetComponentByRef<Ammo>(id).amount;
+            if (ammo == 0)
+                continue;
 #if DEBUG
+            if (ammo < 0)
+                throw new System.Exception("negative ammo");
             if (world.GetComponent<Ammo>(id).amount <= 0)
                 throw new System.Exception("OnProjectileShotSystem. ammo amount is <= 0. have ammo component: " + world.Have<Ammo>(id));
 #endif
@@ -39,7 +44,7 @@ public class ProjectileAttackSystem : EcsSystem
             var speed = world.GetComponent<SpeedComponent>(projectileId).speed;
             projectileView.GetComponent<Rigidbody>().AddForce(attack.direction * speed);//TODO: try different force types
 
-            world.GetComponentByRef<Ammo>(id).amount--;
+            ammo--;
         }
     }
 }

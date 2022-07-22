@@ -20,12 +20,17 @@ public class RangedAttackSystem : EcsSystem
     {
         foreach (var id in world.Enumerate(_filterId))
         {
+            ref var ammo = ref world.GetComponentByRef<Ammo>(id).amount;
+            if (ammo == 0)
+                continue;
 #if DEBUG
+            if (ammo < 0)
+                throw new System.Exception("negative ammo");
             if (world.GetComponent<Ammo>(id).amount <= 0)
                 throw new System.Exception("ammo amount is <= 0. have ammo component: " + world.Have<Ammo>(id));
 #endif
 
-            world.GetComponentByRef<Ammo>(id).amount--;
+            ammo--;
 
             Debug.Log("instant ranged attack!");
 
