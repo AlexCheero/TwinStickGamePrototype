@@ -105,6 +105,12 @@ namespace Components
         public Vector3 velocity;
     }
 
+    struct ProjectileWeapon
+    {
+        public string poolName;
+        public Entity prototypeEntity;
+    }
+
     struct NextWaypointIdx
     {
         public int idx;
@@ -127,10 +133,10 @@ namespace Tags
     struct DeadTag { }
     struct MeleeWeapon { }
     struct RangedWeapon { }
-    struct ProjectileWeapon { }
     struct Weapon { }
 
     struct PatrolAction { }
     struct ChaseAction { }
     struct FleeAction { }
+    struct Prototype { }
 }

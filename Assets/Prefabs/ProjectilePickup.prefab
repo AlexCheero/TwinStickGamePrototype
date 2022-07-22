@@ -126,10 +126,6 @@ MonoBehaviour:
       Preset: {fileID: 0}
     UnityComponent: {fileID: 0}
     IsExpanded: 0
-  - ComponentName: Tags.ProjectileWeapon
-    Fields: []
-    UnityComponent: {fileID: 0}
-    IsExpanded: 0
   - ComponentName: Components.AttackCooldown
     Fields:
     - TypeName: System.Single

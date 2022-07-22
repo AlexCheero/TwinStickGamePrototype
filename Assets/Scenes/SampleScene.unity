@@ -123,382 +123,6 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 23800000, guid: 38ff75cc6f212cf42956d0b15370ede7, type: 2}
---- !u!1 &347786758
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 347786765}
-  - component: {fileID: 347786764}
-  - component: {fileID: 347786763}
-  - component: {fileID: 347786762}
-  - component: {fileID: 347786761}
-  - component: {fileID: 347786759}
-  - component: {fileID: 347786760}
-  m_Layer: 0
-  m_Name: Projectile(Clone)
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!114 &347786759
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 347786758}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 92f4fda690b09b742be5dd8fa8519d7f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _pool: {fileID: 1957870344}
-  _idx: 0
---- !u!114 &347786760
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 347786758}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bd67fbb5415272440ad8bbd0def578db, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _metas:
-  - ComponentName: Components.SpeedComponent
-    Fields:
-    - TypeName: System.Single
-      Name: speed
-      ValueRepresentation: 2000
-      UnityComponent: {fileID: 0}
-      Preset: {fileID: 0}
-    UnityComponent: {fileID: 0}
-    IsExpanded: 0
-  - ComponentName: Tags.Projectile
-    Fields: []
-    UnityComponent: {fileID: 0}
-    IsExpanded: 0
-  - ComponentName: Components.DamageComponent
-    Fields:
-    - TypeName: System.Single
-      Name: damage
-      ValueRepresentation: 200
-      UnityComponent: {fileID: 0}
-      Preset: {fileID: 0}
-    UnityComponent: {fileID: 0}
-    IsExpanded: 0
-  - ComponentName: UnityEngine.Transform
-    Fields: []
-    UnityComponent: {fileID: 347786765}
-    IsExpanded: 0
-  - ComponentName: Tags.DeleteOnCollision
-    Fields: []
-    UnityComponent: {fileID: 0}
-    IsExpanded: 0
-  - ComponentName: PoolItem
-    Fields: []
-    UnityComponent: {fileID: 347786759}
-    IsExpanded: 0
-  - ComponentName: Components.LifeTime
-    Fields:
-    - TypeName: System.Single
-      Name: time
-      ValueRepresentation: 5
-      UnityComponent: {fileID: 0}
-      Preset: {fileID: 0}
-    UnityComponent: {fileID: 0}
-    IsExpanded: 0
-  - ComponentName: UnityEngine.Rigidbody
-    Fields: []
-    UnityComponent: {fileID: 347786761}
-    IsExpanded: 0
---- !u!54 &347786761
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 347786758}
-  serializedVersion: 2
-  m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0.05
-  m_UseGravity: 1
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_Constraints: 0
-  m_CollisionDetection: 0
---- !u!135 &347786762
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 347786758}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.5
-  m_Center: {x: 0, y: 0, z: 0}
---- !u!23 &347786763
-MeshRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 347786758}
-  m_Enabled: 1
-  m_CastShadows: 1
-  m_ReceiveShadows: 1
-  m_DynamicOccludee: 1
-  m_MotionVectors: 1
-  m_LightProbeUsage: 1
-  m_ReflectionProbeUsage: 1
-  m_RayTracingMode: 2
-  m_RayTraceProcedural: 0
-  m_RenderingLayerMask: 1
-  m_RendererPriority: 0
-  m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
-  m_StaticBatchInfo:
-    firstSubMesh: 0
-    subMeshCount: 0
-  m_StaticBatchRoot: {fileID: 0}
-  m_ProbeAnchor: {fileID: 0}
-  m_LightProbeVolumeOverride: {fileID: 0}
-  m_ScaleInLightmap: 1
-  m_ReceiveGI: 1
-  m_PreserveUVs: 0
-  m_IgnoreNormalsForChartDetection: 0
-  m_ImportantGI: 0
-  m_StitchLightmapSeams: 1
-  m_SelectedEditorRenderState: 3
-  m_MinimumChartSize: 4
-  m_AutoUVMaxDistance: 0.5
-  m_AutoUVMaxAngle: 89
-  m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 0
-  m_AdditionalVertexStreams: {fileID: 0}
---- !u!33 &347786764
-MeshFilter:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 347786758}
-  m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
---- !u!4 &347786765
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 347786758}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 6.95, y: 5.107816, z: 18.75}
-  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
-  m_Children: []
-  m_Father: {fileID: 1957870345}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &393912673
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 393912680}
-  - component: {fileID: 393912679}
-  - component: {fileID: 393912678}
-  - component: {fileID: 393912677}
-  - component: {fileID: 393912676}
-  - component: {fileID: 393912674}
-  - component: {fileID: 393912675}
-  m_Layer: 0
-  m_Name: Projectile(Clone)
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!114 &393912674
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 393912673}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 92f4fda690b09b742be5dd8fa8519d7f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _pool: {fileID: 1957870344}
-  _idx: 5
---- !u!114 &393912675
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 393912673}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bd67fbb5415272440ad8bbd0def578db, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _metas:
-  - ComponentName: Components.SpeedComponent
-    Fields:
-    - TypeName: System.Single
-      Name: speed
-      ValueRepresentation: 2000
-      UnityComponent: {fileID: 0}
-      Preset: {fileID: 0}
-    UnityComponent: {fileID: 0}
-    IsExpanded: 0
-  - ComponentName: Tags.Projectile
-    Fields: []
-    UnityComponent: {fileID: 0}
-    IsExpanded: 0
-  - ComponentName: Components.DamageComponent
-    Fields:
-    - TypeName: System.Single
-      Name: damage
-      ValueRepresentation: 200
-      UnityComponent: {fileID: 0}
-      Preset: {fileID: 0}
-    UnityComponent: {fileID: 0}
-    IsExpanded: 0
-  - ComponentName: UnityEngine.Transform
-    Fields: []
-    UnityComponent: {fileID: 393912680}
-    IsExpanded: 0
-  - ComponentName: Tags.DeleteOnCollision
-    Fields: []
-    UnityComponent: {fileID: 0}
-    IsExpanded: 0
-  - ComponentName: PoolItem
-    Fields: []
-    UnityComponent: {fileID: 393912674}
-    IsExpanded: 0
-  - ComponentName: Components.LifeTime
-    Fields:
-    - TypeName: System.Single
-      Name: time
-      ValueRepresentation: 5
-      UnityComponent: {fileID: 0}
-      Preset: {fileID: 0}
-    UnityComponent: {fileID: 0}
-    IsExpanded: 1
-  - ComponentName: UnityEngine.Rigidbody
-    Fields: []
-    UnityComponent: {fileID: 393912676}
-    IsExpanded: 0
---- !u!54 &393912676
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 393912673}
-  serializedVersion: 2
-  m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0.05
-  m_UseGravity: 1
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_Constraints: 0
-  m_CollisionDetection: 0
---- !u!135 &393912677
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 393912673}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.5
-  m_Center: {x: 0, y: 0, z: 0}
---- !u!23 &393912678
-MeshRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 393912673}
-  m_Enabled: 1
-  m_CastShadows: 1
-  m_ReceiveShadows: 1
-  m_DynamicOccludee: 1
-  m_MotionVectors: 1
-  m_LightProbeUsage: 1
-  m_ReflectionProbeUsage: 1
-  m_RayTracingMode: 2
-  m_RayTraceProcedural: 0
-  m_RenderingLayerMask: 1
-  m_RendererPriority: 0
-  m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
-  m_StaticBatchInfo:
-    firstSubMesh: 0
-    subMeshCount: 0
-  m_StaticBatchRoot: {fileID: 0}
-  m_ProbeAnchor: {fileID: 0}
-  m_LightProbeVolumeOverride: {fileID: 0}
-  m_ScaleInLightmap: 1
-  m_ReceiveGI: 1
-  m_PreserveUVs: 0
-  m_IgnoreNormalsForChartDetection: 0
-  m_ImportantGI: 0
-  m_StitchLightmapSeams: 1
-  m_SelectedEditorRenderState: 3
-  m_MinimumChartSize: 4
-  m_AutoUVMaxDistance: 0.5
-  m_AutoUVMaxAngle: 89
-  m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 0
-  m_AdditionalVertexStreams: {fileID: 0}
---- !u!33 &393912679
-MeshFilter:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 393912673}
-  m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
---- !u!4 &393912680
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 393912673}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 6.95, y: 5.107816, z: 18.75}
-  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
-  m_Children: []
-  m_Father: {fileID: 1957870345}
-  m_RootOrder: 5
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &426900723
 GameObject:
   m_ObjectHideFlags: 0
@@ -528,194 +152,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 12
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &451065336
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 451065343}
-  - component: {fileID: 451065342}
-  - component: {fileID: 451065341}
-  - component: {fileID: 451065340}
-  - component: {fileID: 451065339}
-  - component: {fileID: 451065337}
-  - component: {fileID: 451065338}
-  m_Layer: 0
-  m_Name: Projectile(Clone)
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!114 &451065337
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 451065336}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 92f4fda690b09b742be5dd8fa8519d7f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _pool: {fileID: 1957870344}
-  _idx: 1
---- !u!114 &451065338
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 451065336}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bd67fbb5415272440ad8bbd0def578db, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _metas:
-  - ComponentName: Components.SpeedComponent
-    Fields:
-    - TypeName: System.Single
-      Name: speed
-      ValueRepresentation: 2000
-      UnityComponent: {fileID: 0}
-      Preset: {fileID: 0}
-    UnityComponent: {fileID: 0}
-    IsExpanded: 0
-  - ComponentName: Tags.Projectile
-    Fields: []
-    UnityComponent: {fileID: 0}
-    IsExpanded: 0
-  - ComponentName: Components.DamageComponent
-    Fields:
-    - TypeName: System.Single
-      Name: damage
-      ValueRepresentation: 200
-      UnityComponent: {fileID: 0}
-      Preset: {fileID: 0}
-    UnityComponent: {fileID: 0}
-    IsExpanded: 0
-  - ComponentName: UnityEngine.Transform
-    Fields: []
-    UnityComponent: {fileID: 451065343}
-    IsExpanded: 0
-  - ComponentName: Tags.DeleteOnCollision
-    Fields: []
-    UnityComponent: {fileID: 0}
-    IsExpanded: 0
-  - ComponentName: PoolItem
-    Fields: []
-    UnityComponent: {fileID: 451065337}
-    IsExpanded: 0
-  - ComponentName: Components.LifeTime
-    Fields:
-    - TypeName: System.Single
-      Name: time
-      ValueRepresentation: 5
-      UnityComponent: {fileID: 0}
-      Preset: {fileID: 0}
-    UnityComponent: {fileID: 0}
-    IsExpanded: 1
-  - ComponentName: UnityEngine.Rigidbody
-    Fields: []
-    UnityComponent: {fileID: 451065339}
-    IsExpanded: 0
---- !u!54 &451065339
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 451065336}
-  serializedVersion: 2
-  m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0.05
-  m_UseGravity: 1
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_Constraints: 0
-  m_CollisionDetection: 0
---- !u!135 &451065340
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 451065336}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.5
-  m_Center: {x: 0, y: 0, z: 0}
---- !u!23 &451065341
-MeshRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 451065336}
-  m_Enabled: 1
-  m_CastShadows: 1
-  m_ReceiveShadows: 1
-  m_DynamicOccludee: 1
-  m_MotionVectors: 1
-  m_LightProbeUsage: 1
-  m_ReflectionProbeUsage: 1
-  m_RayTracingMode: 2
-  m_RayTraceProcedural: 0
-  m_RenderingLayerMask: 1
-  m_RendererPriority: 0
-  m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
-  m_StaticBatchInfo:
-    firstSubMesh: 0
-    subMeshCount: 0
-  m_StaticBatchRoot: {fileID: 0}
-  m_ProbeAnchor: {fileID: 0}
-  m_LightProbeVolumeOverride: {fileID: 0}
-  m_ScaleInLightmap: 1
-  m_ReceiveGI: 1
-  m_PreserveUVs: 0
-  m_IgnoreNormalsForChartDetection: 0
-  m_ImportantGI: 0
-  m_StitchLightmapSeams: 1
-  m_SelectedEditorRenderState: 3
-  m_MinimumChartSize: 4
-  m_AutoUVMaxDistance: 0.5
-  m_AutoUVMaxAngle: 89
-  m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 0
-  m_AdditionalVertexStreams: {fileID: 0}
---- !u!33 &451065342
-MeshFilter:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 451065336}
-  m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
---- !u!4 &451065343
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 451065336}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 6.95, y: 5.107816, z: 18.75}
-  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
-  m_Children: []
-  m_Father: {fileID: 1957870345}
-  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &464289677
 GameObject:
@@ -748,194 +184,6 @@ Transform:
   m_Father: {fileID: 1378647053}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &517646515
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 517646522}
-  - component: {fileID: 517646521}
-  - component: {fileID: 517646520}
-  - component: {fileID: 517646519}
-  - component: {fileID: 517646518}
-  - component: {fileID: 517646516}
-  - component: {fileID: 517646517}
-  m_Layer: 0
-  m_Name: Projectile(Clone)
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!114 &517646516
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 517646515}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 92f4fda690b09b742be5dd8fa8519d7f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _pool: {fileID: 1957870344}
-  _idx: 6
---- !u!114 &517646517
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 517646515}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bd67fbb5415272440ad8bbd0def578db, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _metas:
-  - ComponentName: Components.SpeedComponent
-    Fields:
-    - TypeName: System.Single
-      Name: speed
-      ValueRepresentation: 2000
-      UnityComponent: {fileID: 0}
-      Preset: {fileID: 0}
-    UnityComponent: {fileID: 0}
-    IsExpanded: 0
-  - ComponentName: Tags.Projectile
-    Fields: []
-    UnityComponent: {fileID: 0}
-    IsExpanded: 0
-  - ComponentName: Components.DamageComponent
-    Fields:
-    - TypeName: System.Single
-      Name: damage
-      ValueRepresentation: 200
-      UnityComponent: {fileID: 0}
-      Preset: {fileID: 0}
-    UnityComponent: {fileID: 0}
-    IsExpanded: 0
-  - ComponentName: UnityEngine.Transform
-    Fields: []
-    UnityComponent: {fileID: 517646522}
-    IsExpanded: 0
-  - ComponentName: Tags.DeleteOnCollision
-    Fields: []
-    UnityComponent: {fileID: 0}
-    IsExpanded: 0
-  - ComponentName: PoolItem
-    Fields: []
-    UnityComponent: {fileID: 517646516}
-    IsExpanded: 0
-  - ComponentName: Components.LifeTime
-    Fields:
-    - TypeName: System.Single
-      Name: time
-      ValueRepresentation: 5
-      UnityComponent: {fileID: 0}
-      Preset: {fileID: 0}
-    UnityComponent: {fileID: 0}
-    IsExpanded: 1
-  - ComponentName: UnityEngine.Rigidbody
-    Fields: []
-    UnityComponent: {fileID: 517646518}
-    IsExpanded: 0
---- !u!54 &517646518
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 517646515}
-  serializedVersion: 2
-  m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0.05
-  m_UseGravity: 1
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_Constraints: 0
-  m_CollisionDetection: 0
---- !u!135 &517646519
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 517646515}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.5
-  m_Center: {x: 0, y: 0, z: 0}
---- !u!23 &517646520
-MeshRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 517646515}
-  m_Enabled: 1
-  m_CastShadows: 1
-  m_ReceiveShadows: 1
-  m_DynamicOccludee: 1
-  m_MotionVectors: 1
-  m_LightProbeUsage: 1
-  m_ReflectionProbeUsage: 1
-  m_RayTracingMode: 2
-  m_RayTraceProcedural: 0
-  m_RenderingLayerMask: 1
-  m_RendererPriority: 0
-  m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
-  m_StaticBatchInfo:
-    firstSubMesh: 0
-    subMeshCount: 0
-  m_StaticBatchRoot: {fileID: 0}
-  m_ProbeAnchor: {fileID: 0}
-  m_LightProbeVolumeOverride: {fileID: 0}
-  m_ScaleInLightmap: 1
-  m_ReceiveGI: 1
-  m_PreserveUVs: 0
-  m_IgnoreNormalsForChartDetection: 0
-  m_ImportantGI: 0
-  m_StitchLightmapSeams: 1
-  m_SelectedEditorRenderState: 3
-  m_MinimumChartSize: 4
-  m_AutoUVMaxDistance: 0.5
-  m_AutoUVMaxAngle: 89
-  m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 0
-  m_AdditionalVertexStreams: {fileID: 0}
---- !u!33 &517646521
-MeshFilter:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 517646515}
-  m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
---- !u!4 &517646522
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 517646515}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 6.95, y: 5.107816, z: 18.75}
-  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
-  m_Children: []
-  m_Father: {fileID: 1957870345}
-  m_RootOrder: 6
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &595471848
 GameObject:
   m_ObjectHideFlags: 0
@@ -965,382 +213,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 14
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &671467812
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 671467819}
-  - component: {fileID: 671467818}
-  - component: {fileID: 671467817}
-  - component: {fileID: 671467816}
-  - component: {fileID: 671467815}
-  - component: {fileID: 671467813}
-  - component: {fileID: 671467814}
-  m_Layer: 0
-  m_Name: Projectile(Clone)
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!114 &671467813
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 671467812}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 92f4fda690b09b742be5dd8fa8519d7f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _pool: {fileID: 1957870344}
-  _idx: 3
---- !u!114 &671467814
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 671467812}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bd67fbb5415272440ad8bbd0def578db, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _metas:
-  - ComponentName: Components.SpeedComponent
-    Fields:
-    - TypeName: System.Single
-      Name: speed
-      ValueRepresentation: 2000
-      UnityComponent: {fileID: 0}
-      Preset: {fileID: 0}
-    UnityComponent: {fileID: 0}
-    IsExpanded: 0
-  - ComponentName: Tags.Projectile
-    Fields: []
-    UnityComponent: {fileID: 0}
-    IsExpanded: 0
-  - ComponentName: Components.DamageComponent
-    Fields:
-    - TypeName: System.Single
-      Name: damage
-      ValueRepresentation: 200
-      UnityComponent: {fileID: 0}
-      Preset: {fileID: 0}
-    UnityComponent: {fileID: 0}
-    IsExpanded: 0
-  - ComponentName: UnityEngine.Transform
-    Fields: []
-    UnityComponent: {fileID: 671467819}
-    IsExpanded: 0
-  - ComponentName: Tags.DeleteOnCollision
-    Fields: []
-    UnityComponent: {fileID: 0}
-    IsExpanded: 0
-  - ComponentName: PoolItem
-    Fields: []
-    UnityComponent: {fileID: 671467813}
-    IsExpanded: 0
-  - ComponentName: Components.LifeTime
-    Fields:
-    - TypeName: System.Single
-      Name: time
-      ValueRepresentation: 5
-      UnityComponent: {fileID: 0}
-      Preset: {fileID: 0}
-    UnityComponent: {fileID: 0}
-    IsExpanded: 1
-  - ComponentName: UnityEngine.Rigidbody
-    Fields: []
-    UnityComponent: {fileID: 671467815}
-    IsExpanded: 0
---- !u!54 &671467815
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 671467812}
-  serializedVersion: 2
-  m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0.05
-  m_UseGravity: 1
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_Constraints: 0
-  m_CollisionDetection: 0
---- !u!135 &671467816
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 671467812}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.5
-  m_Center: {x: 0, y: 0, z: 0}
---- !u!23 &671467817
-MeshRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 671467812}
-  m_Enabled: 1
-  m_CastShadows: 1
-  m_ReceiveShadows: 1
-  m_DynamicOccludee: 1
-  m_MotionVectors: 1
-  m_LightProbeUsage: 1
-  m_ReflectionProbeUsage: 1
-  m_RayTracingMode: 2
-  m_RayTraceProcedural: 0
-  m_RenderingLayerMask: 1
-  m_RendererPriority: 0
-  m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
-  m_StaticBatchInfo:
-    firstSubMesh: 0
-    subMeshCount: 0
-  m_StaticBatchRoot: {fileID: 0}
-  m_ProbeAnchor: {fileID: 0}
-  m_LightProbeVolumeOverride: {fileID: 0}
-  m_ScaleInLightmap: 1
-  m_ReceiveGI: 1
-  m_PreserveUVs: 0
-  m_IgnoreNormalsForChartDetection: 0
-  m_ImportantGI: 0
-  m_StitchLightmapSeams: 1
-  m_SelectedEditorRenderState: 3
-  m_MinimumChartSize: 4
-  m_AutoUVMaxDistance: 0.5
-  m_AutoUVMaxAngle: 89
-  m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 0
-  m_AdditionalVertexStreams: {fileID: 0}
---- !u!33 &671467818
-MeshFilter:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 671467812}
-  m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
---- !u!4 &671467819
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 671467812}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 6.95, y: 5.107816, z: 18.75}
-  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
-  m_Children: []
-  m_Father: {fileID: 1957870345}
-  m_RootOrder: 3
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &696029475
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 696029482}
-  - component: {fileID: 696029481}
-  - component: {fileID: 696029480}
-  - component: {fileID: 696029479}
-  - component: {fileID: 696029478}
-  - component: {fileID: 696029476}
-  - component: {fileID: 696029477}
-  m_Layer: 0
-  m_Name: Projectile(Clone)
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!114 &696029476
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 696029475}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 92f4fda690b09b742be5dd8fa8519d7f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _pool: {fileID: 1957870344}
-  _idx: 4
---- !u!114 &696029477
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 696029475}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bd67fbb5415272440ad8bbd0def578db, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _metas:
-  - ComponentName: Components.SpeedComponent
-    Fields:
-    - TypeName: System.Single
-      Name: speed
-      ValueRepresentation: 2000
-      UnityComponent: {fileID: 0}
-      Preset: {fileID: 0}
-    UnityComponent: {fileID: 0}
-    IsExpanded: 0
-  - ComponentName: Tags.Projectile
-    Fields: []
-    UnityComponent: {fileID: 0}
-    IsExpanded: 0
-  - ComponentName: Components.DamageComponent
-    Fields:
-    - TypeName: System.Single
-      Name: damage
-      ValueRepresentation: 200
-      UnityComponent: {fileID: 0}
-      Preset: {fileID: 0}
-    UnityComponent: {fileID: 0}
-    IsExpanded: 0
-  - ComponentName: UnityEngine.Transform
-    Fields: []
-    UnityComponent: {fileID: 696029482}
-    IsExpanded: 0
-  - ComponentName: Tags.DeleteOnCollision
-    Fields: []
-    UnityComponent: {fileID: 0}
-    IsExpanded: 0
-  - ComponentName: PoolItem
-    Fields: []
-    UnityComponent: {fileID: 696029476}
-    IsExpanded: 0
-  - ComponentName: Components.LifeTime
-    Fields:
-    - TypeName: System.Single
-      Name: time
-      ValueRepresentation: 5
-      UnityComponent: {fileID: 0}
-      Preset: {fileID: 0}
-    UnityComponent: {fileID: 0}
-    IsExpanded: 1
-  - ComponentName: UnityEngine.Rigidbody
-    Fields: []
-    UnityComponent: {fileID: 696029478}
-    IsExpanded: 0
---- !u!54 &696029478
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 696029475}
-  serializedVersion: 2
-  m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0.05
-  m_UseGravity: 1
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_Constraints: 0
-  m_CollisionDetection: 0
---- !u!135 &696029479
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 696029475}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.5
-  m_Center: {x: 0, y: 0, z: 0}
---- !u!23 &696029480
-MeshRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 696029475}
-  m_Enabled: 1
-  m_CastShadows: 1
-  m_ReceiveShadows: 1
-  m_DynamicOccludee: 1
-  m_MotionVectors: 1
-  m_LightProbeUsage: 1
-  m_ReflectionProbeUsage: 1
-  m_RayTracingMode: 2
-  m_RayTraceProcedural: 0
-  m_RenderingLayerMask: 1
-  m_RendererPriority: 0
-  m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
-  m_StaticBatchInfo:
-    firstSubMesh: 0
-    subMeshCount: 0
-  m_StaticBatchRoot: {fileID: 0}
-  m_ProbeAnchor: {fileID: 0}
-  m_LightProbeVolumeOverride: {fileID: 0}
-  m_ScaleInLightmap: 1
-  m_ReceiveGI: 1
-  m_PreserveUVs: 0
-  m_IgnoreNormalsForChartDetection: 0
-  m_ImportantGI: 0
-  m_StitchLightmapSeams: 1
-  m_SelectedEditorRenderState: 3
-  m_MinimumChartSize: 4
-  m_AutoUVMaxDistance: 0.5
-  m_AutoUVMaxAngle: 89
-  m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 0
-  m_AdditionalVertexStreams: {fileID: 0}
---- !u!33 &696029481
-MeshFilter:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 696029475}
-  m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
---- !u!4 &696029482
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 696029475}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 6.95, y: 5.107816, z: 18.75}
-  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
-  m_Children: []
-  m_Father: {fileID: 1957870345}
-  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &705507993
 GameObject:
@@ -1435,6 +307,390 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
+--- !u!1 &787921240
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 787921247}
+  - component: {fileID: 787921246}
+  - component: {fileID: 787921245}
+  - component: {fileID: 787921244}
+  - component: {fileID: 787921243}
+  - component: {fileID: 787921241}
+  - component: {fileID: 787921242}
+  m_Layer: 0
+  m_Name: Projectile(Clone)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!114 &787921241
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 787921240}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 92f4fda690b09b742be5dd8fa8519d7f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _pool: {fileID: 1957870344}
+  _idx: 7
+--- !u!114 &787921242
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 787921240}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bd67fbb5415272440ad8bbd0def578db, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _metas:
+  - ComponentName: Components.SpeedComponent
+    Fields:
+    - TypeName: System.Single
+      Name: speed
+      ValueRepresentation: 2000
+      UnityComponent: {fileID: 0}
+      Preset: {fileID: 0}
+    UnityComponent: {fileID: 0}
+    IsExpanded: 0
+  - ComponentName: Tags.Projectile
+    Fields: []
+    UnityComponent: {fileID: 0}
+    IsExpanded: 0
+  - ComponentName: Components.DamageComponent
+    Fields:
+    - TypeName: System.Single
+      Name: damage
+      ValueRepresentation: 200
+      UnityComponent: {fileID: 0}
+      Preset: {fileID: 0}
+    UnityComponent: {fileID: 0}
+    IsExpanded: 0
+  - ComponentName: UnityEngine.Transform
+    Fields: []
+    UnityComponent: {fileID: 787921247}
+    IsExpanded: 0
+  - ComponentName: Tags.DeleteOnCollision
+    Fields: []
+    UnityComponent: {fileID: 0}
+    IsExpanded: 0
+  - ComponentName: PoolItem
+    Fields: []
+    UnityComponent: {fileID: 787921241}
+    IsExpanded: 0
+  - ComponentName: Components.LifeTime
+    Fields:
+    - TypeName: System.Single
+      Name: time
+      ValueRepresentation: 5
+      UnityComponent: {fileID: 0}
+      Preset: {fileID: 0}
+    UnityComponent: {fileID: 0}
+    IsExpanded: 1
+  - ComponentName: UnityEngine.Rigidbody
+    Fields: []
+    UnityComponent: {fileID: 787921243}
+    IsExpanded: 0
+  - ComponentName: Tags.Prototype
+    Fields: []
+    UnityComponent: {fileID: 0}
+    IsExpanded: 0
+--- !u!54 &787921243
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 787921240}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
+--- !u!135 &787921244
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 787921240}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.5
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!23 &787921245
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 787921240}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
+--- !u!33 &787921246
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 787921240}
+  m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!4 &787921247
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 787921240}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 6.95, y: 5.107816, z: 18.75}
+  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
+  m_Children: []
+  m_Father: {fileID: 1957870345}
+  m_RootOrder: 7
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &788704454
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 788704461}
+  - component: {fileID: 788704460}
+  - component: {fileID: 788704459}
+  - component: {fileID: 788704458}
+  - component: {fileID: 788704457}
+  - component: {fileID: 788704455}
+  - component: {fileID: 788704456}
+  m_Layer: 0
+  m_Name: Projectile(Clone)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!114 &788704455
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 788704454}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 92f4fda690b09b742be5dd8fa8519d7f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _pool: {fileID: 1957870344}
+  _idx: 6
+--- !u!114 &788704456
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 788704454}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bd67fbb5415272440ad8bbd0def578db, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _metas:
+  - ComponentName: Components.SpeedComponent
+    Fields:
+    - TypeName: System.Single
+      Name: speed
+      ValueRepresentation: 2000
+      UnityComponent: {fileID: 0}
+      Preset: {fileID: 0}
+    UnityComponent: {fileID: 0}
+    IsExpanded: 0
+  - ComponentName: Tags.Projectile
+    Fields: []
+    UnityComponent: {fileID: 0}
+    IsExpanded: 0
+  - ComponentName: Components.DamageComponent
+    Fields:
+    - TypeName: System.Single
+      Name: damage
+      ValueRepresentation: 200
+      UnityComponent: {fileID: 0}
+      Preset: {fileID: 0}
+    UnityComponent: {fileID: 0}
+    IsExpanded: 0
+  - ComponentName: UnityEngine.Transform
+    Fields: []
+    UnityComponent: {fileID: 788704461}
+    IsExpanded: 0
+  - ComponentName: Tags.DeleteOnCollision
+    Fields: []
+    UnityComponent: {fileID: 0}
+    IsExpanded: 0
+  - ComponentName: PoolItem
+    Fields: []
+    UnityComponent: {fileID: 788704455}
+    IsExpanded: 0
+  - ComponentName: Components.LifeTime
+    Fields:
+    - TypeName: System.Single
+      Name: time
+      ValueRepresentation: 5
+      UnityComponent: {fileID: 0}
+      Preset: {fileID: 0}
+    UnityComponent: {fileID: 0}
+    IsExpanded: 1
+  - ComponentName: UnityEngine.Rigidbody
+    Fields: []
+    UnityComponent: {fileID: 788704457}
+    IsExpanded: 0
+  - ComponentName: Tags.Prototype
+    Fields: []
+    UnityComponent: {fileID: 0}
+    IsExpanded: 0
+--- !u!54 &788704457
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 788704454}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
+--- !u!135 &788704458
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 788704454}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.5
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!23 &788704459
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 788704454}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
+--- !u!33 &788704460
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 788704454}
+  m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!4 &788704461
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 788704454}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 6.95, y: 5.107816, z: 18.75}
+  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
+  m_Children: []
+  m_Father: {fileID: 1957870345}
+  m_RootOrder: 6
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &900338452 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 5277610905655307547, guid: bb06379d853144440a09367ba455fae2, type: 3}
@@ -1578,7 +834,7 @@ MonoBehaviour:
       Preset: {fileID: 0}
     UnityComponent: {fileID: 0}
     IsExpanded: 1
---- !u!1 &1176573058
+--- !u!1 &986103925
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1586,13 +842,13 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 1176573065}
-  - component: {fileID: 1176573064}
-  - component: {fileID: 1176573063}
-  - component: {fileID: 1176573062}
-  - component: {fileID: 1176573061}
-  - component: {fileID: 1176573059}
-  - component: {fileID: 1176573060}
+  - component: {fileID: 986103932}
+  - component: {fileID: 986103931}
+  - component: {fileID: 986103930}
+  - component: {fileID: 986103929}
+  - component: {fileID: 986103928}
+  - component: {fileID: 986103926}
+  - component: {fileID: 986103927}
   m_Layer: 0
   m_Name: Projectile(Clone)
   m_TagString: Untagged
@@ -1600,13 +856,13 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 0
---- !u!114 &1176573059
+--- !u!114 &986103926
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1176573058}
+  m_GameObject: {fileID: 986103925}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 92f4fda690b09b742be5dd8fa8519d7f, type: 3}
@@ -1614,13 +870,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _pool: {fileID: 1957870344}
   _idx: 2
---- !u!114 &1176573060
+--- !u!114 &986103927
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1176573058}
+  m_GameObject: {fileID: 986103925}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: bd67fbb5415272440ad8bbd0def578db, type: 3}
@@ -1651,7 +907,7 @@ MonoBehaviour:
     IsExpanded: 0
   - ComponentName: UnityEngine.Transform
     Fields: []
-    UnityComponent: {fileID: 1176573065}
+    UnityComponent: {fileID: 986103932}
     IsExpanded: 0
   - ComponentName: Tags.DeleteOnCollision
     Fields: []
@@ -1659,7 +915,7 @@ MonoBehaviour:
     IsExpanded: 0
   - ComponentName: PoolItem
     Fields: []
-    UnityComponent: {fileID: 1176573059}
+    UnityComponent: {fileID: 986103926}
     IsExpanded: 0
   - ComponentName: Components.LifeTime
     Fields:
@@ -1672,15 +928,19 @@ MonoBehaviour:
     IsExpanded: 1
   - ComponentName: UnityEngine.Rigidbody
     Fields: []
-    UnityComponent: {fileID: 1176573061}
+    UnityComponent: {fileID: 986103928}
     IsExpanded: 0
---- !u!54 &1176573061
+  - ComponentName: Tags.Prototype
+    Fields: []
+    UnityComponent: {fileID: 0}
+    IsExpanded: 0
+--- !u!54 &986103928
 Rigidbody:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1176573058}
+  m_GameObject: {fileID: 986103925}
   serializedVersion: 2
   m_Mass: 1
   m_Drag: 0
@@ -1690,26 +950,26 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!135 &1176573062
+--- !u!135 &986103929
 SphereCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1176573058}
+  m_GameObject: {fileID: 986103925}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
   m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}
---- !u!23 &1176573063
+--- !u!23 &986103930
 MeshRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1176573058}
+  m_GameObject: {fileID: 986103925}
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
@@ -1744,27 +1004,411 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!33 &1176573064
+--- !u!33 &986103931
 MeshFilter:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1176573058}
+  m_GameObject: {fileID: 986103925}
   m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
---- !u!4 &1176573065
+--- !u!4 &986103932
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1176573058}
+  m_GameObject: {fileID: 986103925}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 6.95, y: 5.107816, z: 18.75}
   m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_Children: []
   m_Father: {fileID: 1957870345}
   m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1005812500
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1005812507}
+  - component: {fileID: 1005812506}
+  - component: {fileID: 1005812505}
+  - component: {fileID: 1005812504}
+  - component: {fileID: 1005812503}
+  - component: {fileID: 1005812501}
+  - component: {fileID: 1005812502}
+  m_Layer: 0
+  m_Name: Projectile(Clone)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!114 &1005812501
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1005812500}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 92f4fda690b09b742be5dd8fa8519d7f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _pool: {fileID: 1957870344}
+  _idx: 5
+--- !u!114 &1005812502
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1005812500}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bd67fbb5415272440ad8bbd0def578db, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _metas:
+  - ComponentName: Components.SpeedComponent
+    Fields:
+    - TypeName: System.Single
+      Name: speed
+      ValueRepresentation: 2000
+      UnityComponent: {fileID: 0}
+      Preset: {fileID: 0}
+    UnityComponent: {fileID: 0}
+    IsExpanded: 0
+  - ComponentName: Tags.Projectile
+    Fields: []
+    UnityComponent: {fileID: 0}
+    IsExpanded: 0
+  - ComponentName: Components.DamageComponent
+    Fields:
+    - TypeName: System.Single
+      Name: damage
+      ValueRepresentation: 200
+      UnityComponent: {fileID: 0}
+      Preset: {fileID: 0}
+    UnityComponent: {fileID: 0}
+    IsExpanded: 0
+  - ComponentName: UnityEngine.Transform
+    Fields: []
+    UnityComponent: {fileID: 1005812507}
+    IsExpanded: 0
+  - ComponentName: Tags.DeleteOnCollision
+    Fields: []
+    UnityComponent: {fileID: 0}
+    IsExpanded: 0
+  - ComponentName: PoolItem
+    Fields: []
+    UnityComponent: {fileID: 1005812501}
+    IsExpanded: 0
+  - ComponentName: Components.LifeTime
+    Fields:
+    - TypeName: System.Single
+      Name: time
+      ValueRepresentation: 5
+      UnityComponent: {fileID: 0}
+      Preset: {fileID: 0}
+    UnityComponent: {fileID: 0}
+    IsExpanded: 1
+  - ComponentName: UnityEngine.Rigidbody
+    Fields: []
+    UnityComponent: {fileID: 1005812503}
+    IsExpanded: 0
+  - ComponentName: Tags.Prototype
+    Fields: []
+    UnityComponent: {fileID: 0}
+    IsExpanded: 0
+--- !u!54 &1005812503
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1005812500}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
+--- !u!135 &1005812504
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1005812500}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.5
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!23 &1005812505
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1005812500}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
+--- !u!33 &1005812506
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1005812500}
+  m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!4 &1005812507
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1005812500}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 6.95, y: 5.107816, z: 18.75}
+  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
+  m_Children: []
+  m_Father: {fileID: 1957870345}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1164145298
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1164145305}
+  - component: {fileID: 1164145304}
+  - component: {fileID: 1164145303}
+  - component: {fileID: 1164145302}
+  - component: {fileID: 1164145301}
+  - component: {fileID: 1164145299}
+  - component: {fileID: 1164145300}
+  m_Layer: 0
+  m_Name: Projectile(Clone)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!114 &1164145299
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1164145298}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 92f4fda690b09b742be5dd8fa8519d7f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _pool: {fileID: 1957870344}
+  _idx: 1
+--- !u!114 &1164145300
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1164145298}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bd67fbb5415272440ad8bbd0def578db, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _metas:
+  - ComponentName: Components.SpeedComponent
+    Fields:
+    - TypeName: System.Single
+      Name: speed
+      ValueRepresentation: 2000
+      UnityComponent: {fileID: 0}
+      Preset: {fileID: 0}
+    UnityComponent: {fileID: 0}
+    IsExpanded: 0
+  - ComponentName: Tags.Projectile
+    Fields: []
+    UnityComponent: {fileID: 0}
+    IsExpanded: 0
+  - ComponentName: Components.DamageComponent
+    Fields:
+    - TypeName: System.Single
+      Name: damage
+      ValueRepresentation: 200
+      UnityComponent: {fileID: 0}
+      Preset: {fileID: 0}
+    UnityComponent: {fileID: 0}
+    IsExpanded: 0
+  - ComponentName: UnityEngine.Transform
+    Fields: []
+    UnityComponent: {fileID: 1164145305}
+    IsExpanded: 0
+  - ComponentName: Tags.DeleteOnCollision
+    Fields: []
+    UnityComponent: {fileID: 0}
+    IsExpanded: 0
+  - ComponentName: PoolItem
+    Fields: []
+    UnityComponent: {fileID: 1164145299}
+    IsExpanded: 0
+  - ComponentName: Components.LifeTime
+    Fields:
+    - TypeName: System.Single
+      Name: time
+      ValueRepresentation: 5
+      UnityComponent: {fileID: 0}
+      Preset: {fileID: 0}
+    UnityComponent: {fileID: 0}
+    IsExpanded: 1
+  - ComponentName: UnityEngine.Rigidbody
+    Fields: []
+    UnityComponent: {fileID: 1164145301}
+    IsExpanded: 0
+  - ComponentName: Tags.Prototype
+    Fields: []
+    UnityComponent: {fileID: 0}
+    IsExpanded: 0
+--- !u!54 &1164145301
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1164145298}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
+--- !u!135 &1164145302
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1164145298}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.5
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!23 &1164145303
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1164145298}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
+--- !u!33 &1164145304
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1164145298}
+  m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!4 &1164145305
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1164145298}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 6.95, y: 5.107816, z: 18.75}
+  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
+  m_Children: []
+  m_Father: {fileID: 1957870345}
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1241560775
 GameObject:
@@ -1856,6 +1500,390 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 17
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1420763667
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1420763674}
+  - component: {fileID: 1420763673}
+  - component: {fileID: 1420763672}
+  - component: {fileID: 1420763671}
+  - component: {fileID: 1420763670}
+  - component: {fileID: 1420763668}
+  - component: {fileID: 1420763669}
+  m_Layer: 0
+  m_Name: Projectile(Clone)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!114 &1420763668
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1420763667}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 92f4fda690b09b742be5dd8fa8519d7f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _pool: {fileID: 1957870344}
+  _idx: 0
+--- !u!114 &1420763669
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1420763667}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bd67fbb5415272440ad8bbd0def578db, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _metas:
+  - ComponentName: Components.SpeedComponent
+    Fields:
+    - TypeName: System.Single
+      Name: speed
+      ValueRepresentation: 2000
+      UnityComponent: {fileID: 0}
+      Preset: {fileID: 0}
+    UnityComponent: {fileID: 0}
+    IsExpanded: 0
+  - ComponentName: Tags.Projectile
+    Fields: []
+    UnityComponent: {fileID: 0}
+    IsExpanded: 0
+  - ComponentName: Components.DamageComponent
+    Fields:
+    - TypeName: System.Single
+      Name: damage
+      ValueRepresentation: 200
+      UnityComponent: {fileID: 0}
+      Preset: {fileID: 0}
+    UnityComponent: {fileID: 0}
+    IsExpanded: 0
+  - ComponentName: UnityEngine.Transform
+    Fields: []
+    UnityComponent: {fileID: 1420763674}
+    IsExpanded: 0
+  - ComponentName: Tags.DeleteOnCollision
+    Fields: []
+    UnityComponent: {fileID: 0}
+    IsExpanded: 0
+  - ComponentName: PoolItem
+    Fields: []
+    UnityComponent: {fileID: 1420763668}
+    IsExpanded: 0
+  - ComponentName: Components.LifeTime
+    Fields:
+    - TypeName: System.Single
+      Name: time
+      ValueRepresentation: 5
+      UnityComponent: {fileID: 0}
+      Preset: {fileID: 0}
+    UnityComponent: {fileID: 0}
+    IsExpanded: 1
+  - ComponentName: UnityEngine.Rigidbody
+    Fields: []
+    UnityComponent: {fileID: 1420763670}
+    IsExpanded: 0
+  - ComponentName: Tags.Prototype
+    Fields: []
+    UnityComponent: {fileID: 0}
+    IsExpanded: 0
+--- !u!54 &1420763670
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1420763667}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
+--- !u!135 &1420763671
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1420763667}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.5
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!23 &1420763672
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1420763667}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
+--- !u!33 &1420763673
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1420763667}
+  m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!4 &1420763674
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1420763667}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 6.95, y: 5.107816, z: 18.75}
+  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
+  m_Children: []
+  m_Father: {fileID: 1957870345}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1450450383
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1450450390}
+  - component: {fileID: 1450450389}
+  - component: {fileID: 1450450388}
+  - component: {fileID: 1450450387}
+  - component: {fileID: 1450450386}
+  - component: {fileID: 1450450384}
+  - component: {fileID: 1450450385}
+  m_Layer: 0
+  m_Name: Projectile(Clone)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!114 &1450450384
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1450450383}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 92f4fda690b09b742be5dd8fa8519d7f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _pool: {fileID: 1957870344}
+  _idx: 4
+--- !u!114 &1450450385
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1450450383}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bd67fbb5415272440ad8bbd0def578db, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _metas:
+  - ComponentName: Components.SpeedComponent
+    Fields:
+    - TypeName: System.Single
+      Name: speed
+      ValueRepresentation: 2000
+      UnityComponent: {fileID: 0}
+      Preset: {fileID: 0}
+    UnityComponent: {fileID: 0}
+    IsExpanded: 0
+  - ComponentName: Tags.Projectile
+    Fields: []
+    UnityComponent: {fileID: 0}
+    IsExpanded: 0
+  - ComponentName: Components.DamageComponent
+    Fields:
+    - TypeName: System.Single
+      Name: damage
+      ValueRepresentation: 200
+      UnityComponent: {fileID: 0}
+      Preset: {fileID: 0}
+    UnityComponent: {fileID: 0}
+    IsExpanded: 0
+  - ComponentName: UnityEngine.Transform
+    Fields: []
+    UnityComponent: {fileID: 1450450390}
+    IsExpanded: 0
+  - ComponentName: Tags.DeleteOnCollision
+    Fields: []
+    UnityComponent: {fileID: 0}
+    IsExpanded: 0
+  - ComponentName: PoolItem
+    Fields: []
+    UnityComponent: {fileID: 1450450384}
+    IsExpanded: 0
+  - ComponentName: Components.LifeTime
+    Fields:
+    - TypeName: System.Single
+      Name: time
+      ValueRepresentation: 5
+      UnityComponent: {fileID: 0}
+      Preset: {fileID: 0}
+    UnityComponent: {fileID: 0}
+    IsExpanded: 1
+  - ComponentName: UnityEngine.Rigidbody
+    Fields: []
+    UnityComponent: {fileID: 1450450386}
+    IsExpanded: 0
+  - ComponentName: Tags.Prototype
+    Fields: []
+    UnityComponent: {fileID: 0}
+    IsExpanded: 0
+--- !u!54 &1450450386
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1450450383}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
+--- !u!135 &1450450387
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1450450383}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.5
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!23 &1450450388
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1450450383}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
+--- !u!33 &1450450389
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1450450383}
+  m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!4 &1450450390
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1450450383}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 6.95, y: 5.107816, z: 18.75}
+  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
+  m_Children: []
+  m_Father: {fileID: 1957870345}
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1483485580
 GameObject:
@@ -2044,14 +2072,14 @@ MonoBehaviour:
   _initialCount: 8
   _prototype: {fileID: 4859373069663518881, guid: 686182d33b1769d439280800cb7e16af, type: 3}
   _objects:
-  - {fileID: 347786759}
-  - {fileID: 451065337}
-  - {fileID: 1176573059}
-  - {fileID: 671467813}
-  - {fileID: 696029476}
-  - {fileID: 393912674}
-  - {fileID: 517646516}
-  - {fileID: 2052158422}
+  - {fileID: 1420763668}
+  - {fileID: 1164145299}
+  - {fileID: 986103926}
+  - {fileID: 2012953294}
+  - {fileID: 1450450384}
+  - {fileID: 1005812501}
+  - {fileID: 788704455}
+  - {fileID: 787921241}
 --- !u!4 &1957870345
 Transform:
   m_ObjectHideFlags: 0
@@ -2063,14 +2091,14 @@ Transform:
   m_LocalPosition: {x: 32.98102, y: 5.583929, z: 2.6287568}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 347786765}
-  - {fileID: 451065343}
-  - {fileID: 1176573065}
-  - {fileID: 671467819}
-  - {fileID: 696029482}
-  - {fileID: 393912680}
-  - {fileID: 517646522}
-  - {fileID: 2052158428}
+  - {fileID: 1420763674}
+  - {fileID: 1164145305}
+  - {fileID: 986103932}
+  - {fileID: 2012953300}
+  - {fileID: 1450450390}
+  - {fileID: 1005812507}
+  - {fileID: 788704461}
+  - {fileID: 787921247}
   m_Father: {fileID: 0}
   m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2103,6 +2131,198 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 15
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &2012953293
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2012953300}
+  - component: {fileID: 2012953299}
+  - component: {fileID: 2012953298}
+  - component: {fileID: 2012953297}
+  - component: {fileID: 2012953296}
+  - component: {fileID: 2012953294}
+  - component: {fileID: 2012953295}
+  m_Layer: 0
+  m_Name: Projectile(Clone)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!114 &2012953294
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2012953293}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 92f4fda690b09b742be5dd8fa8519d7f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _pool: {fileID: 1957870344}
+  _idx: 3
+--- !u!114 &2012953295
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2012953293}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bd67fbb5415272440ad8bbd0def578db, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _metas:
+  - ComponentName: Components.SpeedComponent
+    Fields:
+    - TypeName: System.Single
+      Name: speed
+      ValueRepresentation: 2000
+      UnityComponent: {fileID: 0}
+      Preset: {fileID: 0}
+    UnityComponent: {fileID: 0}
+    IsExpanded: 0
+  - ComponentName: Tags.Projectile
+    Fields: []
+    UnityComponent: {fileID: 0}
+    IsExpanded: 0
+  - ComponentName: Components.DamageComponent
+    Fields:
+    - TypeName: System.Single
+      Name: damage
+      ValueRepresentation: 200
+      UnityComponent: {fileID: 0}
+      Preset: {fileID: 0}
+    UnityComponent: {fileID: 0}
+    IsExpanded: 0
+  - ComponentName: UnityEngine.Transform
+    Fields: []
+    UnityComponent: {fileID: 2012953300}
+    IsExpanded: 0
+  - ComponentName: Tags.DeleteOnCollision
+    Fields: []
+    UnityComponent: {fileID: 0}
+    IsExpanded: 0
+  - ComponentName: PoolItem
+    Fields: []
+    UnityComponent: {fileID: 2012953294}
+    IsExpanded: 0
+  - ComponentName: Components.LifeTime
+    Fields:
+    - TypeName: System.Single
+      Name: time
+      ValueRepresentation: 5
+      UnityComponent: {fileID: 0}
+      Preset: {fileID: 0}
+    UnityComponent: {fileID: 0}
+    IsExpanded: 1
+  - ComponentName: UnityEngine.Rigidbody
+    Fields: []
+    UnityComponent: {fileID: 2012953296}
+    IsExpanded: 0
+  - ComponentName: Tags.Prototype
+    Fields: []
+    UnityComponent: {fileID: 0}
+    IsExpanded: 0
+--- !u!54 &2012953296
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2012953293}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
+--- !u!135 &2012953297
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2012953293}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.5
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!23 &2012953298
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2012953293}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
+--- !u!33 &2012953299
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2012953293}
+  m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!4 &2012953300
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2012953293}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 6.95, y: 5.107816, z: 18.75}
+  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
+  m_Children: []
+  m_Father: {fileID: 1957870345}
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2020709256
 GameObject:
@@ -2139,6 +2359,8 @@ MonoBehaviour:
   - InitResetAttackTimeSystem
   - InitEnemySystem
   - StartPatrolSystem
+  - InitEntityViewPoolsSystem
+  - InitProjectileWeapons
   _updateSystemTypeNames:
   - CleanupTargetEntitySystem
   - PlayerMovementSystem
@@ -2167,7 +2389,7 @@ MonoBehaviour:
   - CollisionCleanupSystem
   - DeleteDeadSystem
   _reactiveSystemTypeNames: []
-  _initSwitches: 0101010101010101010101
+  _initSwitches: 010101010101010101010101010101
   _updateSwitches: 010101010001010101010101010101010101010101010101010101010101
   _lateUpdateSwitches: 010101
   _fixedUpdateSwitches: 01010101
@@ -2186,194 +2408,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 3
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &2052158421
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 2052158428}
-  - component: {fileID: 2052158427}
-  - component: {fileID: 2052158426}
-  - component: {fileID: 2052158425}
-  - component: {fileID: 2052158424}
-  - component: {fileID: 2052158422}
-  - component: {fileID: 2052158423}
-  m_Layer: 0
-  m_Name: Projectile(Clone)
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!114 &2052158422
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2052158421}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 92f4fda690b09b742be5dd8fa8519d7f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _pool: {fileID: 1957870344}
-  _idx: 7
---- !u!114 &2052158423
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2052158421}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bd67fbb5415272440ad8bbd0def578db, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _metas:
-  - ComponentName: Components.SpeedComponent
-    Fields:
-    - TypeName: System.Single
-      Name: speed
-      ValueRepresentation: 2000
-      UnityComponent: {fileID: 0}
-      Preset: {fileID: 0}
-    UnityComponent: {fileID: 0}
-    IsExpanded: 0
-  - ComponentName: Tags.Projectile
-    Fields: []
-    UnityComponent: {fileID: 0}
-    IsExpanded: 0
-  - ComponentName: Components.DamageComponent
-    Fields:
-    - TypeName: System.Single
-      Name: damage
-      ValueRepresentation: 200
-      UnityComponent: {fileID: 0}
-      Preset: {fileID: 0}
-    UnityComponent: {fileID: 0}
-    IsExpanded: 0
-  - ComponentName: UnityEngine.Transform
-    Fields: []
-    UnityComponent: {fileID: 2052158428}
-    IsExpanded: 0
-  - ComponentName: Tags.DeleteOnCollision
-    Fields: []
-    UnityComponent: {fileID: 0}
-    IsExpanded: 0
-  - ComponentName: PoolItem
-    Fields: []
-    UnityComponent: {fileID: 2052158422}
-    IsExpanded: 0
-  - ComponentName: Components.LifeTime
-    Fields:
-    - TypeName: System.Single
-      Name: time
-      ValueRepresentation: 5
-      UnityComponent: {fileID: 0}
-      Preset: {fileID: 0}
-    UnityComponent: {fileID: 0}
-    IsExpanded: 1
-  - ComponentName: UnityEngine.Rigidbody
-    Fields: []
-    UnityComponent: {fileID: 2052158424}
-    IsExpanded: 0
---- !u!54 &2052158424
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2052158421}
-  serializedVersion: 2
-  m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0.05
-  m_UseGravity: 1
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_Constraints: 0
-  m_CollisionDetection: 0
---- !u!135 &2052158425
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2052158421}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.5
-  m_Center: {x: 0, y: 0, z: 0}
---- !u!23 &2052158426
-MeshRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2052158421}
-  m_Enabled: 1
-  m_CastShadows: 1
-  m_ReceiveShadows: 1
-  m_DynamicOccludee: 1
-  m_MotionVectors: 1
-  m_LightProbeUsage: 1
-  m_ReflectionProbeUsage: 1
-  m_RayTracingMode: 2
-  m_RayTraceProcedural: 0
-  m_RenderingLayerMask: 1
-  m_RendererPriority: 0
-  m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
-  m_StaticBatchInfo:
-    firstSubMesh: 0
-    subMeshCount: 0
-  m_StaticBatchRoot: {fileID: 0}
-  m_ProbeAnchor: {fileID: 0}
-  m_LightProbeVolumeOverride: {fileID: 0}
-  m_ScaleInLightmap: 1
-  m_ReceiveGI: 1
-  m_PreserveUVs: 0
-  m_IgnoreNormalsForChartDetection: 0
-  m_ImportantGI: 0
-  m_StitchLightmapSeams: 1
-  m_SelectedEditorRenderState: 3
-  m_MinimumChartSize: 4
-  m_AutoUVMaxDistance: 0.5
-  m_AutoUVMaxAngle: 89
-  m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 0
-  m_AdditionalVertexStreams: {fileID: 0}
---- !u!33 &2052158427
-MeshFilter:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2052158421}
-  m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
---- !u!4 &2052158428
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2052158421}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 6.95, y: 5.107816, z: 18.75}
-  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
-  m_Children: []
-  m_Father: {fileID: 1957870345}
-  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &257307695028065365
 PrefabInstance:
@@ -2661,6 +2695,18 @@ PrefabInstance:
     - target: {fileID: 1896602290991745285, guid: f0b795638ef2dc84185acde7f6a4186b, type: 3}
       propertyPath: m_Name
       value: ProjectilePickup
+      objectReference: {fileID: 0}
+    - target: {fileID: 4161576124969941030, guid: f0b795638ef2dc84185acde7f6a4186b, type: 3}
+      propertyPath: _metas.Array.size
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 4161576124969941030, guid: f0b795638ef2dc84185acde7f6a4186b, type: 3}
+      propertyPath: _metas.Array.data[3].IsExpanded
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4161576124969941030, guid: f0b795638ef2dc84185acde7f6a4186b, type: 3}
+      propertyPath: _metas.Array.data[5].ComponentName
+      value: Components.ProjectileWeapon
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f0b795638ef2dc84185acde7f6a4186b, type: 3}

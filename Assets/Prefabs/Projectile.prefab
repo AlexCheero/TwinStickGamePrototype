@@ -147,6 +147,7 @@ MonoBehaviour:
       Name: speed
       ValueRepresentation: 2000
       UnityComponent: {fileID: 0}
+      Preset: {fileID: 0}
     UnityComponent: {fileID: 0}
     IsExpanded: 0
   - ComponentName: Tags.Projectile
@@ -159,6 +160,7 @@ MonoBehaviour:
       Name: damage
       ValueRepresentation: 200
       UnityComponent: {fileID: 0}
+      Preset: {fileID: 0}
     UnityComponent: {fileID: 0}
     IsExpanded: 0
   - ComponentName: UnityEngine.Transform
@@ -179,9 +181,14 @@ MonoBehaviour:
       Name: time
       ValueRepresentation: 5
       UnityComponent: {fileID: 0}
+      Preset: {fileID: 0}
     UnityComponent: {fileID: 0}
     IsExpanded: 1
   - ComponentName: UnityEngine.Rigidbody
     Fields: []
     UnityComponent: {fileID: 4443661290508678105}
+    IsExpanded: 0
+  - ComponentName: Tags.Prototype
+    Fields: []
+    UnityComponent: {fileID: 0}
     IsExpanded: 0

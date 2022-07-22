@@ -10,7 +10,7 @@ public class LifeTimeSystem : EcsSystem
 
     public LifeTimeSystem(EcsWorld world)
     {
-        _filterId = world.RegisterFilter(new BitMask(Id<LifeTime>()));
+        _filterId = world.RegisterFilter(new BitMask(Id<LifeTime>()), new BitMask(Id<Prototype>()));
     }
 
     public override void Tick(EcsWorld world)

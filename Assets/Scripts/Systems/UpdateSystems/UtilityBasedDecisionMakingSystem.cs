@@ -96,8 +96,11 @@ public class UtilityBasedDecisionMakingSystem : EcsSystem
         float damage = 0f;
         if (world.Have<ProjectileWeapon>(weaponId))
         {
-            var projectileId = PoolManager.Get("ProjectilePool").GetPrototype<EntityView>().Id;
+            var projectileEntity = world.GetComponent<ProjectileWeapon>(weaponId).prototypeEntity;
+            var projectileId = projectileEntity.GetId();
 #if DEBUG
+            if (!world.IsEntityValid(projectileEntity))
+                throw new System.Exception("invalid prototype projectile entity");
             if (!world.Have<DamageComponent>(projectileId))
                 throw new System.Exception("projectile should have damage component");
 #endif

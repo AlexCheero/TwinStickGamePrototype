@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 
@@ -12,6 +13,8 @@ public class ObjectPool : MonoBehaviour
     [SerializeField]
     private PoolItem[] _objects;
     private int _firstAvailable = 0;
+
+    private Dictionary<Type, MonoBehaviour> _cachedPrototypes;
 
 #if UNITY_EDITOR
     [MenuItem("Pools/Fix pools", false, -1)]
@@ -45,7 +48,25 @@ public class ObjectPool : MonoBehaviour
     }
 #endif
 
-    public T GetPrototype<T>() where T : MonoBehaviour => _prototype.GetComponent<T>();
+    void Awake()
+    {
+        _cachedPrototypes = new Dictionary<Type, MonoBehaviour>();
+    }
+
+    public T GetPrototype<T>() where T : MonoBehaviour
+    {
+        var type = typeof(T);
+        if (!_cachedPrototypes.ContainsKey(type))
+        {
+            T monoBeh = _prototype.GetComponent<T>();
+#if DEBUG
+            if (monoBeh == null)
+                throw new Exception("no such MonoBehaviour on prototype");
+#endif
+            _cachedPrototypes.Add(type, monoBeh);
+        }
+        return _cachedPrototypes[type] as T;
+    }
 
     public T Get<T>() where T : MonoBehaviour => Get<T>(Vector3.zero, Quaternion.identity);
 
