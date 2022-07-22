@@ -17,7 +17,6 @@ public class InitProjectileWeapons : EcsSystem
         foreach (var id in world.Enumerate(_filterId))
         {
             ref var projectileWeapon = ref world.GetComponentByRef<ProjectileWeapon>(id);
-            projectileWeapon.poolName = "ProjectilePool";
             projectileWeapon.prototypeEntity = PoolManager.Get(projectileWeapon.poolName).GetPrototype<EntityView>().Entity;
         }
     }

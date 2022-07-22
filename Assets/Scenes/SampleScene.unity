@@ -363,6 +363,7 @@ MonoBehaviour:
       ValueRepresentation: 2000
       UnityComponent: {fileID: 0}
       Preset: {fileID: 0}
+      IsHiddenInEditor: 0
     UnityComponent: {fileID: 0}
     IsExpanded: 0
   - ComponentName: Tags.Projectile
@@ -376,6 +377,7 @@ MonoBehaviour:
       ValueRepresentation: 200
       UnityComponent: {fileID: 0}
       Preset: {fileID: 0}
+      IsHiddenInEditor: 0
     UnityComponent: {fileID: 0}
     IsExpanded: 0
   - ComponentName: UnityEngine.Transform
@@ -397,6 +399,7 @@ MonoBehaviour:
       ValueRepresentation: 5
       UnityComponent: {fileID: 0}
       Preset: {fileID: 0}
+      IsHiddenInEditor: 0
     UnityComponent: {fileID: 0}
     IsExpanded: 1
   - ComponentName: UnityEngine.Rigidbody
@@ -555,6 +558,7 @@ MonoBehaviour:
       ValueRepresentation: 2000
       UnityComponent: {fileID: 0}
       Preset: {fileID: 0}
+      IsHiddenInEditor: 0
     UnityComponent: {fileID: 0}
     IsExpanded: 0
   - ComponentName: Tags.Projectile
@@ -568,6 +572,7 @@ MonoBehaviour:
       ValueRepresentation: 200
       UnityComponent: {fileID: 0}
       Preset: {fileID: 0}
+      IsHiddenInEditor: 0
     UnityComponent: {fileID: 0}
     IsExpanded: 0
   - ComponentName: UnityEngine.Transform
@@ -589,6 +594,7 @@ MonoBehaviour:
       ValueRepresentation: 5
       UnityComponent: {fileID: 0}
       Preset: {fileID: 0}
+      IsHiddenInEditor: 0
     UnityComponent: {fileID: 0}
     IsExpanded: 1
   - ComponentName: UnityEngine.Rigidbody
@@ -814,11 +820,13 @@ MonoBehaviour:
       ValueRepresentation: 1 1 -1
       UnityComponent: {fileID: 0}
       Preset: {fileID: 0}
+      IsHiddenInEditor: 0
     - TypeName: System.Single
       Name: distance
       ValueRepresentation: 15
       UnityComponent: {fileID: 0}
       Preset: {fileID: 0}
+      IsHiddenInEditor: 0
     UnityComponent: {fileID: 0}
     IsExpanded: 0
   - ComponentName: UnityEngine.Camera
@@ -832,6 +840,7 @@ MonoBehaviour:
       ValueRepresentation: 
       UnityComponent: {fileID: 900338452}
       Preset: {fileID: 0}
+      IsHiddenInEditor: 0
     UnityComponent: {fileID: 0}
     IsExpanded: 1
 --- !u!1 &986103925
@@ -890,6 +899,7 @@ MonoBehaviour:
       ValueRepresentation: 2000
       UnityComponent: {fileID: 0}
       Preset: {fileID: 0}
+      IsHiddenInEditor: 0
     UnityComponent: {fileID: 0}
     IsExpanded: 0
   - ComponentName: Tags.Projectile
@@ -903,6 +913,7 @@ MonoBehaviour:
       ValueRepresentation: 200
       UnityComponent: {fileID: 0}
       Preset: {fileID: 0}
+      IsHiddenInEditor: 0
     UnityComponent: {fileID: 0}
     IsExpanded: 0
   - ComponentName: UnityEngine.Transform
@@ -924,6 +935,7 @@ MonoBehaviour:
       ValueRepresentation: 5
       UnityComponent: {fileID: 0}
       Preset: {fileID: 0}
+      IsHiddenInEditor: 0
     UnityComponent: {fileID: 0}
     IsExpanded: 1
   - ComponentName: UnityEngine.Rigidbody
@@ -1082,6 +1094,7 @@ MonoBehaviour:
       ValueRepresentation: 2000
       UnityComponent: {fileID: 0}
       Preset: {fileID: 0}
+      IsHiddenInEditor: 0
     UnityComponent: {fileID: 0}
     IsExpanded: 0
   - ComponentName: Tags.Projectile
@@ -1095,6 +1108,7 @@ MonoBehaviour:
       ValueRepresentation: 200
       UnityComponent: {fileID: 0}
       Preset: {fileID: 0}
+      IsHiddenInEditor: 0
     UnityComponent: {fileID: 0}
     IsExpanded: 0
   - ComponentName: UnityEngine.Transform
@@ -1116,6 +1130,7 @@ MonoBehaviour:
       ValueRepresentation: 5
       UnityComponent: {fileID: 0}
       Preset: {fileID: 0}
+      IsHiddenInEditor: 0
     UnityComponent: {fileID: 0}
     IsExpanded: 1
   - ComponentName: UnityEngine.Rigidbody
@@ -1274,6 +1289,7 @@ MonoBehaviour:
       ValueRepresentation: 2000
       UnityComponent: {fileID: 0}
       Preset: {fileID: 0}
+      IsHiddenInEditor: 0
     UnityComponent: {fileID: 0}
     IsExpanded: 0
   - ComponentName: Tags.Projectile
@@ -1287,6 +1303,7 @@ MonoBehaviour:
       ValueRepresentation: 200
       UnityComponent: {fileID: 0}
       Preset: {fileID: 0}
+      IsHiddenInEditor: 0
     UnityComponent: {fileID: 0}
     IsExpanded: 0
   - ComponentName: UnityEngine.Transform
@@ -1308,6 +1325,7 @@ MonoBehaviour:
       ValueRepresentation: 5
       UnityComponent: {fileID: 0}
       Preset: {fileID: 0}
+      IsHiddenInEditor: 0
     UnityComponent: {fileID: 0}
     IsExpanded: 1
   - ComponentName: UnityEngine.Rigidbody
@@ -1557,6 +1575,7 @@ MonoBehaviour:
       ValueRepresentation: 2000
       UnityComponent: {fileID: 0}
       Preset: {fileID: 0}
+      IsHiddenInEditor: 0
     UnityComponent: {fileID: 0}
     IsExpanded: 0
   - ComponentName: Tags.Projectile
@@ -1570,6 +1589,7 @@ MonoBehaviour:
       ValueRepresentation: 200
       UnityComponent: {fileID: 0}
       Preset: {fileID: 0}
+      IsHiddenInEditor: 0
     UnityComponent: {fileID: 0}
     IsExpanded: 0
   - ComponentName: UnityEngine.Transform
@@ -1591,6 +1611,7 @@ MonoBehaviour:
       ValueRepresentation: 5
       UnityComponent: {fileID: 0}
       Preset: {fileID: 0}
+      IsHiddenInEditor: 0
     UnityComponent: {fileID: 0}
     IsExpanded: 1
   - ComponentName: UnityEngine.Rigidbody
@@ -1749,6 +1770,7 @@ MonoBehaviour:
       ValueRepresentation: 2000
       UnityComponent: {fileID: 0}
       Preset: {fileID: 0}
+      IsHiddenInEditor: 0
     UnityComponent: {fileID: 0}
     IsExpanded: 0
   - ComponentName: Tags.Projectile
@@ -1762,6 +1784,7 @@ MonoBehaviour:
       ValueRepresentation: 200
       UnityComponent: {fileID: 0}
       Preset: {fileID: 0}
+      IsHiddenInEditor: 0
     UnityComponent: {fileID: 0}
     IsExpanded: 0
   - ComponentName: UnityEngine.Transform
@@ -1783,6 +1806,7 @@ MonoBehaviour:
       ValueRepresentation: 5
       UnityComponent: {fileID: 0}
       Preset: {fileID: 0}
+      IsHiddenInEditor: 0
     UnityComponent: {fileID: 0}
     IsExpanded: 1
   - ComponentName: UnityEngine.Rigidbody
@@ -2188,6 +2212,7 @@ MonoBehaviour:
       ValueRepresentation: 2000
       UnityComponent: {fileID: 0}
       Preset: {fileID: 0}
+      IsHiddenInEditor: 0
     UnityComponent: {fileID: 0}
     IsExpanded: 0
   - ComponentName: Tags.Projectile
@@ -2201,6 +2226,7 @@ MonoBehaviour:
       ValueRepresentation: 200
       UnityComponent: {fileID: 0}
       Preset: {fileID: 0}
+      IsHiddenInEditor: 0
     UnityComponent: {fileID: 0}
     IsExpanded: 0
   - ComponentName: UnityEngine.Transform
@@ -2222,6 +2248,7 @@ MonoBehaviour:
       ValueRepresentation: 5
       UnityComponent: {fileID: 0}
       Preset: {fileID: 0}
+      IsHiddenInEditor: 0
     UnityComponent: {fileID: 0}
     IsExpanded: 1
   - ComponentName: UnityEngine.Rigidbody
@@ -2695,18 +2722,6 @@ PrefabInstance:
     - target: {fileID: 1896602290991745285, guid: f0b795638ef2dc84185acde7f6a4186b, type: 3}
       propertyPath: m_Name
       value: ProjectilePickup
-      objectReference: {fileID: 0}
-    - target: {fileID: 4161576124969941030, guid: f0b795638ef2dc84185acde7f6a4186b, type: 3}
-      propertyPath: _metas.Array.size
-      value: 6
-      objectReference: {fileID: 0}
-    - target: {fileID: 4161576124969941030, guid: f0b795638ef2dc84185acde7f6a4186b, type: 3}
-      propertyPath: _metas.Array.data[3].IsExpanded
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4161576124969941030, guid: f0b795638ef2dc84185acde7f6a4186b, type: 3}
-      propertyPath: _metas.Array.data[5].ComponentName
-      value: Components.ProjectileWeapon
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f0b795638ef2dc84185acde7f6a4186b, type: 3}

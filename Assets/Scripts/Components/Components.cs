@@ -108,6 +108,7 @@ namespace Components
     struct ProjectileWeapon
     {
         public string poolName;
+        [HiddenInspector]
         public Entity prototypeEntity;
     }
 

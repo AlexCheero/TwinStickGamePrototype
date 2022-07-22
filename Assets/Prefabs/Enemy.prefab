@@ -243,6 +243,7 @@ MonoBehaviour:
       ValueRepresentation: 100
       UnityComponent: {fileID: 0}
       Preset: {fileID: 0}
+      IsHiddenInEditor: 0
     UnityComponent: {fileID: 0}
     IsExpanded: 0
   - ComponentName: Components.SpeedComponent
@@ -252,6 +253,7 @@ MonoBehaviour:
       ValueRepresentation: 9
       UnityComponent: {fileID: 0}
       Preset: {fileID: 0}
+      IsHiddenInEditor: 0
     UnityComponent: {fileID: 0}
     IsExpanded: 0
   - ComponentName: Components.AngularSpeedComponent
@@ -261,6 +263,7 @@ MonoBehaviour:
       ValueRepresentation: 2880
       UnityComponent: {fileID: 0}
       Preset: {fileID: 0}
+      IsHiddenInEditor: 0
     UnityComponent: {fileID: 0}
     IsExpanded: 0
   - ComponentName: Components.ReachComponent
@@ -270,6 +273,7 @@ MonoBehaviour:
       ValueRepresentation: 2.5
       UnityComponent: {fileID: 0}
       Preset: {fileID: 0}
+      IsHiddenInEditor: 0
     UnityComponent: {fileID: 0}
     IsExpanded: 0
   - ComponentName: Components.AccelerationComponent
@@ -279,6 +283,7 @@ MonoBehaviour:
       ValueRepresentation: 20
       UnityComponent: {fileID: 0}
       Preset: {fileID: 0}
+      IsHiddenInEditor: 0
     UnityComponent: {fileID: 0}
     IsExpanded: 0
   - ComponentName: UnityEngine.AI.NavMeshAgent
@@ -296,6 +301,7 @@ MonoBehaviour:
       ValueRepresentation: 100
       UnityComponent: {fileID: 0}
       Preset: {fileID: 0}
+      IsHiddenInEditor: 0
     UnityComponent: {fileID: 0}
     IsExpanded: 0
   - ComponentName: Components.TargetEntityComponent
@@ -305,6 +311,7 @@ MonoBehaviour:
       ValueRepresentation: 
       UnityComponent: {fileID: 0}
       Preset: {fileID: 0}
+      IsHiddenInEditor: 0
     UnityComponent: {fileID: 0}
     IsExpanded: 0
   - ComponentName: Components.DefaultWeapon
@@ -314,6 +321,7 @@ MonoBehaviour:
       ValueRepresentation: 
       UnityComponent: {fileID: 0}
       Preset: {fileID: 11400000, guid: 9f3956faf2ec2944e902deadab675db9, type: 2}
+      IsHiddenInEditor: 0
     UnityComponent: {fileID: 0}
     IsExpanded: 0
   - ComponentName: Components.NextWaypointIdx
@@ -323,5 +331,6 @@ MonoBehaviour:
       ValueRepresentation: 0
       UnityComponent: {fileID: 0}
       Preset: {fileID: 0}
+      IsHiddenInEditor: 0
     UnityComponent: {fileID: 0}
     IsExpanded: 0
