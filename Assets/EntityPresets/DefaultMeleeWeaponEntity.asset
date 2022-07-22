@@ -12,53 +12,59 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 12b1dc98d75fed842a60027f55761e69, type: 3}
   m_Name: DefaultMeleeWeaponEntity
   m_EditorClassIdentifier: 
-  _metas:
-  - ComponentName: Tags.MeleeWeapon
-    Fields: []
-    UnityComponent: {fileID: 0}
-    IsExpanded: 0
-  - ComponentName: Components.AttackCooldown
-    Fields:
-    - TypeName: System.Single
-      Name: previousAttackTime
-      ValueRepresentation: -1
+  Data:
+    Metas:
+    - ComponentName: Tags.MeleeWeapon
+      Fields: []
       UnityComponent: {fileID: 0}
-      Preset: {fileID: 0}
-    - TypeName: System.Single
-      Name: attackCD
-      ValueRepresentation: 0.1
+      IsExpanded: 0
+    - ComponentName: Components.AttackCooldown
+      Fields:
+      - TypeName: System.Single
+        Name: previousAttackTime
+        ValueRepresentation: 
+        UnityComponent: {fileID: 0}
+        Preset: {fileID: 0}
+        IsHiddenInEditor: 1
+      - TypeName: System.Single
+        Name: attackCD
+        ValueRepresentation: 0.1
+        UnityComponent: {fileID: 0}
+        Preset: {fileID: 0}
+        IsHiddenInEditor: 0
       UnityComponent: {fileID: 0}
-      Preset: {fileID: 0}
-    UnityComponent: {fileID: 0}
-    IsExpanded: 1
-  - ComponentName: Tags.Weapon
-    Fields: []
-    UnityComponent: {fileID: 0}
-    IsExpanded: 0
-  - ComponentName: Components.DamageComponent
-    Fields:
-    - TypeName: System.Single
-      Name: damage
-      ValueRepresentation: 10
+      IsExpanded: 1
+    - ComponentName: Tags.Weapon
+      Fields: []
       UnityComponent: {fileID: 0}
-      Preset: {fileID: 0}
-    UnityComponent: {fileID: 0}
-    IsExpanded: 1
-  - ComponentName: Components.ReachComponent
-    Fields:
-    - TypeName: System.Single
-      Name: distance
-      ValueRepresentation: 5
+      IsExpanded: 0
+    - ComponentName: Components.DamageComponent
+      Fields:
+      - TypeName: System.Single
+        Name: damage
+        ValueRepresentation: 10
+        UnityComponent: {fileID: 0}
+        Preset: {fileID: 0}
+        IsHiddenInEditor: 0
       UnityComponent: {fileID: 0}
-      Preset: {fileID: 0}
-    UnityComponent: {fileID: 0}
-    IsExpanded: 1
-  - ComponentName: Components.AttackAngle
-    Fields:
-    - TypeName: System.Single
-      Name: angle
-      ValueRepresentation: 120
+      IsExpanded: 1
+    - ComponentName: Components.ReachComponent
+      Fields:
+      - TypeName: System.Single
+        Name: distance
+        ValueRepresentation: 5
+        UnityComponent: {fileID: 0}
+        Preset: {fileID: 0}
+        IsHiddenInEditor: 0
       UnityComponent: {fileID: 0}
-      Preset: {fileID: 0}
-    UnityComponent: {fileID: 0}
-    IsExpanded: 1
+      IsExpanded: 1
+    - ComponentName: Components.AttackAngle
+      Fields:
+      - TypeName: System.Single
+        Name: angle
+        ValueRepresentation: 120
+        UnityComponent: {fileID: 0}
+        Preset: {fileID: 0}
+        IsHiddenInEditor: 0
+      UnityComponent: {fileID: 0}
+      IsExpanded: 1

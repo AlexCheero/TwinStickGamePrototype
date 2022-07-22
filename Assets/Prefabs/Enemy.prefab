@@ -231,106 +231,107 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd67fbb5415272440ad8bbd0def578db, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _metas:
-  - ComponentName: Tags.EnemyTag
-    Fields: []
-    UnityComponent: {fileID: 0}
-    IsExpanded: 1
-  - ComponentName: Components.HealthComponent
-    Fields:
-    - TypeName: System.Single
-      Name: health
-      ValueRepresentation: 100
+  Data:
+    Metas:
+    - ComponentName: Tags.EnemyTag
+      Fields: []
       UnityComponent: {fileID: 0}
-      Preset: {fileID: 0}
-      IsHiddenInEditor: 0
-    UnityComponent: {fileID: 0}
-    IsExpanded: 0
-  - ComponentName: Components.SpeedComponent
-    Fields:
-    - TypeName: System.Single
-      Name: speed
-      ValueRepresentation: 9
+      IsExpanded: 0
+    - ComponentName: Components.HealthComponent
+      Fields:
+      - TypeName: System.Single
+        Name: health
+        ValueRepresentation: 100
+        UnityComponent: {fileID: 0}
+        Preset: {fileID: 0}
+        IsHiddenInEditor: 0
       UnityComponent: {fileID: 0}
-      Preset: {fileID: 0}
-      IsHiddenInEditor: 0
-    UnityComponent: {fileID: 0}
-    IsExpanded: 0
-  - ComponentName: Components.AngularSpeedComponent
-    Fields:
-    - TypeName: System.Single
-      Name: speed
-      ValueRepresentation: 2880
+      IsExpanded: 1
+    - ComponentName: Components.SpeedComponent
+      Fields:
+      - TypeName: System.Single
+        Name: speed
+        ValueRepresentation: 9
+        UnityComponent: {fileID: 0}
+        Preset: {fileID: 0}
+        IsHiddenInEditor: 0
       UnityComponent: {fileID: 0}
-      Preset: {fileID: 0}
-      IsHiddenInEditor: 0
-    UnityComponent: {fileID: 0}
-    IsExpanded: 0
-  - ComponentName: Components.ReachComponent
-    Fields:
-    - TypeName: System.Single
-      Name: distance
-      ValueRepresentation: 2.5
+      IsExpanded: 1
+    - ComponentName: Components.AngularSpeedComponent
+      Fields:
+      - TypeName: System.Single
+        Name: speed
+        ValueRepresentation: 2880
+        UnityComponent: {fileID: 0}
+        Preset: {fileID: 0}
+        IsHiddenInEditor: 0
       UnityComponent: {fileID: 0}
-      Preset: {fileID: 0}
-      IsHiddenInEditor: 0
-    UnityComponent: {fileID: 0}
-    IsExpanded: 0
-  - ComponentName: Components.AccelerationComponent
-    Fields:
-    - TypeName: System.Single
-      Name: acceleration
-      ValueRepresentation: 20
+      IsExpanded: 1
+    - ComponentName: Components.ReachComponent
+      Fields:
+      - TypeName: System.Single
+        Name: distance
+        ValueRepresentation: 2.5
+        UnityComponent: {fileID: 0}
+        Preset: {fileID: 0}
+        IsHiddenInEditor: 0
       UnityComponent: {fileID: 0}
-      Preset: {fileID: 0}
-      IsHiddenInEditor: 0
-    UnityComponent: {fileID: 0}
-    IsExpanded: 0
-  - ComponentName: UnityEngine.AI.NavMeshAgent
-    Fields: []
-    UnityComponent: {fileID: 3981269079167589345}
-    IsExpanded: 0
-  - ComponentName: UnityEngine.Transform
-    Fields: []
-    UnityComponent: {fileID: 3981269079167589347}
-    IsExpanded: 0
-  - ComponentName: Components.ViewAngle
-    Fields:
-    - TypeName: System.Single
-      Name: angle
-      ValueRepresentation: 100
+      IsExpanded: 1
+    - ComponentName: Components.AccelerationComponent
+      Fields:
+      - TypeName: System.Single
+        Name: acceleration
+        ValueRepresentation: 20
+        UnityComponent: {fileID: 0}
+        Preset: {fileID: 0}
+        IsHiddenInEditor: 0
       UnityComponent: {fileID: 0}
-      Preset: {fileID: 0}
-      IsHiddenInEditor: 0
-    UnityComponent: {fileID: 0}
-    IsExpanded: 0
-  - ComponentName: Components.TargetEntityComponent
-    Fields:
-    - TypeName: EntityView
-      Name: target
-      ValueRepresentation: 
+      IsExpanded: 1
+    - ComponentName: UnityEngine.AI.NavMeshAgent
+      Fields: []
+      UnityComponent: {fileID: 3981269079167589345}
+      IsExpanded: 0
+    - ComponentName: UnityEngine.Transform
+      Fields: []
+      UnityComponent: {fileID: 3981269079167589347}
+      IsExpanded: 0
+    - ComponentName: Components.ViewAngle
+      Fields:
+      - TypeName: System.Single
+        Name: angle
+        ValueRepresentation: 100
+        UnityComponent: {fileID: 0}
+        Preset: {fileID: 0}
+        IsHiddenInEditor: 0
       UnityComponent: {fileID: 0}
-      Preset: {fileID: 0}
-      IsHiddenInEditor: 0
-    UnityComponent: {fileID: 0}
-    IsExpanded: 0
-  - ComponentName: Components.DefaultWeapon
-    Fields:
-    - TypeName: EntityPreset
-      Name: preset
-      ValueRepresentation: 
+      IsExpanded: 1
+    - ComponentName: Components.TargetEntityComponent
+      Fields:
+      - TypeName: EntityView
+        Name: target
+        ValueRepresentation: 
+        UnityComponent: {fileID: 0}
+        Preset: {fileID: 0}
+        IsHiddenInEditor: 0
       UnityComponent: {fileID: 0}
-      Preset: {fileID: 11400000, guid: 9f3956faf2ec2944e902deadab675db9, type: 2}
-      IsHiddenInEditor: 0
-    UnityComponent: {fileID: 0}
-    IsExpanded: 0
-  - ComponentName: Components.NextWaypointIdx
-    Fields:
-    - TypeName: System.Int32
-      Name: idx
-      ValueRepresentation: 0
+      IsExpanded: 1
+    - ComponentName: Components.DefaultWeapon
+      Fields:
+      - TypeName: EntityPreset
+        Name: preset
+        ValueRepresentation: 
+        UnityComponent: {fileID: 0}
+        Preset: {fileID: 11400000, guid: 9f3956faf2ec2944e902deadab675db9, type: 2}
+        IsHiddenInEditor: 0
       UnityComponent: {fileID: 0}
-      Preset: {fileID: 0}
-      IsHiddenInEditor: 0
-    UnityComponent: {fileID: 0}
-    IsExpanded: 0
+      IsExpanded: 1
+    - ComponentName: Components.NextWaypointIdx
+      Fields:
+      - TypeName: System.Int32
+        Name: idx
+        ValueRepresentation: 0
+        UnityComponent: {fileID: 0}
+        Preset: {fileID: 0}
+        IsHiddenInEditor: 0
+      UnityComponent: {fileID: 0}
+      IsExpanded: 1

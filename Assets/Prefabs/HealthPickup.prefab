@@ -108,25 +108,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd67fbb5415272440ad8bbd0def578db, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _metas:
-  - ComponentName: Tags.DeleteOnCollision
-    Fields: []
-    UnityComponent: {fileID: 0}
-    IsExpanded: 0
-  - ComponentName: Tags.Pickup
-    Fields: []
-    UnityComponent: {fileID: 0}
-    IsExpanded: 0
-  - ComponentName: UnityEngine.Transform
-    Fields: []
-    UnityComponent: {fileID: 3209535173863548671}
-    IsExpanded: 0
-  - ComponentName: Components.HealthComponent
-    Fields:
-    - TypeName: System.Single
-      Name: health
-      ValueRepresentation: 10
+  Data:
+    Metas:
+    - ComponentName: Tags.DeleteOnCollision
+      Fields: []
       UnityComponent: {fileID: 0}
-      Preset: {fileID: 0}
-    UnityComponent: {fileID: 0}
-    IsExpanded: 0
+      IsExpanded: 0
+    - ComponentName: Tags.Pickup
+      Fields: []
+      UnityComponent: {fileID: 0}
+      IsExpanded: 0
+    - ComponentName: UnityEngine.Transform
+      Fields: []
+      UnityComponent: {fileID: 3209535173863548671}
+      IsExpanded: 0
+    - ComponentName: Components.HealthComponent
+      Fields:
+      - TypeName: System.Single
+        Name: health
+        ValueRepresentation: 10
+        UnityComponent: {fileID: 0}
+        Preset: {fileID: 0}
+        IsHiddenInEditor: 0
+      UnityComponent: {fileID: 0}
+      IsExpanded: 1

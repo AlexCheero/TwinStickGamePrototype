@@ -140,55 +140,59 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd67fbb5415272440ad8bbd0def578db, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _metas:
-  - ComponentName: Components.SpeedComponent
-    Fields:
-    - TypeName: System.Single
-      Name: speed
-      ValueRepresentation: 2000
+  Data:
+    Metas:
+    - ComponentName: Components.SpeedComponent
+      Fields:
+      - TypeName: System.Single
+        Name: speed
+        ValueRepresentation: 2000
+        UnityComponent: {fileID: 0}
+        Preset: {fileID: 0}
+        IsHiddenInEditor: 0
       UnityComponent: {fileID: 0}
-      Preset: {fileID: 0}
-    UnityComponent: {fileID: 0}
-    IsExpanded: 0
-  - ComponentName: Tags.Projectile
-    Fields: []
-    UnityComponent: {fileID: 0}
-    IsExpanded: 0
-  - ComponentName: Components.DamageComponent
-    Fields:
-    - TypeName: System.Single
-      Name: damage
-      ValueRepresentation: 200
+      IsExpanded: 1
+    - ComponentName: Tags.Projectile
+      Fields: []
       UnityComponent: {fileID: 0}
-      Preset: {fileID: 0}
-    UnityComponent: {fileID: 0}
-    IsExpanded: 0
-  - ComponentName: UnityEngine.Transform
-    Fields: []
-    UnityComponent: {fileID: 78941872649121836}
-    IsExpanded: 0
-  - ComponentName: Tags.DeleteOnCollision
-    Fields: []
-    UnityComponent: {fileID: 0}
-    IsExpanded: 0
-  - ComponentName: PoolItem
-    Fields: []
-    UnityComponent: {fileID: 4859373069663518881}
-    IsExpanded: 0
-  - ComponentName: Components.LifeTime
-    Fields:
-    - TypeName: System.Single
-      Name: time
-      ValueRepresentation: 5
+      IsExpanded: 0
+    - ComponentName: Components.DamageComponent
+      Fields:
+      - TypeName: System.Single
+        Name: damage
+        ValueRepresentation: 200
+        UnityComponent: {fileID: 0}
+        Preset: {fileID: 0}
+        IsHiddenInEditor: 0
       UnityComponent: {fileID: 0}
-      Preset: {fileID: 0}
-    UnityComponent: {fileID: 0}
-    IsExpanded: 1
-  - ComponentName: UnityEngine.Rigidbody
-    Fields: []
-    UnityComponent: {fileID: 4443661290508678105}
-    IsExpanded: 0
-  - ComponentName: Tags.Prototype
-    Fields: []
-    UnityComponent: {fileID: 0}
-    IsExpanded: 0
+      IsExpanded: 1
+    - ComponentName: UnityEngine.Transform
+      Fields: []
+      UnityComponent: {fileID: 78941872649121836}
+      IsExpanded: 0
+    - ComponentName: Tags.DeleteOnCollision
+      Fields: []
+      UnityComponent: {fileID: 0}
+      IsExpanded: 0
+    - ComponentName: PoolItem
+      Fields: []
+      UnityComponent: {fileID: 4859373069663518881}
+      IsExpanded: 0
+    - ComponentName: Components.LifeTime
+      Fields:
+      - TypeName: System.Single
+        Name: time
+        ValueRepresentation: 5
+        UnityComponent: {fileID: 0}
+        Preset: {fileID: 0}
+        IsHiddenInEditor: 0
+      UnityComponent: {fileID: 0}
+      IsExpanded: 1
+    - ComponentName: UnityEngine.Rigidbody
+      Fields: []
+      UnityComponent: {fileID: 4443661290508678105}
+      IsExpanded: 0
+    - ComponentName: Tags.Prototype
+      Fields: []
+      UnityComponent: {fileID: 0}
+      IsExpanded: 0

@@ -127,77 +127,84 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd67fbb5415272440ad8bbd0def578db, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _metas:
-  - ComponentName: Tags.PlayerTag
-    Fields: []
-    UnityComponent: {fileID: 0}
-    IsExpanded: 0
-  - ComponentName: UnityEngine.Transform
-    Fields: []
-    UnityComponent: {fileID: 8791500836367506950}
-    IsExpanded: 0
-  - ComponentName: Components.SpeedComponent
-    Fields:
-    - TypeName: System.Single
-      Name: speed
-      ValueRepresentation: 10
+  Data:
+    Metas:
+    - ComponentName: Tags.PlayerTag
+      Fields: []
       UnityComponent: {fileID: 0}
-      Preset: {fileID: 0}
-    UnityComponent: {fileID: 0}
-    IsExpanded: 0
-  - ComponentName: Components.HealthComponent
-    Fields:
-    - TypeName: System.Single
-      Name: health
-      ValueRepresentation: 150
+      IsExpanded: 0
+    - ComponentName: UnityEngine.Transform
+      Fields: []
+      UnityComponent: {fileID: 8791500836367506950}
+      IsExpanded: 0
+    - ComponentName: Components.SpeedComponent
+      Fields:
+      - TypeName: System.Single
+        Name: speed
+        ValueRepresentation: 10
+        UnityComponent: {fileID: 0}
+        Preset: {fileID: 0}
+        IsHiddenInEditor: 0
       UnityComponent: {fileID: 0}
-      Preset: {fileID: 0}
-    UnityComponent: {fileID: 0}
-    IsExpanded: 0
-  - ComponentName: Components.ViewAngle
-    Fields:
-    - TypeName: System.Single
-      Name: angle
-      ValueRepresentation: 120
+      IsExpanded: 1
+    - ComponentName: Components.HealthComponent
+      Fields:
+      - TypeName: System.Single
+        Name: health
+        ValueRepresentation: 150
+        UnityComponent: {fileID: 0}
+        Preset: {fileID: 0}
+        IsHiddenInEditor: 0
       UnityComponent: {fileID: 0}
-      Preset: {fileID: 0}
-    UnityComponent: {fileID: 0}
-    IsExpanded: 0
-  - ComponentName: Components.ReachComponent
-    Fields:
-    - TypeName: System.Single
-      Name: distance
-      ValueRepresentation: 3
+      IsExpanded: 1
+    - ComponentName: Components.ViewAngle
+      Fields:
+      - TypeName: System.Single
+        Name: angle
+        ValueRepresentation: 120
+        UnityComponent: {fileID: 0}
+        Preset: {fileID: 0}
+        IsHiddenInEditor: 0
       UnityComponent: {fileID: 0}
-      Preset: {fileID: 0}
-    UnityComponent: {fileID: 0}
-    IsExpanded: 0
-  - ComponentName: Components.DefaultWeapon
-    Fields:
-    - TypeName: EntityPreset
-      Name: preset
-      ValueRepresentation: 
+      IsExpanded: 1
+    - ComponentName: Components.ReachComponent
+      Fields:
+      - TypeName: System.Single
+        Name: distance
+        ValueRepresentation: 3
+        UnityComponent: {fileID: 0}
+        Preset: {fileID: 0}
+        IsHiddenInEditor: 0
       UnityComponent: {fileID: 0}
-      Preset: {fileID: 11400000, guid: 9f3956faf2ec2944e902deadab675db9, type: 2}
-    UnityComponent: {fileID: 0}
-    IsExpanded: 0
-  - ComponentName: UnityEngine.Rigidbody
-    Fields: []
-    UnityComponent: {fileID: 8791500836367506952}
-    IsExpanded: 0
-  - ComponentName: Components.PlayerVelocityComponent
-    Fields:
-    - TypeName: UnityEngine.Vector3
-      Name: velocity
-      ValueRepresentation: 0 0 0
+      IsExpanded: 1
+    - ComponentName: Components.DefaultWeapon
+      Fields:
+      - TypeName: EntityPreset
+        Name: preset
+        ValueRepresentation: 
+        UnityComponent: {fileID: 0}
+        Preset: {fileID: 11400000, guid: 9f3956faf2ec2944e902deadab675db9, type: 2}
+        IsHiddenInEditor: 0
       UnityComponent: {fileID: 0}
-      Preset: {fileID: 0}
-    UnityComponent: {fileID: 0}
-    IsExpanded: 0
-  - ComponentName: UnityEngine.Collider
-    Fields: []
-    UnityComponent: {fileID: 8791500836367506949}
-    IsExpanded: 0
+      IsExpanded: 1
+    - ComponentName: UnityEngine.Rigidbody
+      Fields: []
+      UnityComponent: {fileID: 8791500836367506952}
+      IsExpanded: 0
+    - ComponentName: Components.PlayerVelocityComponent
+      Fields:
+      - TypeName: UnityEngine.Vector3
+        Name: velocity
+        ValueRepresentation: 
+        UnityComponent: {fileID: 0}
+        Preset: {fileID: 0}
+        IsHiddenInEditor: 0
+      UnityComponent: {fileID: 0}
+      IsExpanded: 0
+    - ComponentName: UnityEngine.Collider
+      Fields: []
+      UnityComponent: {fileID: 8791500836367506949}
+      IsExpanded: 0
 --- !u!1 &8791500836585612155
 GameObject:
   m_ObjectHideFlags: 0

@@ -108,56 +108,57 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd67fbb5415272440ad8bbd0def578db, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _metas:
-  - ComponentName: Tags.Pickup
-    Fields: []
-    UnityComponent: {fileID: 0}
-    IsExpanded: 0
-  - ComponentName: UnityEngine.Transform
-    Fields: []
-    UnityComponent: {fileID: 1959630420423865832}
-    IsExpanded: 0
-  - ComponentName: Components.Ammo
-    Fields:
-    - TypeName: System.Int32
-      Name: amount
-      ValueRepresentation: 15
+  Data:
+    Metas:
+    - ComponentName: Tags.Pickup
+      Fields: []
       UnityComponent: {fileID: 0}
-      Preset: {fileID: 0}
-      IsHiddenInEditor: 0
-    UnityComponent: {fileID: 0}
-    IsExpanded: 0
-  - ComponentName: Tags.RangedWeapon
-    Fields: []
-    UnityComponent: {fileID: 0}
-    IsExpanded: 0
-  - ComponentName: Tags.Weapon
-    Fields: []
-    UnityComponent: {fileID: 0}
-    IsExpanded: 0
-  - ComponentName: Components.DamageComponent
-    Fields:
-    - TypeName: System.Single
-      Name: damage
-      ValueRepresentation: 30
+      IsExpanded: 0
+    - ComponentName: UnityEngine.Transform
+      Fields: []
+      UnityComponent: {fileID: 1959630420423865832}
+      IsExpanded: 0
+    - ComponentName: Components.Ammo
+      Fields:
+      - TypeName: System.Int32
+        Name: amount
+        ValueRepresentation: 15
+        UnityComponent: {fileID: 0}
+        Preset: {fileID: 0}
+        IsHiddenInEditor: 0
       UnityComponent: {fileID: 0}
-      Preset: {fileID: 0}
-      IsHiddenInEditor: 0
-    UnityComponent: {fileID: 0}
-    IsExpanded: 0
-  - ComponentName: Components.AttackCooldown
-    Fields:
-    - TypeName: System.Single
-      Name: previousAttackTime
-      ValueRepresentation: 
+      IsExpanded: 1
+    - ComponentName: Tags.RangedWeapon
+      Fields: []
       UnityComponent: {fileID: 0}
-      Preset: {fileID: 0}
-      IsHiddenInEditor: 1
-    - TypeName: System.Single
-      Name: attackCD
-      ValueRepresentation: 0.1
+      IsExpanded: 0
+    - ComponentName: Components.DamageComponent
+      Fields:
+      - TypeName: System.Single
+        Name: damage
+        ValueRepresentation: 30
+        UnityComponent: {fileID: 0}
+        Preset: {fileID: 0}
+        IsHiddenInEditor: 0
       UnityComponent: {fileID: 0}
-      Preset: {fileID: 0}
-      IsHiddenInEditor: 0
-    UnityComponent: {fileID: 0}
-    IsExpanded: 0
+      IsExpanded: 1
+    - ComponentName: Components.AttackCooldown
+      Fields:
+      - TypeName: System.Single
+        Name: previousAttackTime
+        ValueRepresentation: 
+        UnityComponent: {fileID: 0}
+        Preset: {fileID: 0}
+        IsHiddenInEditor: 1
+      - TypeName: System.Single
+        Name: attackCD
+        ValueRepresentation: 0.1
+        UnityComponent: {fileID: 0}
+        Preset: {fileID: 0}
+        IsHiddenInEditor: 0
+      UnityComponent: {fileID: 0}
+      IsExpanded: 1
+    - ComponentName: Tags.Weapon
+      Fields: []
+      UnityComponent: {fileID: 0}
+      IsExpanded: 0
