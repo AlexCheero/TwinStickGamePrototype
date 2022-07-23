@@ -30,10 +30,10 @@ public class UtilityBasedDecisionMakingSystem : EcsSystem
             var targetHealth = GetTargetHealth(world, id);
             var normalizedDamage = Mathf.Clamp01(GetWeaponDamage(world, id) / targetHealth);
 
-            var curves = world.GetComponent<UtilityCurvesComponent>(id).curves;
-            var getHealthUtility = curves.Health.Evaluate(normalizedHealth);
+            var curves = world.GetComponent<UtilityCurvesComponent>(id);
+            var getHealthUtility = Evaluate(curves.health, normalizedHealth);
             var targetUtility = targetHealth > 0 ? 1 : 0;
-            var attackUtility = curves.Damage.Evaluate(normalizedDamage);
+            var attackUtility = Evaluate(curves.damage, normalizedDamage);
 
             var patrolPriority = 1 - targetUtility;
             var attackPriority = ((1 - getHealthUtility) + targetUtility + attackUtility) / 3;
@@ -112,5 +112,10 @@ public class UtilityBasedDecisionMakingSystem : EcsSystem
         }
 
         return damage;
+    }
+
+    private float Evaluate(in UtilityCurve curves, float value)
+    {
+        return 0;
     }
 }

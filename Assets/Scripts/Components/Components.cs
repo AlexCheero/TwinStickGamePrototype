@@ -119,9 +119,25 @@ namespace Components
         public int idx;
     }
 
+    struct UtilityCurve
+    {
+        public float h0;
+        public float h1;
+        public float h2;
+        public float h3;
+        public float h4;
+        public float h5;
+        public float h6;
+        public float h7;
+        public float h8;
+        public float h9;
+        public float h10;
+    }
+
     struct UtilityCurvesComponent
     {
-        public UtilityCurves curves;
+        public UtilityCurve health;
+        public UtilityCurve damage;
     }
 }
 
