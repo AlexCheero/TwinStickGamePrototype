@@ -319,6 +319,50 @@ Transform:
   m_Father: {fileID: 1957870345}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &158114424
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 158114426}
+  - component: {fileID: 158114425}
+  m_Layer: 0
+  m_Name: UtilityCurvesHolder
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &158114425
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 158114424}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a110ea4d89b9f5040b8d699daf5a13c0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Curves: {fileID: 11400000, guid: 2a608d09a9b7f2f45898fff5b3500fba, type: 2}
+--- !u!4 &158114426
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 158114424}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.14432834, y: 2.6209812, z: 17.874393}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 17
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &222343804
 GameObject:
   m_ObjectHideFlags: 0
@@ -1912,6 +1956,7 @@ MonoBehaviour:
   - StartPatrolSystem
   - InitEntityViewPoolsSystem
   - InitProjectileWeapons
+  - SetUtilityCurvesHack
   _updateSystemTypeNames:
   - CleanupTargetEntitySystem
   - PlayerMovementSystem
@@ -1927,6 +1972,7 @@ MonoBehaviour:
   - MeleeAttackSystem
   - RangedAttackSystem
   - ProjectileAttackSystem
+  - UtilityBasedDecisionMakingSystem
   _lateUpdateSystemTypeNames:
   - AttackCleanupSystem
   - DeleteDeadSystem
@@ -1938,8 +1984,8 @@ MonoBehaviour:
   - WeaponPickupCollisionSystem
   - CollisionCleanupSystem
   - DeleteDeadSystem
-  _initSwitches: 010101010101010101010101010101
-  _updateSwitches: 010101010000010101010101010101010101010101010101010101010101
+  _initSwitches: 01010101010101010101010101010101
+  _updateSwitches: 01010101000001010100010101010101010101010101010101010101010101
   _lateUpdateSwitches: 010101
   _fixedUpdateSwitches: 01010101
   _lateFixedUpdateSwitches: 010101010101

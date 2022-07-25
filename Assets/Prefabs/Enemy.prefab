@@ -335,3 +335,19 @@ MonoBehaviour:
         IsHiddenInEditor: 0
       UnityComponent: {fileID: 0}
       IsExpanded: 1
+    - ComponentName: Components.HealthLimitsComponent
+      Fields:
+      - TypeName: System.Single
+        Name: initialHealth
+        ValueRepresentation: 100
+        UnityComponent: {fileID: 0}
+        Preset: {fileID: 0}
+        IsHiddenInEditor: 0
+      - TypeName: System.Single
+        Name: maxHealth
+        ValueRepresentation: 100
+        UnityComponent: {fileID: 0}
+        Preset: {fileID: 0}
+        IsHiddenInEditor: 0
+      UnityComponent: {fileID: 0}
+      IsExpanded: 1

@@ -1,5 +1,7 @@
 using Components;
 using ECS;
+using System;
+using System.Collections.Generic;
 using Tags;
 using UnityEngine;
 
@@ -7,7 +9,42 @@ using UnityEngine;
 [System(ESystemCategory.Update)]
 public class UtilityBasedDecisionMakingSystem : EcsSystem
 {
+    private enum EActions
+    {
+        Patrol,
+        Chase,
+        Attack,
+        Flee
+    }
+
+    private struct ActionPriority
+    {
+        public EActions Type;
+        public float Priority;
+
+        public ActionPriority(EActions type, float priority)
+        {
+            Type = type;
+            Priority = priority;
+        }
+    }
+
+    private class PriorityComparer : IComparer<ActionPriority>
+    {
+        //sort in descending order
+        public int Compare(ActionPriority x, ActionPriority y)
+        {
+            if (x.Priority < y.Priority)
+                return 1;
+            if (y.Priority < x.Priority)
+                return -1;
+            return 0;
+        }
+    }
+
     private int _filterId;
+    private ActionPriority[] _priorities;
+    private PriorityComparer _comparer;
 
     public UtilityBasedDecisionMakingSystem(EcsWorld world)
     {
@@ -17,8 +54,13 @@ public class UtilityBasedDecisionMakingSystem : EcsSystem
                 Id<HealthComponent>(),
                 Id<HealthLimitsComponent>(),
                 Id<UtilityCurvesComponent>(),
+                Id<AttackReachComponent>(),
+                Id<Transform>(),
                 Id<CurrentWeapon>())
             );
+
+        _priorities = new ActionPriority[4] { default, default, default, default, };
+        _comparer = new PriorityComparer();
     }
 
     public override void Tick(EcsWorld world)
@@ -27,24 +69,58 @@ public class UtilityBasedDecisionMakingSystem : EcsSystem
         {
             var normalizedHealth = GetNormalizedHealth(world, id);
 
-            var targetHealth = GetTargetHealth(world, id);
-            var normalizedDamage = Mathf.Clamp01(GetWeaponDamage(world, id) / targetHealth);
+            EntityView targetView = null;
+            if (world.Have<TargetEntityComponent>(id))
+            {
+                targetView = world.GetComponent<TargetEntityComponent>(id).target;
+#if DEBUG
+                if (targetView == null)
+                    throw new Exception("TargetEntityComponent should be cleaned up if target entity view is null");
+                if (!world.IsEntityValid(targetView.Entity))
+                    throw new Exception("TargetEntityComponent should be cleaned up if target entity view is invalid");
+#endif
+            }
 
-            var curves = world.GetComponent<UtilityCurvesComponent>(id);
-            var getHealthUtility = Evaluate(curves.health, normalizedHealth);
+            var targetHealth = targetView != null && world.Have<HealthComponent>(targetView.Id)
+                ? world.GetComponent<HealthComponent>(targetView.Id).health : 0;
+            var normalizedDamage = targetHealth > 0 ? Mathf.Clamp01(GetWeaponDamage(world, id) / targetHealth) : 1;
+
+            var position = world.GetComponent<Transform>(id).position;
+            var distance = (targetView.transform.position - position).magnitude;
+            var normalizedDistance = Mathf.Clamp01(distance / world.GetComponent<AttackReachComponent>(id).distance);
+
+            var curves = world.GetComponent<UtilityCurvesComponent>(id).curves;
+            var healthUtility = curves.Health.Evaluate(normalizedHealth);
             var targetUtility = targetHealth > 0 ? 1 : 0;
-            var attackUtility = Evaluate(curves.damage, normalizedDamage);
+            var attackUtility = curves.Damage.Evaluate(normalizedDamage);
+            var distanceUtility = curves.DistanceToTarget.Evaluate(normalizedDistance);
 
             var patrolPriority = 1 - targetUtility;
-            var attackPriority = ((1 - getHealthUtility) + targetUtility + attackUtility) / 3;
-            var fleePriority = (getHealthUtility + targetUtility) / 2;
+            _priorities[0] = new ActionPriority(EActions.Patrol, patrolPriority);
+            var chasePriority = ((1 - healthUtility) + targetUtility + attackUtility + distanceUtility) / 4;
+            _priorities[1] = new ActionPriority(EActions.Chase, chasePriority);
+            var attackPriority = ((1 - healthUtility) + targetUtility + attackUtility + (1 - distanceUtility)) / 4;
+            _priorities[2] = new ActionPriority(EActions.Attack, attackPriority);
+            var fleePriority = (healthUtility + targetUtility) / 2;
+            _priorities[3] = new ActionPriority(EActions.Flee, fleePriority);
 
-            if (attackPriority > fleePriority && attackPriority > patrolPriority)
-                world.Add<ChaseAction>(id);
-            else if (fleePriority > patrolPriority && fleePriority > attackPriority)
-                world.Add<FleeAction>(id);
-            else
-                world.Add<PatrolAction>(id);
+            Array.Sort(_priorities, _comparer);
+            var highestPriorityAction = _priorities[0].Type;
+            switch (highestPriorityAction)
+            {
+                case EActions.Patrol:
+                    SetAction<PatrolAction>(world, id);
+                    break;
+                case EActions.Chase:
+                    SetAction<ChaseAction>(world, id);
+                    break;
+                case EActions.Attack:
+                    SetAction<AttackAction>(world, id);
+                    break;
+                case EActions.Flee:
+                    SetAction<FleeAction>(world, id);
+                    break;
+            }
         }
     }
 
@@ -54,29 +130,9 @@ public class UtilityBasedDecisionMakingSystem : EcsSystem
         var maxHealth = world.GetComponent<HealthLimitsComponent>(id).maxHealth;
 #if DEBUG
         if (health > maxHealth)
-            throw new System.Exception("health can't be bigger than max health");
+            throw new Exception("health can't be bigger than max health");
 #endif
         return health / maxHealth;
-    }
-
-    private float GetTargetHealth(EcsWorld world, int id)
-    {
-        if (world.Have<TargetEntityComponent>(id))
-        {
-            var targetEntity = world.GetComponent<TargetEntityComponent>(id).target;
-#if DEBUG
-            if (targetEntity == null)
-                throw new System.Exception("TargetEntityComponent should be cleaned up if target entity view is null");
-#endif
-            
-            if (world.IsEntityValid(targetEntity.Entity) &&
-                world.Have<HealthComponent>(targetEntity.Id))
-            {
-                return world.GetComponent<HealthComponent>(targetEntity.Id).health;
-            }
-        }
-
-        return 0;
     }
 
     private float GetWeaponDamage(EcsWorld world, int id)
@@ -114,8 +170,18 @@ public class UtilityBasedDecisionMakingSystem : EcsSystem
         return damage;
     }
 
-    private float Evaluate(in UtilityCurve curves, float value)
+    private void SetAction<T>(EcsWorld world, int id)
     {
-        return 0;
+        if (world.Have<T>(id))
+            return;
+
+        Debug.Log("UtilityBasedDecisionMakingSystem.SetAction " + typeof(T).Name);
+        //TODO: use mutually exclusive components here
+        if (world.Have<PatrolAction>(id)) world.Remove<PatrolAction>(id);
+        if (world.Have<ChaseAction>(id)) world.Remove<ChaseAction>(id);
+        if (world.Have<AttackAction>(id)) world.Remove<AttackAction>(id);
+        if (world.Have<FleeAction>(id)) world.Remove<FleeAction>(id);
+
+        world.Add<T>(id);
     }
 }

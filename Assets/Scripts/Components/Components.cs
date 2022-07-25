@@ -119,6 +119,7 @@ namespace Components
         public int idx;
     }
 
+    /*
     struct UtilityCurve
     {
         public float h0;
@@ -139,6 +140,12 @@ namespace Components
         public UtilityCurve health;
         public UtilityCurve damage;
     }
+    */
+
+    struct UtilityCurvesComponent
+    {
+        public UtilityCurves curves;
+    }
 }
 
 namespace Tags
@@ -153,9 +160,15 @@ namespace Tags
     struct MeleeWeapon { }
     struct RangedWeapon { }
     struct Weapon { }
+    struct Prototype { }
 
     struct PatrolAction { }
     struct ChaseAction { }
+    struct AttackAction { }
     struct FleeAction { }
-    struct Prototype { }
+
+    struct PatrolState { }
+    struct ChaseState { }
+    struct AttackState { }
+    struct FleeState { }
 }
