@@ -58,6 +58,11 @@ namespace Components
         public float angle;
     }
 
+    struct ViewDistance
+    {
+        public float distance;
+    }
+
     struct AttackAngle
     {
         public float angle;
@@ -161,7 +166,9 @@ namespace Tags
     struct RangedWeapon { }
     struct Weapon { }
     struct Prototype { }
+    struct SeenEnemyTag { }
 
+    //stuff needed for more complex AI, which was abandoned
     struct PatrolAction { }
     struct ChaseAction { }
     struct AttackAction { }

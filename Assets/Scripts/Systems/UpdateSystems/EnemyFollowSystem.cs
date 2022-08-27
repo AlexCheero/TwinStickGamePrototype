@@ -16,6 +16,7 @@ public class EnemyFollowSystem : EcsSystem
                 Id<EnemyTag>(),
                 Id<NavMeshAgent>(),
                 Id<TargetEntityComponent>(),
+                Id<SeenEnemyTag>(),
                 Id<Transform>()
                 ));
     }

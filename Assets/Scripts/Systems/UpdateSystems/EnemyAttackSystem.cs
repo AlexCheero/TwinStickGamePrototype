@@ -15,7 +15,8 @@ public class EnemyAttackSystem : EcsSystem
                                                           Id<AttackReachComponent>(),
                                                           Id<ViewAngle>(),
                                                           Id<CurrentWeapon>(),
-                                                          Id<TargetEntityComponent>()));
+                                                          Id<TargetEntityComponent>(),
+                                                          Id<SeenEnemyTag>()));
     }
 
     public override void Tick(EcsWorld world)
