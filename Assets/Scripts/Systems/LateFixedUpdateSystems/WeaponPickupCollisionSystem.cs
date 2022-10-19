@@ -42,7 +42,7 @@ public class WeaponPickupCollisionSystem : EcsSystem
 
                 weaponTransform.SetParent(GunHolder);
                 weaponTransform.localPosition = -GunGrip.localPosition;
-                weaponTransform.localRotation = Quaternion.identity;
+                weaponTransform.localRotation = GunGrip.localRotation;
 
                 world.Remove<Transform>(id);
             }
