@@ -17,7 +17,8 @@ public class MeleeAttackSystem : EcsSystem
                                                      Id<MeleeWeapon>(),
                                                      Id<DamageComponent>(),
                                                      Id<ReachComponent>(),
-                                                     Id<AttackAngle>()));
+                                                     Id<AttackAngle>(),
+                                                     Id<Owner>()));
 
         _overlapResults = new Collider[OverlapsCount];
     }
@@ -26,7 +27,16 @@ public class MeleeAttackSystem : EcsSystem
     {
         foreach (var id in world.Enumerate(_filterId))
         {
-            Debug.Log("melee attack!");
+#if DEBUG
+            if (!world.Have<Owner>(id))
+                throw new System.Exception("weapon should have owner");
+#endif
+            var ownerId = world.GetComponent<Owner>(id).entity.GetId();
+            if (world.Have<Animator>(ownerId))
+            {
+                var animator = world.GetComponent<Animator>(ownerId);
+                animator.SetTrigger(world.Have<DefaultMeleeWeapon>(id) ? "IsPunching" : "IsMelee");
+            }
 
             var attackDistance = world.GetComponent<ReachComponent>(id).distance;
             var attack = world.GetComponent<Attack>(id);

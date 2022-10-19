@@ -119,6 +119,11 @@ namespace Components
         public Entity prototypeEntity;
     }
 
+    struct Owner
+    {
+        public Entity entity;
+    }
+
     struct NextWaypointIdx
     {
         public int idx;
@@ -163,6 +168,7 @@ namespace Tags
     struct DeleteOnCollision { }
     struct DeadTag { }
     struct MeleeWeapon { }
+    struct DefaultMeleeWeapon { }
     struct RangedWeapon { }
     struct Weapon { }
     struct Prototype { }

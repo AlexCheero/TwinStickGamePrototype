@@ -45,6 +45,14 @@ public class ProjectileAttackSystem : EcsSystem
             projectileView.GetComponent<Rigidbody>().AddForce(attack.direction * speed);//TODO: try different force types
 
             ammo--;
+
+#if DEBUG
+            if (!world.Have<Owner>(id))
+                throw new System.Exception("weapon should have owner");
+#endif
+            var ownerId = world.GetComponent<Owner>(id).entity.GetId();
+            if (world.Have<Animator>(ownerId))
+                world.GetComponent<Animator>(ownerId).SetTrigger("IsThrowing");
         }
     }
 }

@@ -22,6 +22,7 @@ public class InitDefaultWeaponSystem : EcsSystem
                 world.GetComponent<ReachComponent>(weaponId).distance :
                 float.MaxValue;
             world.GetOrAddComponentRef<AttackReachComponent>(id).distance = attackReach;
+            world.GetOrAddComponentRef<Owner>(weaponId).entity = world.GetById(id);
         }
     }
 }

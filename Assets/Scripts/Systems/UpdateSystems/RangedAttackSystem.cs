@@ -32,7 +32,13 @@ public class RangedAttackSystem : EcsSystem
 
             ammo--;
 
-            Debug.Log("instant ranged attack!");
+#if DEBUG
+            if (!world.Have<Owner>(id))
+                throw new System.Exception("weapon should have owner");
+#endif
+            var ownerId = world.GetComponent<Owner>(id).entity.GetId();
+            if (world.Have<Animator>(ownerId))
+                world.GetComponent<Animator>(ownerId).SetTrigger("IsFiring");
 
             var attack = world.GetComponent<Attack>(id);
             Ray ray = new Ray(attack.position, attack.direction);

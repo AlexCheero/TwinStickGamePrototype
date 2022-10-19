@@ -68,3 +68,7 @@ MonoBehaviour:
         IsHiddenInEditor: 0
       UnityComponent: {fileID: 0}
       IsExpanded: 1
+    - ComponentName: Tags.DefaultMeleeWeapon
+      Fields: []
+      UnityComponent: {fileID: 0}
+      IsExpanded: 0
