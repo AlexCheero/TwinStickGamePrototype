@@ -61,6 +61,8 @@ public class RangedAttackSystem : EcsSystem
             Debug.Log("instant ranged hit!");
             world.GetComponentByRef<HealthComponent>(targetEntityId).health -=
                 world.GetComponent<DamageComponent>(id).damage;
+
+            world.Remove<Attack>(id);
         }
     }
 }

@@ -6,18 +6,27 @@ using UnityEngine;
 [System(ESystemCategory.Update)]
 public class ProjectileAttackSystem : EcsSystem
 {
-    private int _filterId;
+    private int _startAttackFilterId;
+    private int _tagFallThroughFilterId;
+    private int _spawnProjectileFilterId;
 
     public ProjectileAttackSystem(EcsWorld world)
     {
-        _filterId = world.RegisterFilter(new BitMask(Id<Attack>(),
-                                                     Id<ProjectileWeapon>(),
-                                                     Id<Ammo>()));
+        _startAttackFilterId = world.RegisterFilter(new BitMask(Id<Attack>(),
+                                                                Id<ProjectileWeapon>(),
+                                                                Id<Ammo>()),
+                                                    new BitMask(Id<GrenadeFly>()));
+
+        _tagFallThroughFilterId = world.RegisterFilter(new BitMask(Id<CharacterTag>(), Id<CurrentWeapon>(), Id<GrenadeFly>()));
+
+        _spawnProjectileFilterId = world.RegisterFilter(new BitMask(Id<GrenadeFly>(),
+                                                                    Id<ProjectileWeapon>(),
+                                                                    Id<Ammo>()));
     }
 
     public override void Tick(EcsWorld world)
     {
-        foreach (var id in world.Enumerate(_filterId))
+        foreach (var id in world.Enumerate(_startAttackFilterId))
         {
             ref var ammo = ref world.GetComponentByRef<Ammo>(id).amount;
             if (ammo == 0)
@@ -29,7 +38,29 @@ public class ProjectileAttackSystem : EcsSystem
                 throw new System.Exception("OnProjectileShotSystem. ammo amount is <= 0. have ammo component: " + world.Have<Ammo>(id));
 #endif
 
-            var attack = world.GetComponent<Attack>(id);
+            ammo--;
+
+#if DEBUG
+            if (!world.Have<Owner>(id))
+                throw new System.Exception("weapon should have owner");
+#endif
+            var ownerId = world.GetComponent<Owner>(id).entity.GetId();
+            if (world.Have<Animator>(ownerId))
+                world.GetComponent<Animator>(ownerId).SetTrigger("IsThrowing");
+
+            world.Remove<Attack>(id);
+        }
+
+        foreach (var id in world.Enumerate(_tagFallThroughFilterId))
+        {
+            var weaponId = world.GetComponent<CurrentWeapon>(id).entity.GetId();
+            world.Add(weaponId, world.GetComponent<GrenadeFly>(id));
+            world.Remove<GrenadeFly>(id);
+        }
+
+        foreach (var id in world.Enumerate(_spawnProjectileFilterId))
+        {
+            var attack = world.GetComponent<GrenadeFly>(id);
 
             var instantiationPosition = attack.position + attack.direction * 2.0f; //instantiation before the player
 
@@ -44,15 +75,7 @@ public class ProjectileAttackSystem : EcsSystem
             var speed = world.GetComponent<SpeedComponent>(projectileId).speed;
             projectileView.GetComponent<Rigidbody>().AddForce(attack.direction * speed);//TODO: try different force types
 
-            ammo--;
-
-#if DEBUG
-            if (!world.Have<Owner>(id))
-                throw new System.Exception("weapon should have owner");
-#endif
-            var ownerId = world.GetComponent<Owner>(id).entity.GetId();
-            if (world.Have<Animator>(ownerId))
-                world.GetComponent<Animator>(ownerId).SetTrigger("IsThrowing");
+            world.Remove<GrenadeFly>(id);
         }
     }
 }

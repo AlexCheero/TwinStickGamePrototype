@@ -246,7 +246,7 @@ MonoBehaviour:
         Preset: {fileID: 0}
         IsHiddenInEditor: 0
       UnityComponent: {fileID: 0}
-      IsExpanded: 1
+      IsExpanded: 0
     - ComponentName: Components.SpeedComponent
       Fields:
       - TypeName: System.Single
@@ -256,7 +256,7 @@ MonoBehaviour:
         Preset: {fileID: 0}
         IsHiddenInEditor: 0
       UnityComponent: {fileID: 0}
-      IsExpanded: 1
+      IsExpanded: 0
     - ComponentName: Components.AngularSpeedComponent
       Fields:
       - TypeName: System.Single
@@ -266,7 +266,7 @@ MonoBehaviour:
         Preset: {fileID: 0}
         IsHiddenInEditor: 0
       UnityComponent: {fileID: 0}
-      IsExpanded: 1
+      IsExpanded: 0
     - ComponentName: Components.ReachComponent
       Fields:
       - TypeName: System.Single
@@ -276,7 +276,7 @@ MonoBehaviour:
         Preset: {fileID: 0}
         IsHiddenInEditor: 0
       UnityComponent: {fileID: 0}
-      IsExpanded: 1
+      IsExpanded: 0
     - ComponentName: Components.AccelerationComponent
       Fields:
       - TypeName: System.Single
@@ -286,7 +286,7 @@ MonoBehaviour:
         Preset: {fileID: 0}
         IsHiddenInEditor: 0
       UnityComponent: {fileID: 0}
-      IsExpanded: 1
+      IsExpanded: 0
     - ComponentName: UnityEngine.AI.NavMeshAgent
       Fields: []
       UnityComponent: {fileID: 3981269079167589345}
@@ -304,7 +304,7 @@ MonoBehaviour:
         Preset: {fileID: 0}
         IsHiddenInEditor: 0
       UnityComponent: {fileID: 0}
-      IsExpanded: 1
+      IsExpanded: 0
     - ComponentName: Components.TargetEntityComponent
       Fields:
       - TypeName: EntityView
@@ -351,3 +351,17 @@ MonoBehaviour:
         IsHiddenInEditor: 0
       UnityComponent: {fileID: 0}
       IsExpanded: 1
+    - ComponentName: Components.ViewDistance
+      Fields:
+      - TypeName: System.Single
+        Name: distance
+        ValueRepresentation: 15
+        UnityComponent: {fileID: 0}
+        Preset: {fileID: 0}
+        IsHiddenInEditor: 0
+      UnityComponent: {fileID: 0}
+      IsExpanded: 1
+    - ComponentName: Tags.CharacterTag
+      Fields: []
+      UnityComponent: {fileID: 0}
+      IsExpanded: 0

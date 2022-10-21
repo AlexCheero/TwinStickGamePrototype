@@ -102,6 +102,12 @@ namespace Components
         public Vector3 direction;
     }
 
+    struct GrenadeFly
+    {
+        public Vector3 position;
+        public Vector3 direction;
+    }
+
     struct DefaultWeapon
     {
         public EntityPreset preset;
@@ -160,6 +166,7 @@ namespace Components
 
 namespace Tags
 {
+    struct CharacterTag { }
     struct PlayerTag { }
     struct EnemyTag { }
     struct CameraTag { }

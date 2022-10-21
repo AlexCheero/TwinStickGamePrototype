@@ -68,6 +68,8 @@ public class MeleeAttackSystem : EcsSystem
                     break;
                 }
             }
+
+            world.Remove<Attack>(id);
         }
     }
 

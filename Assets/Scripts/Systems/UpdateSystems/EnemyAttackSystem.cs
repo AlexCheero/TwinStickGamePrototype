@@ -11,12 +11,12 @@ public class EnemyAttackSystem : EcsSystem
     public EnemyAttackSystem(EcsWorld world)
     {
         _filterId = world.RegisterFilter(new BitMask(Id<EnemyTag>(),
-                                                          Id<Transform>(),
-                                                          Id<AttackReachComponent>(),
-                                                          Id<ViewAngle>(),
-                                                          Id<CurrentWeapon>(),
-                                                          Id<TargetEntityComponent>(),
-                                                          Id<SeenEnemyTag>()));
+                                                     Id<Transform>(),
+                                                     Id<AttackReachComponent>(),
+                                                     Id<ViewAngle>(),
+                                                     Id<CurrentWeapon>(),
+                                                     Id<TargetEntityComponent>(),
+                                                     Id<SeenEnemyTag>()));
     }
 
     public override void Tick(EcsWorld world)
