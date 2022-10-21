@@ -14,6 +14,9 @@ public class AnimEventListener : MonoBehaviour
     void GrenadeFly()
     {
         if (!_view.Have<GrenadeFly>())
-            _view.Add(new GrenadeFly { position = transform.position, direction = transform.forward });
+        {
+            var gunHolder = MiscUtils.FindGrandChildByName(transform, "GunHolder");
+            _view.Add(new GrenadeFly { position = gunHolder.position, direction = transform.forward });
+        }
     }
 }

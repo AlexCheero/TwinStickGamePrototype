@@ -37,8 +37,8 @@ public class WeaponPickupCollisionSystem : EcsSystem
                     weaponCollider.enabled = false;
 
                 var playerTransform = world.GetComponent<Transform>(collidedId);
-                var GunHolder = FindGrandChildByName(playerTransform, "GunHolder");
-                var GunGrip = FindGrandChildByName(weaponTransform, "Grip");
+                var GunHolder = MiscUtils.FindGrandChildByName(playerTransform, "GunHolder");
+                var GunGrip = MiscUtils.FindGrandChildByName(weaponTransform, "Grip");
 
                 weaponTransform.SetParent(GunHolder);
 
@@ -56,19 +56,5 @@ public class WeaponPickupCollisionSystem : EcsSystem
                 world.Remove<Transform>(id);
             }
         }
-    }
-
-    private Transform FindGrandChildByName(Transform transform, string name)
-    {
-        foreach (Transform child in transform)
-        {
-            if (child.name == name)
-                return child;
-            var childTransform = FindGrandChildByName(child, name);
-            if (childTransform != null)
-                return childTransform;
-        }
-
-        return null;
     }
 }
