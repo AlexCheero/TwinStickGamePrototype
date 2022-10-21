@@ -37,15 +37,17 @@ public class WeaponPickupCollisionSystem : EcsSystem
                     weaponCollider.enabled = false;
 
                 var playerTransform = world.GetComponent<Transform>(collidedId);
-                var GunHolder = MiscUtils.FindGrandChildByName(playerTransform, "GunHolder");
-                var GunGrip = MiscUtils.FindGrandChildByName(weaponTransform, "Grip");
+                var gunHolder = MiscUtils.FindGrandChildByName(playerTransform, "GunHolder");
+                foreach (Transform gun in gunHolder)
+                    GameObject.Destroy(gun.gameObject);
+                var gunGrip = MiscUtils.FindGrandChildByName(weaponTransform, "Grip");
 
-                weaponTransform.SetParent(GunHolder);
+                weaponTransform.SetParent(gunHolder);
 
-                if (GunGrip != null)
+                if (gunGrip != null)
                 {
-                    weaponTransform.localPosition = -GunGrip.localPosition;
-                    weaponTransform.localRotation = GunGrip.localRotation;
+                    weaponTransform.localPosition = -gunGrip.localPosition;
+                    weaponTransform.localRotation = gunGrip.localRotation;
                 }
                 else
                 {
