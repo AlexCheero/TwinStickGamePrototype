@@ -41,8 +41,17 @@ public class WeaponPickupCollisionSystem : EcsSystem
                 var GunGrip = FindGrandChildByName(weaponTransform, "Grip");
 
                 weaponTransform.SetParent(GunHolder);
-                weaponTransform.localPosition = -GunGrip.localPosition;
-                weaponTransform.localRotation = GunGrip.localRotation;
+
+                if (GunGrip != null)
+                {
+                    weaponTransform.localPosition = -GunGrip.localPosition;
+                    weaponTransform.localRotation = GunGrip.localRotation;
+                }
+                else
+                {
+                    weaponTransform.localPosition = Vector3.zero;
+                    weaponTransform.localRotation = Quaternion.identity;
+                }
 
                 world.Remove<Transform>(id);
             }
