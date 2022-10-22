@@ -5465,7 +5465,6 @@ Transform:
   m_Children:
   - {fileID: 5235598820072310978}
   - {fileID: 4920979304223819095}
-  - {fileID: 5381915674868281399}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 90, z: 90}
@@ -5558,6 +5557,22 @@ MonoBehaviour:
       Fields: []
       UnityComponent: {fileID: 4710816682801042463}
       IsExpanded: 0
+    - ComponentName: Components.GripTransform
+      Fields:
+      - TypeName: UnityEngine.Vector3
+        Name: position
+        ValueRepresentation: 0 0,5 0
+        UnityComponent: {fileID: 0}
+        Preset: {fileID: 0}
+        IsHiddenInEditor: 0
+      - TypeName: UnityEngine.Vector3
+        Name: rotation
+        ValueRepresentation: 0 0 90
+        UnityComponent: {fileID: 0}
+        Preset: {fileID: 0}
+        IsHiddenInEditor: 0
+      UnityComponent: {fileID: 0}
+      IsExpanded: 1
 --- !u!1 &1982581365190004737
 GameObject:
   m_ObjectHideFlags: 0
@@ -13010,36 +13025,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!1 &5525791272760151206
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 5381915674868281399}
-  m_Layer: 0
-  m_Name: Grip
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &5381915674868281399
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5525791272760151206}
-  m_LocalRotation: {x: 0.5, y: 0.5, z: 0.5, w: 0.5}
-  m_LocalPosition: {x: -0.5, y: 0.05, z: 0.015}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 4710816682801042463}
-  m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 0, y: 90, z: 90}
 --- !u!1 &5541143082760806022
 GameObject:
   m_ObjectHideFlags: 0

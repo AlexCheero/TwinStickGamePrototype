@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &7593587955195380975
+--- !u!1 &3426359586814709819
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,47 +8,45 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 7073475716119748181}
-  - component: {fileID: 6162563913815970288}
-  - component: {fileID: 8241908871396107578}
-  - component: {fileID: 1152013217259468798}
-  - component: {fileID: 3469522513105118961}
+  - component: {fileID: 4328175729415152043}
+  - component: {fileID: 4014357398081119364}
+  - component: {fileID: 5108440054547604210}
   m_Layer: 0
-  m_Name: Shotgun
+  m_Name: MESH-0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &7073475716119748181
+--- !u!4 &4328175729415152043
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7593587955195380975}
-  m_LocalRotation: {x: -0.7069834, y: 0, z: 0, w: 0.7072302}
-  m_LocalPosition: {x: 22.452463, y: 1.08, z: 8.630616}
+  m_GameObject: {fileID: 3426359586814709819}
+  m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 4315594678850727785}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: -89.98, y: 0, z: 0}
---- !u!33 &6162563913815970288
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!33 &4014357398081119364
 MeshFilter:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7593587955195380975}
-  m_Mesh: {fileID: 1568016432510859342, guid: 427d1f54abe2b0344820cc2dd54d9aa5, type: 3}
---- !u!23 &8241908871396107578
+  m_GameObject: {fileID: 3426359586814709819}
+  m_Mesh: {fileID: -6250925836635344426, guid: dc74bffd63be01b4eaf0230ab2b3fd83, type: 3}
+--- !u!23 &5108440054547604210
 MeshRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7593587955195380975}
+  m_GameObject: {fileID: 3426359586814709819}
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
@@ -61,7 +59,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 0843f10147877214daa4c45673e1a29b, type: 2}
+  - {fileID: 2100000, guid: 90674328518bebd478bfa97a1cb54284, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -83,26 +81,59 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!65 &1152013217259468798
+--- !u!1 &3508236843181602259
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4315594678850727785}
+  - component: {fileID: 8830445477050230622}
+  - component: {fileID: 7827552257392514615}
+  m_Layer: 0
+  m_Name: Sword
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4315594678850727785
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3508236843181602259}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 20.42, y: 1.05, z: 11.67}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 4328175729415152043}
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &8830445477050230622
 BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7593587955195380975}
+  m_GameObject: {fileID: 3508236843181602259}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.17354433, y: 0.8283864, z: 0.2649084}
-  m_Center: {x: 0, y: 0.01526208, z: -0.0036345194}
---- !u!114 &3469522513105118961
+  m_Size: {x: 0.04, y: 0.19, z: 1.24}
+  m_Center: {x: 0, y: 0.15, z: 0.09}
+--- !u!114 &7827552257392514615
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7593587955195380975}
+  m_GameObject: {fileID: 3508236843181602259}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: bd67fbb5415272440ad8bbd0def578db, type: 3}
@@ -114,17 +145,11 @@ MonoBehaviour:
       Fields: []
       UnityComponent: {fileID: 0}
       IsExpanded: 0
-    - ComponentName: Components.Ammo
-      Fields:
-      - TypeName: System.Int32
-        Name: amount
-        ValueRepresentation: 15
-        UnityComponent: {fileID: 0}
-        Preset: {fileID: 0}
-        IsHiddenInEditor: 0
+    - ComponentName: Tags.MeleeWeapon
+      Fields: []
       UnityComponent: {fileID: 0}
-      IsExpanded: 1
-    - ComponentName: Tags.RangedWeapon
+      IsExpanded: 0
+    - ComponentName: Tags.Weapon
       Fields: []
       UnityComponent: {fileID: 0}
       IsExpanded: 0
@@ -132,7 +157,27 @@ MonoBehaviour:
       Fields:
       - TypeName: System.Single
         Name: damage
-        ValueRepresentation: 30
+        ValueRepresentation: 10
+        UnityComponent: {fileID: 0}
+        Preset: {fileID: 0}
+        IsHiddenInEditor: 0
+      UnityComponent: {fileID: 0}
+      IsExpanded: 1
+    - ComponentName: Components.ReachComponent
+      Fields:
+      - TypeName: System.Single
+        Name: distance
+        ValueRepresentation: 5
+        UnityComponent: {fileID: 0}
+        Preset: {fileID: 0}
+        IsHiddenInEditor: 0
+      UnityComponent: {fileID: 0}
+      IsExpanded: 1
+    - ComponentName: Components.AttackAngle
+      Fields:
+      - TypeName: System.Single
+        Name: angle
+        ValueRepresentation: 120
         UnityComponent: {fileID: 0}
         Preset: {fileID: 0}
         IsHiddenInEditor: 0
@@ -154,25 +199,21 @@ MonoBehaviour:
         IsHiddenInEditor: 0
       UnityComponent: {fileID: 0}
       IsExpanded: 1
-    - ComponentName: Tags.Weapon
-      Fields: []
-      UnityComponent: {fileID: 0}
-      IsExpanded: 0
     - ComponentName: UnityEngine.Transform
       Fields: []
-      UnityComponent: {fileID: 7073475716119748181}
+      UnityComponent: {fileID: 4315594678850727785}
       IsExpanded: 0
     - ComponentName: Components.GripTransform
       Fields:
       - TypeName: UnityEngine.Vector3
         Name: position
-        ValueRepresentation: -0,07 0,13 0
+        ValueRepresentation: -0,3 0,1 0
         UnityComponent: {fileID: 0}
         Preset: {fileID: 0}
         IsHiddenInEditor: 0
       - TypeName: UnityEngine.Vector3
         Name: rotation
-        ValueRepresentation: 0 -90 0
+        ValueRepresentation: 0 -90 180
         UnityComponent: {fileID: 0}
         Preset: {fileID: 0}
         IsHiddenInEditor: 0

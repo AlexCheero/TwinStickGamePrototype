@@ -135,6 +135,12 @@ namespace Components
         public int idx;
     }
 
+    struct GripTransform
+    {
+        public Vector3 position;
+        public Vector3 rotation;
+    }
+
     /*
     struct UtilityCurve
     {

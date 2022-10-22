@@ -44,15 +44,16 @@ public class WeaponPickupCollisionSystem : EcsSystem
 
                 weaponTransform.SetParent(gunHolder);
 
-                if (gunGrip != null)
+                if (world.Have<GripTransform>(id))
                 {
-                    weaponTransform.localPosition = -gunGrip.localPosition;
-                    weaponTransform.localRotation = gunGrip.localRotation;
+                    var gripTransform = world.GetComponent<GripTransform>(id);
+                    weaponTransform.localPosition = gripTransform.position;
+                    weaponTransform.localEulerAngles = gripTransform.rotation;
                 }
                 else
                 {
                     weaponTransform.localPosition = Vector3.zero;
-                    weaponTransform.localRotation = Quaternion.identity;
+                    weaponTransform.localEulerAngles = Vector3.zero;
                 }
 
                 world.Remove<Transform>(id);
