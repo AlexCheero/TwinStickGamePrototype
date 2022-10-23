@@ -1220,12 +1220,12 @@ MonoBehaviour:
         IsHiddenInEditor: 0
       - TypeName: System.Single
         Name: distance
-        ValueRepresentation: 15
+        ValueRepresentation: 10
         UnityComponent: {fileID: 0}
         Preset: {fileID: 0}
         IsHiddenInEditor: 0
       UnityComponent: {fileID: 0}
-      IsExpanded: 0
+      IsExpanded: 1
     - ComponentName: Components.TargetEntityComponent
       Fields:
       - TypeName: EntityView
@@ -2090,6 +2090,7 @@ MonoBehaviour:
   - BotMovementAnimationSystem
   _lateUpdateSystemTypeNames:
   - DeleteDeadSystem
+  - AttackCleanupSystem
   _fixedUpdateSystemTypeNames:
   - ApplyPlayerVelocitySystem
   _lateFixedUpdateSystemTypeNames:
@@ -2100,7 +2101,7 @@ MonoBehaviour:
   - DeleteDeadSystem
   _initSwitches: 01010101010101010101010101010101
   _updateSwitches: 0101010101010101010101010101010101010101010101010101010101010101010101
-  _lateUpdateSwitches: 010101
+  _lateUpdateSwitches: 01010101
   _fixedUpdateSwitches: 01010101
   _lateFixedUpdateSwitches: 010101010101
 --- !u!4 &2020709258

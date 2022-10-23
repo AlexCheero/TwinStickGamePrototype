@@ -1040,8 +1040,8 @@ GameObject:
   - component: {fileID: 7777156661414571538}
   - component: {fileID: 2074487693109958013}
   - component: {fileID: 7806782409769925050}
-  - component: {fileID: 4649735956465255904}
   - component: {fileID: 1781395108}
+  - component: {fileID: 4649735956465255904}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -1115,6 +1115,18 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 80
   m_CollisionDetection: 0
+--- !u!114 &1781395108
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3910811949241216722}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 11d2cb45d295e1e40a28f13a0da864a3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &4649735956465255904
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1213,18 +1225,6 @@ MonoBehaviour:
       Fields: []
       UnityComponent: {fileID: 0}
       IsExpanded: 0
---- !u!114 &1781395108
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3910811949241216722}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 11d2cb45d295e1e40a28f13a0da864a3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &4079052989807219141
 GameObject:
   m_ObjectHideFlags: 0

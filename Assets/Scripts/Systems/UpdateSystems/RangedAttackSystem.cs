@@ -42,6 +42,9 @@ public class RangedAttackSystem : EcsSystem
 
             var attack = world.GetComponent<Attack>(id);
             Ray ray = new Ray(attack.position, attack.direction);
+#if DEBUG
+            Debug.DrawRay(attack.position, attack.direction * 100, Color.red, 5.0f);
+#endif
             RaycastHit hit;
             if (!Physics.Raycast(ray, out hit))
                 continue;
@@ -61,8 +64,6 @@ public class RangedAttackSystem : EcsSystem
             Debug.Log("instant ranged hit!");
             world.GetComponentByRef<HealthComponent>(targetEntityId).health -=
                 world.GetComponent<DamageComponent>(id).damage;
-
-            world.Remove<Attack>(id);
         }
     }
 }

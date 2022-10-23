@@ -33,7 +33,9 @@ public class PlayerAttackSystem : EcsSystem
 #endif
 
             var transform = world.GetComponent<Transform>(id);
-            world.Add(weaponId, new Attack { position = transform.position, direction = transform.forward });
+            var pos = transform.position;
+            pos.y += 1.5f;
+            world.Add(weaponId, new Attack { position = pos, direction = transform.forward });
         }
     }
 }

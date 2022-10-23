@@ -6,6 +6,8 @@ using UnityEngine;
 [System(ESystemCategory.Update)]
 public class MeleeAttackSystem : EcsSystem
 {
+    private int _startAttackFilterId;
+    private int _tagFallThroughFilterId;
     private int _filterId;
 
     private const int OverlapsCount = 16;
@@ -13,33 +15,46 @@ public class MeleeAttackSystem : EcsSystem
 
     public MeleeAttackSystem(EcsWorld world)
     {
-        _filterId = world.RegisterFilter(new BitMask(Id<Attack>(),
+        _startAttackFilterId = world.RegisterFilter(new BitMask(Id<Attack>(),
+                                                                Id<MeleeWeapon>(),
+                                                                Id<Owner>()));
+
+        _tagFallThroughFilterId = world.RegisterFilter(new BitMask(Id<CharacterTag>(), Id<CurrentWeapon>(), Id<MeleeAttackEvent>()));
+
+        _filterId = world.RegisterFilter(new BitMask(Id<MeleeAttackEvent>(),
                                                      Id<MeleeWeapon>(),
                                                      Id<DamageComponent>(),
                                                      Id<ReachComponent>(),
-                                                     Id<AttackAngle>(),
-                                                     Id<Owner>()));
+                                                     Id<AttackAngle>()));
 
         _overlapResults = new Collider[OverlapsCount];
     }
 
     public override void Tick(EcsWorld world)
     {
-        foreach (var id in world.Enumerate(_filterId))
+        foreach (var id in world.Enumerate(_startAttackFilterId))
         {
-#if DEBUG
-            if (!world.Have<Owner>(id))
-                throw new System.Exception("weapon should have owner");
-#endif
             var ownerId = world.GetComponent<Owner>(id).entity.GetId();
             if (world.Have<Animator>(ownerId))
             {
                 var animator = world.GetComponent<Animator>(ownerId);
                 animator.SetTrigger(world.Have<DefaultMeleeWeapon>(id) ? "IsPunching" : "IsMelee");
             }
+        }
 
+        foreach (var id in world.Enumerate(_tagFallThroughFilterId))
+        {
+            var weaponId = world.GetComponent<CurrentWeapon>(id).entity.GetId();
+            world.Add(weaponId, world.GetComponent<MeleeAttackEvent>(id));
+            world.Remove<MeleeAttackEvent>(id);
+        }
+
+        foreach (var id in world.Enumerate(_filterId))
+        {
+            Debug.Log("melee attack!");
+            var attack = world.GetComponent<MeleeAttackEvent>(id);
+            world.Remove<MeleeAttackEvent>(id);
             var attackDistance = world.GetComponent<ReachComponent>(id).distance;
-            var attack = world.GetComponent<Attack>(id);
             var position = attack.position;
             //TODO: set masks for physics
             var overlapCount = Physics.OverlapSphereNonAlloc(position, attackDistance, _overlapResults);
@@ -68,8 +83,6 @@ public class MeleeAttackSystem : EcsSystem
                     break;
                 }
             }
-
-            world.Remove<Attack>(id);
         }
     }
 
@@ -93,7 +106,7 @@ public class MeleeAttackSystem : EcsSystem
     private static int MoveAllSuitableCollidersToFront(EcsWorld world,
                                                 Collider[] colliders,
                                                 int count,
-                                                Attack attack,
+                                                MeleeAttackEvent attack,
                                                 float viewAngle)
     {
         int suitableCount = 0;

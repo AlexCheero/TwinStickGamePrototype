@@ -108,6 +108,12 @@ namespace Components
         public Vector3 direction;
     }
 
+    struct MeleeAttackEvent
+    {
+        public Vector3 position;
+        public Vector3 direction;
+    }
+
     struct DefaultWeapon
     {
         public EntityPreset preset;

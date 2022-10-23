@@ -14,7 +14,8 @@ public class ProjectileAttackSystem : EcsSystem
     {
         _startAttackFilterId = world.RegisterFilter(new BitMask(Id<Attack>(),
                                                                 Id<ProjectileWeapon>(),
-                                                                Id<Ammo>()),
+                                                                Id<Ammo>(),
+                                                                Id<Owner>()),
                                                     new BitMask(Id<GrenadeFly>()));
 
         _tagFallThroughFilterId = world.RegisterFilter(new BitMask(Id<CharacterTag>(), Id<CurrentWeapon>(), Id<GrenadeFly>()));
@@ -40,15 +41,9 @@ public class ProjectileAttackSystem : EcsSystem
 
             ammo--;
 
-#if DEBUG
-            if (!world.Have<Owner>(id))
-                throw new System.Exception("weapon should have owner");
-#endif
             var ownerId = world.GetComponent<Owner>(id).entity.GetId();
             if (world.Have<Animator>(ownerId))
                 world.GetComponent<Animator>(ownerId).SetTrigger("IsThrowing");
-
-            world.Remove<Attack>(id);
         }
 
         foreach (var id in world.Enumerate(_tagFallThroughFilterId))
