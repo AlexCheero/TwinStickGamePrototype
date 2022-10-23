@@ -10,7 +10,7 @@ public class RangedAttackSystem : EcsSystem
 
     public RangedAttackSystem(EcsWorld world)
     {
-        _filterId = world.RegisterFilter(new BitMask(Id<Attack>(),
+        _filterId = world.RegisterFilter(new BitMask(Id<AttackEvent>(),
                                                      Id<RangedWeapon>(),
                                                      Id<Ammo>(),
                                                      Id<DamageComponent>()));
@@ -40,7 +40,7 @@ public class RangedAttackSystem : EcsSystem
             if (world.Have<Animator>(ownerId))
                 world.GetComponent<Animator>(ownerId).SetTrigger("IsFiring");
 
-            var attack = world.GetComponent<Attack>(id);
+            var attack = world.GetComponent<AttackEvent>(id);
             Ray ray = new Ray(attack.position, attack.direction);
 #if DEBUG
             Debug.DrawRay(attack.position, attack.direction * 100, Color.red, 5.0f);

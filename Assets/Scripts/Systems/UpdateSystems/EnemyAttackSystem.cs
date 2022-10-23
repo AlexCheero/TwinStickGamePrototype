@@ -48,10 +48,10 @@ public class EnemyAttackSystem : EcsSystem
 #endif
             var weaponId = weaponEntity.GetId();
 #if DEBUG
-            if (world.Have<Attack>(weaponId))
+            if (world.Have<AttackEvent>(weaponId))
                 throw new System.Exception("please clean Attack component from weapon");
 #endif
-            world.Add(weaponId, new Attack { position = transform.position, direction = transform.forward });
+            world.Add(weaponId, new AttackEvent { position = transform.position, direction = transform.forward });
         }
     }
 }

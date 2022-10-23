@@ -15,7 +15,7 @@ public class AttackCDSystem : EcsSystem
 
     public AttackCDSystem(EcsWorld world)
     {
-        _filterId = world.RegisterFilter(new BitMask(Id<Attack>(), Id<AttackCooldown>()));
+        _filterId = world.RegisterFilter(new BitMask(Id<AttackEvent>(), Id<AttackCooldown>()));
     }
 
     public override void Tick(EcsWorld world)
@@ -25,7 +25,7 @@ public class AttackCDSystem : EcsSystem
             ref var attackCD = ref world.GetComponentByRef<AttackCooldown>(id);
             var nextAttackTime = attackCD.previousAttackTime + attackCD.attackCD;
             if (Time.time < nextAttackTime)
-                world.Remove<Attack>(id);
+                world.Remove<AttackEvent>(id);
             else
                 attackCD.previousAttackTime = Time.time;
         }

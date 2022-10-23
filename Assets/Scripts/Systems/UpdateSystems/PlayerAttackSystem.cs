@@ -28,14 +28,14 @@ public class PlayerAttackSystem : EcsSystem
             var weaponId = weaponEntity.GetId();
 
 #if DEBUG
-            if (world.Have<Attack>(weaponId))
+            if (world.Have<AttackEvent>(weaponId))
                 throw new System.Exception("please clean Attack component from weapon");
 #endif
 
             var transform = world.GetComponent<Transform>(id);
             var pos = transform.position;
             pos.y += 1.5f;
-            world.Add(weaponId, new Attack { position = pos, direction = transform.forward });
+            world.Add(weaponId, new AttackEvent { position = pos, direction = transform.forward });
         }
     }
 }

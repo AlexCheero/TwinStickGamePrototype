@@ -12,15 +12,15 @@ public class ProjectileAttackSystem : EcsSystem
 
     public ProjectileAttackSystem(EcsWorld world)
     {
-        _startAttackFilterId = world.RegisterFilter(new BitMask(Id<Attack>(),
+        _startAttackFilterId = world.RegisterFilter(new BitMask(Id<AttackEvent>(),
                                                                 Id<ProjectileWeapon>(),
                                                                 Id<Ammo>(),
                                                                 Id<Owner>()),
-                                                    new BitMask(Id<GrenadeFly>()));
+                                                    new BitMask(Id<GrenadeFlyEvent>()));
 
-        _tagFallThroughFilterId = world.RegisterFilter(new BitMask(Id<CharacterTag>(), Id<CurrentWeapon>(), Id<GrenadeFly>()));
+        _tagFallThroughFilterId = world.RegisterFilter(new BitMask(Id<CharacterTag>(), Id<CurrentWeapon>(), Id<GrenadeFlyEvent>()));
 
-        _spawnProjectileFilterId = world.RegisterFilter(new BitMask(Id<GrenadeFly>(),
+        _spawnProjectileFilterId = world.RegisterFilter(new BitMask(Id<GrenadeFlyEvent>(),
                                                                     Id<ProjectileWeapon>(),
                                                                     Id<Ammo>()));
     }
@@ -49,13 +49,13 @@ public class ProjectileAttackSystem : EcsSystem
         foreach (var id in world.Enumerate(_tagFallThroughFilterId))
         {
             var weaponId = world.GetComponent<CurrentWeapon>(id).entity.GetId();
-            world.Add(weaponId, world.GetComponent<GrenadeFly>(id));
-            world.Remove<GrenadeFly>(id);
+            world.Add(weaponId, world.GetComponent<GrenadeFlyEvent>(id));
+            world.Remove<GrenadeFlyEvent>(id);
         }
 
         foreach (var id in world.Enumerate(_spawnProjectileFilterId))
         {
-            var attack = world.GetComponent<GrenadeFly>(id);
+            var attack = world.GetComponent<GrenadeFlyEvent>(id);
 
             var instantiationPosition = attack.position + attack.direction; //instantiation before the player
 
@@ -70,7 +70,7 @@ public class ProjectileAttackSystem : EcsSystem
             var speed = world.GetComponent<SpeedComponent>(projectileId).speed;
             projectileView.GetComponent<Rigidbody>().AddForce(attack.direction * speed);//TODO: try different force types
 
-            world.Remove<GrenadeFly>(id);
+            world.Remove<GrenadeFlyEvent>(id);
         }
     }
 }

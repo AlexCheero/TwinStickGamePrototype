@@ -96,13 +96,13 @@ namespace Components
         public Entity entity;
     }
 
-    struct Attack
+    struct AttackEvent
     {
         public Vector3 position;
         public Vector3 direction;
     }
 
-    struct GrenadeFly
+    struct GrenadeFlyEvent
     {
         public Vector3 position;
         public Vector3 direction;

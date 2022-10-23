@@ -15,7 +15,7 @@ public class MeleeAttackSystem : EcsSystem
 
     public MeleeAttackSystem(EcsWorld world)
     {
-        _startAttackFilterId = world.RegisterFilter(new BitMask(Id<Attack>(),
+        _startAttackFilterId = world.RegisterFilter(new BitMask(Id<AttackEvent>(),
                                                                 Id<MeleeWeapon>(),
                                                                 Id<Owner>()));
 
