@@ -52,7 +52,7 @@ MonoBehaviour:
       Fields:
       - TypeName: System.Single
         Name: distance
-        ValueRepresentation: 5
+        ValueRepresentation: 2.5
         UnityComponent: {fileID: 0}
         Preset: {fileID: 0}
         IsHiddenInEditor: 0
