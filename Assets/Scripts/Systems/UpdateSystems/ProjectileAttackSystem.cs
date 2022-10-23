@@ -62,7 +62,7 @@ public class ProjectileAttackSystem : EcsSystem
         {
             var attack = world.GetComponent<GrenadeFly>(id);
 
-            var instantiationPosition = attack.position + attack.direction * 2.0f; //instantiation before the player
+            var instantiationPosition = attack.position + attack.direction; //instantiation before the player
 
             var projectileWeapon = world.GetComponent<ProjectileWeapon>(id);
             var projectileView = PoolManager.Get(projectileWeapon.poolName).Get<EntityView>(instantiationPosition, Quaternion.identity);
