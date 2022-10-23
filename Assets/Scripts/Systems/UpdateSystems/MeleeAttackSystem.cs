@@ -34,6 +34,8 @@ public class MeleeAttackSystem : EcsSystem
     {
         foreach (var id in world.Enumerate(_startAttackFilterId))
         {
+            world.Remove<AttackEvent>(id);
+
             var ownerId = world.GetComponent<Owner>(id).entity.GetId();
             if (world.Have<Animator>(ownerId))
             {

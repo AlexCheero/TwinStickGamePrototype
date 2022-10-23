@@ -29,6 +29,8 @@ public class ProjectileAttackSystem : EcsSystem
     {
         foreach (var id in world.Enumerate(_startAttackFilterId))
         {
+            world.Remove<AttackEvent>(id);
+
             ref var ammo = ref world.GetComponentByRef<Ammo>(id).amount;
             if (ammo == 0)
                 continue;

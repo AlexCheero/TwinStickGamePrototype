@@ -13,6 +13,7 @@ public class RangedAttackSystem : EcsSystem
         _filterId = world.RegisterFilter(new BitMask(Id<AttackEvent>(),
                                                      Id<RangedWeapon>(),
                                                      Id<Ammo>(),
+                                                     Id<Owner>(),
                                                      Id<DamageComponent>()));
     }
 
@@ -20,6 +21,9 @@ public class RangedAttackSystem : EcsSystem
     {
         foreach (var id in world.Enumerate(_filterId))
         {
+            var attack = world.GetComponent<AttackEvent>(id);
+            world.Remove<AttackEvent>(id);
+
             ref var ammo = ref world.GetComponentByRef<Ammo>(id).amount;
             if (ammo == 0)
                 continue;
@@ -30,17 +34,14 @@ public class RangedAttackSystem : EcsSystem
                 throw new System.Exception("ammo amount is <= 0. have ammo component: " + world.Have<Ammo>(id));
 #endif
 
+            Debug.Log("ranged attack!");
+
             ammo--;
 
-#if DEBUG
-            if (!world.Have<Owner>(id))
-                throw new System.Exception("weapon should have owner");
-#endif
             var ownerId = world.GetComponent<Owner>(id).entity.GetId();
             if (world.Have<Animator>(ownerId))
                 world.GetComponent<Animator>(ownerId).SetTrigger("IsFiring");
 
-            var attack = world.GetComponent<AttackEvent>(id);
             Ray ray = new Ray(attack.position, attack.direction);
 #if DEBUG
             Debug.DrawRay(attack.position, attack.direction * 100, Color.red, 5.0f);
