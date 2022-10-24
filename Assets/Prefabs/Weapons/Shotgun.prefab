@@ -118,7 +118,7 @@ MonoBehaviour:
       Fields:
       - TypeName: System.Int32
         Name: amount
-        ValueRepresentation: 15
+        ValueRepresentation: 5
         UnityComponent: {fileID: 0}
         Preset: {fileID: 0}
         IsHiddenInEditor: 0
