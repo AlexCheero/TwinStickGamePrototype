@@ -147,6 +147,16 @@ namespace Components
         public Vector3 rotation;
     }
 
+    struct Weaponry
+    {
+        [HiddenInspector]
+        public Entity melee;
+        [HiddenInspector]
+        public Entity ranged;
+        [HiddenInspector]
+        public Entity throwable;
+    }
+
     /*
     struct UtilityCurve
     {

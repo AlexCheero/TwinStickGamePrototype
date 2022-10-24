@@ -26,7 +26,8 @@ public class WeaponPickupCollisionSystem : EcsSystem
             if (world.IsEntityValid(collidedEntity) &&
                 world.Have<PlayerTag>(collidedId))
             {
-                world.GetOrAddComponentRef<CurrentWeapon>(collidedId).entity = world.GetById(id);
+                var weaponEntity = world.GetById(id);
+                world.GetOrAddComponentRef<CurrentWeapon>(collidedId).entity = weaponEntity;
                 var attackReach = world.Have<ReachComponent>(id) ? world.GetComponent<ReachComponent>(id).distance : float.PositiveInfinity;
                 world.GetOrAddComponentRef<AttackReachComponent>(collidedId).distance = attackReach;
                 world.GetOrAddComponentRef<Owner>(id).entity = collidedEntity;
@@ -39,8 +40,7 @@ public class WeaponPickupCollisionSystem : EcsSystem
                 var playerTransform = world.GetComponent<Transform>(collidedId);
                 var gunHolder = MiscUtils.FindGrandChildByName(playerTransform, "GunHolder");
                 foreach (Transform gun in gunHolder)
-                    GameObject.Destroy(gun.gameObject);
-                var gunGrip = MiscUtils.FindGrandChildByName(weaponTransform, "Grip");
+                    gun.gameObject.SetActive(false);
 
                 weaponTransform.SetParent(gunHolder);
 
@@ -56,7 +56,16 @@ public class WeaponPickupCollisionSystem : EcsSystem
                     weaponTransform.localEulerAngles = Vector3.zero;
                 }
 
-                world.Remove<Transform>(id);
+                if (world.Have<Weaponry>(collidedId))
+                {
+                    ref var weaponry = ref world.GetComponentByRef<Weaponry>(collidedId);
+                    if (world.Have<MeleeWeapon>(id))
+                        weaponry.melee = weaponEntity;
+                    else if (world.Have<RangedWeapon>(id))
+                        weaponry.ranged = weaponEntity;
+                    else if (world.Have<Projectile>(id))
+                        weaponry.throwable = weaponEntity;
+                }
             }
         }
     }
