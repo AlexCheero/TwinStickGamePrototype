@@ -25,7 +25,7 @@ public class ApplyDamageSystem : EcsSystem
             {
                 var ps = GameObject.Instantiate(Resources.Load<ParticleSystem>("ParticleSystems/Blood/Blood_PS"));
                 var pos = world.GetComponent<Transform>(id).position;
-                pos.y += 1.8f;
+                pos.y += 1.5f;
                 ps.transform.position = pos;
             }
         }
