@@ -1,7 +1,7 @@
 fileFormatVersion: 2
 guid: de58166c199cf6b41a72b3bb38e314a0
 ModelImporter:
-  serializedVersion: 20200
+  serializedVersion: 20300
   internalIDToNameTable:
   - first:
       74: -203655887218126122
@@ -61,7 +61,7 @@ ModelImporter:
       events:
       - time: 0.3976555
         functionName: MeleeAttack
-        data: 
+        data: RightShoulder
         objectReferenceParameter: {instanceID: 0}
         floatParameter: 0
         intParameter: 0
@@ -891,6 +891,7 @@ ModelImporter:
   humanoidOversampling: 1
   avatarSetup: 2
   addHumanoidExtraRootOnlyWhenUsingAvatar: 1
+  remapMaterialsIfMaterialImportModeIsNone: 1
   additionalBone: 0
   userData: 
   assetBundleName: 

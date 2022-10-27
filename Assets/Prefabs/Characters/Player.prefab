@@ -2324,7 +2324,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7273800558475053542}
   m_Layer: 0
-  m_Name: GunHolder
+  m_Name: RightPalm
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

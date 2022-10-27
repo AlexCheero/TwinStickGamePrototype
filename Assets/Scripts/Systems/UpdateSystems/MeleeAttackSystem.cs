@@ -80,6 +80,7 @@ public class MeleeAttackSystem : EcsSystem
                     Debug.Log("melee hit! " + hit.collider.gameObject.name);
                     var targetId = hit.collider.gameObject.GetComponent<EntityView>().Id;
                     world.Add(targetId, world.GetComponent<DamageComponent>(id));
+                    world.Add(targetId, new Impact { position = hit.point, normal = hit.normal });
 
                     //TODO: remove break if area attack needed
                     break;

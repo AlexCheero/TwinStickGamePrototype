@@ -21,12 +21,11 @@ public class ApplyDamageSystem : EcsSystem
                 world.GetComponent<DamageComponent>(id).damage;
             world.Remove<DamageComponent>(id);
 
-            if (world.Have<Transform>(id))
+            if (world.Have<Impact>(id))
             {
                 var ps = GameObject.Instantiate(Resources.Load<ParticleSystem>("ParticleSystems/Blood/Blood_PS"));
-                var pos = world.GetComponent<Transform>(id).position;
-                pos.y += 1.5f;
-                ps.transform.position = pos;
+                ps.transform.position = world.GetComponent<Impact>(id).position;
+                world.Remove<Impact>(id);
             }
         }
     }

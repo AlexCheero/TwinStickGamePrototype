@@ -64,6 +64,7 @@ public class RangedAttackSystem : EcsSystem
 
             Debug.Log("instant ranged hit!");
             world.Add(targetEntityId, world.GetComponent<DamageComponent>(id));
+            world.Add(targetEntityId, new Impact { position = hit.point, normal = hit.normal });
         }
     }
 }
