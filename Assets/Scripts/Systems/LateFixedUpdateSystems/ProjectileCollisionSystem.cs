@@ -22,8 +22,7 @@ public class ProjectileCollisionSystem : EcsSystem
                 world.Have<HealthComponent>(collidedId) &&
                 !world.Have<Pickup>(collidedId))
             {
-                world.GetComponentByRef<HealthComponent>(collidedId).health -=
-                    world.GetComponent<DamageComponent>(id).damage;
+                world.Add(collidedId, world.GetComponent<DamageComponent>(id));
             }
 
             world.Add<DeadTag>(id);
