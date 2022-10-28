@@ -15,20 +15,30 @@ public class AnimEventListener : MonoBehaviour
     {
         if (!_view.Have<GrenadeFlyEvent>())
         {
-            var rightPalm = MiscUtils.FindGrandChildByName(transform, "RightPalm");
-            _view.Add(new GrenadeFlyEvent { position = rightPalm.position, direction = transform.forward });
+            var gunHolder = MiscUtils.FindGrandChildByName(transform, "GunHolder");
+            _view.Add(new GrenadeFlyEvent { position = gunHolder.position, direction = transform.forward });
         }
     }
 
-    void MeleeAttack(string from)
+    void MeleeAttack()
     {
         if (!_view.Have<MeleeAttackEvent>())
         {
-            var pos = transform.position;
-            var attackFrom = MiscUtils.FindGrandChildByNamePart(transform, from);
-            if (attackFrom != null)
-                pos.y = attackFrom.position.y;
-            _view.Add(new MeleeAttackEvent { position = pos, direction = transform.forward });
+            Vector3 attackPosition;
+            var collider = GetComponent<Collider>();
+            if (collider != null)
+            {
+                var bounds = collider.bounds;
+                attackPosition = bounds.center;
+                //3/4 upper part of collider
+                attackPosition.y += bounds.extents.y / 2;
+            }
+            else
+            {
+                attackPosition = transform.position;
+            }
+            
+            _view.Add(new MeleeAttackEvent { position = attackPosition, direction = transform.forward });
         }
     }
 }

@@ -38,7 +38,7 @@ public class WeaponPickupCollisionSystem : EcsSystem
                     weaponCollider.enabled = false;
 
                 var playerTransform = world.GetComponent<Transform>(collidedId);
-                var gunHolder = MiscUtils.FindGrandChildByName(playerTransform, "RightPalm");
+                var gunHolder = MiscUtils.FindGrandChildByName(playerTransform, "GunHolder");
                 foreach (Transform gun in gunHolder)
                     gun.gameObject.SetActive(false);
 
