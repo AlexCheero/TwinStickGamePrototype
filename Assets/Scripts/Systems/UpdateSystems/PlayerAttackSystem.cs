@@ -33,9 +33,19 @@ public class PlayerAttackSystem : EcsSystem
 #endif
 
             var transform = world.GetComponent<Transform>(id);
-            var pos = transform.position;
-            pos.y += 1.5f;
-            world.Add(weaponId, new AttackEvent { position = pos, direction = transform.forward });
+            Vector3 attackPosition;
+            if (world.Have<Collider>(id))
+            {
+                var bounds = world.GetComponent<Collider>(id).bounds;
+                attackPosition = bounds.center;
+                //3/4 upper part of collider
+                attackPosition.y += bounds.extents.y / 2;
+            }
+            else
+            {
+                attackPosition = transform.position;
+            }
+            world.Add(weaponId, new AttackEvent { position = attackPosition, direction = transform.forward });
         }
     }
 }
