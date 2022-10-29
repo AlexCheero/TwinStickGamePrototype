@@ -61,16 +61,17 @@ public class ObjectPool : MonoBehaviour
             T monoBeh = _prototype.GetComponent<T>();
 #if DEBUG
             if (monoBeh == null)
-                throw new Exception("no such MonoBehaviour on prototype");
+                return null;
 #endif
             _cachedPrototypes.Add(type, monoBeh);
         }
         return _cachedPrototypes[type] as T;
     }
 
-    public T Get<T>() where T : MonoBehaviour => Get<T>(Vector3.zero, Quaternion.identity);
+    public T Get<T>() where T : Component => Get<T>(Vector3.zero, Quaternion.identity);
+    public T Get<T>(Vector3 position) where T : Component => Get<T>(position, Quaternion.identity);
 
-    public T Get<T>(Vector3 position, Quaternion rotation) where T : MonoBehaviour
+    public T Get<T>(Vector3 position, Quaternion rotation) where T : Component
     {
 #if DEBUG
         if (_firstAvailable > _objects.Length)

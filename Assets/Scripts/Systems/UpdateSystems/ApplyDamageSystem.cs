@@ -23,8 +23,8 @@ public class ApplyDamageSystem : EcsSystem
 
             if (world.Have<Impact>(id) && world.Have<Transform>(id))
             {
-                var ps = GameObject.Instantiate(Resources.Load<ParticleSystem>("ParticleSystems/Blood/Blood_PS"));
-                ps.transform.position = world.GetComponent<Impact>(id).position;
+                var effectPosition = world.GetComponent<Impact>(id).position;
+                var ps = PoolManager.Get("BloodEffectPool").Get<ParticleSystem>(effectPosition);
                 ps.transform.SetParent(world.GetComponent<Transform>(id), true);
                 world.Remove<Impact>(id);
             }
