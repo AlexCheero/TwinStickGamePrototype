@@ -11,7 +11,10 @@ public class ApplyDamageSystem : EcsSystem
 
     public ApplyDamageSystem(EcsWorld world)
     {
-        _filterId = world.RegisterFilter(new BitMask(Id<HealthComponent>(), Id<DamageComponent>()));
+        _filterId = world.RegisterFilter(new BitMask(
+            Id<HealthComponent>(),
+            Id<ImpactEffect>(),
+            Id<DamageComponent>()));
     }
 
     public override void Tick(EcsWorld world)
@@ -25,7 +28,8 @@ public class ApplyDamageSystem : EcsSystem
             if (world.Have<Impact>(id) && world.Have<Transform>(id))
             {
                 var effectPosition = world.GetComponent<Impact>(id).position;
-                var effectObject = PoolManager.Get("BloodEffectPool").Get(effectPosition);
+                var effectPoolName = world.GetComponent<ImpactEffect>(id).poolName;
+                var effectObject = PoolManager.Get(effectPoolName).Get(effectPosition);
                 var particleSystem = effectObject.GetComponent<ParticleSystem>();
                 particleSystem.transform.SetParent(world.GetComponent<Transform>(id), true);
 

@@ -30,6 +30,11 @@ namespace Components
         public float distance;
     }
 
+    struct ImpactEffect
+    {
+        public string poolName;
+    }
+    
     struct HealthComponent
     {
         public float health;

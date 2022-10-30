@@ -860,6 +860,16 @@ MonoBehaviour:
       Fields: []
       UnityComponent: {fileID: 2879561023896923301}
       IsExpanded: 0
+    - ComponentName: Components.ImpactEffect
+      Fields:
+      - TypeName: System.String
+        Name: poolName
+        ValueRepresentation: BloodEffectPool
+        UnityComponent: {fileID: 0}
+        Preset: {fileID: 0}
+        IsHiddenInEditor: 0
+      UnityComponent: {fileID: 0}
+      IsExpanded: 1
 --- !u!1 &3625167423135340734
 GameObject:
   m_ObjectHideFlags: 0
