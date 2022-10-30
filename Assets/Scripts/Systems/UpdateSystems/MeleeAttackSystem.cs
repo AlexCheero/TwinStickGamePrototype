@@ -53,7 +53,6 @@ public class MeleeAttackSystem : EcsSystem
 
         foreach (var id in world.Enumerate(_filterId))
         {
-            Debug.Log("melee attack!");
             var attack = world.GetComponent<MeleeAttackEvent>(id);
             world.Remove<MeleeAttackEvent>(id);
             var attackDistance = world.GetComponent<ReachComponent>(id).distance;
@@ -90,7 +89,6 @@ public class MeleeAttackSystem : EcsSystem
                 if (Physics.Raycast(position, targetPos - position, out RaycastHit hit, attackDistance) &&
                     hit.collider == _overlapResults[i])
                 {
-                    Debug.Log("melee hit! " + hit.collider.gameObject.name);
                     var targetId = hit.collider.gameObject.GetComponent<EntityView>().Id;
                     world.Add(targetId, world.GetComponent<DamageComponent>(id));
                     world.Add(targetId, new Impact { position = hit.point, normal = hit.normal });

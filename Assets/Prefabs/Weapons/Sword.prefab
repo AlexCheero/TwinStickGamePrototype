@@ -157,7 +157,7 @@ MonoBehaviour:
       Fields:
       - TypeName: System.Single
         Name: damage
-        ValueRepresentation: 10
+        ValueRepresentation: 20
         UnityComponent: {fileID: 0}
         Preset: {fileID: 0}
         IsHiddenInEditor: 0

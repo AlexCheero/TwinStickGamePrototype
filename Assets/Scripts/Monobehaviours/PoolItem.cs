@@ -7,7 +7,7 @@ public class PoolItem : MonoBehaviour
     [SerializeField]
     private int _idx;
 
-    public int Idx { get => _idx; }
+    public int Idx => _idx;
 
     public void AddToPool(ObjectPool pool, int idx)
     {
@@ -15,9 +15,5 @@ public class PoolItem : MonoBehaviour
         _idx = idx;
     }
 
-    public void ReturnToPool()
-    {
-        Debug.LogWarning(name + _idx + " ReturnToPool");
-        _pool.ReturnItem(this);
-    }
+    public virtual void ReturnToPool() => _pool.ReturnItem(this);
 }

@@ -34,8 +34,6 @@ public class RangedAttackSystem : EcsSystem
                 throw new System.Exception("ammo amount is <= 0. have ammo component: " + world.Have<Ammo>(id));
 #endif
 
-            Debug.Log("ranged attack!");
-
             ammo--;
 
             var ownerId = world.GetComponent<Owner>(id).entity.GetId();
@@ -62,7 +60,6 @@ public class RangedAttackSystem : EcsSystem
             if (!world.Have<HealthComponent>(targetEntityId) || world.Have<Pickup>(targetEntityId))
                 continue;
 
-            Debug.Log("instant ranged hit!");
             world.Add(targetEntityId, world.GetComponent<DamageComponent>(id));
             world.Add(targetEntityId, new Impact { position = hit.point, normal = hit.normal });
         }

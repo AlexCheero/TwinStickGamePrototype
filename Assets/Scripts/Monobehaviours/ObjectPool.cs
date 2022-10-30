@@ -68,15 +68,9 @@ public class ObjectPool : MonoBehaviour
         return _cachedPrototypes[type] as T;
     }
 
-    public T Get<T>() where T : Component => Get<T>(Vector3.zero, Quaternion.identity);
-    public T Get<T>(Vector3 position) where T : Component => Get<T>(position, Quaternion.identity);
-
-    public T Get<T>(Vector3 position, Quaternion rotation) where T : Component
-        => GetObject(position, rotation).GetComponent<T>();
-
-    public GameObject GetObject() => GetObject(Vector3.zero, Quaternion.identity);
-    public GameObject GetObject(Vector3 position) => GetObject(position, Quaternion.identity);
-    public GameObject GetObject(Vector3 position, Quaternion rotation)
+    public GameObject Get() => Get(Vector3.zero, Quaternion.identity);
+    public GameObject Get(Vector3 position) => Get(position, Quaternion.identity);
+    public GameObject Get(Vector3 position, Quaternion rotation)
     {
 #if DEBUG
         if (_firstAvailable > _objects.Length)
@@ -134,6 +128,7 @@ public class ObjectPool : MonoBehaviour
             var temp = _objects[_firstAvailable];
             _objects[_firstAvailable] = item;
             _objects[item.Idx] = temp;
+            temp.AddToPool(this, item.Idx);
             item.AddToPool(this, _firstAvailable);
         }
     }

@@ -18,19 +18,20 @@ public class DeleteDeadSystem : EcsSystem
         _deadEntitiesFilterId = world.RegisterFilter(new BitMask(Id<DeadTag>()), new BitMask(Id<Transform>(), Id<PoolItem>()));
     }
 
+    /*
+     * ReturnToPool also deletes entity if it is the PooledEntityView
+     */
     public override void Tick(EcsWorld world)
     {
         foreach (var id in world.Enumerate(_poolItemfilterId))
         {
             world.GetComponent<PoolItem>(id).ReturnToPool();
-            world.Delete(id);
         }
 
         foreach (var id in world.Enumerate(_poolItemRBfilterId))
         {
-            world.GetComponent<PoolItem>(id).ReturnToPool();
             world.GetComponent<Rigidbody>(id).velocity = Vector3.zero;
-            world.Delete(id);
+            world.GetComponent<PoolItem>(id).ReturnToPool();
         }
 
         foreach (var id in world.Enumerate(_transformfilterId))
@@ -38,7 +39,7 @@ public class DeleteDeadSystem : EcsSystem
             var gameObject = world.GetComponent<Transform>(id).gameObject;
             foreach (var poolItem in gameObject.GetComponentsInChildren<PoolItem>())
                 poolItem.ReturnToPool();
-            Object.Destroy(world.GetComponent<Transform>(id).gameObject);
+            Object.Destroy(gameObject);
             world.Delete(id);
         }
 

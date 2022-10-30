@@ -20,7 +20,6 @@ public class WeaponPickupCollisionSystem : EcsSystem
     {
         foreach (var id in world.Enumerate(_filterId))
         {
-            Debug.Log("new weapon picked up");
             var collidedEntity = world.GetComponent<CollisionWith>(id).entity;
             var collidedId = collidedEntity.GetId();
             if (world.IsEntityValid(collidedEntity) &&

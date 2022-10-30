@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 7617237981132785007}
   - component: {fileID: 7953691764287804591}
   - component: {fileID: 2363612167920018997}
-  - component: {fileID: -5401031338845427867}
+  - component: {fileID: 8715823794517042119}
   - component: {fileID: 6517802412577269356}
   m_Layer: 0
   m_Name: Blood_PS
@@ -4806,7 +4806,7 @@ ParticleSystemRenderer:
   m_Mesh2: {fileID: 0}
   m_Mesh3: {fileID: 0}
   m_MaskInteraction: 0
---- !u!114 &-5401031338845427867
+--- !u!114 &8715823794517042119
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -4815,7 +4815,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 2506791658728467173}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 92f4fda690b09b742be5dd8fa8519d7f, type: 3}
+  m_Script: {fileID: 11500000, guid: e3bfb375387202a4685af3652364b557, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _pool: {fileID: 0}
@@ -4834,11 +4834,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Data:
     Metas:
-    - ComponentName: PoolItem
-      Fields: []
-      UnityComponent: {fileID: -5401031338845427867}
-      IsExpanded: 0
     - ComponentName: UnityEngine.ParticleSystem
       Fields: []
       UnityComponent: {fileID: 7953691764287804591}
+      IsExpanded: 0
+    - ComponentName: PoolItem
+      Fields: []
+      UnityComponent: {fileID: 8715823794517042119}
       IsExpanded: 0
