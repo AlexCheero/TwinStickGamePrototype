@@ -72,6 +72,11 @@ public class ObjectPool : MonoBehaviour
     public T Get<T>(Vector3 position) where T : Component => Get<T>(position, Quaternion.identity);
 
     public T Get<T>(Vector3 position, Quaternion rotation) where T : Component
+        => GetObject(position, rotation).GetComponent<T>();
+
+    public GameObject GetObject() => GetObject(Vector3.zero, Quaternion.identity);
+    public GameObject GetObject(Vector3 position) => GetObject(position, Quaternion.identity);
+    public GameObject GetObject(Vector3 position, Quaternion rotation)
     {
 #if DEBUG
         if (_firstAvailable > _objects.Length)
@@ -85,7 +90,7 @@ public class ObjectPool : MonoBehaviour
         obj.transform.rotation = rotation;
         obj.gameObject.SetActive(true);
         _firstAvailable++;
-        return obj.GetComponent<T>();
+        return obj.gameObject;
     }
 
     private void Grow()
@@ -120,6 +125,8 @@ public class ObjectPool : MonoBehaviour
 #endif
         item.gameObject.SetActive(false);
         item.transform.parent = transform;
+        item.transform.position = Vector3.zero;
+        item.transform.rotation = Quaternion.identity;
 
         _firstAvailable--;
         if (item.Idx < _firstAvailable)

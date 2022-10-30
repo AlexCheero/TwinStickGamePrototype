@@ -152,7 +152,8 @@ public class UtilityBasedDecisionMakingSystem : EcsSystem
         float damage = 0f;
         if (world.Have<ProjectileWeapon>(weaponId))
         {
-            var projectileEntity = world.GetComponent<ProjectileWeapon>(weaponId).prototypeEntity;
+            throw new NotImplementedException("prototypeEntity is now not inited");
+            var projectileEntity = EntityExtension.NullEntity;// world.GetComponent<ProjectileWeapon>(weaponId).prototypeEntity;
             var projectileId = projectileEntity.GetId();
 #if DEBUG
             if (!world.IsEntityValid(projectileEntity))

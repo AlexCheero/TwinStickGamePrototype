@@ -27,13 +27,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 833953520653399066}
-  m_LocalRotation: {x: -0.7071068, y: 0, z: -0, w: 0.7071068}
+  m_LocalRotation: {x: -0.7071068, y: 0, z: 0, w: 0.7071068}
   m_LocalPosition: {x: 23.475334, y: 1.008, z: 3.826}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
 --- !u!33 &3996601033806848261
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -128,22 +128,6 @@ MonoBehaviour:
       Fields: []
       UnityComponent: {fileID: 0}
       IsExpanded: 0
-    - ComponentName: Components.ProjectileWeapon
-      Fields:
-      - TypeName: System.String
-        Name: poolName
-        ValueRepresentation: ProjectilePool
-        UnityComponent: {fileID: 0}
-        Preset: {fileID: 0}
-        IsHiddenInEditor: 0
-      - TypeName: ECS.Entity
-        Name: prototypeEntity
-        ValueRepresentation: 
-        UnityComponent: {fileID: 0}
-        Preset: {fileID: 0}
-        IsHiddenInEditor: 1
-      UnityComponent: {fileID: 0}
-      IsExpanded: 1
     - ComponentName: Components.AttackCooldown
       Fields:
       - TypeName: System.Single
@@ -164,3 +148,13 @@ MonoBehaviour:
       Fields: []
       UnityComponent: {fileID: 61111828663185056}
       IsExpanded: 0
+    - ComponentName: Components.ProjectileWeapon
+      Fields:
+      - TypeName: System.String
+        Name: poolName
+        ValueRepresentation: ProjectilePool
+        UnityComponent: {fileID: 0}
+        Preset: {fileID: 0}
+        IsHiddenInEditor: 0
+      UnityComponent: {fileID: 0}
+      IsExpanded: 1

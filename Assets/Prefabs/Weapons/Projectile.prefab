@@ -192,7 +192,3 @@ MonoBehaviour:
       Fields: []
       UnityComponent: {fileID: 4443661290508678105}
       IsExpanded: 0
-    - ComponentName: Tags.Prototype
-      Fields: []
-      UnityComponent: {fileID: 0}
-      IsExpanded: 0

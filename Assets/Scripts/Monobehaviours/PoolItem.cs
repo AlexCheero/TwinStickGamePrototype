@@ -17,6 +17,7 @@ public class PoolItem : MonoBehaviour
 
     public void ReturnToPool()
     {
+        Debug.LogWarning(name + _idx + " ReturnToPool");
         _pool.ReturnItem(this);
     }
 }

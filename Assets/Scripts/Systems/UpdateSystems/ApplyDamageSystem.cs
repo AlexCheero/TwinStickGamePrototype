@@ -1,5 +1,6 @@
 using Components;
 using ECS;
+using Tags;
 using UnityEngine;
 
 //choose system type here
@@ -24,8 +25,12 @@ public class ApplyDamageSystem : EcsSystem
             if (world.Have<Impact>(id) && world.Have<Transform>(id))
             {
                 var effectPosition = world.GetComponent<Impact>(id).position;
-                var ps = PoolManager.Get("BloodEffectPool").Get<ParticleSystem>(effectPosition);
-                ps.transform.SetParent(world.GetComponent<Transform>(id), true);
+                var effectObject = PoolManager.Get("BloodEffectPool").GetObject(effectPosition);
+                var particleSystem = effectObject.GetComponent<ParticleSystem>();
+                particleSystem.transform.SetParent(world.GetComponent<Transform>(id), true);
+
+                effectObject.GetComponent<EntityView>().InitAsEntity(world);
+
                 world.Remove<Impact>(id);
             }
         }

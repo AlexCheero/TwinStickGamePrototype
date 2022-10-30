@@ -64,7 +64,6 @@ public class ProjectileAttackSystem : EcsSystem
             var projectileWeapon = world.GetComponent<ProjectileWeapon>(id);
             var projectileView = PoolManager.Get(projectileWeapon.poolName).Get<EntityView>(instantiationPosition);
             var projectileId = projectileView.InitAsEntity(world);
-            world.Remove<Prototype>(projectileId);
 #if DEBUG
             if (!world.Have<Projectile>(projectileId))
                 throw new System.Exception("projectileView have no Projectile tag");

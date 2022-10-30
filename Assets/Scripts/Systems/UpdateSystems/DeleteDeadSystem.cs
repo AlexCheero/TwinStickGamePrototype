@@ -35,6 +35,9 @@ public class DeleteDeadSystem : EcsSystem
 
         foreach (var id in world.Enumerate(_transformfilterId))
         {
+            var gameObject = world.GetComponent<Transform>(id).gameObject;
+            foreach (var poolItem in gameObject.GetComponentsInChildren<PoolItem>())
+                poolItem.ReturnToPool();
             Object.Destroy(world.GetComponent<Transform>(id).gameObject);
             world.Delete(id);
         }

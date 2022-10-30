@@ -133,8 +133,6 @@ namespace Components
     struct ProjectileWeapon
     {
         public string poolName;
-        [HiddenInspector]
-        public Entity prototypeEntity;
     }
 
     struct Owner
@@ -206,7 +204,6 @@ namespace Tags
     struct DefaultMeleeWeapon { }
     struct RangedWeapon { }
     struct Weapon { }
-    struct Prototype { }
     struct SeenEnemyTag { }
 
     //stuff needed for more complex AI, which was abandoned
