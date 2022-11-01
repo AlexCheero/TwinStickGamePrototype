@@ -193,7 +193,7 @@ MonoBehaviour:
         IsHiddenInEditor: 1
       - TypeName: System.Single
         Name: attackCD
-        ValueRepresentation: 0.1
+        ValueRepresentation: 0.7
         UnityComponent: {fileID: 0}
         Preset: {fileID: 0}
         IsHiddenInEditor: 0

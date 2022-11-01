@@ -44,6 +44,9 @@ public class MeleeAttackSystem : EcsSystem
                 
                 //prepare attack animation speed
                 animator.Update(0);//hack to be able to get next animator state
+                //if no transition nextStateInfo.length will be 0 and animator will stuck
+                if (!animator.IsInTransition(1))
+                    continue;
                 var nextStateInfo = animator.GetNextAnimatorStateInfo(1);
                 var attackTime = nextStateInfo.length * nextStateInfo.speedMultiplier;
                 var targetLength = world.GetComponent<AttackCooldown>(id).attackCD;
