@@ -1,3 +1,6 @@
+#if DEBUG
+using System;
+#endif
 using Components;
 using ECS;
 using Tags;
@@ -51,6 +54,10 @@ public class MeleeAttackSystem : EcsSystem
                 var attackTime = nextStateInfo.length * nextStateInfo.speedMultiplier;
                 var targetLength = world.GetComponent<AttackCooldown>(id).attackCD;
                 var speedMultiplier = attackTime / targetLength;
+#if DEBUG
+                if (speedMultiplier <= float.Epsilon)
+                    throw new Exception("speedMultiplier should be bigger than 0");
+#endif
                 animator.SetFloat("AttackSpeedMultiplier", speedMultiplier);
             }
         }
