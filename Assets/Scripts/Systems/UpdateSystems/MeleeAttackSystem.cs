@@ -1,6 +1,3 @@
-#if DEBUG
-using System;
-#endif
 using Components;
 using ECS;
 using Tags;
@@ -19,6 +16,7 @@ public class MeleeAttackSystem : EcsSystem
     public MeleeAttackSystem(EcsWorld world)
     {
         _startAttackFilterId = world.RegisterFilter(new BitMask(Id<AttackEvent>(),
+                                                                Id<AttackCooldown>(),
                                                                 Id<MeleeWeapon>(),
                                                                 Id<Owner>()));
 
@@ -38,28 +36,16 @@ public class MeleeAttackSystem : EcsSystem
         foreach (var id in world.Enumerate(_startAttackFilterId))
         {
             world.Remove<AttackEvent>(id);
+            if (!AttackHelper.CheckAndUpdateAttackCooldown(world, id))
+                continue;
 
             var ownerId = world.GetComponent<Owner>(id).entity.GetId();
-            if (world.Have<Animator>(ownerId))
-            {
-                var animator = world.GetComponent<Animator>(ownerId);
-                animator.SetTrigger(world.Have<DefaultMeleeWeapon>(id) ? "IsPunching" : "IsMelee");
-                
-                //prepare attack animation speed
-                animator.Update(0);//hack to be able to get next animator state
-                //if no transition nextStateInfo.length will be 0 and animator will stuck
-                if (!animator.IsInTransition(1))
-                    continue;
-                var nextStateInfo = animator.GetNextAnimatorStateInfo(1);
-                var attackTime = nextStateInfo.length * nextStateInfo.speedMultiplier;
-                var targetLength = world.GetComponent<AttackCooldown>(id).attackCD;
-                var speedMultiplier = attackTime / targetLength;
-#if DEBUG
-                if (speedMultiplier <= float.Epsilon)
-                    throw new Exception("speedMultiplier should be bigger than 0");
-#endif
-                animator.SetFloat("AttackSpeedMultiplier", speedMultiplier);
-            }
+            if (!world.Have<Animator>(ownerId))
+                continue;
+            var animator = world.GetComponent<Animator>(ownerId);
+            var playTime = world.GetComponent<AttackCooldown>(id).attackCD;
+            var triggerName = world.Have<DefaultMeleeWeapon>(id) ? "IsPunching" : "IsMelee";
+            AttackHelper.PlayAttackAnimationState(animator, playTime, triggerName);
         }
 
         foreach (var id in world.Enumerate(_tagFallThroughFilterId))

@@ -39362,7 +39362,6 @@ MonoBehaviour:
   - LifeTimeSystem
   - PlayerAttackSystem
   - EnemyAttackSystem
-  - AttackCDSystem
   - MeleeAttackSystem
   - RangedAttackSystem
   - ProjectileAttackSystem
@@ -45011,10 +45010,6 @@ PrefabInstance:
     - target: {fileID: 833953520653399066, guid: 48e3dd12fd1620d4f9503177d68a937a, type: 3}
       propertyPath: m_Name
       value: Grenade
-      objectReference: {fileID: 0}
-    - target: {fileID: 5549390437488027151, guid: 48e3dd12fd1620d4f9503177d68a937a, type: 3}
-      propertyPath: Data.Metas.Array.data[3].Fields.Array.data[1].ValueRepresentation
-      value: 0.005
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 48e3dd12fd1620d4f9503177d68a937a, type: 3}

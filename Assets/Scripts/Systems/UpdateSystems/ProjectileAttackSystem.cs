@@ -13,6 +13,7 @@ public class ProjectileAttackSystem : EcsSystem
     public ProjectileAttackSystem(EcsWorld world)
     {
         _startAttackFilterId = world.RegisterFilter(new BitMask(Id<AttackEvent>(),
+                                                                Id<AttackCooldown>(),
                                                                 Id<ProjectileWeapon>(),
                                                                 Id<Ammo>(),
                                                                 Id<Owner>()),
@@ -30,7 +31,16 @@ public class ProjectileAttackSystem : EcsSystem
         foreach (var id in world.Enumerate(_startAttackFilterId))
         {
             world.Remove<AttackEvent>(id);
+            if (!AttackHelper.CheckAndUpdateAttackCooldown(world, id))
+                continue;
 
+            var ownerId = world.GetComponent<Owner>(id).entity.GetId();
+            if (!world.Have<Animator>(ownerId))
+                continue;
+            var animator = world.GetComponent<Animator>(ownerId);
+            var playTime = world.GetComponent<AttackCooldown>(id).attackCD;
+            AttackHelper.PlayAttackAnimationState(animator, playTime, "IsThrowing");
+            
             ref var ammo = ref world.GetComponentByRef<Ammo>(id).amount;
             if (ammo == 0)
                 continue;
@@ -42,10 +52,6 @@ public class ProjectileAttackSystem : EcsSystem
 #endif
 
             ammo--;
-
-            var ownerId = world.GetComponent<Owner>(id).entity.GetId();
-            if (world.Have<Animator>(ownerId))
-                world.GetComponent<Animator>(ownerId).SetTrigger("IsThrowing");
         }
 
         foreach (var id in world.Enumerate(_tagFallThroughFilterId))
