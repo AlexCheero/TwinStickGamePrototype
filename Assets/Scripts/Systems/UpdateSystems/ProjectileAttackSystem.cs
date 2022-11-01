@@ -33,13 +33,6 @@ public class ProjectileAttackSystem : EcsSystem
             world.Remove<AttackEvent>(id);
             if (!AttackHelper.CheckAndUpdateAttackCooldown(world, id))
                 continue;
-
-            var ownerId = world.GetComponent<Owner>(id).entity.GetId();
-            if (!world.Have<Animator>(ownerId))
-                continue;
-            var animator = world.GetComponent<Animator>(ownerId);
-            var playTime = world.GetComponent<AttackCooldown>(id).attackCD;
-            AttackHelper.PlayAttackAnimationState(animator, playTime, "IsThrowing");
             
             ref var ammo = ref world.GetComponentByRef<Ammo>(id).amount;
             if (ammo == 0)
@@ -47,11 +40,16 @@ public class ProjectileAttackSystem : EcsSystem
 #if DEBUG
             if (ammo < 0)
                 throw new System.Exception("negative ammo");
-            if (world.GetComponent<Ammo>(id).amount <= 0)
-                throw new System.Exception("OnProjectileShotSystem. ammo amount is <= 0. have ammo component: " + world.Have<Ammo>(id));
 #endif
 
             ammo--;
+            
+            var ownerId = world.GetComponent<Owner>(id).entity.GetId();
+            if (!world.Have<Animator>(ownerId))
+                continue;
+            var animator = world.GetComponent<Animator>(ownerId);
+            var playTime = world.GetComponent<AttackCooldown>(id).attackCD;
+            AttackHelper.PlayAttackAnimationState(animator, playTime, "IsThrowing");
         }
 
         foreach (var id in world.Enumerate(_tagFallThroughFilterId))

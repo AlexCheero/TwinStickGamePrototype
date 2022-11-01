@@ -100,6 +100,9 @@ namespace Components
     public struct Ammo
     {
         public int amount;
+        //TODO: cahnge to enum. 0 - shell, 1 - grenade...
+        //implement inspector for custom component types or at least for enums
+        public int type;
     }
 
     struct CurrentWeapon

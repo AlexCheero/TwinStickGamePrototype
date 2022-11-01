@@ -130,5 +130,11 @@ MonoBehaviour:
         UnityComponent: {fileID: 0}
         Preset: {fileID: 0}
         IsHiddenInEditor: 0
+      - TypeName: System.Int32
+        Name: type
+        ValueRepresentation: 0
+        UnityComponent: {fileID: 0}
+        Preset: {fileID: 0}
+        IsHiddenInEditor: 0
       UnityComponent: {fileID: 0}
       IsExpanded: 1

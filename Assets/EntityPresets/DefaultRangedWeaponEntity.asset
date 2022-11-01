@@ -14,16 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Data:
     Metas:
-    - ComponentName: Components.Ammo
-      Fields:
-      - TypeName: System.Int32
-        Name: amount
-        ValueRepresentation: 15
-        UnityComponent: {fileID: 0}
-        Preset: {fileID: 0}
-        IsHiddenInEditor: 0
-      UnityComponent: {fileID: 0}
-      IsExpanded: 1
     - ComponentName: Tags.RangedWeapon
       Fields: []
       UnityComponent: {fileID: 0}
@@ -53,6 +43,22 @@ MonoBehaviour:
       - TypeName: System.Single
         Name: damage
         ValueRepresentation: 30
+        UnityComponent: {fileID: 0}
+        Preset: {fileID: 0}
+        IsHiddenInEditor: 0
+      UnityComponent: {fileID: 0}
+      IsExpanded: 1
+    - ComponentName: Components.Ammo
+      Fields:
+      - TypeName: System.Int32
+        Name: amount
+        ValueRepresentation: 15
+        UnityComponent: {fileID: 0}
+        Preset: {fileID: 0}
+        IsHiddenInEditor: 0
+      - TypeName: System.Int32
+        Name: type
+        ValueRepresentation: 0
         UnityComponent: {fileID: 0}
         Preset: {fileID: 0}
         IsHiddenInEditor: 0

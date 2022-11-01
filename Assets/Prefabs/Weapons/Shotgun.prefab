@@ -114,16 +114,6 @@ MonoBehaviour:
       Fields: []
       UnityComponent: {fileID: 0}
       IsExpanded: 0
-    - ComponentName: Components.Ammo
-      Fields:
-      - TypeName: System.Int32
-        Name: amount
-        ValueRepresentation: 5
-        UnityComponent: {fileID: 0}
-        Preset: {fileID: 0}
-        IsHiddenInEditor: 0
-      UnityComponent: {fileID: 0}
-      IsExpanded: 1
     - ComponentName: Tags.RangedWeapon
       Fields: []
       UnityComponent: {fileID: 0}
@@ -173,6 +163,22 @@ MonoBehaviour:
       - TypeName: UnityEngine.Vector3
         Name: rotation
         ValueRepresentation: 0 -90 0
+        UnityComponent: {fileID: 0}
+        Preset: {fileID: 0}
+        IsHiddenInEditor: 0
+      UnityComponent: {fileID: 0}
+      IsExpanded: 1
+    - ComponentName: Components.Ammo
+      Fields:
+      - TypeName: System.Int32
+        Name: amount
+        ValueRepresentation: 5
+        UnityComponent: {fileID: 0}
+        Preset: {fileID: 0}
+        IsHiddenInEditor: 0
+      - TypeName: System.Int32
+        Name: type
+        ValueRepresentation: 0
         UnityComponent: {fileID: 0}
         Preset: {fileID: 0}
         IsHiddenInEditor: 0

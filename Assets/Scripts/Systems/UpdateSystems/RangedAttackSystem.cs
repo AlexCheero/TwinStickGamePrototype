@@ -33,8 +33,6 @@ public class RangedAttackSystem : EcsSystem
 #if DEBUG
             if (ammo < 0)
                 throw new System.Exception("negative ammo");
-            if (world.GetComponent<Ammo>(id).amount <= 0)
-                throw new System.Exception("ammo amount is <= 0. have ammo component: " + world.Have<Ammo>(id));
 #endif
 
             ammo--;
