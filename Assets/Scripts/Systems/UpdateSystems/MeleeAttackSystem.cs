@@ -41,6 +41,14 @@ public class MeleeAttackSystem : EcsSystem
             {
                 var animator = world.GetComponent<Animator>(ownerId);
                 animator.SetTrigger(world.Have<DefaultMeleeWeapon>(id) ? "IsPunching" : "IsMelee");
+                
+                //prepare attack animation speed
+                animator.Update(0);//hack to be able to get next animator state
+                var nextStateInfo = animator.GetNextAnimatorStateInfo(1);
+                var attackNormalizedTime = nextStateInfo.length * nextStateInfo.speedMultiplier;
+                var targetLength = 5.0f;
+                var lengthMultiplier = targetLength / attackNormalizedTime;
+                animator.SetFloat("AttackLengthMultiplier", lengthMultiplier);
             }
         }
 
