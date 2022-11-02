@@ -10,19 +10,17 @@ public class InitHealthUISliderSystem : EcsSystem
 
     public InitHealthUISliderSystem(EcsWorld world)
     {
-        _filterId = world.RegisterFilter(new BitMask(Id<HealthLimitsComponent>(), Id<HealthUISlider>()));
+        _filterId = world.RegisterFilter(new BitMask(Id<HealthLimitsComponent>(), Id<HealthComponent>(), Id<HealthUISlider>()));
     }
 
     public override void Tick(EcsWorld world)
     {
         foreach (var id in world.Enumerate(_filterId))
         {
-            Debug.Log("A");
             var slider = world.GetComponent<HealthUISlider>(id).slider;
-            var healthLimits = world.GetComponent<HealthLimitsComponent>(id);
             slider.minValue = 0;
-            slider.maxValue = healthLimits.maxHealth;
-            slider.value = healthLimits.initialHealth;
+            slider.maxValue = world.GetComponent<HealthLimitsComponent>(id).maxHealth;
+            slider.value = world.GetComponent<HealthComponent>(id).health;
         }
     }
 }

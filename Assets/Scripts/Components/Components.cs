@@ -48,7 +48,6 @@ namespace Components
 
     struct HealthLimitsComponent
     {
-        public float initialHealth;
         public float maxHealth;
     }
 
