@@ -49,7 +49,9 @@ public class PlayerChooseWeaponSystem : EcsSystem
             }
             else if (Input.GetKeyDown(KeyCode.Alpha3))
             {
-                if (!world.Have<Projectile>(currentWeaponId) && world.IsEntityValid(weaponry.throwable))
+                var a = !world.Have<ProjectileWeapon>(currentWeaponId);
+                var b = world.IsEntityValid(weaponry.throwable);
+                if (!world.Have<ProjectileWeapon>(currentWeaponId) && world.IsEntityValid(weaponry.throwable))
                 {
                     if (world.Have<Transform>(currentWeaponId))
                         world.GetComponent<Transform>(currentWeaponId).gameObject.SetActive(false);

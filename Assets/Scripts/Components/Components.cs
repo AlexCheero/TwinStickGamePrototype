@@ -46,6 +46,11 @@ namespace Components
         public Slider slider;
     }
 
+    struct WeaponUI
+    {
+        public WeaponIconsHolder holder;
+    }
+
     struct HealthLimitsComponent
     {
         public float maxHealth;

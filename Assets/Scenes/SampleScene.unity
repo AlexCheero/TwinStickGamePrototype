@@ -22578,6 +22578,10 @@ PrefabInstance:
       propertyPath: Data.Metas.Array.data[14].Fields.Array.data[0].UnityComponent
       value: 
       objectReference: {fileID: 2525420701645774379}
+    - target: {fileID: 4649735956465255904, guid: 01424304433e58946acc87cc21a18eb6, type: 3}
+      propertyPath: Data.Metas.Array.data[17].Fields.Array.data[0].UnityComponent
+      value: 
+      objectReference: {fileID: 2525420701645774380}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 01424304433e58946acc87cc21a18eb6, type: 3}
 --- !u!114 &1237610121 stripped
@@ -39443,6 +39447,7 @@ MonoBehaviour:
   - PlayerChooseWeaponSystem
   - ApplyDamageSystem
   - HealthUISliderSystem
+  - ChangeWeaponIconUISystem
   _lateUpdateSystemTypeNames:
   - ParticlesCleanupSystem
   - DeleteDeadSystem
@@ -39456,7 +39461,7 @@ MonoBehaviour:
   - CollisionCleanupSystem
   - DeleteDeadSystem
   _initSwitches: 010101000101010101010101010101010101
-  _updateSwitches: 010101010101010101010101010101010101010101010101010101010101010101010101010101
+  _updateSwitches: 01010101010101010101010101010101010101010101010101010101010101010101010101010101
   _lateUpdateSwitches: 0101010101
   _fixedUpdateSwitches: 01010101
   _lateFixedUpdateSwitches: 01010101010101
@@ -45021,6 +45026,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 67db9e8f0e2ae9c40bc1e2b64352a6b4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &2525420701645774380 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3493824034204506623, guid: 848b95de8adb2e244a9816d29013fb92, type: 3}
+  m_PrefabInstance: {fileID: 2525420701645774378}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5406b5b2184203c42a4f23a2c1a547f4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1001 &2879561025412819746

@@ -62,7 +62,7 @@ public class WeaponPickupCollisionSystem : EcsSystem
                         weaponry.melee = weaponEntity;
                     else if (world.Have<RangedWeapon>(id))
                         weaponry.ranged = weaponEntity;
-                    else if (world.Have<Projectile>(id))
+                    else if (world.Have<ProjectileWeapon>(id))
                         weaponry.throwable = weaponEntity;
                 }
             }
