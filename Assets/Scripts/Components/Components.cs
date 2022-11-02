@@ -1,5 +1,6 @@
 using ECS;
 using UnityEngine;
+using UnityEngine.UI;
 
 //TODO: remove prefixes
 namespace Components
@@ -38,6 +39,11 @@ namespace Components
     struct HealthComponent
     {
         public float health;
+    }
+
+    struct HealthUISlider
+    {
+        public Slider slider;
     }
 
     struct HealthLimitsComponent

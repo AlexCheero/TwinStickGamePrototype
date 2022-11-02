@@ -1257,6 +1257,32 @@ MonoBehaviour:
         IsHiddenInEditor: 0
       UnityComponent: {fileID: 0}
       IsExpanded: 0
+    - ComponentName: Components.HealthUISlider
+      Fields:
+      - TypeName: UnityEngine.UI.Slider
+        Name: slider
+        ValueRepresentation: 
+        UnityComponent: {fileID: 0}
+        Preset: {fileID: 0}
+        IsHiddenInEditor: 0
+      UnityComponent: {fileID: 0}
+      IsExpanded: 0
+    - ComponentName: Components.HealthLimitsComponent
+      Fields:
+      - TypeName: System.Single
+        Name: initialHealth
+        ValueRepresentation: 150
+        UnityComponent: {fileID: 0}
+        Preset: {fileID: 0}
+        IsHiddenInEditor: 0
+      - TypeName: System.Single
+        Name: maxHealth
+        ValueRepresentation: 200
+        UnityComponent: {fileID: 0}
+        Preset: {fileID: 0}
+        IsHiddenInEditor: 0
+      UnityComponent: {fileID: 0}
+      IsExpanded: 1
 --- !u!1 &4079052989807219141
 GameObject:
   m_ObjectHideFlags: 0
