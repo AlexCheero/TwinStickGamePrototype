@@ -39423,6 +39423,7 @@ MonoBehaviour:
   - StartPatrolSystem
   - SetUtilityCurvesHack
   - InitHealthUISliderSystem
+  - InitPlayerDirectionSystem
   _updateSystemTypeNames:
   - CleanupTargetEntitySystem
   - PlayerMovementSystem
@@ -39454,7 +39455,7 @@ MonoBehaviour:
   - WeaponPickupCollisionSystem
   - CollisionCleanupSystem
   - DeleteDeadSystem
-  _initSwitches: 0101010001010101010101010101010101
+  _initSwitches: 010101000101010101010101010101010101
   _updateSwitches: 010101010101010101010101010101010101010101010101010101010101010101010101010101
   _lateUpdateSwitches: 0101010101
   _fixedUpdateSwitches: 01010101

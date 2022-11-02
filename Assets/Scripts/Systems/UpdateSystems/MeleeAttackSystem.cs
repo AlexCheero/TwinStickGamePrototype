@@ -97,6 +97,14 @@ public class MeleeAttackSystem : EcsSystem
                     world.Add(targetId, world.GetComponent<DamageComponent>(id));
                     world.Add(targetId, new Impact { position = hit.point, normal = hit.normal });
 
+                    var ownerId = world.GetComponent<Owner>(id).entity.GetId();
+                    if (world.Have<PlayerDirectionComponent>(ownerId))
+                    {
+                        ref var ownerDirection = ref world.GetComponentByRef<PlayerDirectionComponent>(ownerId).direction;
+                        ownerDirection = (targetPos - position).normalized;
+                        ownerDirection.y = 0;
+                    }
+
                     //TODO: remove break if area attack needed
                     break;
                 }

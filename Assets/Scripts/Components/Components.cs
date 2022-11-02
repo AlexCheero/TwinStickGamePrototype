@@ -143,6 +143,11 @@ namespace Components
         public Vector3 velocity;
     }
 
+    struct PlayerDirectionComponent
+    {
+        public Vector3 direction;
+    }
+
     struct ProjectileWeapon
     {
         public string poolName;
