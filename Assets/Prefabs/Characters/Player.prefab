@@ -1151,7 +1151,6 @@ MonoBehaviour:
         Name: speed
         ValueRepresentation: 10
         UnityObject: {fileID: 0}
-        Preset: {fileID: 0}
         IsHiddenInEditor: 0
       UnityObject: {fileID: 0}
       IsExpanded: 0
@@ -1161,7 +1160,6 @@ MonoBehaviour:
         Name: health
         ValueRepresentation: 150
         UnityObject: {fileID: 0}
-        Preset: {fileID: 0}
         IsHiddenInEditor: 0
       UnityObject: {fileID: 0}
       IsExpanded: 0
@@ -1171,7 +1169,6 @@ MonoBehaviour:
         Name: angle
         ValueRepresentation: 120
         UnityObject: {fileID: 0}
-        Preset: {fileID: 0}
         IsHiddenInEditor: 0
       UnityObject: {fileID: 0}
       IsExpanded: 0
@@ -1181,7 +1178,6 @@ MonoBehaviour:
         Name: distance
         ValueRepresentation: 3
         UnityObject: {fileID: 0}
-        Preset: {fileID: 0}
         IsHiddenInEditor: 0
       UnityObject: {fileID: 0}
       IsExpanded: 0
@@ -1190,8 +1186,7 @@ MonoBehaviour:
       - TypeName: EntityPreset
         Name: preset
         ValueRepresentation: 
-        UnityObject: {fileID: 0}
-        Preset: {fileID: 11400000, guid: 9f3956faf2ec2944e902deadab675db9, type: 2}
+        UnityObject: {fileID: 11400000, guid: 9f3956faf2ec2944e902deadab675db9, type: 2}
         IsHiddenInEditor: 0
       UnityObject: {fileID: 0}
       IsExpanded: 0
@@ -1201,7 +1196,6 @@ MonoBehaviour:
         Name: velocity
         ValueRepresentation: 0 0 0
         UnityObject: {fileID: 0}
-        Preset: {fileID: 0}
         IsHiddenInEditor: 0
       UnityObject: {fileID: 0}
       IsExpanded: 0
@@ -1215,19 +1209,16 @@ MonoBehaviour:
         Name: melee
         ValueRepresentation: 
         UnityObject: {fileID: 0}
-        Preset: {fileID: 0}
         IsHiddenInEditor: 1
       - TypeName: ECS.Entity
         Name: ranged
         ValueRepresentation: 
         UnityObject: {fileID: 0}
-        Preset: {fileID: 0}
         IsHiddenInEditor: 1
       - TypeName: ECS.Entity
         Name: throwable
         ValueRepresentation: 
         UnityObject: {fileID: 0}
-        Preset: {fileID: 0}
         IsHiddenInEditor: 1
       UnityObject: {fileID: 0}
       IsExpanded: 0
@@ -1237,7 +1228,6 @@ MonoBehaviour:
         Name: poolName
         ValueRepresentation: BloodEffectPool
         UnityObject: {fileID: 0}
-        Preset: {fileID: 0}
         IsHiddenInEditor: 0
       UnityObject: {fileID: 0}
       IsExpanded: 0
@@ -1247,7 +1237,6 @@ MonoBehaviour:
         Name: maxHealth
         ValueRepresentation: 200
         UnityObject: {fileID: 0}
-        Preset: {fileID: 0}
         IsHiddenInEditor: 0
       UnityObject: {fileID: 0}
       IsExpanded: 0
@@ -1257,7 +1246,6 @@ MonoBehaviour:
         Name: direction
         ValueRepresentation: 0 0 0
         UnityObject: {fileID: 0}
-        Preset: {fileID: 0}
         IsHiddenInEditor: 0
       UnityObject: {fileID: 0}
       IsExpanded: 0
@@ -1283,7 +1271,6 @@ MonoBehaviour:
         Name: slider
         ValueRepresentation: 
         UnityObject: {fileID: 0}
-        Preset: {fileID: 0}
         IsHiddenInEditor: 0
       UnityObject: {fileID: 0}
       IsExpanded: 0
@@ -1293,7 +1280,6 @@ MonoBehaviour:
         Name: image
         ValueRepresentation: 
         UnityObject: {fileID: 0}
-        Preset: {fileID: 0}
         IsHiddenInEditor: 0
       UnityObject: {fileID: 0}
       IsExpanded: 0

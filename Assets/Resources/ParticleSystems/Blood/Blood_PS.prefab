@@ -4836,9 +4836,9 @@ MonoBehaviour:
     Metas:
     - ComponentName: UnityEngine.ParticleSystem
       Fields: []
-      UnityComponent: {fileID: 7953691764287804591}
+      UnityObject: {fileID: 7953691764287804591}
       IsExpanded: 0
     - ComponentName: PoolItem
       Fields: []
-      UnityComponent: {fileID: 8715823794517042119}
+      UnityObject: {fileID: 8715823794517042119}
       IsExpanded: 0
