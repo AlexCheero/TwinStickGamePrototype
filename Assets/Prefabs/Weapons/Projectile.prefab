@@ -147,48 +147,48 @@ MonoBehaviour:
       - TypeName: System.Single
         Name: speed
         ValueRepresentation: 2000
-        UnityComponent: {fileID: 0}
+        UnityObject: {fileID: 0}
         Preset: {fileID: 0}
         IsHiddenInEditor: 0
-      UnityComponent: {fileID: 0}
+      UnityObject: {fileID: 0}
       IsExpanded: 1
     - ComponentName: Tags.Projectile
       Fields: []
-      UnityComponent: {fileID: 0}
+      UnityObject: {fileID: 0}
       IsExpanded: 0
     - ComponentName: Components.DamageComponent
       Fields:
       - TypeName: System.Single
         Name: damage
         ValueRepresentation: 200
-        UnityComponent: {fileID: 0}
+        UnityObject: {fileID: 0}
         Preset: {fileID: 0}
         IsHiddenInEditor: 0
-      UnityComponent: {fileID: 0}
+      UnityObject: {fileID: 0}
       IsExpanded: 1
-    - ComponentName: UnityEngine.Transform
-      Fields: []
-      UnityComponent: {fileID: 78941872649121836}
-      IsExpanded: 0
     - ComponentName: Tags.DeleteOnCollision
       Fields: []
-      UnityComponent: {fileID: 0}
+      UnityObject: {fileID: 0}
       IsExpanded: 0
     - ComponentName: Components.LifeTime
       Fields:
       - TypeName: System.Single
         Name: time
         ValueRepresentation: 5
-        UnityComponent: {fileID: 0}
+        UnityObject: {fileID: 0}
         Preset: {fileID: 0}
         IsHiddenInEditor: 0
-      UnityComponent: {fileID: 0}
+      UnityObject: {fileID: 0}
       IsExpanded: 1
+    - ComponentName: UnityEngine.Transform
+      Fields: []
+      UnityObject: {fileID: 78941872649121836}
+      IsExpanded: 0
     - ComponentName: UnityEngine.Rigidbody
       Fields: []
-      UnityComponent: {fileID: 4443661290508678105}
+      UnityObject: {fileID: 4443661290508678105}
       IsExpanded: 0
     - ComponentName: PoolItem
       Fields: []
-      UnityComponent: {fileID: 1770726970249807671}
+      UnityObject: {fileID: 1770726970249807671}
       IsExpanded: 0
