@@ -1143,160 +1143,160 @@ MonoBehaviour:
     Metas:
     - ComponentName: Tags.PlayerTag
       Fields: []
-      UnityComponent: {fileID: 0}
+      UnityObject: {fileID: 0}
       IsExpanded: 1
     - ComponentName: Components.SpeedComponent
       Fields:
       - TypeName: System.Single
         Name: speed
         ValueRepresentation: 10
-        UnityComponent: {fileID: 0}
+        UnityObject: {fileID: 0}
         Preset: {fileID: 0}
         IsHiddenInEditor: 0
-      UnityComponent: {fileID: 0}
+      UnityObject: {fileID: 0}
       IsExpanded: 0
     - ComponentName: Components.HealthComponent
       Fields:
       - TypeName: System.Single
         Name: health
         ValueRepresentation: 150
-        UnityComponent: {fileID: 0}
+        UnityObject: {fileID: 0}
         Preset: {fileID: 0}
         IsHiddenInEditor: 0
-      UnityComponent: {fileID: 0}
+      UnityObject: {fileID: 0}
       IsExpanded: 0
     - ComponentName: Components.ViewAngle
       Fields:
       - TypeName: System.Single
         Name: angle
         ValueRepresentation: 120
-        UnityComponent: {fileID: 0}
+        UnityObject: {fileID: 0}
         Preset: {fileID: 0}
         IsHiddenInEditor: 0
-      UnityComponent: {fileID: 0}
+      UnityObject: {fileID: 0}
       IsExpanded: 0
     - ComponentName: Components.ReachComponent
       Fields:
       - TypeName: System.Single
         Name: distance
         ValueRepresentation: 3
-        UnityComponent: {fileID: 0}
+        UnityObject: {fileID: 0}
         Preset: {fileID: 0}
         IsHiddenInEditor: 0
-      UnityComponent: {fileID: 0}
+      UnityObject: {fileID: 0}
       IsExpanded: 0
     - ComponentName: Components.DefaultWeapon
       Fields:
       - TypeName: EntityPreset
         Name: preset
         ValueRepresentation: 
-        UnityComponent: {fileID: 0}
+        UnityObject: {fileID: 0}
         Preset: {fileID: 11400000, guid: 9f3956faf2ec2944e902deadab675db9, type: 2}
         IsHiddenInEditor: 0
-      UnityComponent: {fileID: 0}
+      UnityObject: {fileID: 0}
       IsExpanded: 0
     - ComponentName: Components.PlayerVelocityComponent
       Fields:
       - TypeName: UnityEngine.Vector3
         Name: velocity
         ValueRepresentation: 0 0 0
-        UnityComponent: {fileID: 0}
+        UnityObject: {fileID: 0}
         Preset: {fileID: 0}
         IsHiddenInEditor: 0
-      UnityComponent: {fileID: 0}
+      UnityObject: {fileID: 0}
       IsExpanded: 0
     - ComponentName: UnityEngine.Rigidbody
       Fields: []
-      UnityComponent: {fileID: 7806782409769925050}
+      UnityObject: {fileID: 7806782409769925050}
       IsExpanded: 0
     - ComponentName: UnityEngine.Collider
       Fields: []
-      UnityComponent: {fileID: 2074487693109958013}
+      UnityObject: {fileID: 2074487693109958013}
       IsExpanded: 0
     - ComponentName: UnityEngine.Transform
       Fields: []
-      UnityComponent: {fileID: 4399504548403639400}
+      UnityObject: {fileID: 4399504548403639400}
       IsExpanded: 0
     - ComponentName: UnityEngine.Animator
       Fields: []
-      UnityComponent: {fileID: 7777156661414571538}
+      UnityObject: {fileID: 7777156661414571538}
       IsExpanded: 0
     - ComponentName: Tags.CharacterTag
       Fields: []
-      UnityComponent: {fileID: 0}
+      UnityObject: {fileID: 0}
       IsExpanded: 0
     - ComponentName: Components.Weaponry
       Fields:
       - TypeName: ECS.Entity
         Name: melee
         ValueRepresentation: 
-        UnityComponent: {fileID: 0}
+        UnityObject: {fileID: 0}
         Preset: {fileID: 0}
         IsHiddenInEditor: 1
       - TypeName: ECS.Entity
         Name: ranged
         ValueRepresentation: 
-        UnityComponent: {fileID: 0}
+        UnityObject: {fileID: 0}
         Preset: {fileID: 0}
         IsHiddenInEditor: 1
       - TypeName: ECS.Entity
         Name: throwable
         ValueRepresentation: 
-        UnityComponent: {fileID: 0}
+        UnityObject: {fileID: 0}
         Preset: {fileID: 0}
         IsHiddenInEditor: 1
-      UnityComponent: {fileID: 0}
+      UnityObject: {fileID: 0}
       IsExpanded: 0
     - ComponentName: Components.ImpactEffect
       Fields:
       - TypeName: System.String
         Name: poolName
         ValueRepresentation: BloodEffectPool
-        UnityComponent: {fileID: 0}
+        UnityObject: {fileID: 0}
         Preset: {fileID: 0}
         IsHiddenInEditor: 0
-      UnityComponent: {fileID: 0}
+      UnityObject: {fileID: 0}
       IsExpanded: 0
     - ComponentName: Components.HealthUISlider
       Fields:
       - TypeName: UnityEngine.UI.Slider
         Name: slider
         ValueRepresentation: 
-        UnityComponent: {fileID: 0}
+        UnityObject: {fileID: 0}
         Preset: {fileID: 0}
         IsHiddenInEditor: 0
-      UnityComponent: {fileID: 0}
+      UnityObject: {fileID: 0}
       IsExpanded: 0
     - ComponentName: Components.HealthLimitsComponent
       Fields:
       - TypeName: System.Single
         Name: maxHealth
         ValueRepresentation: 200
-        UnityComponent: {fileID: 0}
+        UnityObject: {fileID: 0}
         Preset: {fileID: 0}
         IsHiddenInEditor: 0
-      UnityComponent: {fileID: 0}
+      UnityObject: {fileID: 0}
       IsExpanded: 0
     - ComponentName: Components.PlayerDirectionComponent
       Fields:
       - TypeName: UnityEngine.Vector3
         Name: direction
         ValueRepresentation: 
-        UnityComponent: {fileID: 0}
+        UnityObject: {fileID: 0}
         Preset: {fileID: 0}
         IsHiddenInEditor: 0
-      UnityComponent: {fileID: 0}
+      UnityObject: {fileID: 0}
       IsExpanded: 0
     - ComponentName: Components.WeaponUI
       Fields:
-      - TypeName: WeaponIconsHolder
-        Name: holder
+      - TypeName: UnityEngine.UI.Image
+        Name: image
         ValueRepresentation: 
-        UnityComponent: {fileID: 0}
+        UnityObject: {fileID: 0}
         Preset: {fileID: 0}
         IsHiddenInEditor: 0
-      UnityComponent: {fileID: 0}
-      IsExpanded: 1
+      UnityObject: {fileID: 0}
+      IsExpanded: 0
 --- !u!1 &4079052989807219141
 GameObject:
   m_ObjectHideFlags: 0

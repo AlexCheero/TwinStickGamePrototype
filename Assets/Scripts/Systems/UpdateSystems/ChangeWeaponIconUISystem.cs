@@ -1,12 +1,11 @@
 using Components;
 using ECS;
-using Tags;
 
 //choose system type here
 [System(ESystemCategory.Update)]
 public class ChangeWeaponIconUISystem : EcsSystem
 {
-    private int _filterId;
+    private readonly int _filterId;
 
     public ChangeWeaponIconUISystem(EcsWorld world)
     {
@@ -18,15 +17,10 @@ public class ChangeWeaponIconUISystem : EcsSystem
         foreach (var id in world.Enumerate(_filterId))
         {
             var currentWeaponId = world.GetComponent<CurrentWeapon>(id).entity.GetId();
-            var ui = world.GetComponent<WeaponUI>(id).holder;
-            if (world.Have<DefaultMeleeWeapon>(currentWeaponId))
-                ui.SetIcon(0);
-            else if (world.Have<MeleeWeapon>(currentWeaponId))
-                ui.SetIcon(1);
-            else if (world.Have<RangedWeapon>(currentWeaponId))
-                ui.SetIcon(2);
-            else if (world.Have<ProjectileWeapon>(currentWeaponId))
-                ui.SetIcon(3);
+            if (world.Have<WeaponIcon>(currentWeaponId))
+            {
+                world.GetComponent<WeaponUI>(id).image.sprite = world.GetComponent<WeaponIcon>(currentWeaponId).icon;
+            }
         }
     }
 }

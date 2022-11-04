@@ -16,51 +16,61 @@ MonoBehaviour:
     Metas:
     - ComponentName: Tags.RangedWeapon
       Fields: []
-      UnityComponent: {fileID: 0}
+      UnityObject: {fileID: 0}
       IsExpanded: 0
     - ComponentName: Components.AttackCooldown
       Fields:
       - TypeName: System.Single
         Name: previousAttackTime
         ValueRepresentation: 
-        UnityComponent: {fileID: 0}
+        UnityObject: {fileID: 0}
         Preset: {fileID: 0}
         IsHiddenInEditor: 1
       - TypeName: System.Single
         Name: attackCD
         ValueRepresentation: 0.1
-        UnityComponent: {fileID: 0}
+        UnityObject: {fileID: 0}
         Preset: {fileID: 0}
         IsHiddenInEditor: 0
-      UnityComponent: {fileID: 0}
+      UnityObject: {fileID: 0}
       IsExpanded: 1
     - ComponentName: Tags.Weapon
       Fields: []
-      UnityComponent: {fileID: 0}
+      UnityObject: {fileID: 0}
       IsExpanded: 0
     - ComponentName: Components.DamageComponent
       Fields:
       - TypeName: System.Single
         Name: damage
         ValueRepresentation: 30
-        UnityComponent: {fileID: 0}
+        UnityObject: {fileID: 0}
         Preset: {fileID: 0}
         IsHiddenInEditor: 0
-      UnityComponent: {fileID: 0}
+      UnityObject: {fileID: 0}
       IsExpanded: 1
     - ComponentName: Components.Ammo
       Fields:
       - TypeName: System.Int32
         Name: amount
         ValueRepresentation: 15
-        UnityComponent: {fileID: 0}
+        UnityObject: {fileID: 0}
         Preset: {fileID: 0}
         IsHiddenInEditor: 0
       - TypeName: System.Int32
         Name: type
         ValueRepresentation: 0
-        UnityComponent: {fileID: 0}
+        UnityObject: {fileID: 0}
         Preset: {fileID: 0}
         IsHiddenInEditor: 0
-      UnityComponent: {fileID: 0}
+      UnityObject: {fileID: 0}
+      IsExpanded: 1
+    - ComponentName: Components.WeaponIcon
+      Fields:
+      - TypeName: UnityEngine.Sprite
+        Name: icon
+        ValueRepresentation: 
+        UnityObject: {fileID: 21300000, guid: d39ea670fea64d545a9cdec13baed457, type: 3}
+        Preset: {fileID: 0}
+        IsHiddenInEditor: 0
+      UnityObject: {fileID: 0}
       IsExpanded: 1

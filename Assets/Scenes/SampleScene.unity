@@ -602,50 +602,50 @@ MonoBehaviour:
       - TypeName: System.Single
         Name: speed
         ValueRepresentation: 2000
-        UnityComponent: {fileID: 0}
+        UnityObject: {fileID: 0}
         Preset: {fileID: 0}
         IsHiddenInEditor: 0
-      UnityComponent: {fileID: 0}
+      UnityObject: {fileID: 0}
       IsExpanded: 1
     - ComponentName: Tags.Projectile
       Fields: []
-      UnityComponent: {fileID: 0}
+      UnityObject: {fileID: 0}
       IsExpanded: 0
     - ComponentName: Components.DamageComponent
       Fields:
       - TypeName: System.Single
         Name: damage
         ValueRepresentation: 200
-        UnityComponent: {fileID: 0}
+        UnityObject: {fileID: 0}
         Preset: {fileID: 0}
         IsHiddenInEditor: 0
-      UnityComponent: {fileID: 0}
+      UnityObject: {fileID: 0}
       IsExpanded: 1
     - ComponentName: UnityEngine.Transform
       Fields: []
-      UnityComponent: {fileID: 187142228}
+      UnityObject: {fileID: 187142228}
       IsExpanded: 0
     - ComponentName: Tags.DeleteOnCollision
       Fields: []
-      UnityComponent: {fileID: 0}
+      UnityObject: {fileID: 0}
       IsExpanded: 0
     - ComponentName: Components.LifeTime
       Fields:
       - TypeName: System.Single
         Name: time
         ValueRepresentation: 5
-        UnityComponent: {fileID: 0}
+        UnityObject: {fileID: 0}
         Preset: {fileID: 0}
         IsHiddenInEditor: 0
-      UnityComponent: {fileID: 0}
+      UnityObject: {fileID: 0}
       IsExpanded: 1
     - ComponentName: UnityEngine.Rigidbody
       Fields: []
-      UnityComponent: {fileID: 187142231}
+      UnityObject: {fileID: 187142231}
       IsExpanded: 0
     - ComponentName: PoolItem
       Fields: []
-      UnityComponent: {fileID: 187142230}
+      UnityObject: {fileID: 187142230}
       IsExpanded: 0
 --- !u!114 &187142230
 MonoBehaviour:
@@ -884,11 +884,11 @@ MonoBehaviour:
     Metas:
     - ComponentName: UnityEngine.ParticleSystem
       Fields: []
-      UnityComponent: {fileID: 252922616}
+      UnityObject: {fileID: 252922616}
       IsExpanded: 0
     - ComponentName: PoolItem
       Fields: []
-      UnityComponent: {fileID: 252922613}
+      UnityObject: {fileID: 252922613}
       IsExpanded: 0
 --- !u!199 &252922615
 ParticleSystemRenderer:
@@ -5792,50 +5792,50 @@ MonoBehaviour:
       - TypeName: System.Single
         Name: speed
         ValueRepresentation: 2000
-        UnityComponent: {fileID: 0}
+        UnityObject: {fileID: 0}
         Preset: {fileID: 0}
         IsHiddenInEditor: 0
-      UnityComponent: {fileID: 0}
+      UnityObject: {fileID: 0}
       IsExpanded: 1
     - ComponentName: Tags.Projectile
       Fields: []
-      UnityComponent: {fileID: 0}
+      UnityObject: {fileID: 0}
       IsExpanded: 0
     - ComponentName: Components.DamageComponent
       Fields:
       - TypeName: System.Single
         Name: damage
         ValueRepresentation: 200
-        UnityComponent: {fileID: 0}
+        UnityObject: {fileID: 0}
         Preset: {fileID: 0}
         IsHiddenInEditor: 0
-      UnityComponent: {fileID: 0}
+      UnityObject: {fileID: 0}
       IsExpanded: 1
     - ComponentName: UnityEngine.Transform
       Fields: []
-      UnityComponent: {fileID: 278416266}
+      UnityObject: {fileID: 278416266}
       IsExpanded: 0
     - ComponentName: Tags.DeleteOnCollision
       Fields: []
-      UnityComponent: {fileID: 0}
+      UnityObject: {fileID: 0}
       IsExpanded: 0
     - ComponentName: Components.LifeTime
       Fields:
       - TypeName: System.Single
         Name: time
         ValueRepresentation: 5
-        UnityComponent: {fileID: 0}
+        UnityObject: {fileID: 0}
         Preset: {fileID: 0}
         IsHiddenInEditor: 0
-      UnityComponent: {fileID: 0}
+      UnityObject: {fileID: 0}
       IsExpanded: 1
     - ComponentName: UnityEngine.Rigidbody
       Fields: []
-      UnityComponent: {fileID: 278416262}
+      UnityObject: {fileID: 278416262}
       IsExpanded: 0
     - ComponentName: PoolItem
       Fields: []
-      UnityComponent: {fileID: 278416260}
+      UnityObject: {fileID: 278416260}
       IsExpanded: 0
 --- !u!54 &278416262
 Rigidbody:
@@ -5979,11 +5979,11 @@ MonoBehaviour:
     Metas:
     - ComponentName: UnityEngine.ParticleSystem
       Fields: []
-      UnityComponent: {fileID: 344722011}
+      UnityObject: {fileID: 344722011}
       IsExpanded: 0
     - ComponentName: PoolItem
       Fields: []
-      UnityComponent: {fileID: 344722008}
+      UnityObject: {fileID: 344722008}
       IsExpanded: 0
 --- !u!199 &344722010
 ParticleSystemRenderer:
@@ -10921,50 +10921,50 @@ MonoBehaviour:
       - TypeName: System.Single
         Name: speed
         ValueRepresentation: 2000
-        UnityComponent: {fileID: 0}
+        UnityObject: {fileID: 0}
         Preset: {fileID: 0}
         IsHiddenInEditor: 0
-      UnityComponent: {fileID: 0}
+      UnityObject: {fileID: 0}
       IsExpanded: 1
     - ComponentName: Tags.Projectile
       Fields: []
-      UnityComponent: {fileID: 0}
+      UnityObject: {fileID: 0}
       IsExpanded: 0
     - ComponentName: Components.DamageComponent
       Fields:
       - TypeName: System.Single
         Name: damage
         ValueRepresentation: 200
-        UnityComponent: {fileID: 0}
+        UnityObject: {fileID: 0}
         Preset: {fileID: 0}
         IsHiddenInEditor: 0
-      UnityComponent: {fileID: 0}
+      UnityObject: {fileID: 0}
       IsExpanded: 1
     - ComponentName: UnityEngine.Transform
       Fields: []
-      UnityComponent: {fileID: 348105942}
+      UnityObject: {fileID: 348105942}
       IsExpanded: 0
     - ComponentName: Tags.DeleteOnCollision
       Fields: []
-      UnityComponent: {fileID: 0}
+      UnityObject: {fileID: 0}
       IsExpanded: 0
     - ComponentName: Components.LifeTime
       Fields:
       - TypeName: System.Single
         Name: time
         ValueRepresentation: 5
-        UnityComponent: {fileID: 0}
+        UnityObject: {fileID: 0}
         Preset: {fileID: 0}
         IsHiddenInEditor: 0
-      UnityComponent: {fileID: 0}
+      UnityObject: {fileID: 0}
       IsExpanded: 1
     - ComponentName: UnityEngine.Rigidbody
       Fields: []
-      UnityComponent: {fileID: 348105938}
+      UnityObject: {fileID: 348105938}
       IsExpanded: 0
     - ComponentName: PoolItem
       Fields: []
-      UnityComponent: {fileID: 348105936}
+      UnityObject: {fileID: 348105936}
       IsExpanded: 0
 --- !u!54 &348105938
 Rigidbody:
@@ -11484,11 +11484,11 @@ MonoBehaviour:
     Metas:
     - ComponentName: UnityEngine.ParticleSystem
       Fields: []
-      UnityComponent: {fileID: 490909009}
+      UnityObject: {fileID: 490909009}
       IsExpanded: 0
     - ComponentName: PoolItem
       Fields: []
-      UnityComponent: {fileID: 490909006}
+      UnityObject: {fileID: 490909006}
       IsExpanded: 0
 --- !u!199 &490909008
 ParticleSystemRenderer:
@@ -16673,11 +16673,11 @@ MonoBehaviour:
     Metas:
     - ComponentName: UnityEngine.ParticleSystem
       Fields: []
-      UnityComponent: {fileID: 679142173}
+      UnityObject: {fileID: 679142173}
       IsExpanded: 0
     - ComponentName: PoolItem
       Fields: []
-      UnityComponent: {fileID: 679142170}
+      UnityObject: {fileID: 679142170}
       IsExpanded: 0
 --- !u!199 &679142172
 ParticleSystemRenderer:
@@ -21465,6 +21465,17 @@ Transform:
   m_Father: {fileID: 1668705800}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &703704032 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7341024632636759397, guid: 848b95de8adb2e244a9816d29013fb92, type: 3}
+  m_PrefabInstance: {fileID: 2525420701645774378}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0
@@ -22133,41 +22144,41 @@ MonoBehaviour:
     Metas:
     - ComponentName: Tags.CameraTag
       Fields: []
-      UnityComponent: {fileID: 0}
+      UnityObject: {fileID: 0}
       IsExpanded: 0
     - ComponentName: UnityEngine.Transform
       Fields: []
-      UnityComponent: {fileID: 963194228}
+      UnityObject: {fileID: 963194228}
       IsExpanded: 0
     - ComponentName: Components.CameraSettingsComponent
       Fields:
       - TypeName: UnityEngine.Vector3
         Name: direction
         ValueRepresentation: 1 1,3 1
-        UnityComponent: {fileID: 0}
+        UnityObject: {fileID: 0}
         Preset: {fileID: 0}
         IsHiddenInEditor: 0
       - TypeName: System.Single
         Name: distance
         ValueRepresentation: 12
-        UnityComponent: {fileID: 0}
+        UnityObject: {fileID: 0}
         Preset: {fileID: 0}
         IsHiddenInEditor: 0
-      UnityComponent: {fileID: 0}
+      UnityObject: {fileID: 0}
       IsExpanded: 1
     - ComponentName: Components.TargetEntityComponent
       Fields:
       - TypeName: EntityView
         Name: target
         ValueRepresentation: 
-        UnityComponent: {fileID: 1237610121}
+        UnityObject: {fileID: 1237610121}
         Preset: {fileID: 0}
         IsHiddenInEditor: 0
-      UnityComponent: {fileID: 0}
+      UnityObject: {fileID: 0}
       IsExpanded: 1
     - ComponentName: UnityEngine.Camera
       Fields: []
-      UnityComponent: {fileID: 963194227}
+      UnityObject: {fileID: 963194227}
       IsExpanded: 0
 --- !u!1 &1086812137
 GameObject:
@@ -22224,50 +22235,50 @@ MonoBehaviour:
       - TypeName: System.Single
         Name: speed
         ValueRepresentation: 2000
-        UnityComponent: {fileID: 0}
+        UnityObject: {fileID: 0}
         Preset: {fileID: 0}
         IsHiddenInEditor: 0
-      UnityComponent: {fileID: 0}
+      UnityObject: {fileID: 0}
       IsExpanded: 1
     - ComponentName: Tags.Projectile
       Fields: []
-      UnityComponent: {fileID: 0}
+      UnityObject: {fileID: 0}
       IsExpanded: 0
     - ComponentName: Components.DamageComponent
       Fields:
       - TypeName: System.Single
         Name: damage
         ValueRepresentation: 200
-        UnityComponent: {fileID: 0}
+        UnityObject: {fileID: 0}
         Preset: {fileID: 0}
         IsHiddenInEditor: 0
-      UnityComponent: {fileID: 0}
+      UnityObject: {fileID: 0}
       IsExpanded: 1
     - ComponentName: UnityEngine.Transform
       Fields: []
-      UnityComponent: {fileID: 1086812144}
+      UnityObject: {fileID: 1086812144}
       IsExpanded: 0
     - ComponentName: Tags.DeleteOnCollision
       Fields: []
-      UnityComponent: {fileID: 0}
+      UnityObject: {fileID: 0}
       IsExpanded: 0
     - ComponentName: Components.LifeTime
       Fields:
       - TypeName: System.Single
         Name: time
         ValueRepresentation: 5
-        UnityComponent: {fileID: 0}
+        UnityObject: {fileID: 0}
         Preset: {fileID: 0}
         IsHiddenInEditor: 0
-      UnityComponent: {fileID: 0}
+      UnityObject: {fileID: 0}
       IsExpanded: 1
     - ComponentName: UnityEngine.Rigidbody
       Fields: []
-      UnityComponent: {fileID: 1086812140}
+      UnityObject: {fileID: 1086812140}
       IsExpanded: 0
     - ComponentName: PoolItem
       Fields: []
-      UnityComponent: {fileID: 1086812138}
+      UnityObject: {fileID: 1086812138}
       IsExpanded: 0
 --- !u!54 &1086812140
 Rigidbody:
@@ -22575,13 +22586,13 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4649735956465255904, guid: 01424304433e58946acc87cc21a18eb6, type: 3}
-      propertyPath: Data.Metas.Array.data[14].Fields.Array.data[0].UnityComponent
+      propertyPath: Data.Metas.Array.data[14].Fields.Array.data[0].UnityObject
       value: 
       objectReference: {fileID: 2525420701645774379}
     - target: {fileID: 4649735956465255904, guid: 01424304433e58946acc87cc21a18eb6, type: 3}
-      propertyPath: Data.Metas.Array.data[17].Fields.Array.data[0].UnityComponent
+      propertyPath: Data.Metas.Array.data[17].Fields.Array.data[0].UnityObject
       value: 
-      objectReference: {fileID: 2525420701645774380}
+      objectReference: {fileID: 703704032}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 01424304433e58946acc87cc21a18eb6, type: 3}
 --- !u!114 &1237610121 stripped
@@ -22902,50 +22913,50 @@ MonoBehaviour:
       - TypeName: System.Single
         Name: speed
         ValueRepresentation: 2000
-        UnityComponent: {fileID: 0}
+        UnityObject: {fileID: 0}
         Preset: {fileID: 0}
         IsHiddenInEditor: 0
-      UnityComponent: {fileID: 0}
+      UnityObject: {fileID: 0}
       IsExpanded: 1
     - ComponentName: Tags.Projectile
       Fields: []
-      UnityComponent: {fileID: 0}
+      UnityObject: {fileID: 0}
       IsExpanded: 0
     - ComponentName: Components.DamageComponent
       Fields:
       - TypeName: System.Single
         Name: damage
         ValueRepresentation: 200
-        UnityComponent: {fileID: 0}
+        UnityObject: {fileID: 0}
         Preset: {fileID: 0}
         IsHiddenInEditor: 0
-      UnityComponent: {fileID: 0}
+      UnityObject: {fileID: 0}
       IsExpanded: 1
     - ComponentName: UnityEngine.Transform
       Fields: []
-      UnityComponent: {fileID: 1433580798}
+      UnityObject: {fileID: 1433580798}
       IsExpanded: 0
     - ComponentName: Tags.DeleteOnCollision
       Fields: []
-      UnityComponent: {fileID: 0}
+      UnityObject: {fileID: 0}
       IsExpanded: 0
     - ComponentName: Components.LifeTime
       Fields:
       - TypeName: System.Single
         Name: time
         ValueRepresentation: 5
-        UnityComponent: {fileID: 0}
+        UnityObject: {fileID: 0}
         Preset: {fileID: 0}
         IsHiddenInEditor: 0
-      UnityComponent: {fileID: 0}
+      UnityObject: {fileID: 0}
       IsExpanded: 1
     - ComponentName: UnityEngine.Rigidbody
       Fields: []
-      UnityComponent: {fileID: 1433580794}
+      UnityObject: {fileID: 1433580794}
       IsExpanded: 0
     - ComponentName: PoolItem
       Fields: []
-      UnityComponent: {fileID: 1433580792}
+      UnityObject: {fileID: 1433580792}
       IsExpanded: 0
 --- !u!54 &1433580794
 Rigidbody:
@@ -23124,50 +23135,50 @@ MonoBehaviour:
       - TypeName: System.Single
         Name: speed
         ValueRepresentation: 2000
-        UnityComponent: {fileID: 0}
+        UnityObject: {fileID: 0}
         Preset: {fileID: 0}
         IsHiddenInEditor: 0
-      UnityComponent: {fileID: 0}
+      UnityObject: {fileID: 0}
       IsExpanded: 1
     - ComponentName: Tags.Projectile
       Fields: []
-      UnityComponent: {fileID: 0}
+      UnityObject: {fileID: 0}
       IsExpanded: 0
     - ComponentName: Components.DamageComponent
       Fields:
       - TypeName: System.Single
         Name: damage
         ValueRepresentation: 200
-        UnityComponent: {fileID: 0}
+        UnityObject: {fileID: 0}
         Preset: {fileID: 0}
         IsHiddenInEditor: 0
-      UnityComponent: {fileID: 0}
+      UnityObject: {fileID: 0}
       IsExpanded: 1
     - ComponentName: UnityEngine.Transform
       Fields: []
-      UnityComponent: {fileID: 1488909071}
+      UnityObject: {fileID: 1488909071}
       IsExpanded: 0
     - ComponentName: Tags.DeleteOnCollision
       Fields: []
-      UnityComponent: {fileID: 0}
+      UnityObject: {fileID: 0}
       IsExpanded: 0
     - ComponentName: Components.LifeTime
       Fields:
       - TypeName: System.Single
         Name: time
         ValueRepresentation: 5
-        UnityComponent: {fileID: 0}
+        UnityObject: {fileID: 0}
         Preset: {fileID: 0}
         IsHiddenInEditor: 0
-      UnityComponent: {fileID: 0}
+      UnityObject: {fileID: 0}
       IsExpanded: 1
     - ComponentName: UnityEngine.Rigidbody
       Fields: []
-      UnityComponent: {fileID: 1488909067}
+      UnityObject: {fileID: 1488909067}
       IsExpanded: 0
     - ComponentName: PoolItem
       Fields: []
-      UnityComponent: {fileID: 1488909065}
+      UnityObject: {fileID: 1488909065}
       IsExpanded: 0
 --- !u!54 &1488909067
 Rigidbody:
@@ -23311,11 +23322,11 @@ MonoBehaviour:
     Metas:
     - ComponentName: UnityEngine.ParticleSystem
       Fields: []
-      UnityComponent: {fileID: 1514750499}
+      UnityObject: {fileID: 1514750499}
       IsExpanded: 0
     - ComponentName: PoolItem
       Fields: []
-      UnityComponent: {fileID: 1514750496}
+      UnityObject: {fileID: 1514750496}
       IsExpanded: 0
 --- !u!199 &1514750498
 ParticleSystemRenderer:
@@ -29132,50 +29143,50 @@ MonoBehaviour:
       - TypeName: System.Single
         Name: speed
         ValueRepresentation: 2000
-        UnityComponent: {fileID: 0}
+        UnityObject: {fileID: 0}
         Preset: {fileID: 0}
         IsHiddenInEditor: 0
-      UnityComponent: {fileID: 0}
+      UnityObject: {fileID: 0}
       IsExpanded: 1
     - ComponentName: Tags.Projectile
       Fields: []
-      UnityComponent: {fileID: 0}
+      UnityObject: {fileID: 0}
       IsExpanded: 0
     - ComponentName: Components.DamageComponent
       Fields:
       - TypeName: System.Single
         Name: damage
         ValueRepresentation: 200
-        UnityComponent: {fileID: 0}
+        UnityObject: {fileID: 0}
         Preset: {fileID: 0}
         IsHiddenInEditor: 0
-      UnityComponent: {fileID: 0}
+      UnityObject: {fileID: 0}
       IsExpanded: 1
     - ComponentName: UnityEngine.Transform
       Fields: []
-      UnityComponent: {fileID: 1935949812}
+      UnityObject: {fileID: 1935949812}
       IsExpanded: 0
     - ComponentName: Tags.DeleteOnCollision
       Fields: []
-      UnityComponent: {fileID: 0}
+      UnityObject: {fileID: 0}
       IsExpanded: 0
     - ComponentName: Components.LifeTime
       Fields:
       - TypeName: System.Single
         Name: time
         ValueRepresentation: 5
-        UnityComponent: {fileID: 0}
+        UnityObject: {fileID: 0}
         Preset: {fileID: 0}
         IsHiddenInEditor: 0
-      UnityComponent: {fileID: 0}
+      UnityObject: {fileID: 0}
       IsExpanded: 1
     - ComponentName: UnityEngine.Rigidbody
       Fields: []
-      UnityComponent: {fileID: 1935949808}
+      UnityObject: {fileID: 1935949808}
       IsExpanded: 0
     - ComponentName: PoolItem
       Fields: []
-      UnityComponent: {fileID: 1935949806}
+      UnityObject: {fileID: 1935949806}
       IsExpanded: 0
 --- !u!54 &1935949808
 Rigidbody:
@@ -29757,11 +29768,11 @@ MonoBehaviour:
     Metas:
     - ComponentName: UnityEngine.ParticleSystem
       Fields: []
-      UnityComponent: {fileID: 1998132056}
+      UnityObject: {fileID: 1998132056}
       IsExpanded: 0
     - ComponentName: PoolItem
       Fields: []
-      UnityComponent: {fileID: 1998132053}
+      UnityObject: {fileID: 1998132053}
       IsExpanded: 0
 --- !u!199 &1998132055
 ParticleSystemRenderer:
@@ -34599,11 +34610,11 @@ MonoBehaviour:
     Metas:
     - ComponentName: UnityEngine.ParticleSystem
       Fields: []
-      UnityComponent: {fileID: 2017872565}
+      UnityObject: {fileID: 2017872565}
       IsExpanded: 0
     - ComponentName: PoolItem
       Fields: []
-      UnityComponent: {fileID: 2017872562}
+      UnityObject: {fileID: 2017872562}
       IsExpanded: 0
 --- !u!199 &2017872564
 ParticleSystemRenderer:
@@ -39461,7 +39472,7 @@ MonoBehaviour:
   - CollisionCleanupSystem
   - DeleteDeadSystem
   _initSwitches: 010101000101010101010101010101010101
-  _updateSwitches: 01010101010101010101010101010101010101010101010101010101010101010101010101010101
+  _updateSwitches: 01010101000101010001010101010101010101010101010101010101010101010101010101010101
   _lateUpdateSwitches: 0101010101
   _fixedUpdateSwitches: 01010101
   _lateFixedUpdateSwitches: 01010101010101
@@ -39724,50 +39735,50 @@ MonoBehaviour:
       - TypeName: System.Single
         Name: speed
         ValueRepresentation: 2000
-        UnityComponent: {fileID: 0}
+        UnityObject: {fileID: 0}
         Preset: {fileID: 0}
         IsHiddenInEditor: 0
-      UnityComponent: {fileID: 0}
+      UnityObject: {fileID: 0}
       IsExpanded: 1
     - ComponentName: Tags.Projectile
       Fields: []
-      UnityComponent: {fileID: 0}
+      UnityObject: {fileID: 0}
       IsExpanded: 0
     - ComponentName: Components.DamageComponent
       Fields:
       - TypeName: System.Single
         Name: damage
         ValueRepresentation: 200
-        UnityComponent: {fileID: 0}
+        UnityObject: {fileID: 0}
         Preset: {fileID: 0}
         IsHiddenInEditor: 0
-      UnityComponent: {fileID: 0}
+      UnityObject: {fileID: 0}
       IsExpanded: 1
     - ComponentName: UnityEngine.Transform
       Fields: []
-      UnityComponent: {fileID: 2048117958}
+      UnityObject: {fileID: 2048117958}
       IsExpanded: 0
     - ComponentName: Tags.DeleteOnCollision
       Fields: []
-      UnityComponent: {fileID: 0}
+      UnityObject: {fileID: 0}
       IsExpanded: 0
     - ComponentName: Components.LifeTime
       Fields:
       - TypeName: System.Single
         Name: time
         ValueRepresentation: 5
-        UnityComponent: {fileID: 0}
+        UnityObject: {fileID: 0}
         Preset: {fileID: 0}
         IsHiddenInEditor: 0
-      UnityComponent: {fileID: 0}
+      UnityObject: {fileID: 0}
       IsExpanded: 1
     - ComponentName: UnityEngine.Rigidbody
       Fields: []
-      UnityComponent: {fileID: 2048117954}
+      UnityObject: {fileID: 2048117954}
       IsExpanded: 0
     - ComponentName: PoolItem
       Fields: []
-      UnityComponent: {fileID: 2048117952}
+      UnityObject: {fileID: 2048117952}
       IsExpanded: 0
 --- !u!54 &2048117954
 Rigidbody:
@@ -39911,11 +39922,11 @@ MonoBehaviour:
     Metas:
     - ComponentName: UnityEngine.ParticleSystem
       Fields: []
-      UnityComponent: {fileID: 2059979725}
+      UnityObject: {fileID: 2059979725}
       IsExpanded: 0
     - ComponentName: PoolItem
       Fields: []
-      UnityComponent: {fileID: 2059979723}
+      UnityObject: {fileID: 2059979723}
       IsExpanded: 0
 --- !u!114 &2059979723
 MonoBehaviour:
@@ -45026,17 +45037,6 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 67db9e8f0e2ae9c40bc1e2b64352a6b4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &2525420701645774380 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 3493824034204506623, guid: 848b95de8adb2e244a9816d29013fb92, type: 3}
-  m_PrefabInstance: {fileID: 2525420701645774378}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5406b5b2184203c42a4f23a2c1a547f4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1001 &2879561025412819746

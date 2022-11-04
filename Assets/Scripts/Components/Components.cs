@@ -48,7 +48,12 @@ namespace Components
 
     struct WeaponUI
     {
-        public WeaponIconsHolder holder;
+        public Image image;
+    }
+
+    struct WeaponIcon
+    {
+        public Sprite icon;
     }
 
     struct HealthLimitsComponent

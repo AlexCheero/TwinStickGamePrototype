@@ -112,55 +112,65 @@ MonoBehaviour:
     Metas:
     - ComponentName: Tags.Pickup
       Fields: []
-      UnityComponent: {fileID: 0}
+      UnityObject: {fileID: 0}
       IsExpanded: 0
     - ComponentName: Tags.Weapon
       Fields: []
-      UnityComponent: {fileID: 0}
+      UnityObject: {fileID: 0}
       IsExpanded: 0
     - ComponentName: Components.AttackCooldown
       Fields:
       - TypeName: System.Single
         Name: previousAttackTime
         ValueRepresentation: 
-        UnityComponent: {fileID: 0}
+        UnityObject: {fileID: 0}
         Preset: {fileID: 0}
         IsHiddenInEditor: 1
       - TypeName: System.Single
         Name: attackCD
         ValueRepresentation: 1.5
-        UnityComponent: {fileID: 0}
+        UnityObject: {fileID: 0}
         Preset: {fileID: 0}
         IsHiddenInEditor: 0
-      UnityComponent: {fileID: 0}
-      IsExpanded: 1
+      UnityObject: {fileID: 0}
+      IsExpanded: 0
     - ComponentName: UnityEngine.Transform
       Fields: []
-      UnityComponent: {fileID: 61111828663185056}
+      UnityObject: {fileID: 61111828663185056}
       IsExpanded: 0
     - ComponentName: Components.ProjectileWeapon
       Fields:
       - TypeName: System.String
         Name: poolName
         ValueRepresentation: ProjectilePool
-        UnityComponent: {fileID: 0}
+        UnityObject: {fileID: 0}
         Preset: {fileID: 0}
         IsHiddenInEditor: 0
-      UnityComponent: {fileID: 0}
-      IsExpanded: 1
+      UnityObject: {fileID: 0}
+      IsExpanded: 0
     - ComponentName: Components.Ammo
       Fields:
       - TypeName: System.Int32
         Name: amount
         ValueRepresentation: 5
-        UnityComponent: {fileID: 0}
+        UnityObject: {fileID: 0}
         Preset: {fileID: 0}
         IsHiddenInEditor: 0
       - TypeName: System.Int32
         Name: type
         ValueRepresentation: 1
-        UnityComponent: {fileID: 0}
+        UnityObject: {fileID: 0}
         Preset: {fileID: 0}
         IsHiddenInEditor: 0
-      UnityComponent: {fileID: 0}
+      UnityObject: {fileID: 0}
+      IsExpanded: 0
+    - ComponentName: Components.WeaponIcon
+      Fields:
+      - TypeName: UnityEngine.Sprite
+        Name: icon
+        ValueRepresentation: 
+        UnityObject: {fileID: 21300000, guid: 993cf3fce21679644a58b2236707f24b, type: 3}
+        Preset: {fileID: 0}
+        IsHiddenInEditor: 0
+      UnityObject: {fileID: 0}
       IsExpanded: 1
