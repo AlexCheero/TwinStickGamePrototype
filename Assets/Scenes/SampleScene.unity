@@ -27236,6 +27236,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4649735956465255904, guid: 01424304433e58946acc87cc21a18eb6, type: 3}
+      propertyPath: Data.Metas.Array.data[16].IsExpanded
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4649735956465255904, guid: 01424304433e58946acc87cc21a18eb6, type: 3}
       propertyPath: Data.Metas.Array.data[16].Fields.Array.data[0].UnityObject
       value: 
       objectReference: {fileID: 2525420701645774379}
@@ -44927,6 +44931,18 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1423297223573736450, guid: 848b95de8adb2e244a9816d29013fb92, type: 3}
+      propertyPath: m_TargetGraphic
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 1458267532486636563, guid: 848b95de8adb2e244a9816d29013fb92, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1458267532486636563, guid: 848b95de8adb2e244a9816d29013fb92, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2525420700513444265, guid: 848b95de8adb2e244a9816d29013fb92, type: 3}
       propertyPath: m_Name
       value: HUD
@@ -45015,19 +45031,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 7914279022443739077, guid: 848b95de8adb2e244a9816d29013fb92, type: 3}
-      propertyPath: m_AnchorMax.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7914279022443739077, guid: 848b95de8adb2e244a9816d29013fb92, type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 0
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 848b95de8adb2e244a9816d29013fb92, type: 3}
 --- !u!114 &2525420701645774379 stripped
 MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 8005297996088825778, guid: 848b95de8adb2e244a9816d29013fb92, type: 3}
+  m_CorrespondingSourceObject: {fileID: 1423297223573736450, guid: 848b95de8adb2e244a9816d29013fb92, type: 3}
   m_PrefabInstance: {fileID: 2525420701645774378}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
