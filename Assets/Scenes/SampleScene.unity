@@ -5728,6 +5728,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2879561023896923306, guid: ef7e0a32fdb06a8499b7a48c0f7fba6e, type: 3}
+      propertyPath: Data.Metas.Array.data[7].Fields.Array.data[0].UnityObject
+      value: 
+      objectReference: {fileID: 1237610121}
+    - target: {fileID: 2879561023896923306, guid: ef7e0a32fdb06a8499b7a48c0f7fba6e, type: 3}
       propertyPath: Data.Metas.Array.data[7].Fields.Array.data[0].UnityComponent
       value: 
       objectReference: {fileID: 1237610121}
@@ -11330,6 +11334,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2879561023896923306, guid: ef7e0a32fdb06a8499b7a48c0f7fba6e, type: 3}
+      propertyPath: Data.Metas.Array.data[7].Fields.Array.data[0].UnityObject
+      value: 
+      objectReference: {fileID: 1237610121}
+    - target: {fileID: 2879561023896923306, guid: ef7e0a32fdb06a8499b7a48c0f7fba6e, type: 3}
       propertyPath: Data.Metas.Array.data[7].Fields.Array.data[0].UnityComponent
       value: 
       objectReference: {fileID: 1237610121}
@@ -16488,6 +16496,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2879561023896923306, guid: ef7e0a32fdb06a8499b7a48c0f7fba6e, type: 3}
+      propertyPath: Data.Metas.Array.data[7].Fields.Array.data[0].UnityObject
+      value: 
+      objectReference: {fileID: 1237610121}
     - target: {fileID: 2879561023896923306, guid: ef7e0a32fdb06a8499b7a48c0f7fba6e, type: 3}
       propertyPath: Data.Metas.Array.data[7].Fields.Array.data[0].UnityComponent
       value: 
@@ -22146,10 +22158,6 @@ MonoBehaviour:
       Fields: []
       UnityObject: {fileID: 0}
       IsExpanded: 0
-    - ComponentName: UnityEngine.Transform
-      Fields: []
-      UnityObject: {fileID: 963194228}
-      IsExpanded: 0
     - ComponentName: Components.CameraSettingsComponent
       Fields:
       - TypeName: UnityEngine.Vector3
@@ -22166,6 +22174,10 @@ MonoBehaviour:
         IsHiddenInEditor: 0
       UnityObject: {fileID: 0}
       IsExpanded: 1
+    - ComponentName: UnityEngine.Transform
+      Fields: []
+      UnityObject: {fileID: 963194228}
+      IsExpanded: 0
     - ComponentName: Components.TargetEntityComponent
       Fields:
       - TypeName: EntityView
@@ -22586,7 +22598,7 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4649735956465255904, guid: 01424304433e58946acc87cc21a18eb6, type: 3}
-      propertyPath: Data.Metas.Array.data[14].Fields.Array.data[0].UnityObject
+      propertyPath: Data.Metas.Array.data[16].Fields.Array.data[0].UnityObject
       value: 
       objectReference: {fileID: 2525420701645774379}
     - target: {fileID: 4649735956465255904, guid: 01424304433e58946acc87cc21a18eb6, type: 3}
@@ -28608,6 +28620,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2879561023896923306, guid: ef7e0a32fdb06a8499b7a48c0f7fba6e, type: 3}
+      propertyPath: Data.Metas.Array.data[7].Fields.Array.data[0].UnityObject
+      value: 
+      objectReference: {fileID: 1237610121}
+    - target: {fileID: 2879561023896923306, guid: ef7e0a32fdb06a8499b7a48c0f7fba6e, type: 3}
       propertyPath: Data.Metas.Array.data[7].Fields.Array.data[0].UnityComponent
       value: 
       objectReference: {fileID: 1237610121}
@@ -28888,6 +28904,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2879561023896923306, guid: ef7e0a32fdb06a8499b7a48c0f7fba6e, type: 3}
+      propertyPath: Data.Metas.Array.data[7].Fields.Array.data[0].UnityObject
+      value: 
+      objectReference: {fileID: 1237610121}
     - target: {fileID: 2879561023896923306, guid: ef7e0a32fdb06a8499b7a48c0f7fba6e, type: 3}
       propertyPath: Data.Metas.Array.data[7].Fields.Array.data[0].UnityComponent
       value: 
@@ -29521,6 +29541,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2879561023896923306, guid: ef7e0a32fdb06a8499b7a48c0f7fba6e, type: 3}
+      propertyPath: Data.Metas.Array.data[7].Fields.Array.data[0].UnityObject
+      value: 
+      objectReference: {fileID: 1237610121}
     - target: {fileID: 2879561023896923306, guid: ef7e0a32fdb06a8499b7a48c0f7fba6e, type: 3}
       propertyPath: Data.Metas.Array.data[7].Fields.Array.data[0].UnityComponent
       value: 
@@ -39472,7 +39496,7 @@ MonoBehaviour:
   - CollisionCleanupSystem
   - DeleteDeadSystem
   _initSwitches: 010101000101010101010101010101010101
-  _updateSwitches: 01010101000101010001010101010101010101010101010101010101010101010101010101010101
+  _updateSwitches: 01010101010101010101010101010101010101010101010101010101010101010101010101010101
   _lateUpdateSwitches: 0101010101
   _fixedUpdateSwitches: 01010101
   _lateFixedUpdateSwitches: 01010101010101
@@ -45091,7 +45115,7 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2879561023896923306, guid: ef7e0a32fdb06a8499b7a48c0f7fba6e, type: 3}
-      propertyPath: Data.Metas.Array.data[7].Fields.Array.data[0].UnityComponent
+      propertyPath: Data.Metas.Array.data[7].Fields.Array.data[0].UnityObject
       value: 
       objectReference: {fileID: 1237610121}
     - target: {fileID: 3114002401536837972, guid: ef7e0a32fdb06a8499b7a48c0f7fba6e, type: 3}

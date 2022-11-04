@@ -199,10 +199,6 @@ MonoBehaviour:
         IsHiddenInEditor: 0
       UnityObject: {fileID: 0}
       IsExpanded: 0
-    - ComponentName: UnityEngine.Transform
-      Fields: []
-      UnityObject: {fileID: 4315594678850727785}
-      IsExpanded: 0
     - ComponentName: Components.GripTransform
       Fields:
       - TypeName: UnityEngine.Vector3
@@ -228,4 +224,8 @@ MonoBehaviour:
         Preset: {fileID: 0}
         IsHiddenInEditor: 0
       UnityObject: {fileID: 0}
-      IsExpanded: 1
+      IsExpanded: 0
+    - ComponentName: UnityEngine.Transform
+      Fields: []
+      UnityObject: {fileID: 4315594678850727785}
+      IsExpanded: 0

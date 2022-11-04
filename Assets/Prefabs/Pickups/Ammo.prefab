@@ -112,29 +112,29 @@ MonoBehaviour:
     Metas:
     - ComponentName: Tags.DeleteOnCollision
       Fields: []
-      UnityComponent: {fileID: 0}
+      UnityObject: {fileID: 0}
       IsExpanded: 0
     - ComponentName: Tags.Pickup
       Fields: []
-      UnityComponent: {fileID: 0}
-      IsExpanded: 0
-    - ComponentName: UnityEngine.Transform
-      Fields: []
-      UnityComponent: {fileID: 2124944598898896205}
+      UnityObject: {fileID: 0}
       IsExpanded: 0
     - ComponentName: Components.Ammo
       Fields:
       - TypeName: System.Int32
         Name: amount
         ValueRepresentation: 20
-        UnityComponent: {fileID: 0}
+        UnityObject: {fileID: 0}
         Preset: {fileID: 0}
         IsHiddenInEditor: 0
       - TypeName: System.Int32
         Name: type
         ValueRepresentation: 0
-        UnityComponent: {fileID: 0}
+        UnityObject: {fileID: 0}
         Preset: {fileID: 0}
         IsHiddenInEditor: 0
-      UnityComponent: {fileID: 0}
-      IsExpanded: 1
+      UnityObject: {fileID: 0}
+      IsExpanded: 0
+    - ComponentName: UnityEngine.Transform
+      Fields: []
+      UnityObject: {fileID: 2124944598898896205}
+      IsExpanded: 0

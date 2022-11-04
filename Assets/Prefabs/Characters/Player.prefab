@@ -1205,22 +1205,6 @@ MonoBehaviour:
         IsHiddenInEditor: 0
       UnityObject: {fileID: 0}
       IsExpanded: 0
-    - ComponentName: UnityEngine.Rigidbody
-      Fields: []
-      UnityObject: {fileID: 7806782409769925050}
-      IsExpanded: 0
-    - ComponentName: UnityEngine.Collider
-      Fields: []
-      UnityObject: {fileID: 2074487693109958013}
-      IsExpanded: 0
-    - ComponentName: UnityEngine.Transform
-      Fields: []
-      UnityObject: {fileID: 4399504548403639400}
-      IsExpanded: 0
-    - ComponentName: UnityEngine.Animator
-      Fields: []
-      UnityObject: {fileID: 7777156661414571538}
-      IsExpanded: 0
     - ComponentName: Tags.CharacterTag
       Fields: []
       UnityObject: {fileID: 0}
@@ -1257,16 +1241,6 @@ MonoBehaviour:
         IsHiddenInEditor: 0
       UnityObject: {fileID: 0}
       IsExpanded: 0
-    - ComponentName: Components.HealthUISlider
-      Fields:
-      - TypeName: UnityEngine.UI.Slider
-        Name: slider
-        ValueRepresentation: 
-        UnityObject: {fileID: 0}
-        Preset: {fileID: 0}
-        IsHiddenInEditor: 0
-      UnityObject: {fileID: 0}
-      IsExpanded: 0
     - ComponentName: Components.HealthLimitsComponent
       Fields:
       - TypeName: System.Single
@@ -1281,6 +1255,32 @@ MonoBehaviour:
       Fields:
       - TypeName: UnityEngine.Vector3
         Name: direction
+        ValueRepresentation: 0 0 0
+        UnityObject: {fileID: 0}
+        Preset: {fileID: 0}
+        IsHiddenInEditor: 0
+      UnityObject: {fileID: 0}
+      IsExpanded: 0
+    - ComponentName: UnityEngine.Rigidbody
+      Fields: []
+      UnityObject: {fileID: 7806782409769925050}
+      IsExpanded: 0
+    - ComponentName: UnityEngine.Collider
+      Fields: []
+      UnityObject: {fileID: 2074487693109958013}
+      IsExpanded: 0
+    - ComponentName: UnityEngine.Transform
+      Fields: []
+      UnityObject: {fileID: 4399504548403639400}
+      IsExpanded: 0
+    - ComponentName: UnityEngine.Animator
+      Fields: []
+      UnityObject: {fileID: 7777156661414571538}
+      IsExpanded: 0
+    - ComponentName: Components.HealthUISlider
+      Fields:
+      - TypeName: UnityEngine.UI.Slider
+        Name: slider
         ValueRepresentation: 
         UnityObject: {fileID: 0}
         Preset: {fileID: 0}

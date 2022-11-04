@@ -726,143 +726,143 @@ MonoBehaviour:
     Metas:
     - ComponentName: Tags.EnemyTag
       Fields: []
-      UnityComponent: {fileID: 0}
+      UnityObject: {fileID: 0}
       IsExpanded: 0
     - ComponentName: Components.HealthComponent
       Fields:
       - TypeName: System.Single
         Name: health
         ValueRepresentation: 100
-        UnityComponent: {fileID: 0}
+        UnityObject: {fileID: 0}
         Preset: {fileID: 0}
         IsHiddenInEditor: 0
-      UnityComponent: {fileID: 0}
+      UnityObject: {fileID: 0}
       IsExpanded: 0
     - ComponentName: Components.SpeedComponent
       Fields:
       - TypeName: System.Single
         Name: speed
         ValueRepresentation: 9
-        UnityComponent: {fileID: 0}
+        UnityObject: {fileID: 0}
         Preset: {fileID: 0}
         IsHiddenInEditor: 0
-      UnityComponent: {fileID: 0}
+      UnityObject: {fileID: 0}
       IsExpanded: 0
     - ComponentName: Components.AngularSpeedComponent
       Fields:
       - TypeName: System.Single
         Name: speed
         ValueRepresentation: 2880
-        UnityComponent: {fileID: 0}
+        UnityObject: {fileID: 0}
         Preset: {fileID: 0}
         IsHiddenInEditor: 0
-      UnityComponent: {fileID: 0}
+      UnityObject: {fileID: 0}
       IsExpanded: 0
     - ComponentName: Components.ReachComponent
       Fields:
       - TypeName: System.Single
         Name: distance
         ValueRepresentation: 2.5
-        UnityComponent: {fileID: 0}
+        UnityObject: {fileID: 0}
         Preset: {fileID: 0}
         IsHiddenInEditor: 0
-      UnityComponent: {fileID: 0}
+      UnityObject: {fileID: 0}
       IsExpanded: 0
     - ComponentName: Components.AccelerationComponent
       Fields:
       - TypeName: System.Single
         Name: acceleration
         ValueRepresentation: 20
-        UnityComponent: {fileID: 0}
+        UnityObject: {fileID: 0}
         Preset: {fileID: 0}
         IsHiddenInEditor: 0
-      UnityComponent: {fileID: 0}
+      UnityObject: {fileID: 0}
       IsExpanded: 0
     - ComponentName: Components.ViewAngle
       Fields:
       - TypeName: System.Single
         Name: angle
         ValueRepresentation: 100
-        UnityComponent: {fileID: 0}
+        UnityObject: {fileID: 0}
         Preset: {fileID: 0}
         IsHiddenInEditor: 0
-      UnityComponent: {fileID: 0}
+      UnityObject: {fileID: 0}
       IsExpanded: 0
     - ComponentName: Components.TargetEntityComponent
       Fields:
       - TypeName: EntityView
         Name: target
         ValueRepresentation: 
-        UnityComponent: {fileID: 0}
+        UnityObject: {fileID: 0}
         Preset: {fileID: 0}
         IsHiddenInEditor: 0
-      UnityComponent: {fileID: 0}
+      UnityObject: {fileID: 0}
       IsExpanded: 0
     - ComponentName: Components.DefaultWeapon
       Fields:
       - TypeName: EntityPreset
         Name: preset
         ValueRepresentation: 
-        UnityComponent: {fileID: 0}
+        UnityObject: {fileID: 0}
         Preset: {fileID: 11400000, guid: 9f3956faf2ec2944e902deadab675db9, type: 2}
         IsHiddenInEditor: 0
-      UnityComponent: {fileID: 0}
+      UnityObject: {fileID: 0}
       IsExpanded: 0
     - ComponentName: Components.NextWaypointIdx
       Fields:
       - TypeName: System.Int32
         Name: idx
         ValueRepresentation: 0
-        UnityComponent: {fileID: 0}
+        UnityObject: {fileID: 0}
         Preset: {fileID: 0}
         IsHiddenInEditor: 0
-      UnityComponent: {fileID: 0}
+      UnityObject: {fileID: 0}
       IsExpanded: 0
     - ComponentName: Components.ViewDistance
       Fields:
       - TypeName: System.Single
         Name: distance
         ValueRepresentation: 15
-        UnityComponent: {fileID: 0}
+        UnityObject: {fileID: 0}
         Preset: {fileID: 0}
         IsHiddenInEditor: 0
-      UnityComponent: {fileID: 0}
+      UnityObject: {fileID: 0}
       IsExpanded: 0
     - ComponentName: Tags.CharacterTag
       Fields: []
-      UnityComponent: {fileID: 0}
+      UnityObject: {fileID: 0}
       IsExpanded: 0
+    - ComponentName: Components.HealthLimitsComponent
+      Fields:
+      - TypeName: System.Single
+        Name: maxHealth
+        ValueRepresentation: 100
+        UnityObject: {fileID: 0}
+        Preset: {fileID: 0}
+        IsHiddenInEditor: 0
+      UnityObject: {fileID: 0}
+      IsExpanded: 1
     - ComponentName: UnityEngine.Transform
       Fields: []
-      UnityComponent: {fileID: 2341018601984709614}
+      UnityObject: {fileID: 2341018601984709614}
       IsExpanded: 0
     - ComponentName: UnityEngine.AI.NavMeshAgent
       Fields: []
-      UnityComponent: {fileID: 2879561023896923307}
+      UnityObject: {fileID: 2879561023896923307}
       IsExpanded: 0
     - ComponentName: UnityEngine.Animator
       Fields: []
-      UnityComponent: {fileID: 2879561023896923301}
+      UnityObject: {fileID: 2879561023896923301}
       IsExpanded: 0
     - ComponentName: Components.ImpactEffect
       Fields:
       - TypeName: System.String
         Name: poolName
         ValueRepresentation: BloodEffectPool
-        UnityComponent: {fileID: 0}
+        UnityObject: {fileID: 0}
         Preset: {fileID: 0}
         IsHiddenInEditor: 0
-      UnityComponent: {fileID: 0}
-      IsExpanded: 1
-    - ComponentName: Components.HealthLimitsComponent
-      Fields:
-      - TypeName: System.Single
-        Name: maxHealth
-        ValueRepresentation: 100
-        UnityComponent: {fileID: 0}
-        Preset: {fileID: 0}
-        IsHiddenInEditor: 0
-      UnityComponent: {fileID: 0}
+      UnityObject: {fileID: 0}
       IsExpanded: 1
 --- !u!1 &3625167423135340734
 GameObject:
