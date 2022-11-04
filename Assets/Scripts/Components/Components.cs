@@ -49,6 +49,7 @@ namespace Components
     struct WeaponUI
     {
         public Image image;
+        public Text text;
     }
 
     struct WeaponIcon

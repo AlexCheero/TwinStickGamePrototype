@@ -27236,8 +27236,28 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4649735956465255904, guid: 01424304433e58946acc87cc21a18eb6, type: 3}
+      propertyPath: Data.Metas.Array.size
+      value: 18
+      objectReference: {fileID: 0}
+    - target: {fileID: 4649735956465255904, guid: 01424304433e58946acc87cc21a18eb6, type: 3}
       propertyPath: Data.Metas.Array.data[16].IsExpanded
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4649735956465255904, guid: 01424304433e58946acc87cc21a18eb6, type: 3}
+      propertyPath: Data.Metas.Array.data[17].IsExpanded
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4649735956465255904, guid: 01424304433e58946acc87cc21a18eb6, type: 3}
+      propertyPath: Data.Metas.Array.data[17].Fields.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4649735956465255904, guid: 01424304433e58946acc87cc21a18eb6, type: 3}
+      propertyPath: Data.Metas.Array.data[17].Fields.Array.data[1].Name
+      value: text
+      objectReference: {fileID: 0}
+    - target: {fileID: 4649735956465255904, guid: 01424304433e58946acc87cc21a18eb6, type: 3}
+      propertyPath: Data.Metas.Array.data[17].Fields.Array.data[1].TypeName
+      value: UnityEngine.UI.Text
       objectReference: {fileID: 0}
     - target: {fileID: 4649735956465255904, guid: 01424304433e58946acc87cc21a18eb6, type: 3}
       propertyPath: Data.Metas.Array.data[16].Fields.Array.data[0].UnityObject
@@ -27247,6 +27267,10 @@ PrefabInstance:
       propertyPath: Data.Metas.Array.data[17].Fields.Array.data[0].UnityObject
       value: 
       objectReference: {fileID: 703704032}
+    - target: {fileID: 4649735956465255904, guid: 01424304433e58946acc87cc21a18eb6, type: 3}
+      propertyPath: Data.Metas.Array.data[17].Fields.Array.data[1].UnityObject
+      value: 
+      objectReference: {fileID: 1255890295}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 01424304433e58946acc87cc21a18eb6, type: 3}
 --- !u!114 &1237610121 stripped
@@ -27258,6 +27282,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: bd67fbb5415272440ad8bbd0def578db, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1255890295 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1255890295, guid: 848b95de8adb2e244a9816d29013fb92, type: 3}
+  m_PrefabInstance: {fileID: 2525420701645774378}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &1265007809
@@ -44304,7 +44339,7 @@ MonoBehaviour:
   - PlayerChooseWeaponSystem
   - ApplyDamageSystem
   - HealthUISliderSystem
-  - ChangeWeaponIconUISystem
+  - WeaponUISystem
   _lateUpdateSystemTypeNames:
   - ParticlesCleanupSystem
   - DeleteDeadSystem
@@ -44318,7 +44353,7 @@ MonoBehaviour:
   - CollisionCleanupSystem
   - DeleteDeadSystem
   _initSwitches: 010101000101010101010101010101010101
-  _updateSwitches: 01010101010101010101010101010101010101010101010101010101010101010101010101010101
+  _updateSwitches: 0101010101010101010101010101010101010101010101010101010101010101010101010101010101
   _lateUpdateSwitches: 0101010101
   _fixedUpdateSwitches: 01010101
   _lateFixedUpdateSwitches: 01010101010101
@@ -44931,10 +44966,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 1423297223573736450, guid: 848b95de8adb2e244a9816d29013fb92, type: 3}
-      propertyPath: m_TargetGraphic
-      value: 
-      objectReference: {fileID: 0}
     - target: {fileID: 1458267532486636563, guid: 848b95de8adb2e244a9816d29013fb92, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0
