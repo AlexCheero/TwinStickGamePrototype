@@ -238,6 +238,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _startNewGame: {fileID: 540479496}
+  _score: {fileID: 1682241380}
 --- !u!1 &376860355
 GameObject:
   m_ObjectHideFlags: 0
