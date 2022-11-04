@@ -1,26 +1,38 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 public class MainMenu : MonoBehaviour
 {
-    private const string SCORE_KEY = "Score";
+    [SerializeField]
+    private Button _startNewGameBtn;
     
     [SerializeField]
-    private Button _startNewGame;
+    private Button _continueGameBtn;
 
     [SerializeField]
     private Text _score;
     
     void Start()
     {
-        int score = PlayerPrefs.HasKey(SCORE_KEY) ? PlayerPrefs.GetInt(SCORE_KEY) : 0;
+        var score = PlayerPrefs.HasKey(Constants.SCORE_KEY) ? PlayerPrefs.GetInt(Constants.SCORE_KEY) : 0;
         _score.text = "Score: " + score;
-        _startNewGame.onClick.AddListener(OnStartNewGameClicked);
+        
+        _continueGameBtn.gameObject.SetActive(score > 0);
+        
+        _startNewGameBtn.onClick.AddListener(OnStartNewGameClicked);
+        _continueGameBtn.onClick.AddListener(OnContinueGameClicked);
     }
 
     private void OnStartNewGameClicked()
     {
-        SceneManager.LoadScene("SampleScene");
+        PlayerPrefs.SetInt(Constants.SCORE_KEY, 0);
+        SceneManager.LoadScene(Constants.SampleScene);
+    }
+    
+    private void OnContinueGameClicked()
+    {
+        SceneManager.LoadScene(Constants.SampleScene);
     }
 }

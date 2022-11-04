@@ -2,6 +2,7 @@ using Components;
 using ECS;
 using Tags;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 [System(ESystemCategory.Update)]
 public class HealthSystem : EcsSystem
@@ -13,29 +14,18 @@ public class HealthSystem : EcsSystem
         _filterId = world.RegisterFilter(new BitMask(Id<HealthComponent>()));
     }
 
-#if DEBUG
-    float hlth;
-#endif
-
     public override void Tick(EcsWorld world)
     {
         foreach (var id in world.Enumerate(_filterId))
         {
-            var health = world.GetComponent<HealthComponent>(id).health;
-
-#if DEBUG
-            //TODO: remove this code when I get proper UI
-            if (world.Have<PlayerTag>(id) && hlth != health)
-            {
-                Debug.Log("Player's health: " + health);
-                hlth = health;
-            }
-#endif
-
-            if (health > 0)
+            if (world.GetComponent<HealthComponent>(id).health > 0)
                 continue;
 
             world.Add<DeadTag>(id);
+            if (world.Have<EnemyTag>(id))
+                MiscUtils.AddScore(Constants.PointsPerKill);
+            else if (world.Have<PlayerTag>(id))
+                SceneManager.LoadScene(Constants.MainMenu);
         }
     }
 }

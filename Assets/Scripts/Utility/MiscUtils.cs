@@ -31,6 +31,13 @@ public static class MiscUtils
         return null;
     }
 
+    public static void AddScore(int addScore)
+    {
+        var score = PlayerPrefs.HasKey(Constants.SCORE_KEY) ? PlayerPrefs.GetInt(Constants.SCORE_KEY) : 0;
+        score += addScore;
+        PlayerPrefs.SetInt(Constants.SCORE_KEY, score);
+    }
+
 #if UNITY_EDITOR
     // Sphere with radius of 1
     private static readonly Vector4[] s_UnitSphere = MakeUnitSphere(16);
