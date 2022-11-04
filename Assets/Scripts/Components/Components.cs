@@ -234,6 +234,7 @@ namespace Tags
     struct RangedWeapon { }
     struct Weapon { }
     struct SeenEnemyTag { }
+    struct LevelExit { }
 
     //stuff needed for more complex AI, which was abandoned
     struct PatrolAction { }
