@@ -8,6 +8,12 @@ public enum EAmmoType
     Grenade
 }
 
+public enum EGoal
+{
+    KillAll,
+    CompleteLevel
+}
+
 //TODO: remove prefixes
 namespace Components
 {
@@ -128,6 +134,11 @@ namespace Components
     struct CurrentWeapon
     {
         public Entity entity;
+    }
+
+    struct LevelGoal
+    {
+        public EGoal goal;
     }
 
     struct AttackEvent
