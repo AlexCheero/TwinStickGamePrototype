@@ -24,13 +24,11 @@ MonoBehaviour:
         Name: previousAttackTime
         ValueRepresentation: 
         UnityObject: {fileID: 0}
-        Preset: {fileID: 0}
         IsHiddenInEditor: 1
       - TypeName: System.Single
         Name: attackCD
         ValueRepresentation: 0.1
         UnityObject: {fileID: 0}
-        Preset: {fileID: 0}
         IsHiddenInEditor: 0
       UnityObject: {fileID: 0}
       IsExpanded: 1
@@ -44,23 +42,6 @@ MonoBehaviour:
         Name: damage
         ValueRepresentation: 30
         UnityObject: {fileID: 0}
-        Preset: {fileID: 0}
-        IsHiddenInEditor: 0
-      UnityObject: {fileID: 0}
-      IsExpanded: 1
-    - ComponentName: Components.Ammo
-      Fields:
-      - TypeName: System.Int32
-        Name: amount
-        ValueRepresentation: 15
-        UnityObject: {fileID: 0}
-        Preset: {fileID: 0}
-        IsHiddenInEditor: 0
-      - TypeName: System.Int32
-        Name: type
-        ValueRepresentation: 0
-        UnityObject: {fileID: 0}
-        Preset: {fileID: 0}
         IsHiddenInEditor: 0
       UnityObject: {fileID: 0}
       IsExpanded: 1
@@ -70,7 +51,20 @@ MonoBehaviour:
         Name: icon
         ValueRepresentation: 
         UnityObject: {fileID: 21300000, guid: d39ea670fea64d545a9cdec13baed457, type: 3}
-        Preset: {fileID: 0}
+        IsHiddenInEditor: 0
+      UnityObject: {fileID: 0}
+      IsExpanded: 1
+    - ComponentName: Components.Ammo
+      Fields:
+      - TypeName: System.Int32
+        Name: amount
+        ValueRepresentation: 15
+        UnityObject: {fileID: 0}
+        IsHiddenInEditor: 0
+      - TypeName: EAmmoType
+        Name: type
+        ValueRepresentation: Shell
+        UnityObject: {fileID: 0}
         IsHiddenInEditor: 0
       UnityObject: {fileID: 0}
       IsExpanded: 1

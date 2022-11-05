@@ -1273,7 +1273,7 @@ MonoBehaviour:
         UnityObject: {fileID: 0}
         IsHiddenInEditor: 0
       UnityObject: {fileID: 0}
-      IsExpanded: 0
+      IsExpanded: 1
     - ComponentName: Components.WeaponUI
       Fields:
       - TypeName: UnityEngine.UI.Image
@@ -1281,8 +1281,13 @@ MonoBehaviour:
         ValueRepresentation: 
         UnityObject: {fileID: 0}
         IsHiddenInEditor: 0
+      - TypeName: UnityEngine.UI.Text
+        Name: text
+        ValueRepresentation: 
+        UnityObject: {fileID: 0}
+        IsHiddenInEditor: 0
       UnityObject: {fileID: 0}
-      IsExpanded: 0
+      IsExpanded: 1
 --- !u!1 &4079052989807219141
 GameObject:
   m_ObjectHideFlags: 0

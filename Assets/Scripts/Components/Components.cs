@@ -2,6 +2,12 @@ using ECS;
 using UnityEngine;
 using UnityEngine.UI;
 
+public enum EAmmoType
+{
+    Shell,
+    Grenade
+}
+
 //TODO: remove prefixes
 namespace Components
 {
@@ -116,9 +122,7 @@ namespace Components
     public struct Ammo
     {
         public int amount;
-        //TODO: cahnge to enum. 0 - shell, 1 - grenade...
-        //implement inspector for custom component types or at least for enums
-        public int type;
+        public EAmmoType type;
     }
 
     struct CurrentWeapon

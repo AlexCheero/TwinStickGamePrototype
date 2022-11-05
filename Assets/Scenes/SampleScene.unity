@@ -27280,30 +27280,6 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4649735956465255904, guid: 01424304433e58946acc87cc21a18eb6, type: 3}
-      propertyPath: Data.Metas.Array.size
-      value: 18
-      objectReference: {fileID: 0}
-    - target: {fileID: 4649735956465255904, guid: 01424304433e58946acc87cc21a18eb6, type: 3}
-      propertyPath: Data.Metas.Array.data[16].IsExpanded
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4649735956465255904, guid: 01424304433e58946acc87cc21a18eb6, type: 3}
-      propertyPath: Data.Metas.Array.data[17].IsExpanded
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4649735956465255904, guid: 01424304433e58946acc87cc21a18eb6, type: 3}
-      propertyPath: Data.Metas.Array.data[17].Fields.Array.size
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 4649735956465255904, guid: 01424304433e58946acc87cc21a18eb6, type: 3}
-      propertyPath: Data.Metas.Array.data[17].Fields.Array.data[1].Name
-      value: text
-      objectReference: {fileID: 0}
-    - target: {fileID: 4649735956465255904, guid: 01424304433e58946acc87cc21a18eb6, type: 3}
-      propertyPath: Data.Metas.Array.data[17].Fields.Array.data[1].TypeName
-      value: UnityEngine.UI.Text
-      objectReference: {fileID: 0}
-    - target: {fileID: 4649735956465255904, guid: 01424304433e58946acc87cc21a18eb6, type: 3}
       propertyPath: Data.Metas.Array.data[16].Fields.Array.data[0].UnityObject
       value: 
       objectReference: {fileID: 2525420701645774379}
