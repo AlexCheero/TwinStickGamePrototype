@@ -28,17 +28,11 @@ public class MainMenu : MonoBehaviour
     private void OnStartNewGameClicked()
     {
         PlayerPrefs.SetInt(Constants.SCORE_KEY, 0);
-        StartGame();
+        SceneManager.LoadScene(Constants.SampleScene);
     }
     
     private void OnContinueGameClicked()
     {
-        StartGame();
-    }
-
-    private void StartGame()
-    {
-        MapGoal.Instance.RandomizeGoal();
         SceneManager.LoadScene(Constants.SampleScene);
     }
 }

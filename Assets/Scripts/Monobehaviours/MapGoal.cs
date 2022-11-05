@@ -20,7 +20,7 @@ public class MapGoal : Singleton<MapGoal>
     protected override void Awake()
     {
         base.Awake();
-        GameObject.DontDestroyOnLoad(gameObject);
+        RandomizeGoal();
     }
 
     public void RandomizeGoal()

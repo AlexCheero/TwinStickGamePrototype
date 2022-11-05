@@ -26,14 +26,7 @@ public class CheckGoalCompletionSystem : EcsSystem
                 enemyCount++;
             isGoalComplete = enemyCount == 0;
         }
-        else if (goal == EGoal.CompleteLevel)
-        {
-            //foreach (var id in world.Enumerate(_killAllFilterId))
-            {
-                //world.GetComponent<Comp1>(id)
-                //world.Have<Comp4>(id)
-            }
-        }
+        //EGoal.CompleteLevel is handled by LevelExitCollsionSystem
         
         if (isGoalComplete)
         {
