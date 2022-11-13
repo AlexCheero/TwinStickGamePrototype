@@ -1,6 +1,8 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 namespace WFC
 {
@@ -43,56 +45,93 @@ namespace WFC
         public int Dim;
         public Cell[] Grid;
 
+        private Stack<int> _history;
+
         void Awake()
         {
             Grid = new Cell[Dim * Dim];
             for (int i = 0; i < Grid.Length; i++)
                 Grid[i] = new Cell(Palette);
+
+            _history = new Stack<int>(Grid.Length);
         }
 
         void Update()
         {
-            if (Input.GetKeyDown(KeyCode.D))
+            if (Input.GetKeyDown(KeyCode.S))
             {
-                for (var i = 0; i < Grid.Length; i++)
+                var idx = GetLowestEntropyCellIdx();
+                Debug.Log("idx: " + idx);
+                if (idx < 0)
                 {
-                    var tile = Grid[i].CollapsedTile;
-                    if (tile != null)
-                        Destroy(tile.gameObject);
-                    Grid[i] = new Cell(Palette);
+                    Clear();
+                    idx = GetLowestEntropyCellIdx();
                 }
-                
+
+                GenerateStep(idx);
+            }
+            
+            if (Input.GetKeyDown(KeyCode.C))
+                Clear();
+
+            if (Input.GetKeyDown(KeyCode.G))
+            {
+                Clear();
                 Generate();
+            }
+            
+            if (Input.GetKeyDown(KeyCode.U))
+            {
+                Undo();
             }
         }
 
+        private void Clear()
+        {
+            _history.Clear();
+            
+            for (var i = 0; i < Grid.Length; i++)
+            {
+                var tile = Grid[i].CollapsedTile;
+                if (tile != null)
+                    Destroy(tile.gameObject);
+                Grid[i] = new Cell(Palette);
+            }
+        }
+
+        public void GenerateStep(int idx)
+        {
+            var halfDim = Dim / 2;
+            var x = idx % Dim;
+            var y = idx / Dim;
+            var position = new Vector3(x - halfDim, 0, y - halfDim);
+            Grid[idx].Collapse(position);
+            _history.Push(idx);
+            var tile = Grid[idx].CollapsedTile;
+            if (tile != null)
+            {
+                // for (int j = y - 1; j < y + 2; j++)
+                // {
+                //     for (int i = x - 1; i < x + 2; i++)
+                //     {
+                //         
+                //     }
+                // }
+
+                RemoveAvailableTiles(x + (y + 1) * Dim, tile.AvailableNeighbours(ETileDirection.Up));
+                RemoveAvailableTiles((x + 1) + y * Dim, tile.AvailableNeighbours(ETileDirection.Right));
+                RemoveAvailableTiles(x + (y - 1) * Dim, tile.AvailableNeighbours(ETileDirection.Down));
+                RemoveAvailableTiles((x - 1) + y * Dim, tile.AvailableNeighbours(ETileDirection.Left));
+            }
+        }
+        
         public void Generate()
         {
             var ctr = 0;
             var idx = GetLowestEntropyCellIdx();
             while (idx >= 0)
             {
-                var halfDim = Dim / 2;
-                var x = idx % Dim;
-                var y = idx / Dim;
-                var position = new Vector3(x - halfDim, 0, y - halfDim);
-                Grid[idx].Collapse(position);
-                var tile = Grid[idx].CollapsedTile;
-                if (tile != null)
-                {
-                    // for (int j = y - 1; j < y + 2; j++)
-                    // {
-                    //     for (int i = x - 1; i < x + 2; i++)
-                    //     {
-                    //         
-                    //     }
-                    // }
-
-                    RemoveAvailableTiles(x + (y - 1) * Dim, tile.AvailableNeighbours(ETileDirection.Up));
-                    RemoveAvailableTiles((x + 1) + y * Dim, tile.AvailableNeighbours(ETileDirection.Right));
-                    RemoveAvailableTiles(x + (y + 1) * Dim, tile.AvailableNeighbours(ETileDirection.Down));
-                    RemoveAvailableTiles((x - 1) + y * Dim, tile.AvailableNeighbours(ETileDirection.Left));
-                }
+                GenerateStep(idx);
                 
                 idx = GetLowestEntropyCellIdx();
                 ctr++;
@@ -144,9 +183,11 @@ namespace WFC
             int lowestEntropy = int.MaxValue;
             for (int i = 0; i < Grid.Length; i++)
             {
+                bool suitableEntropy = Grid[i].Entropy < lowestEntropy;
+                //suitableEntropy |= Grid[i].Entropy == lowestEntropy && Random.value > 0.5f;
                 if (Grid[i].CollapsedTile == null &&
                     Grid[i].AvailableTiles.Count > 0 &&
-                    Grid[i].Entropy < lowestEntropy)
+                    suitableEntropy)
                 {
                     lowestEntropyTileIdx = i;
                     lowestEntropy = Grid[i].Entropy;
@@ -154,6 +195,79 @@ namespace WFC
             }
 
             return lowestEntropyTileIdx;
+        }
+
+        private void Undo()
+        {
+            if (_history.Count == 0)
+                return;
+            
+            var idx = _history.Pop();
+            var tile = Grid[idx].CollapsedTile;
+            if (tile != null)
+                Destroy(tile.gameObject);
+            Grid[idx] = new Cell(Palette);
+
+            var x = idx % Dim;
+            var y = idx / Dim;
+            
+            var upIdx = x + (y - 1) * Dim;
+            if (upIdx > 0 && upIdx < Grid.Length)
+                RestoreAvailableTiles(upIdx);
+
+            var rightIdx = (x + 1) + y * Dim;
+            if (rightIdx > 0 && rightIdx < Grid.Length)
+                RestoreAvailableTiles(rightIdx);
+            
+            var downIdx = x + (y + 1) * Dim;
+            if (downIdx > 0 && downIdx < Grid.Length)
+                RestoreAvailableTiles(downIdx);//down
+            
+            var leftIdx = (x - 1) + y * Dim;
+            if (leftIdx > 0 && leftIdx < Grid.Length)
+                RestoreAvailableTiles(leftIdx);//left
+        }
+
+        private void RestoreAvailableTiles(int idx)
+        {
+            var x = idx % Dim;
+            var y = idx / Dim;
+            var upIdx = x + (y - 1) * Dim;
+            var rightIdx = (x + 1) + y * Dim;
+            var downIdx = x + (y + 1) * Dim;
+            var leftIdx = (x - 1) + y * Dim;
+
+            Grid[idx].AvailableTiles = Palette;
+
+
+            Tile neighbourTile = null;
+            if (upIdx > 0 && upIdx < Grid.Length)
+            {
+                neighbourTile = Grid[upIdx].CollapsedTile;
+                if (neighbourTile != null)
+                    RemoveAvailableTiles(idx, neighbourTile.AvailableNeighbours(ETileDirection.Down));
+            }
+
+            if (rightIdx > 0 && rightIdx < Grid.Length)
+            {
+                neighbourTile = Grid[rightIdx].CollapsedTile;
+                if (neighbourTile != null)
+                    RemoveAvailableTiles(idx, neighbourTile.AvailableNeighbours(ETileDirection.Left));
+            }
+            
+            if (downIdx > 0 && downIdx < Grid.Length)
+            {
+                neighbourTile = Grid[downIdx].CollapsedTile;
+                if (neighbourTile != null)
+                    RemoveAvailableTiles(idx, neighbourTile.AvailableNeighbours(ETileDirection.Up));
+            }
+            
+            if (leftIdx > 0 && leftIdx < Grid.Length)
+            {
+                neighbourTile = Grid[leftIdx].CollapsedTile;
+                if (neighbourTile != null)
+                    RemoveAvailableTiles(idx, neighbourTile.AvailableNeighbours(ETileDirection.Right));
+            }
         }
     }
 }
