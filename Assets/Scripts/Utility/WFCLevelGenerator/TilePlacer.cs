@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using WFC;
 
 [RequireComponent(typeof(TilePalette))]
 public class TilePlacer : MonoBehaviour
@@ -11,6 +12,7 @@ public class TilePlacer : MonoBehaviour
     private TilePalette _palette;
     private List<Transform> _markers;
     private int _currentMarkerIdx;
+    private Dictionary<Vector3, Tile> _placedTiles;
 
     private Transform CurrentMarker => _markers[_currentMarkerIdx];
     
@@ -18,6 +20,7 @@ public class TilePlacer : MonoBehaviour
     {
         _cam = FindObjectOfType<Camera>();
         _palette = GetComponent<TilePalette>();
+        _placedTiles = new Dictionary<Vector3, Tile>();
 
         const string markersHolderName = "markers";
         var markersHolder = transform.Find(markersHolderName);
@@ -52,17 +55,7 @@ public class TilePlacer : MonoBehaviour
             return;
        
         Ray ray = _cam.ScreenPointToRay(Input.mousePosition);
-        float SnapValue(float value)
-        {
-            var abs = Mathf.Abs(value);
-            var sign = Mathf.Sign(value);
-            var rem = abs % _snapSize;
-            var snapped = abs - rem;
-            if (rem / _snapSize > 0.5f)
-                snapped += _snapSize;
-            return snapped * sign;
-        }
-       
+
         var t = -ray.origin.y / ray.direction.y;
         var x = SnapValue(ray.origin.x + t * ray.direction.x);
         var z = SnapValue(ray.origin.z + t * ray.direction.z);
@@ -71,8 +64,10 @@ public class TilePlacer : MonoBehaviour
         CurrentMarker.position = markerPosition;
         if (Input.GetMouseButtonDown(0))
         {
-            var prototype = _palette.Palette[_currentMarkerIdx];
-            Instantiate(prototype, markerPosition, prototype.transform.rotation);
+            if (Input.GetKey(KeyCode.LeftShift))
+                DeleteTile(markerPosition);
+            else
+                PlaceTile(markerPosition);
         }
         if (Input.GetMouseButtonDown(1))
         {
@@ -80,5 +75,38 @@ public class TilePlacer : MonoBehaviour
             _currentMarkerIdx = (_currentMarkerIdx + 1) % _markers.Count;
             CurrentMarker.gameObject.SetActive(true);
         }
+    }
+
+    private float SnapValue(float value)
+    {
+        var abs = Mathf.Abs(value);
+        var sign = Mathf.Sign(value);
+        var rem = abs % _snapSize;
+        var snapped = abs - rem;
+        if (rem / _snapSize > 0.5f)
+            snapped += _snapSize;
+        return snapped * sign;
+    }
+
+    private void PlaceTile(Vector3 position)
+    {
+        if (_placedTiles.ContainsKey(position))
+            DeleteTile(position);
+        
+        var prototype = _palette.Palette[_currentMarkerIdx];
+        var tile = Instantiate(prototype, position, prototype.transform.rotation);
+        _placedTiles[position] = tile;
+    }
+    
+    private void DeleteTile(Vector3 position)
+    {
+        if (!_placedTiles.ContainsKey(position))
+        {
+            Debug.Log("wrong position");
+            return;
+        }
+        
+        Destroy(_placedTiles[position].gameObject);
+        _placedTiles.Remove(position);
     }
 }
