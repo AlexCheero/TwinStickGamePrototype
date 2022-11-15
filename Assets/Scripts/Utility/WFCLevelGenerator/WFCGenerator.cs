@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -39,19 +38,22 @@ namespace WFC
         public int Entropy => AvailableTiles.Count;
     }
 
+    [RequireComponent(typeof(TilePalette))]
     public class WFCGenerator : MonoBehaviour
     {
-        public List<Tile> Palette;
         public int Dim;
         public Cell[] Grid;
 
+        private TilePalette _palette;
+        
         private Stack<int> _history;
 
         void Awake()
         {
+            _palette = GetComponent<TilePalette>();
             Grid = new Cell[Dim * Dim];
             for (int i = 0; i < Grid.Length; i++)
-                Grid[i] = new Cell(Palette);
+                Grid[i] = new Cell(_palette.Palette);
 
             _history = new Stack<int>(Grid.Length);
         }
@@ -95,7 +97,7 @@ namespace WFC
                 var tile = Grid[i].CollapsedTile;
                 if (tile != null)
                     Destroy(tile.gameObject);
-                Grid[i] = new Cell(Palette);
+                Grid[i] = new Cell(_palette.Palette);
             }
         }
 
@@ -206,7 +208,7 @@ namespace WFC
             var tile = Grid[idx].CollapsedTile;
             if (tile != null)
                 Destroy(tile.gameObject);
-            Grid[idx] = new Cell(Palette);
+            Grid[idx] = new Cell(_palette.Palette);
 
             var x = idx % Dim;
             var y = idx / Dim;
@@ -237,7 +239,7 @@ namespace WFC
             var downIdx = x + (y + 1) * Dim;
             var leftIdx = (x - 1) + y * Dim;
 
-            Grid[idx].AvailableTiles = Palette;
+            Grid[idx].AvailableTiles = _palette.Palette;
 
 
             Tile neighbourTile = null;
