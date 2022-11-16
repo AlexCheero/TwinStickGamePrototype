@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Unity.Plastic.Newtonsoft.Json;
 using UnityEngine;
 using WFC;
 
@@ -21,6 +22,12 @@ public class PossibleNeighbours
 {
     public Dictionary<ETileSide, List<PossibleNeighbour>> Neighbours;
 
+    public PossibleNeighbours(bool b)
+    {
+        Neighbours = new Dictionary<ETileSide, List<PossibleNeighbour>>();
+        Neighbours.Add(ETileSide.Center, new List<PossibleNeighbour>() { new PossibleNeighbour(666) });
+    }
+    
     public PossibleNeighbours()
     {
         Neighbours = new Dictionary<ETileSide, List<PossibleNeighbour>>()
@@ -97,6 +104,20 @@ public class TileAnalizer : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.A))
             Analize();
+        if (Input.GetKeyDown(KeyCode.J))
+        {
+            var patternFilePath = Application.persistentDataPath + "/pattern";
+            if (Input.GetKey(KeyCode.LeftShift))
+            {
+                var patternJson = MiscUtils.ReadStringFromFile(patternFilePath);
+                _pattern = JsonConvert.DeserializeObject<List<PossibleNeighbours>>(patternJson);
+            }
+            else
+            {
+                var patternJson = JsonConvert.SerializeObject(_pattern);
+                MiscUtils.WriteStringToFile(patternFilePath, patternJson);
+            }
+        }
     }
 
     private void Analize()

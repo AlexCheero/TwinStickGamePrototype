@@ -1,4 +1,5 @@
 
+using System.IO;
 using UnityEngine;
 
 public static class MiscUtils 
@@ -38,6 +39,21 @@ public static class MiscUtils
         PlayerPrefs.SetInt(Constants.SCORE_KEY, score);
     }
 
+    public static void WriteStringToFile(string path, string content)
+    {
+        using var writer = new StreamWriter(path, true);
+        writer.WriteLine(content);
+        writer.Close();
+    }
+
+    public static string ReadStringFromFile(string path)
+    {
+        using var reader = new StreamReader(path);
+        var content = reader.ReadToEnd();
+        reader.Close();
+        return content;
+    }
+    
 #if UNITY_EDITOR
     // Sphere with radius of 1
     private static readonly Vector4[] s_UnitSphere = MakeUnitSphere(16);
