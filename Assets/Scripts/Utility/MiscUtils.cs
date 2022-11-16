@@ -39,9 +39,9 @@ public static class MiscUtils
         PlayerPrefs.SetInt(Constants.SCORE_KEY, score);
     }
 
-    public static void WriteStringToFile(string path, string content)
+    public static void WriteStringToFile(string path, string content, bool append)
     {
-        using var writer = new StreamWriter(path, true);
+        using var writer = new StreamWriter(path, append);
         writer.WriteLine(content);
         writer.Close();
     }

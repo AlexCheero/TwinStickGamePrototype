@@ -39,18 +39,21 @@ namespace WFC
     }
 
     [RequireComponent(typeof(TilePalette))]
+    [RequireComponent(typeof(TileAnalyzer))]
     public class WFCGenerator : MonoBehaviour
     {
         public int Dim;
         public Cell[] Grid;
 
         private TilePalette _palette;
+        private TileAnalyzer _analyzer;
         
         private Stack<int> _history;
 
         void Awake()
         {
             _palette = GetComponent<TilePalette>();
+            _analyzer = GetComponent<TileAnalyzer>();
             Grid = new Cell[Dim * Dim];
             for (int i = 0; i < Grid.Length; i++)
                 Grid[i] = new Cell(_palette.Palette);
@@ -120,10 +123,16 @@ namespace WFC
                 //     }
                 // }
 
-                RemoveAvailableTiles(x + (y + 1) * Dim, tile.AvailableNeighbours(ETileDirection.Up));
-                RemoveAvailableTiles((x + 1) + y * Dim, tile.AvailableNeighbours(ETileDirection.Right));
-                RemoveAvailableTiles(x + (y - 1) * Dim, tile.AvailableNeighbours(ETileDirection.Down));
-                RemoveAvailableTiles((x - 1) + y * Dim, tile.AvailableNeighbours(ETileDirection.Left));
+                var tileNeighbours = _analyzer.Pattern[tile.TileId].Neighbours;
+                
+                if (tileNeighbours.ContainsKey(ETileSide.Up))
+                    RemoveAvailableTiles(x + (y + 1) * Dim, tileNeighbours[ETileSide.Up]);
+                if (tileNeighbours.ContainsKey(ETileSide.Right))
+                    RemoveAvailableTiles((x + 1) + y * Dim, tileNeighbours[ETileSide.Right]);
+                if (tileNeighbours.ContainsKey(ETileSide.Down))
+                    RemoveAvailableTiles(x + (y - 1) * Dim, tileNeighbours[ETileSide.Down]);
+                if (tileNeighbours.ContainsKey(ETileSide.Left))
+                    RemoveAvailableTiles((x - 1) + y * Dim, tileNeighbours[ETileSide.Left]);
             }
         }
         
@@ -145,8 +154,8 @@ namespace WFC
                 }
             }
         }
-        
-        void RemoveAvailableTiles(int idx, ETileType[] availableNeighbours)
+
+        void RemoveAvailableTiles(int idx, List<PossibleNeighbour> possibleNeighbours)
         {
             if (idx < 0 || idx >= Grid.Length)
                 return;
@@ -156,21 +165,11 @@ namespace WFC
                     
             for (int i = 0; i < possibleTilesInNeighbour.Count; i++)
             {
-                bool isFound = false;
-                foreach (var availableNeighbourType in availableNeighbours)
-                {
-                    if (possibleTilesInNeighbour[i].Type == availableNeighbourType)
-                    {
-                        isFound = true;
-                        break;
-                    }
-                }
-
-                if (!isFound)
-                {
-                    if (!deleteSet.Add(i))
-                        Debug.LogError("trying to add index for delete second time");
-                }
+                var isFound = possibleNeighbours.Any(possibleNeighbour => possibleTilesInNeighbour[i].TileId == possibleNeighbour.Id);
+                if (isFound)
+                    continue;
+                if (!deleteSet.Add(i))
+                    Debug.LogError("trying to add index for delete second time");
             }
 
             var deleteList = deleteSet.ToList();
@@ -243,32 +242,37 @@ namespace WFC
 
 
             Tile neighbourTile = null;
+            Dictionary<ETileSide, List<PossibleNeighbour>> tileNeighbours = null;
             if (upIdx > 0 && upIdx < Grid.Length)
             {
                 neighbourTile = Grid[upIdx].CollapsedTile;
+                tileNeighbours = _analyzer.Pattern[neighbourTile.TileId].Neighbours;
                 if (neighbourTile != null)
-                    RemoveAvailableTiles(idx, neighbourTile.AvailableNeighbours(ETileDirection.Down));
+                    RemoveAvailableTiles(idx, tileNeighbours[ETileSide.Down]);
             }
 
             if (rightIdx > 0 && rightIdx < Grid.Length)
             {
                 neighbourTile = Grid[rightIdx].CollapsedTile;
+                tileNeighbours = _analyzer.Pattern[neighbourTile.TileId].Neighbours;
                 if (neighbourTile != null)
-                    RemoveAvailableTiles(idx, neighbourTile.AvailableNeighbours(ETileDirection.Left));
+                    RemoveAvailableTiles(idx, tileNeighbours[ETileSide.Left]);
             }
             
             if (downIdx > 0 && downIdx < Grid.Length)
             {
                 neighbourTile = Grid[downIdx].CollapsedTile;
+                tileNeighbours = _analyzer.Pattern[neighbourTile.TileId].Neighbours;
                 if (neighbourTile != null)
-                    RemoveAvailableTiles(idx, neighbourTile.AvailableNeighbours(ETileDirection.Up));
+                    RemoveAvailableTiles(idx, tileNeighbours[ETileSide.Up]);
             }
             
             if (leftIdx > 0 && leftIdx < Grid.Length)
             {
                 neighbourTile = Grid[leftIdx].CollapsedTile;
+                tileNeighbours = _analyzer.Pattern[neighbourTile.TileId].Neighbours;
                 if (neighbourTile != null)
-                    RemoveAvailableTiles(idx, neighbourTile.AvailableNeighbours(ETileDirection.Right));
+                    RemoveAvailableTiles(idx, tileNeighbours[ETileSide.Right]);
             }
         }
     }

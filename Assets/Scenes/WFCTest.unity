@@ -361,7 +361,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7f1f557fb58b6684ca04865681605f95, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Dim: 3
+  Dim: 10
 --- !u!4 &1563116671
 Transform:
   m_ObjectHideFlags: 0
@@ -420,4 +420,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a2024d38387def34f9fc45c749d6972f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _isEightDirectionAnalize: 1
+  _isEightDirectionAnalize: 0

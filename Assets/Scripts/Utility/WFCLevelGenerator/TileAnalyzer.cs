@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Unity.Plastic.Newtonsoft.Json;
 using UnityEngine;
 using WFC;
@@ -22,25 +23,9 @@ public class PossibleNeighbours
 {
     public Dictionary<ETileSide, List<PossibleNeighbour>> Neighbours;
 
-    public PossibleNeighbours(bool b)
-    {
-        Neighbours = new Dictionary<ETileSide, List<PossibleNeighbour>>();
-        Neighbours.Add(ETileSide.Center, new List<PossibleNeighbour>() { new PossibleNeighbour(666) });
-    }
-    
     public PossibleNeighbours()
     {
-        Neighbours = new Dictionary<ETileSide, List<PossibleNeighbour>>()
-        {
-            { ETileSide.DownLeft, new List<PossibleNeighbour>() },
-            { ETileSide.Down, new List<PossibleNeighbour>() },
-            { ETileSide.DownRight, new List<PossibleNeighbour>() },
-            { ETileSide.Left, new List<PossibleNeighbour>() },
-            { ETileSide.Right, new List<PossibleNeighbour>() },
-            { ETileSide.UpLeft, new List<PossibleNeighbour>() },
-            { ETileSide.Up, new List<PossibleNeighbour>() },
-            { ETileSide.UpRight, new List<PossibleNeighbour>() }
-        };
+        Neighbours = new Dictionary<ETileSide, List<PossibleNeighbour>>();
     }
 
     public void Add(ETileSide side, Tile tile)
@@ -60,17 +45,16 @@ public class PossibleNeighbours
         
         neighboursOnSide.Add(new PossibleNeighbour(tile.TileId));
 
+        var overallCount = neighboursOnSide.Sum(neighbour => neighbour.Count);
         for (var i = 0; i < neighboursOnSide.Count; i++)
         {
             var neighbour = neighboursOnSide[i];
-            neighbour.Chance = neighbour.Count / neighboursOnSide.Count;
+            neighbour.Chance = (float)neighbour.Count / overallCount;
             neighboursOnSide[i] = neighbour;
         }
         
 #if DEBUG
-        var chanceOverall = 0.0f;
-        foreach (var neighbour in neighboursOnSide)
-            chanceOverall += neighbour.Chance;
+        var chanceOverall = neighboursOnSide.Sum(neighbour => neighbour.Chance);
         if (chanceOverall > 1)
             throw new Exception("overall chance of tile neighbours is bigger than 1");
 #endif
@@ -79,15 +63,23 @@ public class PossibleNeighbours
 
 [RequireComponent(typeof(TilePlacer))]
 [RequireComponent(typeof(TilePalette))]
-public class TileAnalizer : MonoBehaviour
+public class TileAnalyzer : MonoBehaviour
 {
     [SerializeField]
-    private bool _isEightDirectionAnalize;
+    private bool _isEightDirectionAnalyze;
     
     private TilePlacer _placer;
     private TilePalette _palette;
     
-    private List<PossibleNeighbours> _pattern;
+    [NonSerialized]
+    public List<PossibleNeighbours> Pattern;
+
+    private string PatternFilePath;
+    
+    void Awake()
+    {
+        PatternFilePath = Application.persistentDataPath + "/pattern";
+    }
     
     void Start()
     {
@@ -95,39 +87,34 @@ public class TileAnalizer : MonoBehaviour
         _palette = GetComponent<TilePalette>();
 
         //_pattern init should be in Start when all duplicates are already removed from palette
-        _pattern = new List<PossibleNeighbours>(_palette.Palette.Count);
+        Pattern = new List<PossibleNeighbours>(_palette.Palette.Count);
         for (int i = 0; i < _palette.Palette.Count; i++)
-            _pattern.Add(new PossibleNeighbours());
+            Pattern.Add(new PossibleNeighbours());
     }
 
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.A))
-            Analize();
-        if (Input.GetKeyDown(KeyCode.J))
         {
-            var patternFilePath = Application.persistentDataPath + "/pattern";
-            if (Input.GetKey(KeyCode.LeftShift))
-            {
-                var patternJson = MiscUtils.ReadStringFromFile(patternFilePath);
-                _pattern = JsonConvert.DeserializeObject<List<PossibleNeighbours>>(patternJson);
-            }
-            else
-            {
-                var patternJson = JsonConvert.SerializeObject(_pattern);
-                MiscUtils.WriteStringToFile(patternFilePath, patternJson);
-            }
+            Analyze();
+            var patternJson = JsonConvert.SerializeObject(Pattern);
+            MiscUtils.WriteStringToFile(PatternFilePath, patternJson, false);
+        }
+        if (Input.GetKeyDown(KeyCode.L))
+        {
+            var patternJson = MiscUtils.ReadStringFromFile(PatternFilePath);
+            Pattern = JsonConvert.DeserializeObject<List<PossibleNeighbours>>(patternJson);
         }
     }
 
-    private void Analize()
+    private void Analyze()
     {
         foreach (var tile in _placer.PlacedTiles.Values)
         {
             var pos = tile.transform.position;
             for (int i = 0; i < 9; i++)
             {
-                if (!_isEightDirectionAnalize && i % 2 == 0)
+                if (!_isEightDirectionAnalyze && i % 2 == 0)
                     continue;
                 var side = (ETileSide)i;
                 if (side == ETileSide.Center)
@@ -143,7 +130,7 @@ public class TileAnalizer : MonoBehaviour
                     continue;
                 var neighbour = _placer.PlacedTiles[neighbourPos];
                 
-                _pattern[tile.TileId].Add(side, neighbour);
+                Pattern[tile.TileId].Add(side, neighbour);
             }
         }
     }
