@@ -4,6 +4,19 @@ using UnityEngine;
 
 namespace WFC
 {
+    public enum ETileSide
+    {
+        DownLeft,
+        Down,
+        DownRight,
+        Left,
+        Center,
+        Right,
+        UpLeft,
+        Up,
+        UpRight
+    }
+    
     public enum ETileDirection
     {
         Up,
@@ -26,6 +39,8 @@ namespace WFC
         public float Chance;
         //public Dictionary<ETileDirection, ETileType[]> AvailableNeighbours;
         public ETileType Type;
+
+        public int TileId { get; set; }
 
         public ETileType[] AvailableNeighbours(ETileDirection direction)
         {

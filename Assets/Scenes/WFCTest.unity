@@ -341,6 +341,7 @@ GameObject:
   - component: {fileID: 1563116673}
   - component: {fileID: 1563116670}
   - component: {fileID: 1563116672}
+  - component: {fileID: 1563116674}
   m_Layer: 0
   m_Name: WFCGenerator
   m_TagString: Untagged
@@ -388,9 +389,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 072a1d21ba17ee241b14bdb94e5542ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _markerSize: 0.25
   _snapSize: 1
-  _cam: {fileID: 1470093765}
 --- !u!114 &1563116673
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -409,3 +408,16 @@ MonoBehaviour:
   - {fileID: 1139377896148661965, guid: 02be08782f8584a48b2e11c7b1ae11c4, type: 3}
   - {fileID: 3372576654475863303, guid: b1f5e90e3cee3ac408a59b2ae43e7def, type: 3}
   - {fileID: 1657689119319434998, guid: 7e4588934c6913f4fb26ccf5b43fb468, type: 3}
+--- !u!114 &1563116674
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1563116669}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a2024d38387def34f9fc45c749d6972f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _isEightDirectionAnalize: 1
