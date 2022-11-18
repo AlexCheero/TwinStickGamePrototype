@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using WFC;
@@ -99,44 +98,9 @@ public class TilePlacer : MonoBehaviour
         
         var prototype = _palette.Palette[_currentMarkerIdx];
         var tile = Instantiate(prototype, position, prototype.transform.rotation);
-        //StartCoroutine(InstNeigbours(_palette.Palette[_currentMarkerIdx + 1], position));
         PlacedTiles[position] = tile;
     }
 
-    IEnumerator InstNeigbours(Tile prototype, Vector3 position)
-    {
-        for (int j = -1; j < 2; j++)
-        {
-            continue;
-            for (int i = -1; i < 2; i++)
-            {
-                if (i == 0 && j == 0)
-                    continue;
-                
-                yield return new WaitForSeconds(0.5f);
-                var pos = position;
-                pos.x += i * _snapSize;
-                pos.z += j * _snapSize;
-                Instantiate(prototype, pos, prototype.transform.rotation);
-            }
-        }
-        
-        for (int i = 0; i < 9; i++)
-        {
-            var xDelta = i % 3 - 1;
-            var yDelta = i / 3 - 1;
-            
-            if (xDelta == 0 && yDelta == 0)
-                continue;
-                
-            yield return new WaitForSeconds(0.5f);
-            var pos = position;
-            pos.x += xDelta * _snapSize;
-            pos.z += yDelta * _snapSize;
-            Instantiate(prototype, pos, prototype.transform.rotation);
-        }
-    }
-    
     private void DeleteTile(Vector3 position)
     {
         if (!PlacedTiles.ContainsKey(position))

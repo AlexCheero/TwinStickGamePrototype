@@ -31,7 +31,7 @@ namespace WFC
                 AvailableTiles.Add(new TileWithChance(tile, baseChance));
         }
 
-        public void Collapse(Vector3 position)
+        public bool TryCollapse(Vector3 position)
         {
             var chance = 0.0f;
             Tile selectedTile = null;
@@ -46,12 +46,15 @@ namespace WFC
                 }
             }
 
-            if (selectedTile != null)
-            {
-                //CollapsedTile = GameObject.Instantiate(selectedTile, position, Quaternion.identity);
-                CollapsedTile = GameObject.Instantiate(selectedTile);
-                CollapsedTile.transform.position = position;
-            }
+            if (selectedTile == null)
+                return false;
+            
+            //CollapsedTile = GameObject.Instantiate(selectedTile, position, Quaternion.identity);
+            CollapsedTile = GameObject.Instantiate(selectedTile);
+            CollapsedTile.transform.position = position;
+                
+            return true;
+
         }
 
         public int Entropy => AvailableTiles.Count;
@@ -118,17 +121,32 @@ namespace WFC
             }
         }
 
+        private int PosToIdx(Vector3 position)
+        {
+            var halfDim = Dim / 2;
+            var x = position.x + halfDim;
+            var y = position.z + halfDim;
+            return (int)y * Dim + (int)x;
+        }
+
+        private Vector3 IdxToPos(int idx)
+        {
+            var halfDim = Dim / 2;
+            var x = idx % Dim;
+            var y = idx / Dim;
+            return new Vector3(x - halfDim, 0, y - halfDim);
+        }
+        
         public void GenerateStep(int idx)
         {
             var halfDim = Dim / 2;
             var x = idx % Dim;
             var y = idx / Dim;
             var position = new Vector3(x - halfDim, 0, y - halfDim);
-            Grid[idx].Collapse(position);
-            _history.Push(idx);
-            var tile = Grid[idx].CollapsedTile;
-            if (tile != null)
+            if (Grid[idx].TryCollapse(position))
             {
+                var collapsedTile = Grid[idx].CollapsedTile;
+                _history.Push(idx);
                 // for (int j = y - 1; j < y + 2; j++)
                 // {
                 //     for (int i = x - 1; i < x + 2; i++)
@@ -137,7 +155,7 @@ namespace WFC
                 //     }
                 // }
 
-                var tileNeighbours = _analyzer.Pattern[tile.TileId].Neighbours;
+                var tileNeighbours = _analyzer.Pattern[collapsedTile.TileId].Neighbours;
                 
                 if (tileNeighbours.ContainsKey(ETileSide.Up))
                     RemoveAvailableTiles(x + (y + 1) * Dim, tileNeighbours[ETileSide.Up]);
