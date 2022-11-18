@@ -213,7 +213,7 @@ namespace WFC
 #if DEBUG
             overallChance = availableTilesInNeighbour.Sum(tileWithChance => tileWithChance.Chance);
             const float chanceTolerance = 0.0001f;
-            if (Mathf.Abs(overallChance - 1) > chanceTolerance)
+            if (availableTilesInNeighbour.Count > 0 && Mathf.Abs(overallChance - 1) > chanceTolerance)
                 Debug.LogError("overall chance ("+ overallChance + ") is not equal to 1 after normalization");
 #endif
 
