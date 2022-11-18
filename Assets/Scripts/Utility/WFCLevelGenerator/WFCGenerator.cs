@@ -38,7 +38,7 @@ namespace WFC
             foreach (var tileChance in AvailableTiles)
             {
                 var shouldChooseTile = tileChance.Chance > chance;
-                shouldChooseTile |= tileChance.Chance == chance && Random.value > 0.5f;
+                shouldChooseTile |= Mathf.Abs(tileChance.Chance - chance) < float.Epsilon && Random.value > 0.5f;
                 if (shouldChooseTile)
                 {
                     chance = tileChance.Chance;
