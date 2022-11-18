@@ -39,17 +39,15 @@ namespace WFC
             {
                 var shouldChooseTile = tileChance.Chance > chance;
                 shouldChooseTile |= Mathf.Abs(tileChance.Chance - chance) < float.Epsilon && Random.value > 0.5f;
-                if (shouldChooseTile)
-                {
-                    chance = tileChance.Chance;
-                    selectedTile = tileChance.Tile;
-                }
+                if (!shouldChooseTile)
+                    continue;
+                chance = tileChance.Chance;
+                selectedTile = tileChance.Tile;
             }
 
             if (selectedTile == null)
                 return false;
             
-            //CollapsedTile = GameObject.Instantiate(selectedTile, position, Quaternion.identity);
             CollapsedTile = GameObject.Instantiate(selectedTile);
             CollapsedTile.transform.position = position;
                 

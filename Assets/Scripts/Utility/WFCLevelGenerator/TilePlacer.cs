@@ -74,9 +74,16 @@ public class TilePlacer : MonoBehaviour
         }
         if (Input.GetMouseButtonDown(1))
         {
-            CurrentMarker.gameObject.SetActive(false);
-            _currentMarkerIdx = (_currentMarkerIdx + 1) % _markers.Count;
-            CurrentMarker.gameObject.SetActive(true);
+            if (Input.GetKey(KeyCode.LeftShift))
+            {
+                CurrentMarker.gameObject.transform.Rotate(Vector3.up, 90.0f);
+            }
+            else
+            {
+                CurrentMarker.gameObject.SetActive(false);
+                _currentMarkerIdx = (_currentMarkerIdx + 1) % _markers.Count;
+                CurrentMarker.gameObject.SetActive(true);
+            }
         }
     }
 
