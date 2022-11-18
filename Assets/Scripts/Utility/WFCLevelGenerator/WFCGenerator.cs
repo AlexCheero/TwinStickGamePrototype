@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -7,23 +8,41 @@ namespace WFC
 {
     public class Cell
     {
-        public List<Tile> AvailableTiles;
+        public struct TileWithChance
+        {
+            public Tile Tile;
+            public float Chance;
+
+            public TileWithChance(Tile tile, float chance)
+            {
+                Tile = tile;
+                Chance = chance;
+            }
+        }
+        //tuple for tile and its chance
+        public List<TileWithChance> AvailableTiles;
         public Tile CollapsedTile;
 
-        public Cell(List<Tile> tiles) => AvailableTiles = tiles.ToList();
+        public Cell(List<Tile> tiles)
+        {
+            var baseChance = 1.0f / tiles.Count;
+            AvailableTiles = new List<TileWithChance>();
+            foreach (var tile in tiles)
+                AvailableTiles.Add(new TileWithChance(tile, baseChance));
+        }
 
         public void Collapse(Vector3 position)
         {
             var chance = 0.0f;
             Tile selectedTile = null;
-            foreach (var tile in AvailableTiles)
+            foreach (var tileChance in AvailableTiles)
             {
-                var shouldChooseTile = tile.Chance > chance;
-                shouldChooseTile |= tile.Chance == chance && Random.value > 0.5f;
+                var shouldChooseTile = tileChance.Chance > chance;
+                shouldChooseTile |= tileChance.Chance == chance && Random.value > 0.5f;
                 if (shouldChooseTile)
                 {
-                    chance = tile.Chance;
-                    selectedTile = tile;
+                    chance = tileChance.Chance;
+                    selectedTile = tileChance.Tile;
                 }
             }
 
@@ -83,11 +102,6 @@ namespace WFC
             {
                 Clear();
                 Generate();
-            }
-            
-            if (Input.GetKeyDown(KeyCode.U))
-            {
-                Undo();
             }
         }
 
@@ -160,22 +174,55 @@ namespace WFC
             if (idx < 0 || idx >= Grid.Length)
                 return;
             
+            //TODO: cache this set so it doesn't have to allocate every method call
             var deleteSet = new HashSet<int>();
-            var possibleTilesInNeighbour = Grid[idx].AvailableTiles;
+            var availableTilesInNeighbour = Grid[idx].AvailableTiles;
                     
-            for (int i = 0; i < possibleTilesInNeighbour.Count; i++)
+            for (int i = 0; i < availableTilesInNeighbour.Count; i++)
             {
-                var isFound = possibleNeighbours.Any(possibleNeighbour => possibleTilesInNeighbour[i].TileId == possibleNeighbour.Id);
-                if (isFound)
-                    continue;
-                if (!deleteSet.Add(i))
+                var isFound = false;
+                foreach (var possibleNeighbour in possibleNeighbours)
+                {
+                    if (availableTilesInNeighbour[i].Tile.TileId != possibleNeighbour.Id)
+                        continue;
+                    isFound = true;
+                    var newChance = Mathf.Min(availableTilesInNeighbour[i].Chance, possibleNeighbour.Chance);
+                    availableTilesInNeighbour[i] =
+                        new Cell.TileWithChance(availableTilesInNeighbour[i].Tile, newChance);
+                    break;
+                }
+
+                if (!isFound && !deleteSet.Add(i))
                     Debug.LogError("trying to add index for delete second time");
             }
 
+#region NormalizingTileChance
+
+            var overallChance = availableTilesInNeighbour.Sum(tileWithChance => tileWithChance.Chance);
+#if DEBUG
+            if (overallChance > 1)
+                Debug.LogError("chance is bigger than 1, after removing available tiles");
+#endif
+            for (int i = 0; i < availableTilesInNeighbour.Count; i++)
+            {
+                var normalizedChance = availableTilesInNeighbour[i].Chance / overallChance;
+                availableTilesInNeighbour[i] =
+                    new Cell.TileWithChance(availableTilesInNeighbour[i].Tile, normalizedChance);
+            }
+            
+#if DEBUG
+            overallChance = availableTilesInNeighbour.Sum(tileWithChance => tileWithChance.Chance);
+            const float chanceTolerance = 0.0001f;
+            if (Mathf.Abs(overallChance - 1) > chanceTolerance)
+                Debug.LogError("overall chance ("+ overallChance + ") is not equal to 1 after normalization");
+#endif
+
+#endregion
+            
             var deleteList = deleteSet.ToList();
             deleteList.Sort((a, b) => b - a);
             foreach (var i in deleteList)
-                possibleTilesInNeighbour.RemoveAt(i);
+                availableTilesInNeighbour.RemoveAt(i);
         }
 
         private int GetLowestEntropyCellIdx()
@@ -196,84 +243,6 @@ namespace WFC
             }
 
             return lowestEntropyTileIdx;
-        }
-
-        private void Undo()
-        {
-            if (_history.Count == 0)
-                return;
-            
-            var idx = _history.Pop();
-            var tile = Grid[idx].CollapsedTile;
-            if (tile != null)
-                Destroy(tile.gameObject);
-            Grid[idx] = new Cell(_palette.Palette);
-
-            var x = idx % Dim;
-            var y = idx / Dim;
-            
-            var upIdx = x + (y - 1) * Dim;
-            if (upIdx > 0 && upIdx < Grid.Length)
-                RestoreAvailableTiles(upIdx);
-
-            var rightIdx = (x + 1) + y * Dim;
-            if (rightIdx > 0 && rightIdx < Grid.Length)
-                RestoreAvailableTiles(rightIdx);
-            
-            var downIdx = x + (y + 1) * Dim;
-            if (downIdx > 0 && downIdx < Grid.Length)
-                RestoreAvailableTiles(downIdx);//down
-            
-            var leftIdx = (x - 1) + y * Dim;
-            if (leftIdx > 0 && leftIdx < Grid.Length)
-                RestoreAvailableTiles(leftIdx);//left
-        }
-
-        private void RestoreAvailableTiles(int idx)
-        {
-            var x = idx % Dim;
-            var y = idx / Dim;
-            var upIdx = x + (y - 1) * Dim;
-            var rightIdx = (x + 1) + y * Dim;
-            var downIdx = x + (y + 1) * Dim;
-            var leftIdx = (x - 1) + y * Dim;
-
-            Grid[idx].AvailableTiles = _palette.Palette;
-
-
-            Tile neighbourTile = null;
-            Dictionary<ETileSide, List<PossibleNeighbour>> tileNeighbours = null;
-            if (upIdx > 0 && upIdx < Grid.Length)
-            {
-                neighbourTile = Grid[upIdx].CollapsedTile;
-                tileNeighbours = _analyzer.Pattern[neighbourTile.TileId].Neighbours;
-                if (neighbourTile != null)
-                    RemoveAvailableTiles(idx, tileNeighbours[ETileSide.Down]);
-            }
-
-            if (rightIdx > 0 && rightIdx < Grid.Length)
-            {
-                neighbourTile = Grid[rightIdx].CollapsedTile;
-                tileNeighbours = _analyzer.Pattern[neighbourTile.TileId].Neighbours;
-                if (neighbourTile != null)
-                    RemoveAvailableTiles(idx, tileNeighbours[ETileSide.Left]);
-            }
-            
-            if (downIdx > 0 && downIdx < Grid.Length)
-            {
-                neighbourTile = Grid[downIdx].CollapsedTile;
-                tileNeighbours = _analyzer.Pattern[neighbourTile.TileId].Neighbours;
-                if (neighbourTile != null)
-                    RemoveAvailableTiles(idx, tileNeighbours[ETileSide.Up]);
-            }
-            
-            if (leftIdx > 0 && leftIdx < Grid.Length)
-            {
-                neighbourTile = Grid[leftIdx].CollapsedTile;
-                tileNeighbours = _analyzer.Pattern[neighbourTile.TileId].Neighbours;
-                if (neighbourTile != null)
-                    RemoveAvailableTiles(idx, tileNeighbours[ETileSide.Right]);
-            }
         }
     }
 }
