@@ -403,11 +403,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Palette:
+  - {fileID: 104101183304243913, guid: d2f44e3bea30f8643a54402c78bc5ff7, type: 3}
+  - {fileID: 6535702921552860779, guid: 31ab905e2e10aad42aa76f693f36efb1, type: 3}
   - {fileID: 2786480192427450132, guid: 87ee2e16e4845a347b9858c22955b5ab, type: 3}
-  - {fileID: 4361338401555375124, guid: efae0c4a7134c1f45a1e689ba1defc16, type: 3}
-  - {fileID: 1139377896148661965, guid: 02be08782f8584a48b2e11c7b1ae11c4, type: 3}
-  - {fileID: 3372576654475863303, guid: b1f5e90e3cee3ac408a59b2ae43e7def, type: 3}
-  - {fileID: 1657689119319434998, guid: 7e4588934c6913f4fb26ccf5b43fb468, type: 3}
 --- !u!114 &1563116674
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -420,4 +418,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a2024d38387def34f9fc45c749d6972f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _isEightDirectionAnalize: 0
+  _isEightDirectionAnalyze: 0

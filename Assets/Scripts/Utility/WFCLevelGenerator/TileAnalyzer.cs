@@ -7,13 +7,13 @@ using WFC;
 
 public struct PossibleNeighbour
 {
-    public int Id;
+    public PatternKey PKey;
     public int Count;
     public float Chance;
 
-    public PossibleNeighbour(int id)
+    public PossibleNeighbour(PatternKey pKey)
     {
-        Id = id;
+        PKey = pKey;
         Count = 1;
         Chance = 0;
     }
@@ -36,14 +36,15 @@ public class PossibleNeighbours
         for (var i = 0; i < neighboursOnSide.Count; i++)
         {
             var neighbour = neighboursOnSide[i];
-            if (neighbour.Id != tile.TileId)
+            if (neighbour.PKey.Id != tile.TileId)
                 continue;
             neighbour.Count++;
             neighboursOnSide[i] = neighbour;
             return;
         }
-        
-        neighboursOnSide.Add(new PossibleNeighbour(tile.TileId));
+
+        var key = new PatternKey { Id = tile.TileId, YRotation = tile.transform.eulerAngles.y };
+        neighboursOnSide.Add(new PossibleNeighbour(key));
 
         var overallCount = neighboursOnSide.Sum(neighbour => neighbour.Count);
         for (var i = 0; i < neighboursOnSide.Count; i++)
@@ -85,13 +86,29 @@ public class TileAnalyzer : MonoBehaviour
     private TilePalette _palette;
     
     [NonSerialized]
-    public Dictionary<int, PossibleNeighbours> Pattern;
+    public Dictionary<PatternKey, PossibleNeighbours> Pattern;
+
+    private List<Tuple<PatternKey, PossibleNeighbours>> _pattern;
+
+    private void PatternToList()
+    {
+        _pattern = new List<Tuple<PatternKey, PossibleNeighbours>>(Pattern.Count);
+        foreach (var pair in Pattern)
+            _pattern.Add(Tuple.Create(pair.Key, pair.Value));
+    }
+
+    private void ListToPattern()
+    {
+        Pattern = new Dictionary<PatternKey, PossibleNeighbours>(_pattern.Count);
+        foreach (var tuple in _pattern)
+            Pattern[tuple.Item1] = tuple.Item2;
+    }
 
     private string PatternFilePath;
     
     void Awake()
     {
-        PatternFilePath = Application.persistentDataPath + "/pattern";
+        PatternFilePath = Application.persistentDataPath + "/pattern2";
     }
     
     void Start()
@@ -100,7 +117,7 @@ public class TileAnalyzer : MonoBehaviour
         _palette = GetComponent<TilePalette>();
 
         //_pattern init should be in Start when all duplicates are already removed from palette
-        Pattern = new Dictionary<int, PossibleNeighbours>(_palette.Palette.Count);
+        Pattern = new Dictionary<PatternKey, PossibleNeighbours>(_palette.Palette.Count);
     }
 
     void Update()
@@ -108,13 +125,15 @@ public class TileAnalyzer : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.A))
         {
             Analyze();
-            var patternJson = JsonConvert.SerializeObject(Pattern);
+            PatternToList();
+            var patternJson = JsonConvert.SerializeObject(_pattern);
             MiscUtils.WriteStringToFile(PatternFilePath, patternJson, false);
         }
         if (Input.GetKeyDown(KeyCode.L))
         {
             var patternJson = MiscUtils.ReadStringFromFile(PatternFilePath);
-            Pattern = JsonConvert.DeserializeObject<Dictionary<int, PossibleNeighbours>>(patternJson);
+            _pattern = JsonConvert.DeserializeObject<List<Tuple<PatternKey, PossibleNeighbours>>>(patternJson);
+            ListToPattern();
         }
     }
 
@@ -141,9 +160,10 @@ public class TileAnalyzer : MonoBehaviour
                     continue;
                 var neighbour = _placer.PlacedTiles[neighbourPos];
 
-                if (!Pattern.ContainsKey(tile.TileId))
-                    Pattern.Add(tile.TileId, new PossibleNeighbours());
-                Pattern[tile.TileId].Add(side, neighbour);
+                var key = new PatternKey { Id = tile.TileId, YRotation = tile.transform.eulerAngles.y };
+                if (!Pattern.ContainsKey(key))
+                    Pattern.Add(key, new PossibleNeighbours());
+                Pattern[key].Add(side, neighbour);
             }
         }
     }

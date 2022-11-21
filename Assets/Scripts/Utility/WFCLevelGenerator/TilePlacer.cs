@@ -70,7 +70,7 @@ public class TilePlacer : MonoBehaviour
             if (Input.GetKey(KeyCode.LeftShift))
                 DeleteTile(markerPosition);
             else
-                PlaceTile(markerPosition);
+                PlaceTile(_currentMarkerIdx, markerPosition, CurrentMarker.gameObject.transform.eulerAngles.y);
         }
         if (Input.GetMouseButtonDown(1))
         {
@@ -98,13 +98,14 @@ public class TilePlacer : MonoBehaviour
         return snapped * sign;
     }
 
-    private void PlaceTile(Vector3 position)
+    public void PlaceTile(int idx, Vector3 position, float yRotation)
     {
         if (PlacedTiles.ContainsKey(position))
             DeleteTile(position);
         
-        var prototype = _palette.Palette[_currentMarkerIdx];
+        var prototype = _palette.Palette[idx];
         var tile = Instantiate(prototype, position, prototype.transform.rotation);
+        tile.transform.eulerAngles = new Vector3(0, yRotation, 0);
         PlacedTiles[position] = tile;
     }
 
@@ -118,5 +119,12 @@ public class TilePlacer : MonoBehaviour
         
         Destroy(PlacedTiles[position].gameObject);
         PlacedTiles.Remove(position);
+    }
+    
+    public void Clear()
+    {
+        foreach (var tilePos in PlacedTiles.Keys)
+            Destroy(PlacedTiles[tilePos].gameObject);
+        PlacedTiles.Clear();
     }
 }

@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -10,20 +9,21 @@ namespace WFC
     {
         public struct TileWithChance
         {
-            public Tile Tile;
+            public PatternKey PKey;
             public float Chance;
 
-            public TileWithChance(Tile tile, float chance)
+            public TileWithChance(PatternKey pKey, float chance)
             {
-                Tile = tile;
+                PKey = pKey;
                 Chance = chance;
             }
         }
         //tuple for tile and its chance
         public List<TileWithChance> AvailableTiles;
-        public Tile CollapsedTile;
+        public PatternKey PKey { get; private set; }
+        public bool IsCollapsed { get; private set; }
 
-        public Cell(List<Tile> tiles)
+        public Cell(ICollection<PatternKey> tiles)
         {
             var baseChance = 1.0f / tiles.Count;
             AvailableTiles = new List<TileWithChance>();
@@ -31,10 +31,10 @@ namespace WFC
                 AvailableTiles.Add(new TileWithChance(tile, baseChance));
         }
 
-        public bool TryCollapse(Vector3 position)
+        public void TryCollapse(Vector3 position)
         {
             var chance = 0.0f;
-            Tile selectedTile = null;
+            TileWithChance selectedTileChance = default;
             foreach (var tileChance in AvailableTiles)
             {
                 var shouldChooseTile = tileChance.Chance > chance;
@@ -42,97 +42,82 @@ namespace WFC
                 if (!shouldChooseTile)
                     continue;
                 chance = tileChance.Chance;
-                selectedTile = tileChance.Tile;
+                selectedTileChance = tileChance;
             }
 
-            if (selectedTile == null)
-                return false;
-            
-            CollapsedTile = GameObject.Instantiate(selectedTile);
-            CollapsedTile.transform.position = position;
-                
-            return true;
+            if (chance == 0)
+                return;
 
+            PKey = selectedTileChance.PKey;
+            IsCollapsed = true;
         }
 
         public int Entropy => AvailableTiles.Count;
     }
 
-    [RequireComponent(typeof(TilePalette))]
     [RequireComponent(typeof(TileAnalyzer))]
+    [RequireComponent(typeof(TilePlacer))]
     public class WFCGenerator : MonoBehaviour
     {
         public int Dim;
         public Cell[] Grid;
 
-        private TilePalette _palette;
         private TileAnalyzer _analyzer;
+        private TilePlacer _placer;
         
-        private Stack<int> _history;
-
         void Awake()
         {
-            _palette = GetComponent<TilePalette>();
             _analyzer = GetComponent<TileAnalyzer>();
-            Grid = new Cell[Dim * Dim];
-            for (int i = 0; i < Grid.Length; i++)
-                Grid[i] = new Cell(_palette.Palette);
-
-            _history = new Stack<int>(Grid.Length);
+            _placer = GetComponent<TilePlacer>();
         }
 
         void Update()
         {
             if (Input.GetKeyDown(KeyCode.S))
             {
+                if (Grid == null)
+                    InitGrid();
+                
                 var idx = GetLowestEntropyCellIdx();
                 Debug.Log("idx: " + idx);
                 if (idx < 0)
                 {
-                    Clear();
+                    _placer.Clear();
+                    ClearGrid();
                     idx = GetLowestEntropyCellIdx();
                 }
 
                 GenerateStep(idx);
             }
-            
+
             if (Input.GetKeyDown(KeyCode.C))
-                Clear();
+            {
+                _placer.Clear();
+                ClearGrid();
+            }
 
             if (Input.GetKeyDown(KeyCode.G))
             {
-                Clear();
+                if (Grid == null)
+                    InitGrid();
+                
+                _placer.Clear();
+                ClearGrid();
                 Generate();
             }
         }
 
-        private void Clear()
+        private void ClearGrid()
         {
-            _history.Clear();
-            
-            for (var i = 0; i < Grid.Length; i++)
-            {
-                var tile = Grid[i].CollapsedTile;
-                if (tile != null)
-                    Destroy(tile.gameObject);
-                Grid[i] = new Cell(_palette.Palette);
-            }
+            for (int i = 0; i < Grid.Length; i++)
+                Grid[i] = new Cell(_analyzer.Pattern.Keys);
         }
 
-        private int PosToIdx(Vector3 position)
+        private void InitGrid()
         {
-            var halfDim = Dim / 2;
-            var x = position.x + halfDim;
-            var y = position.z + halfDim;
-            return (int)y * Dim + (int)x;
-        }
-
-        private Vector3 IdxToPos(int idx)
-        {
-            var halfDim = Dim / 2;
-            var x = idx % Dim;
-            var y = idx / Dim;
-            return new Vector3(x - halfDim, 0, y - halfDim);
+            Grid = new Cell[Dim * Dim];
+            for (int i = 0; i < Grid.Length; i++)
+                Grid[i] = new Cell(_analyzer.Pattern.Keys);
         }
         
         public void GenerateStep(int idx)
@@ -141,10 +126,11 @@ namespace WFC
             var x = idx % Dim;
             var y = idx / Dim;
             var position = new Vector3(x - halfDim, 0, y - halfDim);
-            if (Grid[idx].TryCollapse(position))
+            Grid[idx].TryCollapse(position);
+            if (Grid[idx].IsCollapsed)
             {
-                var collapsedTile = Grid[idx].CollapsedTile;
-                _history.Push(idx);
+                var key = Grid[idx].PKey;
+                _placer.PlaceTile(key.Id, position, key.YRotation);
                 // for (int j = y - 1; j < y + 2; j++)
                 // {
                 //     for (int i = x - 1; i < x + 2; i++)
@@ -153,7 +139,7 @@ namespace WFC
                 //     }
                 // }
 
-                var tileNeighbours = _analyzer.Pattern[collapsedTile.TileId].Neighbours;
+                var tileNeighbours = _analyzer.Pattern[key].Neighbours;
                 
                 if (tileNeighbours.ContainsKey(ETileSide.Up))
                     RemoveAvailableTiles(x + (y + 1) * Dim, tileNeighbours[ETileSide.Up]);
@@ -199,12 +185,12 @@ namespace WFC
                 var isFound = false;
                 foreach (var possibleNeighbour in possibleNeighbours)
                 {
-                    if (availableTilesInNeighbour[i].Tile.TileId != possibleNeighbour.Id)
+                    if (availableTilesInNeighbour[i].PKey.Id != possibleNeighbour.PKey.Id)
                         continue;
                     isFound = true;
                     var newChance = Mathf.Min(availableTilesInNeighbour[i].Chance, possibleNeighbour.Chance);
                     availableTilesInNeighbour[i] =
-                        new Cell.TileWithChance(availableTilesInNeighbour[i].Tile, newChance);
+                        new Cell.TileWithChance(availableTilesInNeighbour[i].PKey, newChance);
                     break;
                 }
 
@@ -223,7 +209,7 @@ namespace WFC
             {
                 var normalizedChance = availableTilesInNeighbour[i].Chance / overallChance;
                 availableTilesInNeighbour[i] =
-                    new Cell.TileWithChance(availableTilesInNeighbour[i].Tile, normalizedChance);
+                    new Cell.TileWithChance(availableTilesInNeighbour[i].PKey, normalizedChance);
             }
             
 #if DEBUG
@@ -249,7 +235,7 @@ namespace WFC
             {
                 bool suitableEntropy = Grid[i].Entropy < lowestEntropy;
                 //suitableEntropy |= Grid[i].Entropy == lowestEntropy && Random.value > 0.5f;
-                if (Grid[i].CollapsedTile == null &&
+                if (!Grid[i].IsCollapsed &&
                     Grid[i].AvailableTiles.Count > 0 &&
                     suitableEntropy)
                 {
