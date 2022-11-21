@@ -72,7 +72,7 @@ public class TileAnalyzer : MonoBehaviour
     private TilePalette _palette;
     
     [NonSerialized]
-    public List<PossibleNeighbours> Pattern;
+    public Dictionary<int, PossibleNeighbours> Pattern;
 
     private string PatternFilePath;
     
@@ -87,9 +87,9 @@ public class TileAnalyzer : MonoBehaviour
         _palette = GetComponent<TilePalette>();
 
         //_pattern init should be in Start when all duplicates are already removed from palette
-        Pattern = new List<PossibleNeighbours>(_palette.Palette.Count);
+        Pattern = new Dictionary<int, PossibleNeighbours>(_palette.Palette.Count);
         for (int i = 0; i < _palette.Palette.Count; i++)
-            Pattern.Add(new PossibleNeighbours());
+            Pattern.Add(i, new PossibleNeighbours());
     }
 
     void Update()
@@ -103,7 +103,7 @@ public class TileAnalyzer : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.L))
         {
             var patternJson = MiscUtils.ReadStringFromFile(PatternFilePath);
-            Pattern = JsonConvert.DeserializeObject<List<PossibleNeighbours>>(patternJson);
+            Pattern = JsonConvert.DeserializeObject<Dictionary<int, PossibleNeighbours>>(patternJson);
         }
     }
 
