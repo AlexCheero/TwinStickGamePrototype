@@ -17,7 +17,6 @@ namespace WFC
     
     public class Tile : MonoBehaviour
     {
-        public float Chance;
         public int TileId;
     }
 }
