@@ -61,6 +61,19 @@ public class PossibleNeighbours
     }
 }
 
+public struct PatternKey
+{
+    public int Id;
+    public float YRotation;
+
+    public override int GetHashCode()
+    {
+        var hash = 17 * 23 + Id;
+        hash = hash * 23 + (int)YRotation;
+        return hash;
+    }
+}
+
 [RequireComponent(typeof(TilePlacer))]
 [RequireComponent(typeof(TilePalette))]
 public class TileAnalyzer : MonoBehaviour
@@ -88,8 +101,6 @@ public class TileAnalyzer : MonoBehaviour
 
         //_pattern init should be in Start when all duplicates are already removed from palette
         Pattern = new Dictionary<int, PossibleNeighbours>(_palette.Palette.Count);
-        for (int i = 0; i < _palette.Palette.Count; i++)
-            Pattern.Add(i, new PossibleNeighbours());
     }
 
     void Update()
@@ -129,7 +140,9 @@ public class TileAnalyzer : MonoBehaviour
                 if (!_placer.PlacedTiles.ContainsKey(neighbourPos))
                     continue;
                 var neighbour = _placer.PlacedTiles[neighbourPos];
-                
+
+                if (!Pattern.ContainsKey(tile.TileId))
+                    Pattern.Add(tile.TileId, new PossibleNeighbours());
                 Pattern[tile.TileId].Add(side, neighbour);
             }
         }
