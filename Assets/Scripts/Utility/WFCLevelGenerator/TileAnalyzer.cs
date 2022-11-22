@@ -117,7 +117,7 @@ public class TileAnalyzer : MonoBehaviour
     
     void Awake()
     {
-        PatternFilePath = Application.persistentDataPath + "/pattern2";
+        PatternFilePath = Application.persistentDataPath + "/pattern";
     }
     
     void Start()

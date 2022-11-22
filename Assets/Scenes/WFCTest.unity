@@ -361,6 +361,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7f1f557fb58b6684ca04865681605f95, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  UseRandom: 1
   Dim: 10
 --- !u!4 &1563116671
 Transform:
@@ -406,6 +407,7 @@ MonoBehaviour:
   - {fileID: 104101183304243913, guid: d2f44e3bea30f8643a54402c78bc5ff7, type: 3}
   - {fileID: 6535702921552860779, guid: 31ab905e2e10aad42aa76f693f36efb1, type: 3}
   - {fileID: 2786480192427450132, guid: 87ee2e16e4845a347b9858c22955b5ab, type: 3}
+  - {fileID: 7134829569025165617, guid: 2e6e4027dad75ee47a7f7089ab3c5e76, type: 3}
 --- !u!114 &1563116674
 MonoBehaviour:
   m_ObjectHideFlags: 0
