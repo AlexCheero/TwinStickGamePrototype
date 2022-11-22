@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -23,6 +24,12 @@ namespace WFC
         public PatternKey PKey { get; private set; }
         public bool IsCollapsed { get; private set; }
 
+        public void SetManually(PatternKey pKey)
+        {
+            PKey = pKey;
+            IsCollapsed = true;
+        }
+
         public Cell(ICollection<PatternKey> tiles)
         {
             var baseChance = 1.0f / tiles.Count;
@@ -32,7 +39,7 @@ namespace WFC
             IsCollapsed = false;
         }
 
-        public void TryCollapse(Vector3 position)
+        public void TryCollapse()
         {
             var chance = 0.0f;
             TileWithChance selectedTileChance = default;
@@ -75,13 +82,20 @@ namespace WFC
             _placer = GetComponent<TilePlacer>();
         }
 
+        IEnumerator Start()
+        {
+            while (_analyzer.Pattern == null)
+                yield return null;
+            InitGrid();
+        }
+
         void Update()
         {
+            if (Input.GetKeyDown(KeyCode.P))
+                PrepareOuterWalls();
+            
             if (Input.GetKeyDown(KeyCode.S))
             {
-                if (Grid == null)
-                    InitGrid();
-
                 var idx = GetLowestEntropyCellIdx();
                 if (idx < 0)
                 {
@@ -101,11 +115,9 @@ namespace WFC
 
             if (Input.GetKeyDown(KeyCode.G))
             {
-                if (Grid == null)
-                    InitGrid();
-                
                 _placer.Clear();
                 ClearGrid();
+                PrepareOuterWalls();
                 Generate();
             }
         }
@@ -122,37 +134,85 @@ namespace WFC
             for (int i = 0; i < Grid.Length; i++)
                 Grid[i] = new Cell(_analyzer.Pattern.Keys);
         }
+
+        private void PrepareOuterWalls()
+        {
+            for (int i = 0; i < Grid.Length; i++)
+            {
+                var gridPos = IdxToGridPos(i, Dim);
+                if (gridPos.x == 0 && gridPos.y == 0)
+                    Grid[i].SetManually(new PatternKey { Id = 0, name = "AngleWallTile(Clone)", YRotation = 0 });
+                else if (gridPos.x == Dim - 1 && gridPos.y == 0)
+                    Grid[i].SetManually(new PatternKey { Id = 0, name = "AngleWallTile(Clone)", YRotation = 270 });
+                else if (gridPos.x == 0 && gridPos.y == Dim - 1)
+                    Grid[i].SetManually(new PatternKey { Id = 0, name = "AngleWallTile(Clone)", YRotation = 90 });
+                else if (gridPos.x == Dim - 1 && gridPos.y == Dim - 1)
+                    Grid[i].SetManually(new PatternKey { Id = 0, name = "AngleWallTile(Clone)", YRotation = 180 });
+                else if (gridPos.x == 0)
+                {
+                    if (Random.value > 0.5f)
+                        Grid[i].SetManually(new PatternKey { Id = 1, name = "WallTile(Clone)", YRotation = 90 });
+                    else
+                        Grid[i].SetManually(new PatternKey { Id = 0, name = "AngleWallTile(Clone)", YRotation = 0 });
+                }
+                else if (gridPos.x == Dim - 1)
+                {
+                    if (Random.value > 0.5f)
+                        Grid[i].SetManually(new PatternKey { Id = 1, name = "WallTile(Clone)", YRotation = 270 });
+                    else
+                        Grid[i].SetManually(new PatternKey { Id = 0, name = "AngleWallTile(Clone)", YRotation = 270 });
+                }
+                else if (gridPos.y == 0)
+                {
+                    if (Random.value > 0.5f)
+                        Grid[i].SetManually(new PatternKey { Id = 1, name = "WallTile(Clone)", YRotation = 0 });
+                    else
+                        Grid[i].SetManually(new PatternKey { Id = 0, name = "AngleWallTile(Clone)", YRotation = 0 });
+                }
+                else if (gridPos.y == Dim - 1)
+                {
+                    if (Random.value > 0.5f)
+                        Grid[i].SetManually(new PatternKey { Id = 1, name = "WallTile(Clone)", YRotation = 180 });
+                    else
+                        Grid[i].SetManually(new PatternKey { Id = 0, name = "AngleWallTile(Clone)", YRotation = 180 });
+                }
+                
+                if (Grid[i].IsCollapsed)
+                    PlaceAndUpdateNeighbours(Grid[i].PKey, gridPos);
+            }
+        }
         
-        public void GenerateStep(int idx)
+        private void GenerateStep(int idx)
+        {
+            var gridPos = IdxToGridPos(idx, Dim);
+            Grid[idx].TryCollapse();
+            if (Grid[idx].IsCollapsed)
+                PlaceAndUpdateNeighbours(Grid[idx].PKey, gridPos);
+        }
+
+        private void PlaceAndUpdateNeighbours(PatternKey pKey, Vector2Int gridPosition)
         {
             var halfDim = Dim / 2;
-            var x = idx % Dim;
-            var y = idx / Dim;
-            var position = new Vector3(x - halfDim, 0, y - halfDim);
-            Grid[idx].TryCollapse(position);
-            if (Grid[idx].IsCollapsed)
-            {
-                var key = Grid[idx].PKey;
-                _placer.PlaceTile(key.Id, position, key.YRotation);
-                // for (int j = y - 1; j < y + 2; j++)
-                // {
-                //     for (int i = x - 1; i < x + 2; i++)
-                //     {
-                //         
-                //     }
-                // }
-
-                var tileNeighbours = _analyzer.Pattern[key].Neighbours;
+            var position = new Vector3(gridPosition.x - halfDim, 0, gridPosition.y - halfDim);
+            _placer.PlaceTile(pKey.Id, position, pKey.YRotation);
+            // for (int j = y - 1; j < y + 2; j++)
+            // {
+            //     for (int i = x - 1; i < x + 2; i++)
+            //     {
+            //         
+            //     }
+            // }
+            
+            var tileNeighbours = _analyzer.Pattern[pKey].Neighbours;
                 
-                if (tileNeighbours.ContainsKey(ETileSide.Up))
-                    RemoveAvailableTiles(x + (y + 1) * Dim, tileNeighbours[ETileSide.Up]);
-                if (tileNeighbours.ContainsKey(ETileSide.Right))
-                    RemoveAvailableTiles((x + 1) + y * Dim, tileNeighbours[ETileSide.Right]);
-                if (tileNeighbours.ContainsKey(ETileSide.Down))
-                    RemoveAvailableTiles(x + (y - 1) * Dim, tileNeighbours[ETileSide.Down]);
-                if (tileNeighbours.ContainsKey(ETileSide.Left))
-                    RemoveAvailableTiles((x - 1) + y * Dim, tileNeighbours[ETileSide.Left]);
-            }
+            if (tileNeighbours.ContainsKey(ETileSide.Up))
+                RemoveAvailableTiles(gridPosition.x + (gridPosition.y + 1) * Dim, tileNeighbours[ETileSide.Up]);
+            if (tileNeighbours.ContainsKey(ETileSide.Right))
+                RemoveAvailableTiles((gridPosition.x + 1) + gridPosition.y * Dim, tileNeighbours[ETileSide.Right]);
+            if (tileNeighbours.ContainsKey(ETileSide.Down))
+                RemoveAvailableTiles(gridPosition.x + (gridPosition.y - 1) * Dim, tileNeighbours[ETileSide.Down]);
+            if (tileNeighbours.ContainsKey(ETileSide.Left))
+                RemoveAvailableTiles((gridPosition.x - 1) + gridPosition.y * Dim, tileNeighbours[ETileSide.Left]);
         }
         
         public void Generate()
