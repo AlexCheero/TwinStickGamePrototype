@@ -43,7 +43,13 @@ public class PossibleNeighbours
             return;
         }
 
-        var key = new PatternKey { Id = tile.TileId, YRotation = tile.transform.eulerAngles.y };
+        var rotation = tile.transform.eulerAngles.y;
+        rotation = Mathf.Clamp(rotation, 0, 359);
+#if DEBUG
+        var key = new PatternKey { Id = tile.TileId, YRotation = rotation, name = tile.name };
+#else
+        var key = new PatternKey { Id = tile.TileId, YRotation = rotation };
+#endif
         neighboursOnSide.Add(new PossibleNeighbour(key));
 
         var overallCount = neighboursOnSide.Sum(neighbour => neighbour.Count);
@@ -66,6 +72,9 @@ public struct PatternKey
 {
     public int Id;
     public float YRotation;
+#if DEBUG
+    public string name;
+#endif
 
     public override int GetHashCode()
     {
@@ -160,7 +169,11 @@ public class TileAnalyzer : MonoBehaviour
                     continue;
                 var neighbour = _placer.PlacedTiles[neighbourPos];
 
-                var key = new PatternKey { Id = tile.TileId, YRotation = tile.transform.eulerAngles.y };
+#if DEBUG
+                var key = new PatternKey { Id = tile.TileId, YRotation = tile.transform.eulerAngles.y, name = tile.name  };
+#else
+                var key = new PatternKey { Id = tile.TileId, YRotation = tile.transform.eulerAngles.y  };
+#endif
                 if (!Pattern.ContainsKey(key))
                     Pattern.Add(key, new PossibleNeighbours());
                 Pattern[key].Add(side, neighbour);

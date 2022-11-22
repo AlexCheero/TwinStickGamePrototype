@@ -29,6 +29,7 @@ namespace WFC
             AvailableTiles = new List<TileWithChance>();
             foreach (var tile in tiles)
                 AvailableTiles.Add(new TileWithChance(tile, baseChance));
+            IsCollapsed = false;
         }
 
         public void TryCollapse(Vector3 position)
@@ -38,7 +39,7 @@ namespace WFC
             foreach (var tileChance in AvailableTiles)
             {
                 var shouldChooseTile = tileChance.Chance > chance;
-                shouldChooseTile |= Mathf.Abs(tileChance.Chance - chance) < float.Epsilon && Random.value > 0.5f;
+                //shouldChooseTile |= Mathf.Abs(tileChance.Chance - chance) < float.Epsilon && Random.value > 0.5f;
                 if (!shouldChooseTile)
                     continue;
                 chance = tileChance.Chance;
@@ -46,7 +47,10 @@ namespace WFC
             }
 
             if (chance == 0)
+            {
+                IsCollapsed = false;
                 return;
+            }
 
             PKey = selectedTileChance.PKey;
             IsCollapsed = true;
@@ -77,9 +81,8 @@ namespace WFC
             {
                 if (Grid == null)
                     InitGrid();
-                
+
                 var idx = GetLowestEntropyCellIdx();
-                Debug.Log("idx: " + idx);
                 if (idx < 0)
                 {
                     _placer.Clear();
@@ -175,29 +178,30 @@ namespace WFC
         {
             if (idx < 0 || idx >= Grid.Length)
                 return;
-            
-            //TODO: cache this set so it doesn't have to allocate every method call
-            var deleteSet = new HashSet<int>();
-            var availableTilesInNeighbour = Grid[idx].AvailableTiles;
-                    
-            for (int i = 0; i < availableTilesInNeighbour.Count; i++)
-            {
-                var isFound = false;
-                foreach (var possibleNeighbour in possibleNeighbours)
-                {
-                    if (availableTilesInNeighbour[i].PKey.Id != possibleNeighbour.PKey.Id)
-                        continue;
-                    isFound = true;
-                    var newChance = Mathf.Min(availableTilesInNeighbour[i].Chance, possibleNeighbour.Chance);
-                    availableTilesInNeighbour[i] =
-                        new Cell.TileWithChance(availableTilesInNeighbour[i].PKey, newChance);
-                    break;
-                }
 
-                if (!isFound && !deleteSet.Add(i))
-                    Debug.LogError("trying to add index for delete second time");
+            var availableTilesInNeighbour = Grid[idx].AvailableTiles;
+            if (possibleNeighbours.Count == 0)
+            {
+                availableTilesInNeighbour.Clear();
+                return;
             }
 
+            for (int i = availableTilesInNeighbour.Count - 1; i >= 0; i--)
+            {
+                var possibleNeighbourIdx =
+                    possibleNeighbours.FindIndex(neighbour =>
+                    {
+                        var isIdsEqual = neighbour.PKey.Id == availableTilesInNeighbour[i].PKey.Id;
+                        const float rotationTolerance = 0.001f;
+                        var isRotationEqual =
+                            Mathf.Abs(neighbour.PKey.YRotation - availableTilesInNeighbour[i].PKey.YRotation) < rotationTolerance;
+                        return isIdsEqual && isRotationEqual;
+                    });
+                
+                if (possibleNeighbourIdx < 0)
+                    availableTilesInNeighbour.RemoveAt(i);
+            }
+            
 #region NormalizingTileChance
 
             var overallChance = availableTilesInNeighbour.Sum(tileWithChance => tileWithChance.Chance);
@@ -220,11 +224,6 @@ namespace WFC
 #endif
 
 #endregion
-            
-            var deleteList = deleteSet.ToList();
-            deleteList.Sort((a, b) => b - a);
-            foreach (var i in deleteList)
-                availableTilesInNeighbour.RemoveAt(i);
         }
 
         private int GetLowestEntropyCellIdx()
@@ -246,5 +245,14 @@ namespace WFC
 
             return lowestEntropyTileIdx;
         }
+
+        private Vector2Int IdxToGridPos(int idx, int dim) =>
+            new Vector2Int
+            {
+                x = idx % dim,
+                y = idx / dim
+            };
+
+        private int GridPosToIdx(Vector2Int pos, int dim) => pos.x + pos.y * dim;
     }
 }
