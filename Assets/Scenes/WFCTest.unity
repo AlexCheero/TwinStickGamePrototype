@@ -420,4 +420,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a2024d38387def34f9fc45c749d6972f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _isEightDirectionAnalyze: 0
+  _isEightDirectionAnalyze: 1

@@ -21,14 +21,8 @@ namespace WFC
         }
         
         public readonly List<ProbableEntry> ProbableEntries;
-        public PatternEntry PEntry { get; private set; }
+        public PatternEntry Entry { get; private set; }
         public bool IsCollapsed { get; private set; }
-
-        public void SetManually(PatternEntry pEntry)
-        {
-            PEntry = pEntry;
-            IsCollapsed = true;
-        }
 
         public Cell(ICollection<PatternEntry> tiles)
         {
@@ -59,7 +53,7 @@ namespace WFC
                 return;
             }
 
-            PEntry = selectedEntry.Entry;
+            Entry = selectedEntry.Entry;
             IsCollapsed = true;
         }
 
@@ -137,7 +131,7 @@ namespace WFC
             var gridPos = IdxToGridPos(idx, Dim);
             Grid[idx].TryCollapse(UseRandom);
             if (Grid[idx].IsCollapsed)
-                PlaceAndUpdateNeighbours(Grid[idx].PEntry, gridPos);
+                PlaceAndUpdateNeighbours(Grid[idx].Entry, gridPos);
         }
 
         private void PlaceAndUpdateNeighbours(PatternEntry pEntry, Vector2Int gridPosition)
@@ -183,7 +177,7 @@ namespace WFC
             }
         }
 
-        void RemoveAvailableTiles(int idx, List<PossibleNeighbour> possibleNeighbours)
+        private void RemoveAvailableTiles(int idx, List<PossibleNeighbour> possibleNeighbours)
         {
             if (idx < 0 || idx >= Grid.Length)
                 return;
