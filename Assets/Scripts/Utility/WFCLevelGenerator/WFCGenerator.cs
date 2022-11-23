@@ -201,9 +201,8 @@ namespace WFC
                     possibleNeighbours.FindIndex(neighbour =>
                     {
                         var isIdsEqual = neighbour.Entry.Id == probableEntries[i].Entry.Id;
-                        const float rotationTolerance = 0.001f;
                         var isRotationEqual =
-                            Mathf.Abs(neighbour.Entry.YRotation - probableEntries[i].Entry.YRotation) < rotationTolerance;
+                            Mathf.Abs(neighbour.Entry.YRotation - probableEntries[i].Entry.YRotation) < TileAnalyzer.RotationTolerance;
                         return isIdsEqual && isRotationEqual;
                     });
                 

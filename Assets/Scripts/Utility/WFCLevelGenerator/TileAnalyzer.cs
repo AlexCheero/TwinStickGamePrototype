@@ -36,7 +36,8 @@ public class PossibleNeighbours
         for (var i = 0; i < neighboursOnSide.Count; i++)
         {
             var neighbour = neighboursOnSide[i];
-            if (neighbour.Entry.Id != tile.TileId)
+            if (neighbour.Entry.Id != tile.TileId ||
+                Mathf.Abs(neighbour.Entry.YRotation - tile.transform.eulerAngles.y) > TileAnalyzer.RotationTolerance)
                 continue;
             neighbour.Count++;
             neighboursOnSide[i] = neighbour;
@@ -88,6 +89,8 @@ public struct PatternEntry
 [RequireComponent(typeof(TilePalette))]
 public class TileAnalyzer : MonoBehaviour
 {
+    public const float RotationTolerance = 0.01f;
+    
     [SerializeField]
     private bool _isEightDirectionAnalyze;
     
