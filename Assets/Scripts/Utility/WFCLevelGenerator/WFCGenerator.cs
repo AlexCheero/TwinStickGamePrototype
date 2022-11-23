@@ -8,49 +8,49 @@ namespace WFC
 {
     public class Cell
     {
-        public struct TileWithChance
+        public struct ProbableEntry
         {
-            public PatternKey PKey;
-            public float Chance;
+            public PatternEntry Entry;
+            public readonly float Chance;
 
-            public TileWithChance(PatternKey pKey, float chance)
+            public ProbableEntry(PatternEntry entry, float chance)
             {
-                PKey = pKey;
+                Entry = entry;
                 Chance = chance;
             }
         }
         
-        public List<TileWithChance> AvailableTiles;
-        public PatternKey PKey { get; private set; }
+        public readonly List<ProbableEntry> ProbableEntries;
+        public PatternEntry PEntry { get; private set; }
         public bool IsCollapsed { get; private set; }
 
-        public void SetManually(PatternKey pKey)
+        public void SetManually(PatternEntry pEntry)
         {
-            PKey = pKey;
+            PEntry = pEntry;
             IsCollapsed = true;
         }
 
-        public Cell(ICollection<PatternKey> tiles)
+        public Cell(ICollection<PatternEntry> tiles)
         {
             var baseChance = 1.0f / tiles.Count;
-            AvailableTiles = new List<TileWithChance>();
+            ProbableEntries = new List<ProbableEntry>();
             foreach (var tile in tiles)
-                AvailableTiles.Add(new TileWithChance(tile, baseChance));
+                ProbableEntries.Add(new ProbableEntry(tile, baseChance));
             IsCollapsed = false;
         }
 
         public void TryCollapse(bool useRandom)
         {
             var chance = 0.0f;
-            TileWithChance selectedTileChance = default;
-            foreach (var tileChance in AvailableTiles)
+            ProbableEntry selectedEntry = default;
+            foreach (var probableEntry in ProbableEntries)
             {
-                var shouldChooseTile = tileChance.Chance > chance;
-                shouldChooseTile |= useRandom && Mathf.Abs(tileChance.Chance - chance) < float.Epsilon && Random.value > 0.5f;
+                var shouldChooseTile = probableEntry.Chance > chance;
+                shouldChooseTile |= useRandom && Mathf.Abs(probableEntry.Chance - chance) < float.Epsilon && Random.value > 0.5f;
                 if (!shouldChooseTile)
                     continue;
-                chance = tileChance.Chance;
-                selectedTileChance = tileChance;
+                chance = probableEntry.Chance;
+                selectedEntry = probableEntry;
             }
 
             if (chance == 0)
@@ -59,11 +59,11 @@ namespace WFC
                 return;
             }
 
-            PKey = selectedTileChance.PKey;
+            PEntry = selectedEntry.Entry;
             IsCollapsed = true;
         }
 
-        public int Entropy => AvailableTiles.Count;
+        public int Entropy => ProbableEntries.Count;
     }
 
     [RequireComponent(typeof(TileAnalyzer))]
@@ -137,16 +137,16 @@ namespace WFC
             var gridPos = IdxToGridPos(idx, Dim);
             Grid[idx].TryCollapse(UseRandom);
             if (Grid[idx].IsCollapsed)
-                PlaceAndUpdateNeighbours(Grid[idx].PKey, gridPos);
+                PlaceAndUpdateNeighbours(Grid[idx].PEntry, gridPos);
         }
 
-        private void PlaceAndUpdateNeighbours(PatternKey pKey, Vector2Int gridPosition)
+        private void PlaceAndUpdateNeighbours(PatternEntry pEntry, Vector2Int gridPosition)
         {
             var halfDim = Dim / 2;
             var position = new Vector3(gridPosition.x - halfDim, 0, gridPosition.y - halfDim);
-            _placer.PlaceTile(pKey.Id, position, pKey.YRotation);
+            _placer.PlaceTile(pEntry.Id, position, pEntry.YRotation);
             
-            var tileNeighbours = _analyzer.Pattern[pKey].Neighbours;
+            var tileNeighbours = _analyzer.Pattern[pEntry].Neighbours;
             for (int j = 0; j < 3; j++)
             {
                 for (int i = 0; i < 3; i++)
@@ -188,47 +188,47 @@ namespace WFC
             if (idx < 0 || idx >= Grid.Length)
                 return;
 
-            var availableTilesInNeighbour = Grid[idx].AvailableTiles;
+            var probableEntries = Grid[idx].ProbableEntries;
             if (possibleNeighbours.Count == 0)
             {
-                availableTilesInNeighbour.Clear();
+                probableEntries.Clear();
                 return;
             }
 
-            for (int i = availableTilesInNeighbour.Count - 1; i >= 0; i--)
+            for (int i = probableEntries.Count - 1; i >= 0; i--)
             {
                 var possibleNeighbourIdx =
                     possibleNeighbours.FindIndex(neighbour =>
                     {
-                        var isIdsEqual = neighbour.PKey.Id == availableTilesInNeighbour[i].PKey.Id;
+                        var isIdsEqual = neighbour.Entry.Id == probableEntries[i].Entry.Id;
                         const float rotationTolerance = 0.001f;
                         var isRotationEqual =
-                            Mathf.Abs(neighbour.PKey.YRotation - availableTilesInNeighbour[i].PKey.YRotation) < rotationTolerance;
+                            Mathf.Abs(neighbour.Entry.YRotation - probableEntries[i].Entry.YRotation) < rotationTolerance;
                         return isIdsEqual && isRotationEqual;
                     });
                 
                 if (possibleNeighbourIdx < 0)
-                    availableTilesInNeighbour.RemoveAt(i);
+                    probableEntries.RemoveAt(i);
             }
             
 #region NormalizingTileChance
 
-            var overallChance = availableTilesInNeighbour.Sum(tileWithChance => tileWithChance.Chance);
+            var overallChance = probableEntries.Sum(tileWithChance => tileWithChance.Chance);
 #if DEBUG
             if (overallChance > 1)
                 Debug.LogError("chance is bigger than 1, after removing available tiles");
 #endif
-            for (int i = 0; i < availableTilesInNeighbour.Count; i++)
+            for (int i = 0; i < probableEntries.Count; i++)
             {
-                var normalizedChance = availableTilesInNeighbour[i].Chance / overallChance;
-                availableTilesInNeighbour[i] =
-                    new Cell.TileWithChance(availableTilesInNeighbour[i].PKey, normalizedChance);
+                var normalizedChance = probableEntries[i].Chance / overallChance;
+                probableEntries[i] =
+                    new Cell.ProbableEntry(probableEntries[i].Entry, normalizedChance);
             }
             
 #if DEBUG
-            overallChance = availableTilesInNeighbour.Sum(tileWithChance => tileWithChance.Chance);
+            overallChance = probableEntries.Sum(tileWithChance => tileWithChance.Chance);
             const float chanceTolerance = 0.0001f;
-            if (availableTilesInNeighbour.Count > 0 && Mathf.Abs(overallChance - 1) > chanceTolerance)
+            if (probableEntries.Count > 0 && Mathf.Abs(overallChance - 1) > chanceTolerance)
                 Debug.LogError("overall chance ("+ overallChance + ") is not equal to 1 after normalization");
 #endif
 
@@ -244,7 +244,7 @@ namespace WFC
                 bool suitableEntropy = Grid[i].Entropy < lowestEntropy;
                 suitableEntropy |= UseRandom && Grid[i].Entropy == lowestEntropy && Random.value > 0.5f;
                 if (!Grid[i].IsCollapsed &&
-                    Grid[i].AvailableTiles.Count > 0 &&
+                    Grid[i].ProbableEntries.Count > 0 &&
                     suitableEntropy)
                 {
                     lowestEntropyTileIdx = i;
