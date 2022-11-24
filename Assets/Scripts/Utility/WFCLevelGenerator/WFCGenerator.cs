@@ -153,7 +153,7 @@ namespace WFC
                     var neighbourGridPos = gridPosition;
                     neighbourGridPos.x += i - 1;
                     neighbourGridPos.y += j - 1;
-                    RemoveAvailableTiles(GridPosToIdx(neighbourGridPos, Dim), tileNeighbours[side]);
+                    RemoveUnavailableTiles(GridPosToIdx(neighbourGridPos, Dim), tileNeighbours[side]);
                 }
             }
         }
@@ -177,7 +177,7 @@ namespace WFC
             }
         }
 
-        private void RemoveAvailableTiles(int idx, List<ProbableEntry> probableNeighbours)
+        private void RemoveUnavailableTiles(int idx, List<ProbableEntry> probableNeighbours)
         {
             if (idx < 0 || idx >= Grid.Length)
                 return;
@@ -209,7 +209,7 @@ namespace WFC
             var overallChance = probableEntries.Sum(tileWithChance => tileWithChance.Chance);
 #if DEBUG
             if (overallChance > 1)
-                Debug.LogError("chance is bigger than 1, after removing available tiles");
+                Debug.LogError("chance is bigger than 1, after removing unavailable tiles");
 #endif
             for (int i = 0; i < probableEntries.Count; i++)
             {
