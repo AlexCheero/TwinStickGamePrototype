@@ -177,13 +177,13 @@ namespace WFC
             }
         }
 
-        private void RemoveAvailableTiles(int idx, List<ProbableEntry> possibleNeighbours)
+        private void RemoveAvailableTiles(int idx, List<ProbableEntry> probableNeighbours)
         {
             if (idx < 0 || idx >= Grid.Length)
                 return;
 
             var probableEntries = Grid[idx].ProbableEntries;
-            if (possibleNeighbours.Count == 0)
+            if (probableNeighbours.Count == 0)
             {
                 probableEntries.Clear();
                 return;
@@ -191,8 +191,8 @@ namespace WFC
 
             for (int i = probableEntries.Count - 1; i >= 0; i--)
             {
-                var possibleNeighbourIdx =
-                    possibleNeighbours.FindIndex(neighbour =>
+                var probableNeighbourIdx =
+                    probableNeighbours.FindIndex(neighbour =>
                     {
                         var isIdsEqual = neighbour.Entry.Id == probableEntries[i].Entry.Id;
                         var isRotationEqual =
@@ -200,7 +200,7 @@ namespace WFC
                         return isIdsEqual && isRotationEqual;
                     });
                 
-                if (possibleNeighbourIdx < 0)
+                if (probableNeighbourIdx < 0)
                     probableEntries.RemoveAt(i);
             }
             

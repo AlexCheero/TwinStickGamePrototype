@@ -5,11 +5,11 @@ using Unity.Plastic.Newtonsoft.Json;
 using UnityEngine;
 using WFC;
 
-public class PossibleNeighbours
+public class ProbableNeighbours
 {
     public Dictionary<ETileSide, List<ProbableEntry>> Neighbours;
 
-    public PossibleNeighbours()
+    public ProbableNeighbours()
     {
         Neighbours = new Dictionary<ETileSide, List<ProbableEntry>>();
     }
@@ -96,20 +96,20 @@ public class TileAnalyzer : MonoBehaviour
     private TilePalette _palette;
     
     [NonSerialized]
-    public Dictionary<PatternEntry, PossibleNeighbours> Pattern;
+    public Dictionary<PatternEntry, ProbableNeighbours> Pattern;
 
-    private List<Tuple<PatternEntry, PossibleNeighbours>> _pattern;
+    private List<Tuple<PatternEntry, ProbableNeighbours>> _pattern;
 
     private void PatternToList()
     {
-        _pattern = new List<Tuple<PatternEntry, PossibleNeighbours>>(Pattern.Count);
+        _pattern = new List<Tuple<PatternEntry, ProbableNeighbours>>(Pattern.Count);
         foreach (var pair in Pattern)
             _pattern.Add(Tuple.Create(pair.Key, pair.Value));
     }
 
     private void ListToPattern()
     {
-        Pattern = new Dictionary<PatternEntry, PossibleNeighbours>(_pattern.Count);
+        Pattern = new Dictionary<PatternEntry, ProbableNeighbours>(_pattern.Count);
         foreach (var tuple in _pattern)
             Pattern[tuple.Item1] = tuple.Item2;
     }
@@ -127,7 +127,7 @@ public class TileAnalyzer : MonoBehaviour
         _palette = GetComponent<TilePalette>();
 
         //_pattern init should be in Start when all duplicates are already removed from palette
-        Pattern = new Dictionary<PatternEntry, PossibleNeighbours>(_palette.Palette.Count);
+        Pattern = new Dictionary<PatternEntry, ProbableNeighbours>(_palette.Palette.Count);
     }
 
     void Update()
@@ -142,7 +142,7 @@ public class TileAnalyzer : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.L))
         {
             var patternJson = MiscUtils.ReadStringFromFile(PatternFilePath);
-            _pattern = JsonConvert.DeserializeObject<List<Tuple<PatternEntry, PossibleNeighbours>>>(patternJson);
+            _pattern = JsonConvert.DeserializeObject<List<Tuple<PatternEntry, ProbableNeighbours>>>(patternJson);
             ListToPattern();
         }
     }
@@ -176,7 +176,7 @@ public class TileAnalyzer : MonoBehaviour
                 var entry = new PatternEntry { Id = tile.TileId, YRotation = tile.transform.eulerAngles.y  };
 #endif
                 if (!Pattern.ContainsKey(entry))
-                    Pattern.Add(entry, new PossibleNeighbours());
+                    Pattern.Add(entry, new ProbableNeighbours());
                 Pattern[entry].Add(side, neighbour);
             }
         }
