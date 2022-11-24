@@ -6,20 +6,20 @@ using Random = UnityEngine.Random;
 
 namespace WFC
 {
+    public struct ProbableEntry
+    {
+        public PatternEntry Entry;
+        public float Chance;
+
+        public ProbableEntry(PatternEntry entry, float chance)
+        {
+            Entry = entry;
+            Chance = chance;
+        }
+    }
+    
     public class Cell
     {
-        public struct ProbableEntry
-        {
-            public PatternEntry Entry;
-            public readonly float Chance;
-
-            public ProbableEntry(PatternEntry entry, float chance)
-            {
-                Entry = entry;
-                Chance = chance;
-            }
-        }
-        
         public readonly List<ProbableEntry> ProbableEntries;
         public PatternEntry Entry { get; private set; }
         public bool IsCollapsed { get; private set; }
@@ -177,7 +177,7 @@ namespace WFC
             }
         }
 
-        private void RemoveAvailableTiles(int idx, List<PossibleNeighbour> possibleNeighbours)
+        private void RemoveAvailableTiles(int idx, List<ProbableEntry> possibleNeighbours)
         {
             if (idx < 0 || idx >= Grid.Length)
                 return;
@@ -215,7 +215,7 @@ namespace WFC
             {
                 var normalizedChance = probableEntries[i].Chance / overallChance;
                 probableEntries[i] =
-                    new Cell.ProbableEntry(probableEntries[i].Entry, normalizedChance);
+                    new ProbableEntry(probableEntries[i].Entry, normalizedChance);
             }
             
 #if DEBUG

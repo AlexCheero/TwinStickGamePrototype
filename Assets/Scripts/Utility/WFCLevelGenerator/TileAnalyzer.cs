@@ -5,33 +5,19 @@ using Unity.Plastic.Newtonsoft.Json;
 using UnityEngine;
 using WFC;
 
-public struct PossibleNeighbour
-{
-    public PatternEntry Entry;
-    public int Count;
-    public float Chance;
-
-    public PossibleNeighbour(PatternEntry entry, float chance)
-    {
-        Entry = entry;
-        Count = 1;
-        Chance = chance;
-    }
-}
-
 public class PossibleNeighbours
 {
-    public Dictionary<ETileSide, List<PossibleNeighbour>> Neighbours;
+    public Dictionary<ETileSide, List<ProbableEntry>> Neighbours;
 
     public PossibleNeighbours()
     {
-        Neighbours = new Dictionary<ETileSide, List<PossibleNeighbour>>();
+        Neighbours = new Dictionary<ETileSide, List<ProbableEntry>>();
     }
 
     public void Add(ETileSide side, Tile tile)
     {
         if (!Neighbours.ContainsKey(side))
-            Neighbours[side] = new List<PossibleNeighbour>();
+            Neighbours[side] = new List<ProbableEntry>();
         var neighboursOnSide = Neighbours[side];
         var tileId = neighboursOnSide.FindIndex(neighbour => neighbour.Entry.Id == tile.TileId &&
                                                              Mathf.Abs(neighbour.Entry.YRotation - tile.transform.eulerAngles.y) >
@@ -58,7 +44,7 @@ public class PossibleNeighbours
             var entry = new PatternEntry { Id = tile.TileId, YRotation = rotation };
 #endif
             
-            neighboursOnSide.Add(new PossibleNeighbour(entry, 1.0f /  (countOverall + 1)));
+            neighboursOnSide.Add(new ProbableEntry(entry, 1.0f /  (countOverall + 1)));
         }
         else
         {
