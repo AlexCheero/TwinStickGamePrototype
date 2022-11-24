@@ -33,25 +33,26 @@ public class PossibleNeighbours
         if (!Neighbours.ContainsKey(side))
             Neighbours[side] = new List<PossibleNeighbour>();
         var neighboursOnSide = Neighbours[side];
-        for (var i = 0; i < neighboursOnSide.Count; i++)
+        var tileId = neighboursOnSide.FindIndex(neighbour => neighbour.Entry.Id == tile.TileId &&
+                         Mathf.Abs(neighbour.Entry.YRotation - tile.transform.eulerAngles.y) >
+                         TileAnalyzer.RotationTolerance);
+        if (tileId >= 0)
         {
-            var neighbour = neighboursOnSide[i];
-            if (neighbour.Entry.Id != tile.TileId ||
-                Mathf.Abs(neighbour.Entry.YRotation - tile.transform.eulerAngles.y) > TileAnalyzer.RotationTolerance)
-                continue;
+            var neighbour = neighboursOnSide[tileId];
             neighbour.Count++;
-            neighboursOnSide[i] = neighbour;
-            return;
+            neighboursOnSide[tileId] = neighbour;
         }
-
-        var rotation = tile.transform.eulerAngles.y;
-        rotation = Mathf.Clamp(rotation, 0, 359);
+        else
+        {
+            var rotation = tile.transform.eulerAngles.y;
+            rotation = Mathf.Clamp(rotation, 0, 359);
 #if DEBUG
-        var entry = new PatternEntry { Id = tile.TileId, YRotation = rotation, name = tile.name };
+            var entry = new PatternEntry { Id = tile.TileId, YRotation = rotation, name = tile.name };
 #else
-        var entry = new PatternEntry { Id = tile.TileId, YRotation = rotation };
+            var entry = new PatternEntry { Id = tile.TileId, YRotation = rotation };
 #endif
-        neighboursOnSide.Add(new PossibleNeighbour(entry));
+            neighboursOnSide.Add(new PossibleNeighbour(entry));
+        }
 
         var overallCount = neighboursOnSide.Sum(neighbour => neighbour.Count);
         for (var i = 0; i < neighboursOnSide.Count; i++)
