@@ -1,4 +1,5 @@
 
+using System;
 using System.IO;
 using UnityEngine;
 
@@ -48,6 +49,8 @@ public static class MiscUtils
 
     public static string ReadStringFromFile(string path)
     {
+        if (!File.Exists(path))
+            return null;
         using var reader = new StreamReader(path);
         var content = reader.ReadToEnd();
         reader.Close();

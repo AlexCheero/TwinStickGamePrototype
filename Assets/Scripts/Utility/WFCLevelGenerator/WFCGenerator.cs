@@ -71,10 +71,16 @@ namespace WFC
         private TileAnalyzer _analyzer;
         private TilePlacer _placer;
         
+        [SerializeField]
+        private float _generateStepTime = 0.2f;
+        private WaitForSeconds _generateDelay;
+        private IEnumerator _generateCoroutine;
+        
         void Awake()
         {
             _analyzer = GetComponent<TileAnalyzer>();
             _placer = GetComponent<TilePlacer>();
+            _generateDelay = new WaitForSeconds(_generateStepTime);
         }
 
         IEnumerator Start()
@@ -91,8 +97,7 @@ namespace WFC
                 var idx = GetLowestEntropyCellIdx();
                 if (idx < 0)
                 {
-                    _placer.Clear();
-                    ClearGrid();
+                    Clear();
                     idx = GetLowestEntropyCellIdx();
                 }
 
@@ -100,16 +105,20 @@ namespace WFC
             }
 
             if (Input.GetKeyDown(KeyCode.C))
-            {
-                _placer.Clear();
-                ClearGrid();
-            }
+                Clear();
 
             if (Input.GetKeyDown(KeyCode.G))
             {
-                _placer.Clear();
-                ClearGrid();
-                Generate();
+                Clear();
+                if (Input.GetKey(KeyCode.LeftShift))
+                {
+                    _generateCoroutine = GenerateCoroutine();
+                    StartCoroutine(_generateCoroutine);
+                }
+                else
+                {
+                    Generate();
+                }
             }
         }
 
@@ -117,6 +126,13 @@ namespace WFC
         {
             for (int i = 0; i < Grid.Length; i++)
                 Grid[i] = new Cell(_analyzer.Pattern.Keys);
+        }
+
+        private void Clear()
+        {
+            StopGenerateCoroutine();
+            _placer.Clear();
+            ClearGrid();
         }
 
         private void InitGrid()
@@ -157,8 +173,8 @@ namespace WFC
                 }
             }
         }
-        
-        public void Generate()
+
+        private void Generate()
         {
             var ctr = 0;
             var idx = GetLowestEntropyCellIdx();
@@ -174,6 +190,38 @@ namespace WFC
                     Debug.LogError("infinte loop");
                     break;
                 }
+            }
+        }
+        
+        private IEnumerator GenerateCoroutine()
+        {
+            var ctr = 0;
+            var idx = GetLowestEntropyCellIdx();
+            while (idx >= 0)
+            {
+                GenerateStep(idx);
+
+                yield return _generateDelay;
+                
+                idx = GetLowestEntropyCellIdx();
+                ctr++;
+
+                if (ctr >= 10000)
+                {
+                    Debug.LogError("infinte loop");
+                    break;
+                }
+            }
+
+            _generateCoroutine = null;
+        }
+
+        private void StopGenerateCoroutine()
+        {
+            if (_generateCoroutine != null)
+            {
+                StopCoroutine(_generateCoroutine);
+                _generateCoroutine = null;
             }
         }
 

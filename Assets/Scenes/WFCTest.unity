@@ -363,6 +363,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   UseRandom: 1
   Dim: 10
+  _generateStepTime: 0.2
 --- !u!4 &1563116671
 Transform:
   m_ObjectHideFlags: 0

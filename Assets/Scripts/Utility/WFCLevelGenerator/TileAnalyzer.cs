@@ -128,6 +128,13 @@ public class TileAnalyzer : MonoBehaviour
 
         //_pattern init should be in Start when all duplicates are already removed from palette
         Pattern = new Dictionary<PatternEntry, ProbableNeighbours>(_palette.Palette.Count);
+        
+        var patternJson = MiscUtils.ReadStringFromFile(PatternFilePath);
+        if (!string.IsNullOrEmpty(patternJson))
+        {
+            _pattern = JsonConvert.DeserializeObject<List<Tuple<PatternEntry, ProbableNeighbours>>>(patternJson);
+            ListToPattern();
+        }
     }
 
     void Update()
