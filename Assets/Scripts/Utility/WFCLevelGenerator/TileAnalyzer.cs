@@ -11,11 +11,11 @@ public struct PossibleNeighbour
     public int Count;
     public float Chance;
 
-    public PossibleNeighbour(PatternEntry entry)
+    public PossibleNeighbour(PatternEntry entry, float chance)
     {
         Entry = entry;
         Count = 1;
-        Chance = 0;
+        Chance = chance;
     }
 }
 
@@ -34,16 +34,22 @@ public class PossibleNeighbours
             Neighbours[side] = new List<PossibleNeighbour>();
         var neighboursOnSide = Neighbours[side];
         var tileId = neighboursOnSide.FindIndex(neighbour => neighbour.Entry.Id == tile.TileId &&
-                         Mathf.Abs(neighbour.Entry.YRotation - tile.transform.eulerAngles.y) >
-                         TileAnalyzer.RotationTolerance);
-        if (tileId >= 0)
+                                                             Mathf.Abs(neighbour.Entry.YRotation - tile.transform.eulerAngles.y) >
+                                                             TileAnalyzer.RotationTolerance);
+        
+        var minChance = neighboursOnSide.Count > 0 ? neighboursOnSide.Min(neighbour => neighbour.Chance) : 1;
+        var countOverall = (int)neighboursOnSide.Sum(e => e.Chance / minChance);
+        
+        if (tileId < 0)
         {
-            var neighbour = neighboursOnSide[tileId];
-            neighbour.Count++;
-            neighboursOnSide[tileId] = neighbour;
-        }
-        else
-        {
+            for (int i = 0; i < neighboursOnSide.Count; i++)
+            {
+                var neighbour = neighboursOnSide[i];
+                var count = countOverall * neighbour.Chance;
+                neighbour.Chance = count / (countOverall + 1);
+                neighboursOnSide[i] = neighbour;
+            }
+            
             var rotation = tile.transform.eulerAngles.y;
             rotation = Mathf.Clamp(rotation, 0, 359);
 #if DEBUG
@@ -51,21 +57,26 @@ public class PossibleNeighbours
 #else
             var entry = new PatternEntry { Id = tile.TileId, YRotation = rotation };
 #endif
-            neighboursOnSide.Add(new PossibleNeighbour(entry));
+            
+            neighboursOnSide.Add(new PossibleNeighbour(entry, 1.0f /  (countOverall + 1)));
         }
-
-        var overallCount = neighboursOnSide.Sum(neighbour => neighbour.Count);
-        for (var i = 0; i < neighboursOnSide.Count; i++)
+        else
         {
-            var neighbour = neighboursOnSide[i];
-            neighbour.Chance = (float)neighbour.Count / overallCount;
-            neighboursOnSide[i] = neighbour;
+            for (int i = 0; i < neighboursOnSide.Count; i++)
+            {
+                var neighbour = neighboursOnSide[i];
+                var count = countOverall * neighbour.Chance;
+                if (i == tileId)
+                    count += 1;
+                neighbour.Chance = count / (countOverall + 1);
+                neighboursOnSide[i] = neighbour;
+            }
         }
         
 #if DEBUG
         var chanceOverall = neighboursOnSide.Sum(neighbour => neighbour.Chance);
-        if (chanceOverall > 1)
-            throw new Exception("overall chance of tile neighbours is bigger than 1");
+        if (Mathf.Abs(chanceOverall - 1) > TileAnalyzer.RotationTolerance)
+            throw new Exception("overall chance of tile neighbours is not equal to 1");
 #endif
     }
 }
