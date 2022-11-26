@@ -69,9 +69,16 @@ namespace WFC
     [RequireComponent(typeof(TilePlacer))]
     public class WFCGenerator : MonoBehaviour
     {
-        public bool UseRandom;
-        public int Dim;
-        public Cell[] Grid;
+        [SerializeField]
+        private bool _useRandom;
+        [SerializeField]
+        private bool _setSeed;
+        [SerializeField]
+        private int _seed;
+        [SerializeField]
+        private int _dim;
+
+        private Cell[] _grid;
 
         private TileAnalyzer _analyzer;
         private TilePlacer _placer;
@@ -129,6 +136,8 @@ namespace WFC
 
         private void Clear()
         {
+            if (_useRandom && _setSeed)
+                Random.InitState(_seed);
             StopGenerateCoroutine();
             _placer.Clear();
             InitGrid(false);
@@ -143,20 +152,20 @@ namespace WFC
         private void InitGrid(bool initNew)
         {
             if (initNew)
-                Grid = new Cell[Dim * Dim];
-            for (int i = 0; i < Grid.Length; i++)
+                _grid = new Cell[_dim * _dim];
+            for (int i = 0; i < _grid.Length; i++)
             {
-                if (IsBorderTile(i, Dim) && _analyzer.Pattern.ContainsKey(PatternEntry.PseudoEntry))
+                if (IsBorderTile(i, _dim) && _analyzer.Pattern.ContainsKey(PatternEntry.PseudoEntry))
                 {
                     var pseudoEntryNeighbours = _analyzer.Pattern[PatternEntry.PseudoEntry].Neighbours;
                     var patternEntries = _analyzer.Pattern.Keys.ToList();
-                    var gridPos = IdxToGridPos(i, Dim);
+                    var gridPos = IdxToGridPos(i, _dim);
                     WFCHelper.ForEachSide(_analyzer.IsEightDirectionAnalyze, (side, x, y) =>
                     {
                         var idx = i;
                         var neighborX = gridPos.x + x;
                         var neighborY = gridPos.y + y;
-                        if (neighborX < 0 || neighborX >= Dim || neighborY < 0 || neighborY >= Dim)
+                        if (neighborX < 0 || neighborX >= _dim || neighborY < 0 || neighborY >= _dim)
                         {
                             var oppositeSide = (ETileSide)(8 - (int)side);
                             var probableEntries = pseudoEntryNeighbours[oppositeSide];
@@ -172,26 +181,26 @@ namespace WFC
                     });
                     if (patternEntries.Count == 0 || (patternEntries.Count == 1 && patternEntries[0].Id == -1))
                         Debug.LogError("empty patternEntries for cell " + i + ". on grid init");
-                    Grid[i] = new Cell(patternEntries);
+                    _grid[i] = new Cell(patternEntries);
                 }
                 else
                 {
-                    Grid[i] = new Cell(_analyzer.Pattern.Keys);
+                    _grid[i] = new Cell(_analyzer.Pattern.Keys);
                 }
             }
         }
 
         private void GenerateStep(int idx)
         {
-            var gridPos = IdxToGridPos(idx, Dim);
-            Grid[idx].TryCollapse(UseRandom);
-            if (Grid[idx].IsCollapsed)
-                PlaceAndUpdateNeighbours(Grid[idx].Entry, gridPos);
+            var gridPos = IdxToGridPos(idx, _dim);
+            _grid[idx].TryCollapse(_useRandom);
+            if (_grid[idx].IsCollapsed)
+                PlaceAndUpdateNeighbours(_grid[idx].Entry, gridPos);
         }
 
         private void PlaceAndUpdateNeighbours(PatternEntry pEntry, Vector2Int gridPosition)
         {
-            var halfDim = Dim / 2;
+            var halfDim = _dim / 2;
             var position = new Vector3(gridPosition.x - halfDim, 0, gridPosition.y - halfDim);
             _placer.PlaceTile(pEntry.Id, position, pEntry.YRotation);
             
@@ -203,7 +212,7 @@ namespace WFC
                 var neighbourGridPos = gridPosition;
                 neighbourGridPos.x += x;
                 neighbourGridPos.y += y;
-                RemoveUnavailableTiles(GridPosToIdx(neighbourGridPos, Dim), tileNeighbours[side]);
+                RemoveUnavailableTiles(GridPosToIdx(neighbourGridPos, _dim), tileNeighbours[side]);
             });
         }
 
@@ -260,10 +269,10 @@ namespace WFC
 
         private void RemoveUnavailableTiles(int idx, List<ProbableEntry> probableNeighbours)
         {
-            if (idx < 0 || idx >= Grid.Length)
+            if (idx < 0 || idx >= _grid.Length)
                 return;
 
-            var probableEntries = Grid[idx].ProbableEntries;
+            var probableEntries = _grid[idx].ProbableEntries;
             if (probableNeighbours.Count == 0)
             {
                 probableEntries.Clear();
@@ -307,16 +316,16 @@ namespace WFC
         {
             int lowestEntropyTileIdx = -1;
             int lowestEntropy = int.MaxValue;
-            for (int i = 0; i < Grid.Length; i++)
+            for (int i = 0; i < _grid.Length; i++)
             {
-                bool suitableEntropy = Grid[i].Entropy < lowestEntropy;
-                suitableEntropy |= UseRandom && Grid[i].Entropy == lowestEntropy && Random.value > 0.5f;
-                if (!Grid[i].IsCollapsed &&
-                    Grid[i].ProbableEntries.Count > 0 &&
+                bool suitableEntropy = _grid[i].Entropy < lowestEntropy;
+                suitableEntropy |= _useRandom && _grid[i].Entropy == lowestEntropy && Random.value > 0.5f;
+                if (!_grid[i].IsCollapsed &&
+                    _grid[i].ProbableEntries.Count > 0 &&
                     suitableEntropy)
                 {
                     lowestEntropyTileIdx = i;
-                    lowestEntropy = Grid[i].Entropy;
+                    lowestEntropy = _grid[i].Entropy;
                 }
             }
 

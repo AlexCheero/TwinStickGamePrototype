@@ -361,8 +361,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7f1f557fb58b6684ca04865681605f95, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  UseRandom: 1
-  Dim: 10
+  _useRandom: 1
+  _setSeed: 1
+  _seed: 8
+  _dim: 5
   _generateStepTime: 0.2
 --- !u!4 &1563116671
 Transform:
