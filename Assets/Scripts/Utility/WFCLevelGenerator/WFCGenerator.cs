@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -169,6 +170,8 @@ namespace WFC
                             }
                         }
                     });
+                    if (patternEntries.Count == 0 || (patternEntries.Count == 1 && patternEntries[0].Id == -1))
+                        Debug.LogError("empty patternEntries for cell " + i + ". on grid init");
                     Grid[i] = new Cell(patternEntries);
                 }
                 else
@@ -327,6 +330,11 @@ namespace WFC
                 y = idx / dim
             };
 
-        private int GridPosToIdx(Vector2Int pos, int dim) => pos.x + pos.y * dim;
+        private int GridPosToIdx(Vector2Int pos, int dim)
+        {
+            if (pos.x < 0 || pos.y < 0)
+                return -1;
+            return pos.x + pos.y * dim;
+        }
     }
 }
