@@ -193,14 +193,6 @@ public class TileAnalyzer : MonoBehaviour
                     if (!Pattern.ContainsKey(pseudoEntry))
                         Pattern.Add(pseudoEntry, new ProbableNeighbours());
                     var oppositeSide = (ETileSide)(8 - (int)side);
-
-                    if (oppositeSide == ETileSide.Up)
-                    {
-                        int a = 0;
-                    }
-                    
-                    var tileName = tile.name;
-                    
                     Pattern[pseudoEntry].Add(oppositeSide, tile);
                     return;
                 }
