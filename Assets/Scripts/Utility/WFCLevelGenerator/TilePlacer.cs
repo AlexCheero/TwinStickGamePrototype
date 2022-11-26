@@ -105,6 +105,7 @@ public class TilePlacer : MonoBehaviour
         
         var prototype = _palette.Palette[idx];
         var tile = Instantiate(prototype, position, prototype.transform.rotation);
+        tile.name += yRotation;
         tile.transform.eulerAngles = new Vector3(0, yRotation, 0);
         PlacedTiles[position] = tile;
     }
