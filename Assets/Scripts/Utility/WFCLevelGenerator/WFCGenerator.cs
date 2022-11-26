@@ -332,7 +332,7 @@ namespace WFC
 
         private int GridPosToIdx(Vector2Int pos, int dim)
         {
-            if (pos.x < 0 || pos.y < 0)
+            if (pos.x < 0 || pos.y < 0 || pos.x >= dim || pos.y >= dim)
                 return -1;
             return pos.x + pos.y * dim;
         }
