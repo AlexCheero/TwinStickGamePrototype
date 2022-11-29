@@ -169,13 +169,13 @@ namespace WFC
                         {
                             var oppositeSide = (ETileSide)(8 - (int)side);
                             var probableEntries = pseudoEntryNeighbours[oppositeSide];
-                            for (int i = patternEntries.Count - 1; i >= 0; i--)
+                            for (int j = patternEntries.Count - 1; j >= 0; j--)
                             {
                                 var probableNeighbourIdx =
                                     probableEntries.FindIndex(probableEntry =>
-                                        TileAnalyzer.EntryComparer.Equals(probableEntry.Entry, patternEntries[i]));
+                                        TileAnalyzer.EntryComparer.Equals(probableEntry.Entry, patternEntries[j]));
                                 if (probableNeighbourIdx < 0)
-                                    patternEntries.RemoveAt(i);
+                                    patternEntries.RemoveAt(j);
                             }
                         }
                     });
