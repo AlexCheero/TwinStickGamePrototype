@@ -362,11 +362,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _useRandom: 1
-  _setSeed: 1
+  _setSeed: 0
   _incrementSeed: 0
-  _seed: 36
-  _dim: 5
-  _tryRegenerate: 0
+  _seed: 0
+  _tryRegenerate: 1
   _regenAttempts: 1000
   _useFallbackTile: 0
   _fallBackTileIdx: 2
@@ -399,6 +398,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _snapSize: 1
+  _dimension: 10
 --- !u!114 &1563116673
 MonoBehaviour:
   m_ObjectHideFlags: 0

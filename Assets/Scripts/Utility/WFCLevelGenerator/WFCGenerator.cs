@@ -62,6 +62,12 @@ namespace WFC
             IsCollapsed = true;
         }
 
+        public void CollapseManually(int id, float rotation)
+        {
+            Entry = new PatternEntry { Id = id, YRotation = rotation };
+            IsCollapsed = true;
+        }
+
         public int Entropy => ProbableEntries.Count;
     }
 
@@ -78,8 +84,6 @@ namespace WFC
         private bool _incrementSeed;
         [SerializeField]
         private int _seed;
-        [SerializeField]
-        private int _dim;
         [SerializeField]
         private bool _tryRegenerate;
         [SerializeField]
@@ -103,8 +107,14 @@ namespace WFC
             _placer = GetComponent<TilePlacer>();
             _palette = GetComponent<TilePalette>();
 
+            _placer.OnPlaced += OnTilePlacedManually;
             _fallBackTileIdx = Mathf.Clamp(_fallBackTileIdx, 0, _palette.Palette.Count - 1);
             _fallBackBorderTileIdx = Mathf.Clamp(_fallBackBorderTileIdx, 0, _palette.Palette.Count - 1);
+        }
+
+        void OnDestroy()
+        {
+            _placer.OnPlaced -= OnTilePlacedManually;
         }
 
         IEnumerator Start()
@@ -140,6 +150,7 @@ namespace WFC
                 var ctr = 0;
                 while (!Generate() && _tryRegenerate)
                 {
+                    InitGrid(false);
                     ctr++;
                     if (ctr >= _regenAttempts)
                     {
@@ -168,29 +179,31 @@ namespace WFC
 
         private bool IsBorderTile(int idx, int dim)
         {
-            var pos = IdxToGridPos(idx, dim);
+            var pos = WFCHelper.IdxToGridPos(idx, dim);
             return pos.x == 0 || pos.y == 0 || pos.x == dim - 1 || pos.y == dim - 1;
         }
         
         private void InitGrid(bool initNew)
         {
+            var dimension = _placer.Dimension;
             if (initNew)
-                _grid = new Cell[_dim * _dim];
+                _grid = new Cell[dimension * dimension];
             for (int i = 0; i < _grid.Length; i++)
             {
-                if (IsBorderTile(i, _dim) && _analyzer.Pattern.ContainsKey(PatternEntry.PseudoEntry))
+                if (IsBorderTile(i, dimension) && _analyzer.Pattern.ContainsKey(PatternEntry.PseudoEntry))
                 {
                     var pseudoEntryNeighbours = _analyzer.Pattern[PatternEntry.PseudoEntry].Neighbours;
                     var patternEntries = _analyzer.Pattern.Keys.ToList();
-                    var gridPos = IdxToGridPos(i, _dim);
-                    WFCHelper.ForEachSide(_analyzer.IsEightDirectionAnalyze, (side, x, y) =>
+                    var gridPos = WFCHelper.IdxToGridPos(i, dimension);
+                    WFCHelper.ForEachSide((side, x, y) =>
                     {
-                        var idx = i;
                         var neighborX = gridPos.x + x;
                         var neighborY = gridPos.y + y;
-                        if (neighborX < 0 || neighborX >= _dim || neighborY < 0 || neighborY >= _dim)
+                        if (neighborX < 0 || neighborX >= dimension || neighborY < 0 || neighborY >= dimension)
                         {
                             var oppositeSide = (ETileSide)(8 - (int)side);
+                            if (!pseudoEntryNeighbours.ContainsKey(oppositeSide))
+                                return;
                             var probableEntries = pseudoEntryNeighbours[oppositeSide];
                             for (int j = patternEntries.Count - 1; j >= 0; j--)
                             {
@@ -215,7 +228,7 @@ namespace WFC
 
         private void GenerateStep(int idx)
         {
-            var gridPos = IdxToGridPos(idx, _dim);
+            var gridPos = WFCHelper.IdxToGridPos(idx, _placer.Dimension);
             _grid[idx].TryCollapse(_useRandom);
             if (_grid[idx].IsCollapsed)
                 UpdateNeighbours(_grid[idx].Entry, gridPos);
@@ -226,16 +239,17 @@ namespace WFC
             var cell = _grid[idx];
             if (!cell.IsCollapsed && (!_useFallbackTile || cell.ProbableEntries.Count > 0))
                 return;
+            var dimension = _placer.Dimension;
             var pEntry = cell.Entry;
-            var gridPos = IdxToGridPos(idx, _dim);
+            var gridPos = WFCHelper.IdxToGridPos(idx, dimension);
             if (_useFallbackTile && cell.ProbableEntries.Count == 0)
             {
-                if (IsBorderTile(idx, _dim))
+                if (IsBorderTile(idx, dimension))
                 {
                     pEntry.Id = _fallBackBorderTileIdx;
                     if (gridPos.x == 0)
                         pEntry.YRotation = 90;
-                    else if (gridPos.x == _dim - 1)
+                    else if (gridPos.x == dimension - 1)
                         pEntry.YRotation = 270;
                     else if (gridPos.y == 0)
                         pEntry.YRotation = 0;
@@ -252,23 +266,28 @@ namespace WFC
             if (idx < 0 || idx >= _grid.Length)
                 throw new Exception("wrong idx");
 #endif
-            var halfDim = _dim / 2;
-            var position = new Vector3(gridPos.x - halfDim, 0, gridPos.y - halfDim);
-            
-            _placer.PlaceTile(pEntry.Id, position, pEntry.YRotation);
+            _placer.PlaceTile(pEntry.Id, WFCHelper.GridPosToPos(gridPos, dimension), pEntry.YRotation);
+        }
+
+        private void OnTilePlacedManually(int tileId, Vector3 position, float yRotation)
+        {
+            var gridPos = WFCHelper.PosToGridPos(position, _placer.Dimension);
+            var idx = WFCHelper.GridPosToIdx(gridPos, _placer.Dimension);
+            _grid[idx].CollapseManually(tileId, yRotation);
+            UpdateNeighbours(_grid[idx].Entry, gridPos);
         }
         
         private void UpdateNeighbours(PatternEntry pEntry, Vector2Int gridPosition)
         {
             var tileNeighbours = _analyzer.Pattern[pEntry].Neighbours;
-            WFCHelper.ForEachSide(_analyzer.IsEightDirectionAnalyze, (side, x, y) =>
+            WFCHelper.ForEachSide((side, x, y) =>
             {
                 if (!tileNeighbours.ContainsKey(side))
                     return;
                 var neighbourGridPos = gridPosition;
                 neighbourGridPos.x += x;
                 neighbourGridPos.y += y;
-                RemoveUnavailableTiles(GridPosToIdx(neighbourGridPos, _dim), tileNeighbours[side]);
+                RemoveUnavailableTiles(WFCHelper.GridPosToIdx(neighbourGridPos, _placer.Dimension), tileNeighbours[side]);
             });
         }
 
@@ -349,20 +368,6 @@ namespace WFC
             }
 
             return lowestEntropyTileIdx;
-        }
-
-        private Vector2Int IdxToGridPos(int idx, int dim) =>
-            new Vector2Int
-            {
-                x = idx % dim,
-                y = idx / dim
-            };
-
-        private int GridPosToIdx(Vector2Int pos, int dim)
-        {
-            if (pos.x < 0 || pos.y < 0 || pos.x >= dim || pos.y >= dim)
-                return -1;
-            return pos.x + pos.y * dim;
         }
     }
 }

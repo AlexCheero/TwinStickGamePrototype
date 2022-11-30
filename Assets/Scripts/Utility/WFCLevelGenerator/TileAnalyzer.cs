@@ -112,8 +112,6 @@ public class TileAnalyzer : MonoBehaviour
     [SerializeField]
     private bool _isEightDirectionAnalyze;
 
-    public bool IsEightDirectionAnalyze => _isEightDirectionAnalyze;
-    
     private TilePlacer _placer;
     private TilePalette _palette;
     
@@ -182,7 +180,7 @@ public class TileAnalyzer : MonoBehaviour
         foreach (var tile in _placer.PlacedTiles.Values)
         {
             var pos = tile.transform.position;
-            WFCHelper.ForEachSide(_isEightDirectionAnalyze, (side, x, y) =>
+            WFCHelper.ForEachSide((side, x, y) =>
             {
                 var neighbourPos = pos;
                 neighbourPos.x += x * _placer.SnapSize;
@@ -202,7 +200,7 @@ public class TileAnalyzer : MonoBehaviour
                 if (!Pattern.ContainsKey(entry))
                     Pattern.Add(entry, new ProbableNeighbours());
                 Pattern[entry].Add(side, neighbour);
-            });
+            }, _isEightDirectionAnalyze);
         }
     }
 }

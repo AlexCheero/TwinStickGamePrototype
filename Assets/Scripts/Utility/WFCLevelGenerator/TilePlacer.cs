@@ -5,10 +5,16 @@ using WFC;
 [RequireComponent(typeof(TilePalette))]
 public class TilePlacer : MonoBehaviour
 {
+    public delegate void OnPlacedDelegate(int tileId, Vector3 position, float yRotation);
+    public event OnPlacedDelegate OnPlaced;
+    
     [SerializeField]
     private float _snapSize = 1.0f;
+    [SerializeField]
+    private int _dimension;
 
     public float SnapSize => _snapSize;
+    public int Dimension => _dimension;
     
     private Camera _cam;
     private TilePalette _palette;
@@ -38,18 +44,40 @@ public class TilePlacer : MonoBehaviour
             var marker = Instantiate(_palette.Palette[i], markersHolder, true);
             marker.name = "marker " + i;
             marker.gameObject.SetActive(false);
-            var renderers = marker.GetComponentsInChildren<MeshRenderer>();
-            foreach (var renderer in renderers)
-            {
-                foreach (var mat in renderer.materials)
-                    mat.color = Color.green;
-            }
+            SetMarkerColor(marker.transform, Color.green);
             _markers.Add(marker.transform);
             //Destroy(marker);
         }
 
         _currentMarkerIdx = 0;
         CurrentMarker.gameObject.SetActive(true);
+
+        var halfSnap = _snapSize / 2;
+        CreateBoundaryMarker(WFCHelper.GridPosToPos(new Vector2Int(0, 0), _dimension) +
+                             new Vector3(-halfSnap, 0, -halfSnap));
+        CreateBoundaryMarker(WFCHelper.GridPosToPos(new Vector2Int(_dimension - 1, 0), _dimension) +
+                             new Vector3(halfSnap, 0, -halfSnap));
+        CreateBoundaryMarker(WFCHelper.GridPosToPos(new Vector2Int(0, _dimension - 1), _dimension) +
+                             new Vector3(-halfSnap, 0, halfSnap));
+        CreateBoundaryMarker(WFCHelper.GridPosToPos(new Vector2Int(_dimension - 1, _dimension - 1), _dimension) +
+                             new Vector3(halfSnap, 0, halfSnap));
+    }
+
+    private void SetMarkerColor(Transform marker, Color color)
+    {
+        var renderers = marker.GetComponentsInChildren<MeshRenderer>();
+        foreach (var renderer in renderers)
+        {
+            foreach (var mat in renderer.materials)
+                mat.color = color;
+        }
+    }
+
+    private void CreateBoundaryMarker(Vector3 position)
+    {
+        var marker = GameObject.CreatePrimitive(PrimitiveType.Sphere).transform;
+        marker.localScale = new Vector3(0.25f, 0.25f, 0.25f);
+        marker.position = position;
     }
 
     void Update()
@@ -64,13 +92,17 @@ public class TilePlacer : MonoBehaviour
         var z = SnapValue(ray.origin.z + t * ray.direction.z);
        
         var markerPosition = new Vector3(x, 0, z);
+        var gridPos = WFCHelper.PosToGridPos(markerPosition, _dimension);
+
+        var isPosValid = WFCHelper.IsGridPosValid(gridPos, _dimension);
+        SetMarkerColor(CurrentMarker, isPosValid ? Color.green : Color.red);
         CurrentMarker.position = markerPosition;
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(0) && isPosValid)
         {
             if (Input.GetKey(KeyCode.LeftShift))
                 DeleteTile(markerPosition);
             else
-                PlaceTile(_currentMarkerIdx, markerPosition, CurrentMarker.gameObject.transform.eulerAngles.y);
+                PlaceTile(_currentMarkerIdx, markerPosition, CurrentMarker.gameObject.transform.eulerAngles.y, true);
         }
         if (Input.GetMouseButtonDown(1))
         {
@@ -98,7 +130,7 @@ public class TilePlacer : MonoBehaviour
         return snapped * sign;
     }
 
-    public void PlaceTile(int idx, Vector3 position, float yRotation)
+    public void PlaceTile(int idx, Vector3 position, float yRotation, bool manually = false)
     {
         if (PlacedTiles.ContainsKey(position))
             DeleteTile(position);
@@ -108,6 +140,9 @@ public class TilePlacer : MonoBehaviour
         tile.name += yRotation;
         tile.transform.eulerAngles = new Vector3(0, yRotation, 0);
         PlacedTiles[position] = tile;
+
+        if (manually)
+            OnPlaced?.Invoke(tile.TileId, position, yRotation);
     }
 
     private void DeleteTile(Vector3 position)
