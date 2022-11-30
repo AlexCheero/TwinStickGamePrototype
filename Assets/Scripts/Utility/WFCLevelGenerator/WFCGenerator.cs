@@ -75,6 +75,8 @@ namespace WFC
         [SerializeField]
         private bool _setSeed;
         [SerializeField]
+        private bool _incrementSeed;
+        [SerializeField]
         private int _seed;
         [SerializeField]
         private int _dim;
@@ -107,6 +109,8 @@ namespace WFC
 
         IEnumerator Start()
         {
+            if (_useRandom && _setSeed)
+                Random.InitState(_seed);
             while (_analyzer.Pattern == null)
                 yield return null;
             InitGrid(true);
@@ -153,7 +157,11 @@ namespace WFC
         private void Clear()
         {
             if (_useRandom && _setSeed)
+            {
                 Random.InitState(_seed);
+                if (_incrementSeed)
+                    _seed++;
+            }
             _placer.Clear();
             InitGrid(false);
         }

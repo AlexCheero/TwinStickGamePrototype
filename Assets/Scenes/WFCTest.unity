@@ -363,11 +363,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _useRandom: 1
   _setSeed: 1
-  _seed: 8
-  _dim: 4
-  _tryRegenerate: 1
+  _incrementSeed: 0
+  _seed: 36
+  _dim: 5
+  _tryRegenerate: 0
   _regenAttempts: 1000
-  _useFallbackTile: 1
+  _useFallbackTile: 0
   _fallBackTileIdx: 2
   _fallBackBorderTileIdx: 1
 --- !u!4 &1563116671
