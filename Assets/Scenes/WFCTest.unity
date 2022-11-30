@@ -362,9 +362,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _useRandom: 1
-  _setSeed: 1
+  _setSeed: 0
   _seed: 8
   _dim: 5
+  _tryRegenerate: 0
+  _regenAttempts: 1000
   _generateStepTime: 0.2
 --- !u!4 &1563116671
 Transform:

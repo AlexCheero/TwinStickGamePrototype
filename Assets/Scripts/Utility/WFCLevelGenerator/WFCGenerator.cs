@@ -77,6 +77,10 @@ namespace WFC
         private int _seed;
         [SerializeField]
         private int _dim;
+        [SerializeField]
+        private bool _tryRegenerate;
+        [SerializeField]
+        private int _regenAttempts = 1000;
 
         private Cell[] _grid;
 
@@ -130,10 +134,10 @@ namespace WFC
                 else
                 {
                     var ctr = 0;
-                    while (!Generate())
+                    while (!Generate() && _tryRegenerate)
                     {
                         ctr++;
-                        if (ctr >= 1000)
+                        if (ctr >= _regenAttempts)
                         {
                             Debug.LogWarning("collapse attempts exceeded");
                             break;
