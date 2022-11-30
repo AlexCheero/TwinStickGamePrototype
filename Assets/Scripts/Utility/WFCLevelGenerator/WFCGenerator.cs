@@ -129,7 +129,17 @@ namespace WFC
                 }
                 else
                 {
-                    Generate();
+                    var ctr = 0;
+                    while (!Generate())
+                    {
+                        ctr++;
+                        if (ctr >= 1000)
+                        {
+                            Debug.LogWarning("collapse attempts exceeded");
+                            break;
+                        }
+                    }
+                    Debug.Log("collapsed in " + ctr + " attempts");
                 }
             }
         }
@@ -216,28 +226,22 @@ namespace WFC
             });
         }
 
-        private void Generate()
+        private bool Generate()
         {
-            var ctr = 0;
+            var notCollapsedCount = _grid.Length;
             var idx = GetLowestEntropyCellIdx();
             while (idx >= 0)
             {
                 GenerateStep(idx);
-                
                 idx = GetLowestEntropyCellIdx();
-                ctr++;
-
-                if (ctr >= 10000)
-                {
-                    Debug.LogError("infinte loop");
-                    break;
-                }
+                notCollapsedCount--;
             }
+
+            return notCollapsedCount == 0;
         }
         
         private IEnumerator GenerateCoroutine()
         {
-            var ctr = 0;
             var idx = GetLowestEntropyCellIdx();
             while (idx >= 0)
             {
@@ -246,13 +250,6 @@ namespace WFC
                 yield return _generateDelay;
                 
                 idx = GetLowestEntropyCellIdx();
-                ctr++;
-
-                if (ctr >= 10000)
-                {
-                    Debug.LogError("infinte loop");
-                    break;
-                }
             }
 
             _generateCoroutine = null;
