@@ -95,8 +95,15 @@ public class TilePlacer : MonoBehaviour
         var gridPos = WFCHelper.PosToGridPos(markerPosition, _dimension);
 
         var isPosValid = WFCHelper.IsGridPosValid(gridPos, _dimension);
-        SetMarkerColor(CurrentMarker, isPosValid ? Color.green : Color.red);
-        CurrentMarker.position = markerPosition;
+        var markerColor = Color.green;
+        if (!isPosValid)
+            markerColor = Color.red;
+        else if (PlacedTiles.ContainsKey(markerPosition))
+            markerColor = Color.yellow;
+        SetMarkerColor(CurrentMarker, markerColor);
+        //shift marker slightly towards camera so it can be rendered on top of already placed tile
+        var markerToCamDirection = (_cam.transform.position - markerPosition).normalized;
+        CurrentMarker.position = markerPosition + markerToCamDirection * 0.1f;
         if (Input.GetMouseButtonDown(0) && isPosValid)
         {
             if (Input.GetKey(KeyCode.LeftShift))
