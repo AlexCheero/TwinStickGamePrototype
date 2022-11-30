@@ -21,10 +21,24 @@ namespace WFC
     
     public class Cell
     {
+        private enum ECollapseState
+        {
+            NotCollapsed,
+            Collapsed,
+            CollapsedManually
+        }
+        
         public readonly List<ProbableEntry> ProbableEntries;
+        
+        private ECollapseState _collapseState;
+        
         public PatternEntry Entry { get; private set; }
-        public bool IsCollapsed { get; private set; }
 
+        public bool IsCollapsed => _collapseState == ECollapseState.Collapsed ||
+                                   _collapseState == ECollapseState.CollapsedManually;
+
+        public bool IsCollapsedManually => _collapseState == ECollapseState.CollapsedManually;
+        
         public Cell(ICollection<PatternEntry> entries)
         {
             var baseChance = 1.0f / entries.Count;
@@ -35,7 +49,7 @@ namespace WFC
                     continue;
                 ProbableEntries.Add(new ProbableEntry(entry, baseChance));
             }
-            IsCollapsed = false;
+            _collapseState = ECollapseState.NotCollapsed;
         }
 
         public void TryCollapse(bool useRandom)
@@ -54,18 +68,18 @@ namespace WFC
 
             if (chance == 0)
             {
-                IsCollapsed = false;
+                _collapseState = ECollapseState.NotCollapsed;
                 return;
             }
 
             Entry = selectedEntry.Entry;
-            IsCollapsed = true;
+            _collapseState = ECollapseState.Collapsed;
         }
 
         public void CollapseManually(int id, float rotation)
         {
             Entry = new PatternEntry { Id = id, YRotation = rotation };
-            IsCollapsed = true;
+            _collapseState = ECollapseState.CollapsedManually;
         }
 
         public int Entropy => ProbableEntries.Count;
@@ -123,7 +137,7 @@ namespace WFC
                 Random.InitState(_seed);
             while (_analyzer.Pattern == null)
                 yield return null;
-            InitGrid(true);
+            InitGrid();
         }
 
         void Update()
@@ -150,7 +164,7 @@ namespace WFC
                 var ctr = 0;
                 while (!Generate() && _tryRegenerate)
                 {
-                    InitGrid(false);
+                    InitGrid();
                     ctr++;
                     if (ctr >= _regenAttempts)
                     {
@@ -174,7 +188,7 @@ namespace WFC
                     _seed++;
             }
             _placer.Clear();
-            InitGrid(false);
+            InitGrid();
         }
 
         private bool IsBorderTile(int idx, int dim)
@@ -183,13 +197,15 @@ namespace WFC
             return pos.x == 0 || pos.y == 0 || pos.x == dim - 1 || pos.y == dim - 1;
         }
         
-        private void InitGrid(bool initNew)
+        private void InitGrid()
         {
             var dimension = _placer.Dimension;
-            if (initNew)
-                _grid = new Cell[dimension * dimension];
+            _grid ??= new Cell[dimension * dimension];
             for (int i = 0; i < _grid.Length; i++)
             {
+                if (_grid[i] != null && _grid[i].IsCollapsedManually)
+                    continue;
+                
                 if (IsBorderTile(i, dimension) && _analyzer.Pattern.ContainsKey(PatternEntry.PseudoEntry))
                 {
                     var pseudoEntryNeighbours = _analyzer.Pattern[PatternEntry.PseudoEntry].Neighbours;
@@ -223,6 +239,14 @@ namespace WFC
                 {
                     _grid[i] = new Cell(_analyzer.Pattern.Keys);
                 }
+            }
+
+            for (int i = 0; i < _grid.Length; i++)
+            {
+                if (!_grid[i].IsCollapsedManually)
+                    continue;
+                var gridPos = WFCHelper.IdxToGridPos(i, _placer.Dimension);
+                UpdateNeighbours(_grid[i].Entry, gridPos);
             }
         }
 
