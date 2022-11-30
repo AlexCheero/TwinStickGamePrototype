@@ -86,6 +86,8 @@ namespace WFC
         private bool _useFallbackTile;
         [SerializeField]
         private int _fallBackTileIdx;
+        [SerializeField]
+        private int _fallBackBorderTileIdx;
 
         private Cell[] _grid;
 
@@ -100,6 +102,7 @@ namespace WFC
             _palette = GetComponent<TilePalette>();
 
             _fallBackTileIdx = Mathf.Clamp(_fallBackTileIdx, 0, _palette.Palette.Count - 1);
+            _fallBackBorderTileIdx = Mathf.Clamp(_fallBackBorderTileIdx, 0, _palette.Palette.Count - 1);
         }
 
         IEnumerator Start()
@@ -216,16 +219,31 @@ namespace WFC
             if (!cell.IsCollapsed && (!_useFallbackTile || cell.ProbableEntries.Count > 0))
                 return;
             var pEntry = cell.Entry;
+            var gridPos = IdxToGridPos(idx, _dim);
             if (_useFallbackTile && cell.ProbableEntries.Count == 0)
             {
-                pEntry.Id = _fallBackTileIdx;
-                pEntry.YRotation = 0;
+                if (IsBorderTile(idx, _dim))
+                {
+                    pEntry.Id = _fallBackBorderTileIdx;
+                    if (gridPos.x == 0)
+                        pEntry.YRotation = 90;
+                    else if (gridPos.x == _dim - 1)
+                        pEntry.YRotation = 270;
+                    else if (gridPos.y == 0)
+                        pEntry.YRotation = 0;
+                    else
+                        pEntry.YRotation = 180;
+                }
+                else
+                {
+                    pEntry.Id = _fallBackTileIdx;
+                    pEntry.YRotation = 0;
+                }
             }
 #if DEBUG
             if (idx < 0 || idx >= _grid.Length)
                 throw new Exception("wrong idx");
 #endif
-            var gridPos = IdxToGridPos(idx, _dim);
             var halfDim = _dim / 2;
             var position = new Vector3(gridPos.x - halfDim, 0, gridPos.y - halfDim);
             

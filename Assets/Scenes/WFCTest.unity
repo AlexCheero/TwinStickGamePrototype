@@ -362,14 +362,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _useRandom: 1
-  _setSeed: 0
+  _setSeed: 1
   _seed: 8
-  _dim: 10
+  _dim: 4
   _tryRegenerate: 1
   _regenAttempts: 1000
   _useFallbackTile: 1
   _fallBackTileIdx: 2
-  _generateStepTime: 0.2
+  _fallBackBorderTileIdx: 1
 --- !u!4 &1563116671
 Transform:
   m_ObjectHideFlags: 0
