@@ -364,9 +364,11 @@ MonoBehaviour:
   _useRandom: 1
   _setSeed: 0
   _seed: 8
-  _dim: 5
-  _tryRegenerate: 0
+  _dim: 10
+  _tryRegenerate: 1
   _regenAttempts: 1000
+  _useFallbackTile: 1
+  _fallBackTileIdx: 2
   _generateStepTime: 0.2
 --- !u!4 &1563116671
 Transform:

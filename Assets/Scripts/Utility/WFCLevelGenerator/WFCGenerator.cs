@@ -67,6 +67,7 @@ namespace WFC
 
     [RequireComponent(typeof(TileAnalyzer))]
     [RequireComponent(typeof(TilePlacer))]
+    [RequireComponent(typeof(TilePalette))]
     public class WFCGenerator : MonoBehaviour
     {
         [SerializeField]
@@ -81,22 +82,24 @@ namespace WFC
         private bool _tryRegenerate;
         [SerializeField]
         private int _regenAttempts = 1000;
+        [SerializeField]
+        private bool _useFallbackTile;
+        [SerializeField]
+        private int _fallBackTileIdx;
 
         private Cell[] _grid;
 
         private TileAnalyzer _analyzer;
         private TilePlacer _placer;
-        
-        [SerializeField]
-        private float _generateStepTime = 0.2f;
-        private WaitForSeconds _generateDelay;
-        private IEnumerator _generateCoroutine;
+        private TilePalette _palette;
         
         void Awake()
         {
             _analyzer = GetComponent<TileAnalyzer>();
             _placer = GetComponent<TilePlacer>();
-            _generateDelay = new WaitForSeconds(_generateStepTime);
+            _palette = GetComponent<TilePalette>();
+
+            _fallBackTileIdx = Mathf.Clamp(_fallBackTileIdx, 0, _palette.Palette.Count - 1);
         }
 
         IEnumerator Start()
@@ -118,6 +121,7 @@ namespace WFC
                 }
 
                 GenerateStep(idx);
+                PlaceTile(idx);
             }
 
             if (Input.GetKeyDown(KeyCode.C))
@@ -126,25 +130,20 @@ namespace WFC
             if (Input.GetKeyDown(KeyCode.G))
             {
                 Clear();
-                if (Input.GetKey(KeyCode.LeftShift))
+                var ctr = 0;
+                while (!Generate() && _tryRegenerate)
                 {
-                    _generateCoroutine = GenerateCoroutine();
-                    StartCoroutine(_generateCoroutine);
-                }
-                else
-                {
-                    var ctr = 0;
-                    while (!Generate() && _tryRegenerate)
+                    ctr++;
+                    if (ctr >= _regenAttempts)
                     {
-                        ctr++;
-                        if (ctr >= _regenAttempts)
-                        {
-                            Debug.LogWarning("collapse attempts exceeded");
-                            break;
-                        }
+                        Debug.LogWarning("collapse attempts exceeded");
+                        break;
                     }
-                    Debug.Log("collapsed in " + ctr + " attempts");
                 }
+                Debug.Log("collapsed in " + ctr + " attempts");
+
+                for (int i = 0; i < _grid.Length; i++)
+                    PlaceTile(i);
             }
         }
 
@@ -152,7 +151,6 @@ namespace WFC
         {
             if (_useRandom && _setSeed)
                 Random.InitState(_seed);
-            StopGenerateCoroutine();
             _placer.Clear();
             InitGrid(false);
         }
@@ -209,15 +207,33 @@ namespace WFC
             var gridPos = IdxToGridPos(idx, _dim);
             _grid[idx].TryCollapse(_useRandom);
             if (_grid[idx].IsCollapsed)
-                PlaceAndUpdateNeighbours(_grid[idx].Entry, gridPos);
+                UpdateNeighbours(_grid[idx].Entry, gridPos);
         }
 
-        private void PlaceAndUpdateNeighbours(PatternEntry pEntry, Vector2Int gridPosition)
+        private void PlaceTile(int idx)
         {
+            var cell = _grid[idx];
+            if (!cell.IsCollapsed && (!_useFallbackTile || cell.ProbableEntries.Count > 0))
+                return;
+            var pEntry = cell.Entry;
+            if (_useFallbackTile && cell.ProbableEntries.Count == 0)
+            {
+                pEntry.Id = _fallBackTileIdx;
+                pEntry.YRotation = 0;
+            }
+#if DEBUG
+            if (idx < 0 || idx >= _grid.Length)
+                throw new Exception("wrong idx");
+#endif
+            var gridPos = IdxToGridPos(idx, _dim);
             var halfDim = _dim / 2;
-            var position = new Vector3(gridPosition.x - halfDim, 0, gridPosition.y - halfDim);
-            _placer.PlaceTile(pEntry.Id, position, pEntry.YRotation);
+            var position = new Vector3(gridPos.x - halfDim, 0, gridPos.y - halfDim);
             
+            _placer.PlaceTile(pEntry.Id, position, pEntry.YRotation);
+        }
+        
+        private void UpdateNeighbours(PatternEntry pEntry, Vector2Int gridPosition)
+        {
             var tileNeighbours = _analyzer.Pattern[pEntry].Neighbours;
             WFCHelper.ForEachSide(_analyzer.IsEightDirectionAnalyze, (side, x, y) =>
             {
@@ -244,30 +260,6 @@ namespace WFC
             return notCollapsedCount == 0;
         }
         
-        private IEnumerator GenerateCoroutine()
-        {
-            var idx = GetLowestEntropyCellIdx();
-            while (idx >= 0)
-            {
-                GenerateStep(idx);
-
-                yield return _generateDelay;
-                
-                idx = GetLowestEntropyCellIdx();
-            }
-
-            _generateCoroutine = null;
-        }
-
-        private void StopGenerateCoroutine()
-        {
-            if (_generateCoroutine != null)
-            {
-                StopCoroutine(_generateCoroutine);
-                _generateCoroutine = null;
-            }
-        }
-
         private void RemoveUnavailableTiles(int idx, List<ProbableEntry> probableNeighbours)
         {
             if (idx < 0 || idx >= _grid.Length)
