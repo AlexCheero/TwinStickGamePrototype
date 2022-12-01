@@ -141,7 +141,7 @@ namespace WFC
                 Random.InitState(_seed);
             while (_analyzer.Pattern == null)
                 yield return null;
-            InitGrid();
+            InitGrid(true);
         }
 
         void Update()
@@ -151,7 +151,7 @@ namespace WFC
                 var idx = GetLowestEntropyCellIdx();
                 if (idx < 0)
                 {
-                    Clear();
+                    Clear(false);
                     idx = GetLowestEntropyCellIdx();
                 }
 
@@ -160,15 +160,15 @@ namespace WFC
             }
 
             if (Input.GetKeyDown(KeyCode.C))
-                Clear();
+                Clear(true);
 
             if (Input.GetKeyDown(KeyCode.G))
             {
-                Clear();
+                Clear(false);
                 var ctr = 0;
                 while (!Generate() && _tryRegenerate)
                 {
-                    InitGrid();
+                    InitGrid(false);
                     ctr++;
                     if (ctr >= _regenAttempts)
                     {
@@ -183,7 +183,7 @@ namespace WFC
             }
         }
 
-        private void Clear()
+        private void Clear(bool clearManuallyCollapsed)
         {
             if (_useRandom && _setSeed)
             {
@@ -192,7 +192,7 @@ namespace WFC
                     _seed++;
             }
             _placer.Clear();
-            InitGrid();
+            InitGrid(clearManuallyCollapsed);
         }
 
         private bool IsBorderTile(int idx, int dim)
@@ -201,13 +201,13 @@ namespace WFC
             return pos.x == 0 || pos.y == 0 || pos.x == dim - 1 || pos.y == dim - 1;
         }
         
-        private void InitGrid()
+        private void InitGrid(bool clearManuallyCollapsed)
         {
             var dimension = _placer.Dimension;
             _grid ??= new Cell[dimension * dimension];
             for (int i = 0; i < _grid.Length; i++)
             {
-                if (_grid[i] != null && _grid[i].IsCollapsedManually)
+                if (!clearManuallyCollapsed && _grid[i] != null && _grid[i].IsCollapsedManually)
                     continue;
                 
                 if (IsBorderTile(i, dimension) && _analyzer.Pattern.ContainsKey(PatternEntry.PseudoEntry))
