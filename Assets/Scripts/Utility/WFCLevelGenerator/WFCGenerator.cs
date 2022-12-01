@@ -32,6 +32,10 @@ namespace WFC
         
         private ECollapseState _collapseState;
         
+#if DEBUG
+        public bool FallbackUsed;
+#endif
+        
         public PatternEntry Entry { get; private set; }
 
         public bool IsCollapsed => _collapseState == ECollapseState.Collapsed ||
@@ -261,12 +265,14 @@ namespace WFC
         private void PlaceTile(int idx)
         {
             var cell = _grid[idx];
-            if (!cell.IsCollapsed && (!_useFallbackTile || cell.ProbableEntries.Count > 0))
+            bool shouldPlace = cell.IsCollapsed || _useFallbackTile;
+            if (!shouldPlace)
                 return;
+            
             var dimension = _placer.Dimension;
             var pEntry = cell.Entry;
             var gridPos = WFCHelper.IdxToGridPos(idx, dimension);
-            if (_useFallbackTile && cell.ProbableEntries.Count == 0)
+            if (!cell.IsCollapsed)
             {
                 if (IsBorderTile(idx, dimension))
                 {
@@ -285,6 +291,10 @@ namespace WFC
                     pEntry.Id = _fallBackTileIdx;
                     pEntry.YRotation = 0;
                 }
+
+#if DEBUG
+                _grid[idx].FallbackUsed = true;
+#endif
             }
 #if DEBUG
             if (idx < 0 || idx >= _grid.Length)
