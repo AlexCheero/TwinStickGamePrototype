@@ -5,6 +5,9 @@ using Unity.Plastic.Newtonsoft.Json;
 using UnityEngine;
 using WFC;
 
+using PatternList = System.Collections.Generic.List<System.Tuple<PatternEntry, ProbableNeighbours>>;
+using PatternDict = System.Collections.Generic.Dictionary<PatternEntry, ProbableNeighbours>;
+
 public class ProbableNeighbours
 {
     //TODO: make private
@@ -116,22 +119,27 @@ public class TileAnalyzer : MonoBehaviour
     private TilePalette _palette;
     
     [NonSerialized]
-    public Dictionary<PatternEntry, ProbableNeighbours> Pattern;
+    private PatternDict _pattern;
 
-    private List<Tuple<PatternEntry, ProbableNeighbours>> _pattern;
+    public ProbableNeighbours this[PatternEntry e] => _pattern[e];
+    public bool IsPatternInited => _pattern != null;
+    public bool Contains(PatternEntry e) => _pattern.ContainsKey(e);
+    public ICollection<PatternEntry> Keys => _pattern.Keys;
 
-    private void PatternToList()
+    private PatternList PatternDictToList(PatternDict dict)
     {
-        _pattern = new List<Tuple<PatternEntry, ProbableNeighbours>>(Pattern.Count);
-        foreach (var pair in Pattern)
-            _pattern.Add(Tuple.Create(pair.Key, pair.Value));
+        var list = new PatternList(dict.Count);
+        foreach (var pair in dict)
+            list.Add(Tuple.Create(pair.Key, pair.Value));
+        return list;
     }
 
-    private void ListToPattern()
+    private PatternDict PatternListToDict(PatternList list)
     {
-        Pattern = new Dictionary<PatternEntry, ProbableNeighbours>(_pattern.Count, EntryComparer);
-        foreach (var tuple in _pattern)
-            Pattern[tuple.Item1] = tuple.Item2;
+        var dict = new PatternDict(list.Count, EntryComparer);
+        foreach (var tuple in list)
+            dict[tuple.Item1] = tuple.Item2;
+        return dict;
     }
 
     private string PatternFilePath;
@@ -147,31 +155,34 @@ public class TileAnalyzer : MonoBehaviour
         _palette = GetComponent<TilePalette>();
 
         //_pattern init should be in Start when all duplicates are already removed from palette
-        Pattern = new Dictionary<PatternEntry, ProbableNeighbours>(_palette.Palette.Count, EntryComparer);
-        
-        var patternJson = MiscUtils.ReadStringFromFile(PatternFilePath);
-        if (!string.IsNullOrEmpty(patternJson))
-        {
-            _pattern = JsonConvert.DeserializeObject<List<Tuple<PatternEntry, ProbableNeighbours>>>(patternJson);
-            ListToPattern();
-        }
+        _pattern = new Dictionary<PatternEntry, ProbableNeighbours>(_palette.Palette.Count, EntryComparer);
+
+        LoadPattern(PatternFilePath);
     }
 
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.A))
         {
-            Pattern.Clear();
+            _pattern.Clear();
             Analyze();
-            PatternToList();
-            var patternJson = JsonConvert.SerializeObject(_pattern);
+            var patternList = PatternDictToList(_pattern);
+            var patternJson = JsonConvert.SerializeObject(patternList);
             MiscUtils.WriteStringToFile(PatternFilePath, patternJson, false);
         }
         if (Input.GetKeyDown(KeyCode.L))
+            LoadPattern(PatternFilePath);
+    }
+
+    private void LoadPattern(string path)
+    {
+        var patternJson = MiscUtils.ReadStringFromFile(path);
+        if (string.IsNullOrEmpty(patternJson))
+            Debug.LogError("can't load pattern json");
+        else
         {
-            var patternJson = MiscUtils.ReadStringFromFile(PatternFilePath);
-            _pattern = JsonConvert.DeserializeObject<List<Tuple<PatternEntry, ProbableNeighbours>>>(patternJson);
-            ListToPattern();
+            var list = JsonConvert.DeserializeObject<List<Tuple<PatternEntry, ProbableNeighbours>>>(patternJson);
+            _pattern = PatternListToDict(list);
         }
     }
 
@@ -188,18 +199,18 @@ public class TileAnalyzer : MonoBehaviour
                 if (!_placer.PlacedTiles.ContainsKey(neighbourPos))
                 {
                     var pseudoEntry = PatternEntry.PseudoEntry;
-                    if (!Pattern.ContainsKey(pseudoEntry))
-                        Pattern.Add(pseudoEntry, new ProbableNeighbours());
+                    if (!_pattern.ContainsKey(pseudoEntry))
+                        _pattern.Add(pseudoEntry, new ProbableNeighbours());
                     var oppositeSide = (ETileSide)(8 - (int)side);
-                    Pattern[pseudoEntry].Add(oppositeSide, tile);
+                    _pattern[pseudoEntry].Add(oppositeSide, tile);
                     return;
                 }
                 var neighbour = _placer.PlacedTiles[neighbourPos];
 
                 var entry = new PatternEntry(tile);
-                if (!Pattern.ContainsKey(entry))
-                    Pattern.Add(entry, new ProbableNeighbours());
-                Pattern[entry].Add(side, neighbour);
+                if (!_pattern.ContainsKey(entry))
+                    _pattern.Add(entry, new ProbableNeighbours());
+                _pattern[entry].Add(side, neighbour);
             }, _isEightDirectionAnalyze);
         }
     }

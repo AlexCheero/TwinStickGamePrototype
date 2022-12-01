@@ -139,7 +139,7 @@ namespace WFC
         {
             if (_useRandom && _setSeed)
                 Random.InitState(_seed);
-            while (_analyzer.Pattern == null)
+            while (!_analyzer.IsPatternInited)
                 yield return null;
             InitGrid(true);
         }
@@ -210,10 +210,10 @@ namespace WFC
                 if (!clearManuallyCollapsed && _grid[i] != null && _grid[i].IsCollapsedManually)
                     continue;
                 
-                if (IsBorderTile(i, dimension) && _analyzer.Pattern.ContainsKey(PatternEntry.PseudoEntry))
+                if (IsBorderTile(i, dimension) && _analyzer.Contains(PatternEntry.PseudoEntry))
                 {
-                    var pseudoEntryNeighbours = _analyzer.Pattern[PatternEntry.PseudoEntry].Neighbours;
-                    var patternEntries = _analyzer.Pattern.Keys.ToList();
+                    var pseudoEntryNeighbours = _analyzer[PatternEntry.PseudoEntry].Neighbours;
+                    var patternEntries = _analyzer.Keys.ToList();
                     var gridPos = WFCHelper.IdxToGridPos(i, dimension);
                     WFCHelper.ForEachSide((side, x, y) =>
                     {
@@ -241,7 +241,7 @@ namespace WFC
                 }
                 else
                 {
-                    _grid[i] = new Cell(_analyzer.Pattern.Keys);
+                    _grid[i] = new Cell(_analyzer.Keys);
                 }
             }
 
@@ -313,7 +313,7 @@ namespace WFC
         
         private void UpdateNeighbours(PatternEntry pEntry, Vector2Int gridPosition)
         {
-            var tileNeighbours = _analyzer.Pattern[pEntry].Neighbours;
+            var tileNeighbours = _analyzer[pEntry].Neighbours;
             WFCHelper.ForEachSide((side, x, y) =>
             {
                 if (!tileNeighbours.ContainsKey(side))
