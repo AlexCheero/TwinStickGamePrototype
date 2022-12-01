@@ -146,7 +146,7 @@ public class TileAnalyzer : MonoBehaviour
     
     void Awake()
     {
-        PatternFilePath = Application.persistentDataPath + "/pattern";
+        PatternFilePath = Application.persistentDataPath + "/pattern3";
     }
     
     void Start()
@@ -191,6 +191,8 @@ public class TileAnalyzer : MonoBehaviour
         foreach (var tile in _placer.PlacedTiles.Values)
         {
             var pos = tile.transform.position;
+            var rotation = tile.transform.eulerAngles.y;
+            rotation = Mathf.Clamp(rotation, 0, 359);
             WFCHelper.ForEachSide((side, x, y) =>
             {
                 var neighbourPos = pos;
@@ -201,7 +203,7 @@ public class TileAnalyzer : MonoBehaviour
                     var pseudoEntry = PatternEntry.PseudoEntry;
                     if (!_pattern.ContainsKey(pseudoEntry))
                         _pattern.Add(pseudoEntry, new ProbableNeighbours());
-                    var oppositeSide = (ETileSide)(8 - (int)side);
+                    var oppositeSide = WFCHelper.GetOppositeSide(side);
                     _pattern[pseudoEntry].Add(oppositeSide, tile);
                     return;
                 }

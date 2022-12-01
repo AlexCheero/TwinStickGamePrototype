@@ -7,14 +7,12 @@ public static class WFCHelper
 {
     public static void ForEachSide(Action<ETileSide, int, int> action, bool isEightDirection = true)
     {
-        for (int i = 0; i < 9; i++)
+        for (int i = 0; i < 8; i++)
         {
-            if (!isEightDirection && i % 2 == 0)
+            if (!isEightDirection && i % 2 != 0)
                 continue;
+            
             var side = (ETileSide)i;
-            if (side == ETileSide.Center)
-                continue;
-                
             var x = i % 3 - 1;
             var y = i / 3 - 1;
 
@@ -51,5 +49,11 @@ public static class WFCHelper
     public static bool IsGridPosValid(Vector2Int gridPos, int dim)
     {
         return gridPos.x >= 0 && gridPos.x < dim && gridPos.y >= 0 && gridPos.y < dim;
+    }
+
+    public static ETileSide GetOppositeSide(ETileSide side)
+    {
+        var intSide = (int)side + 4;
+        return (ETileSide)(intSide % 8);
     }
 }

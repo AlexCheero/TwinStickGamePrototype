@@ -221,7 +221,7 @@ namespace WFC
                         var neighborY = gridPos.y + y;
                         if (neighborX < 0 || neighborX >= dimension || neighborY < 0 || neighborY >= dimension)
                         {
-                            var oppositeSide = (ETileSide)(8 - (int)side);
+                            var oppositeSide = WFCHelper.GetOppositeSide(side);
                             if (!pseudoEntryNeighbours.ContainsKey(oppositeSide))
                                 return;
                             var probableEntries = pseudoEntryNeighbours[oppositeSide];

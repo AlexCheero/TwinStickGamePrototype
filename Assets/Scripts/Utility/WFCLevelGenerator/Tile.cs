@@ -2,17 +2,17 @@
 
 namespace WFC
 {
+    //sides in clockwise order
     public enum ETileSide
     {
-        DownLeft,
-        Down,
-        DownRight,
-        Left,
-        Center,
-        Right,
-        UpLeft,
         Up,
-        UpRight
+        UpRight,
+        Right,
+        DownRight,
+        Down,
+        DownLeft,
+        Left,
+        UpLeft
     }
     
     public class Tile : MonoBehaviour
