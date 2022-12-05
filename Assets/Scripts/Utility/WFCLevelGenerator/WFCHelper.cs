@@ -5,6 +5,8 @@ using WFC;
 
 public static class WFCHelper
 {
+    public const int PseudoTileId = -1;
+    
     public static void ForEachSide(Action<ETileSide, int, int> action, bool isEightDirection = true)
     {
         for (int i = 0; i < 8; i++)
@@ -54,6 +56,14 @@ public static class WFCHelper
     public static ETileSide GetOppositeSide(ETileSide side)
     {
         var intSide = (int)side + 4;
+        return (ETileSide)(intSide % 8);
+    }
+
+    //TODO: test carefully
+    public static ETileSide GetLocalSideByTurn(ETileSide globalSide, float turn)
+    {
+        var turnDecrement = Mathf.RoundToInt(turn / 45);
+        var intSide = (int)globalSide - turnDecrement;
         return (ETileSide)(intSide % 8);
     }
 }

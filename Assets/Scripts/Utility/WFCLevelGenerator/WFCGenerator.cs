@@ -9,12 +9,12 @@ namespace WFC
 {
     public struct ProbableEntry
     {
-        public PatternEntry Entry;
+        public int Id;
         public float Chance;
 
-        public ProbableEntry(PatternEntry entry, float chance)
+        public ProbableEntry(int id, float chance)
         {
-            Entry = entry;
+            Id = id;
             Chance = chance;
         }
     }
@@ -36,22 +36,23 @@ namespace WFC
         public bool FallbackUsed;
 #endif
         
-        public PatternEntry Entry { get; private set; }
+        public int Id;
+        public float Rotation;
 
         public bool IsCollapsed => _collapseState == ECollapseState.Collapsed ||
                                    _collapseState == ECollapseState.CollapsedManually;
 
         public bool IsCollapsedManually => _collapseState == ECollapseState.CollapsedManually;
         
-        public Cell(ICollection<PatternEntry> entries)
+        public Cell(ICollection<int> ids)
         {
-            var baseChance = 1.0f / entries.Count;
+            var baseChance = 1.0f / ids.Count;
             ProbableEntries = new List<ProbableEntry>();
-            foreach (var entry in entries)
+            foreach (var id in ids)
             {
-                if (TileAnalyzer.EntryComparer.Equals(entry, PatternEntry.PseudoEntry))
+                if (id == WFCHelper.PseudoTileId)
                     continue;
-                ProbableEntries.Add(new ProbableEntry(entry, baseChance));
+                ProbableEntries.Add(new ProbableEntry(id, baseChance));
             }
             _collapseState = ECollapseState.NotCollapsed;
         }
@@ -76,13 +77,14 @@ namespace WFC
                 return;
             }
 
-            Entry = selectedEntry.Entry;
+            Id = selectedEntry.Id;
             _collapseState = ECollapseState.Collapsed;
         }
 
         public void CollapseManually(int id, float rotation)
         {
-            Entry = new PatternEntry { Id = id, YRotation = rotation };
+            Id = id;
+            Rotation = rotation;
             _collapseState = ECollapseState.CollapsedManually;
         }
 
@@ -210,9 +212,9 @@ namespace WFC
                 if (!clearManuallyCollapsed && _grid[i] != null && _grid[i].IsCollapsedManually)
                     continue;
                 
-                if (IsBorderTile(i, dimension) && _analyzer.Contains(PatternEntry.PseudoEntry))
+                if (IsBorderTile(i, dimension) && _analyzer.Contains(WFCHelper.PseudoTileId))
                 {
-                    var pseudoEntryNeighbours = _analyzer[PatternEntry.PseudoEntry].Neighbours;
+                    var pseudoEntryNeighbours = _analyzer[WFCHelper.PseudoTileId].Neighbours;
                     var patternEntries = _analyzer.Keys.ToList();
                     var gridPos = WFCHelper.IdxToGridPos(i, dimension);
                     WFCHelper.ForEachSide((side, x, y) =>
@@ -228,14 +230,13 @@ namespace WFC
                             for (int j = patternEntries.Count - 1; j >= 0; j--)
                             {
                                 var probableNeighbourIdx =
-                                    probableEntries.FindIndex(probableEntry =>
-                                        TileAnalyzer.EntryComparer.Equals(probableEntry.Entry, patternEntries[j]));
+                                    probableEntries.FindIndex(probableEntry => probableEntry.Id == patternEntries[j]);
                                 if (probableNeighbourIdx < 0)
                                     patternEntries.RemoveAt(j);
                             }
                         }
                     });
-                    if (patternEntries.Count == 0 || (patternEntries.Count == 1 && patternEntries[0].Id == -1))
+                    if (patternEntries.Count == 0 || (patternEntries.Count == 1 && patternEntries[0] == -1))
                         Debug.LogError("empty patternEntries for cell " + i + ". on grid init");
                     _grid[i] = new Cell(patternEntries);
                 }
@@ -250,7 +251,7 @@ namespace WFC
                 if (!_grid[i].IsCollapsedManually)
                     continue;
                 var gridPos = WFCHelper.IdxToGridPos(i, _placer.Dimension);
-                UpdateNeighbours(_grid[i].Entry, gridPos);
+                UpdateNeighbours(_grid[i].Id, gridPos);
             }
         }
 
@@ -259,7 +260,7 @@ namespace WFC
             var gridPos = WFCHelper.IdxToGridPos(idx, _placer.Dimension);
             _grid[idx].TryCollapse(_useRandom);
             if (_grid[idx].IsCollapsed)
-                UpdateNeighbours(_grid[idx].Entry, gridPos);
+                UpdateNeighbours(_grid[idx].Id, gridPos);
         }
 
         private void PlaceTile(int idx)
@@ -270,26 +271,27 @@ namespace WFC
                 return;
             
             var dimension = _placer.Dimension;
-            var pEntry = cell.Entry;
+            var id = cell.Id;
+            var rotation = cell.Rotation;
             var gridPos = WFCHelper.IdxToGridPos(idx, dimension);
             if (!cell.IsCollapsed)
             {
                 if (IsBorderTile(idx, dimension))
                 {
-                    pEntry.Id = _fallBackBorderTileIdx;
+                    id = _fallBackBorderTileIdx;
                     if (gridPos.x == 0)
-                        pEntry.YRotation = 90;
+                        rotation = 90;
                     else if (gridPos.x == dimension - 1)
-                        pEntry.YRotation = 270;
+                        rotation = 270;
                     else if (gridPos.y == 0)
-                        pEntry.YRotation = 0;
+                        rotation = 0;
                     else
-                        pEntry.YRotation = 180;
+                        rotation = 180;
                 }
                 else
                 {
-                    pEntry.Id = _fallBackTileIdx;
-                    pEntry.YRotation = 0;
+                    id = _fallBackTileIdx;
+                    rotation = 0;
                 }
 
 #if DEBUG
@@ -300,7 +302,7 @@ namespace WFC
             if (idx < 0 || idx >= _grid.Length)
                 throw new Exception("wrong idx");
 #endif
-            _placer.PlaceTile(pEntry.Id, WFCHelper.GridPosToPos(gridPos, dimension), pEntry.YRotation);
+            _placer.PlaceTile(id, WFCHelper.GridPosToPos(gridPos, dimension), rotation);
         }
 
         private void OnTilePlacedManually(int tileId, Vector3 position, float yRotation)
@@ -308,12 +310,12 @@ namespace WFC
             var gridPos = WFCHelper.PosToGridPos(position, _placer.Dimension);
             var idx = WFCHelper.GridPosToIdx(gridPos, _placer.Dimension);
             _grid[idx].CollapseManually(tileId, yRotation);
-            UpdateNeighbours(_grid[idx].Entry, gridPos);
+            UpdateNeighbours(_grid[idx].Id, gridPos);
         }
         
-        private void UpdateNeighbours(PatternEntry pEntry, Vector2Int gridPosition)
+        private void UpdateNeighbours(int id, Vector2Int gridPosition)
         {
-            var tileNeighbours = _analyzer[pEntry].Neighbours;
+            var tileNeighbours = _analyzer[id].Neighbours;
             WFCHelper.ForEachSide((side, x, y) =>
             {
                 if (!tileNeighbours.ContainsKey(side))
@@ -354,8 +356,7 @@ namespace WFC
             for (int i = probableEntries.Count - 1; i >= 0; i--)
             {
                 var probableNeighbourIdx =
-                    probableNeighbours.FindIndex(neighbour =>
-                        TileAnalyzer.EntryComparer.Equals(neighbour.Entry, probableEntries[i].Entry));
+                    probableNeighbours.FindIndex(neighbour => neighbour.Id == probableEntries[i].Id);
                 if (probableNeighbourIdx < 0)
                     probableEntries.RemoveAt(i);
             }
@@ -371,7 +372,7 @@ namespace WFC
             {
                 var normalizedChance = probableEntries[i].Chance / overallChance;
                 probableEntries[i] =
-                    new ProbableEntry(probableEntries[i].Entry, normalizedChance);
+                    new ProbableEntry(probableEntries[i].Id, normalizedChance);
             }
             
 #if DEBUG
