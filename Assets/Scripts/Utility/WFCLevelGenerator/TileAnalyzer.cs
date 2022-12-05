@@ -22,39 +22,16 @@ public class ProbableNeighbours
         var neighboursOnSide = Neighbours[side];
         var tileId = neighboursOnSide.FindIndex(neighbour => neighbour.Id == tile.TileId);
         
-        var minChance = neighboursOnSide.Count > 0 ? neighboursOnSide.Min(neighbour => neighbour.Chance) : 1;
-        var countOverall = (int)neighboursOnSide.Sum(e => e.Chance / minChance);
-        
         if (tileId < 0)
         {
-            for (int i = 0; i < neighboursOnSide.Count; i++)
-            {
-                var neighbour = neighboursOnSide[i];
-                var count = countOverall * neighbour.Chance;
-                neighbour.Chance = count / (countOverall + 1);
-                neighboursOnSide[i] = neighbour;
-            }
-            
-            neighboursOnSide.Add(new ProbableEntry(tile.TileId, 1.0f /  (countOverall + 1)));
+            neighboursOnSide.Add(new ProbableEntry(tile.TileId, 1));
         }
         else
         {
-            for (int i = 0; i < neighboursOnSide.Count; i++)
-            {
-                var neighbour = neighboursOnSide[i];
-                var count = countOverall * neighbour.Chance;
-                if (i == tileId)
-                    count += 1;
-                neighbour.Chance = count / (countOverall + 1);
-                neighboursOnSide[i] = neighbour;
-            }
+            var neighbour = neighboursOnSide[tileId];
+            neighbour.Weight++;
+            neighboursOnSide[tileId] = neighbour;
         }
-        
-#if DEBUG
-        var chanceOverall = neighboursOnSide.Sum(neighbour => neighbour.Chance);
-        if (Mathf.Abs(chanceOverall - 1) > 0.001f)
-            throw new Exception("overall chance of tile neighbours is not equal to 1");
-#endif
     }
 }
 

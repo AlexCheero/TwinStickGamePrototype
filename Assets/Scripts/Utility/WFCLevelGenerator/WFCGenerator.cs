@@ -10,12 +10,12 @@ namespace WFC
     public struct ProbableEntry
     {
         public int Id;
-        public float Chance;
+        public float Weight;
 
-        public ProbableEntry(int id, float chance)
+        public ProbableEntry(int id, float weight)
         {
             Id = id;
-            Chance = chance;
+            Weight = weight;
         }
     }
     
@@ -44,34 +44,33 @@ namespace WFC
 
         public bool IsCollapsedManually => _collapseState == ECollapseState.CollapsedManually;
         
-        public Cell(ICollection<int> ids)
+        public Cell(IEnumerable<int> ids)
         {
-            var baseChance = 1.0f / ids.Count;
             ProbableEntries = new List<ProbableEntry>();
             foreach (var id in ids)
             {
                 if (id == WFCHelper.PseudoTileId)
                     continue;
-                ProbableEntries.Add(new ProbableEntry(id, baseChance));
+                ProbableEntries.Add(new ProbableEntry(id, 1));
             }
             _collapseState = ECollapseState.NotCollapsed;
         }
 
         public void TryCollapse(bool useRandom)
         {
-            var chance = 0.0f;
+            var weight = 0.0f;
             ProbableEntry selectedEntry = default;
             foreach (var probableEntry in ProbableEntries)
             {
-                var shouldChooseTile = probableEntry.Chance > chance;
-                shouldChooseTile |= useRandom && Mathf.Abs(probableEntry.Chance - chance) < float.Epsilon && Random.value > 0.5f;
+                var shouldChooseTile = probableEntry.Weight > weight;
+                shouldChooseTile |= useRandom && Mathf.Abs(probableEntry.Weight - weight) < float.Epsilon && Random.value > 0.5f;
                 if (!shouldChooseTile)
                     continue;
-                chance = probableEntry.Chance;
+                weight = probableEntry.Weight;
                 selectedEntry = probableEntry;
             }
 
-            if (chance == 0)
+            if (weight == 0)
             {
                 _collapseState = ECollapseState.NotCollapsed;
                 return;
@@ -359,30 +358,13 @@ namespace WFC
                     probableNeighbours.FindIndex(neighbour => neighbour.Id == probableEntries[i].Id);
                 if (probableNeighbourIdx < 0)
                     probableEntries.RemoveAt(i);
+                else
+                {
+                    var entry = probableEntries[i];
+                    entry.Weight = Mathf.Min(entry.Weight, probableNeighbours[probableNeighbourIdx].Weight);
+                    probableEntries[i] = entry;
+                }
             }
-            
-#region NormalizingTileChance
-
-            var overallChance = probableEntries.Sum(tileWithChance => tileWithChance.Chance);
-#if DEBUG
-            if (overallChance > 1)
-                Debug.LogError("chance is bigger than 1, after removing unavailable tiles");
-#endif
-            for (int i = 0; i < probableEntries.Count; i++)
-            {
-                var normalizedChance = probableEntries[i].Chance / overallChance;
-                probableEntries[i] =
-                    new ProbableEntry(probableEntries[i].Id, normalizedChance);
-            }
-            
-#if DEBUG
-            overallChance = probableEntries.Sum(tileWithChance => tileWithChance.Chance);
-            const float chanceTolerance = 0.0001f;
-            if (probableEntries.Count > 0 && Mathf.Abs(overallChance - 1) > chanceTolerance)
-                Debug.LogError("overall chance ("+ overallChance + ") is not equal to 1 after normalization");
-#endif
-
-#endregion
         }
 
         private int GetLowestEntropyCellIdx()
