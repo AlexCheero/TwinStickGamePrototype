@@ -66,4 +66,6 @@ public static class WFCHelper
         var intSide = (int)globalSide - turnDecrement;
         return (ETileSide)(intSide % 8);
     }
+
+    public static float GetYRotation(this Transform transform) => transform.eulerAngles.y % 360;
 }

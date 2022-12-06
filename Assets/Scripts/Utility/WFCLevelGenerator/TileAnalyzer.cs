@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using Unity.Plastic.Newtonsoft.Json;
 using UnityEngine;
 using WFC;
@@ -8,29 +7,30 @@ using WFC;
 public class ProbableNeighbours
 {
     //TODO: make private
-    public Dictionary<ETileSide, List<ProbableEntry>> Neighbours;
+    public Dictionary<ETileSide, List<Tuple<ETileSide, ProbableEntry>>> Neighbours;
 
     public ProbableNeighbours()
     {
-        Neighbours = new Dictionary<ETileSide, List<ProbableEntry>>();
+        Neighbours = new Dictionary<ETileSide, List<Tuple<ETileSide, ProbableEntry>>>();
     }
 
-    public void Add(ETileSide side, Tile tile)
+    public void Add(ETileSide side, ETileSide adjacentSide, Tile tile)
     {
         if (!Neighbours.ContainsKey(side))
-            Neighbours[side] = new List<ProbableEntry>();
+            Neighbours[side] = new List<Tuple<ETileSide, ProbableEntry>>();
         var neighboursOnSide = Neighbours[side];
-        var tileId = neighboursOnSide.FindIndex(neighbour => neighbour.Id == tile.TileId);
+        var tileId = neighboursOnSide.FindIndex(tuple => tuple.Item1 == adjacentSide && tuple.Item2.Id == tile.TileId);
         
         if (tileId < 0)
         {
-            neighboursOnSide.Add(new ProbableEntry(tile.TileId, 1));
+            neighboursOnSide.Add(Tuple.Create(adjacentSide, new ProbableEntry(tile.TileId, 1)));
         }
         else
         {
-            var neighbour = neighboursOnSide[tileId];
+            var neighbour = neighboursOnSide[tileId].Item2;
             neighbour.Weight++;
-            neighboursOnSide[tileId] = neighbour;
+            //TODO: probably it is better to use custom mutable tuple not to allocate every time
+            neighboursOnSide[tileId] = Tuple.Create(adjacentSide, neighbour);
         }
     }
 }
@@ -101,29 +101,31 @@ public class TileAnalyzer : MonoBehaviour
     {
         foreach (var tile in _placer.PlacedTiles.Values)
         {
-            var pos = tile.transform.position;
-            var rotation = tile.transform.eulerAngles.y;
-            rotation = Mathf.Clamp(rotation, 0, 359);
+            var tileTransform = tile.transform;
+            var pos = tileTransform.position;
+            var rotation = tileTransform.GetYRotation();
             WFCHelper.ForEachSide((side, x, y) =>
             {
                 var neighbourPos = pos;
                 neighbourPos.x += x * _placer.SnapSize;
                 neighbourPos.z += y * _placer.SnapSize;
+                var oppositeSide = WFCHelper.GetOppositeSide(side);
+                var localSide = WFCHelper.GetLocalSideByTurn(side, rotation);
                 if (!_placer.PlacedTiles.ContainsKey(neighbourPos))
                 {
                     if (!_pattern.ContainsKey(WFCHelper.PseudoTileId))
                         _pattern.Add(WFCHelper.PseudoTileId, new ProbableNeighbours());
-                    var oppositeSide = WFCHelper.GetOppositeSide(side);
-                    _pattern[WFCHelper.PseudoTileId].Add(oppositeSide, tile);
-                    return;
+                    _pattern[WFCHelper.PseudoTileId].Add(oppositeSide, localSide, tile);
                 }
-                var neighbour = _placer.PlacedTiles[neighbourPos];
-
-                var id = tile.TileId;
-                if (!_pattern.ContainsKey(id))
-                    _pattern.Add(id, new ProbableNeighbours());
-                var localSide = WFCHelper.GetLocalSideByTurn(side, rotation);
-                _pattern[id].Add(localSide, neighbour);
+                else
+                {
+                    var id = tile.TileId;
+                    if (!_pattern.ContainsKey(id))
+                        _pattern.Add(id, new ProbableNeighbours());
+                    var neighbour = _placer.PlacedTiles[neighbourPos];
+                    var adjacentLocalSide = WFCHelper.GetLocalSideByTurn(oppositeSide, neighbour.transform.GetYRotation());
+                    _pattern[id].Add(localSide, adjacentLocalSide, neighbour);
+                }
             }, _isEightDirectionAnalyze);
         }
     }
