@@ -85,7 +85,28 @@ namespace WFC
             _collapseState = ECollapseState.CollapsedManually;
         }
 
-        public int Entropy => ProbableEntries.Count;
+        //public int Entropy => ProbableEntries.Count;
+        
+        //TODO: recheck the Shannon entropy formula
+        public float Entropy
+        {
+            get
+            {
+                var totalWeight = ProbableEntries.Sum(entry => entry.Weight);
+                var entropy = 0.0f;
+                for (int i = 1; i < ProbableEntries.Count; i++)
+                {
+                    var weight = ProbableEntries[i].Weight;
+                    if (weight > 0)
+                    {
+                        var p = weight / totalWeight;
+                        entropy -= p * Mathf.Log(p) / Mathf.Log(2);
+                    }
+                }
+                
+                return entropy;
+            }
+        }
     }
 
     [RequireComponent(typeof(TileAnalyzer))]
@@ -369,7 +390,7 @@ namespace WFC
         private int GetLowestEntropyCellIdx()
         {
             int lowestEntropyTileIdx = -1;
-            int lowestEntropy = int.MaxValue;
+            float lowestEntropy = float.MaxValue;
             for (int i = 0; i < _grid.Length; i++)
             {
                 bool suitableEntropy = _grid[i].Entropy < lowestEntropy;
