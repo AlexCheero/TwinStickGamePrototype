@@ -176,14 +176,15 @@ public class TileAnalyzer : MonoBehaviour
                 else
                 {
                     var neighbour = _placer.PlacedTiles[neighbourPos];
-                    for (int i = 0; i < 360; i += 90)
+                    for (int i = 0; i < 4; i++)
                     {
-                        var rotation = (tile.GetTileRotation() + i) % 360;
+                        var rotation = (tile.GetTileRotation() + i*90) % 360;
                         var entry = new PatternEntry(tile.TileId, rotation);
                         if (!_pattern.ContainsKey(entry))
                             _pattern.Add(entry, new ProbableNeighbours());
-                        var neighbourRotation = (neighbour.GetTileRotation() + i) % 360;
-                        _pattern[entry].Add(side, neighbour.TileId, neighbourRotation);
+                        var neighbourRotation = (neighbour.GetTileRotation() + i*90) % 360;
+                        var rotatedSide = WFCHelper.TurnSide(side, i * 2);
+                        _pattern[entry].Add(rotatedSide, neighbour.TileId, neighbourRotation);
                     }
                 }
             }, _isEightDirectionAnalyze);

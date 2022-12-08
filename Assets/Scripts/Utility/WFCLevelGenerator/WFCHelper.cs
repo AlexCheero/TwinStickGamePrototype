@@ -51,11 +51,13 @@ public static class WFCHelper
         return gridPos.x >= 0 && gridPos.x < dim && gridPos.y >= 0 && gridPos.y < dim;
     }
 
-    public static ETileSide GetOppositeSide(ETileSide side)
+    public static ETileSide TurnSide(ETileSide side, int numTurns)
     {
-        var intSide = (int)side + 4;
+        var intSide = (int)side + numTurns;
         return (ETileSide)(intSide % 8);
     }
 
+    public static ETileSide GetOppositeSide(ETileSide side) => TurnSide(side, 4);
+    
     public static float GetTileRotation(this Tile tile) => tile.transform.eulerAngles.y % 360;
 }
