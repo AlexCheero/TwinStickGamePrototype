@@ -56,4 +56,6 @@ public static class WFCHelper
         var intSide = (int)side + 4;
         return (ETileSide)(intSide % 8);
     }
+
+    public static float GetTileRotation(this Tile tile) => tile.transform.eulerAngles.y % 360;
 }

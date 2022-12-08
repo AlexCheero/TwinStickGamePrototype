@@ -18,24 +18,24 @@ public class ProbableNeighbours
         Neighbours = new Dictionary<ETileSide, List<ProbableEntry>>();
     }
 
-    public void Add(ETileSide side, Tile tile)
+    public void Add(ETileSide side, int neighbourId, float neighbourRotation)
     {
         if (!Neighbours.ContainsKey(side))
             Neighbours[side] = new List<ProbableEntry>();
         var neighboursOnSide = Neighbours[side];
-        var tileId = neighboursOnSide.FindIndex(neighbour => neighbour.Entry.Id == tile.TileId &&
-                                                             Mathf.Abs(neighbour.Entry.YRotation - tile.transform.eulerAngles.y) <
+        var neighbourIdx = neighboursOnSide.FindIndex(neighbour => neighbour.Entry.Id == neighbourId &&
+                                                             Mathf.Abs(neighbour.Entry.YRotation - neighbourRotation) <
                                                              PatternEntryEqualityComparer.RotationTolerance);
         
-        if (tileId < 0)
+        if (neighbourIdx < 0)
         {
-            neighboursOnSide.Add(new ProbableEntry(new PatternEntry(tile), 1));
+            neighboursOnSide.Add(new ProbableEntry(new PatternEntry(neighbourId, neighbourRotation), 1));
         }
         else
         {
-            var neighbour = neighboursOnSide[tileId];
+            var neighbour = neighboursOnSide[neighbourIdx];
             neighbour.Weight++;
-            neighboursOnSide[tileId] = neighbour;
+            neighboursOnSide[neighbourIdx] = neighbour;
         }
     }
 }
@@ -58,26 +58,17 @@ public struct PatternEntry
 {
     public int Id;
     public float YRotation;
-#if DEBUG
-    private string name;
-#endif
 
     public static readonly PatternEntry PseudoEntry = new PatternEntry
     {
         Id = -1,
         YRotation = 0,
-#if DEBUG
-        name = "PseudoTile"
-#endif
     };
     
-    public PatternEntry(Tile tile)
+    public PatternEntry(int tileId, float yRotation)
     {
-        Id = tile.TileId;
-        YRotation = tile.transform.eulerAngles.y % 360;
-#if DEBUG
-        name = tile.name;
-#endif
+        Id = tileId;
+        YRotation = yRotation % 360;
     }
 }
 
@@ -123,7 +114,7 @@ public class TileAnalyzer : MonoBehaviour
     
     void Awake()
     {
-        PatternFilePath = Application.persistentDataPath + "/pattern3";
+        PatternFilePath = Application.persistentDataPath + "/pattern";
     }
     
     void Start()
@@ -146,6 +137,7 @@ public class TileAnalyzer : MonoBehaviour
             var patternList = PatternDictToList(_pattern);
             var patternJson = JsonConvert.SerializeObject(patternList);
             MiscUtils.WriteStringToFile(PatternFilePath, patternJson, false);
+            Debug.Log("Pattern saved at: " + PatternFilePath);
         }
         if (Input.GetKeyDown(KeyCode.L))
             LoadPattern(PatternFilePath);
@@ -168,8 +160,6 @@ public class TileAnalyzer : MonoBehaviour
         foreach (var tile in _placer.PlacedTiles.Values)
         {
             var pos = tile.transform.position;
-            var rotation = tile.transform.eulerAngles.y;
-            rotation = Mathf.Clamp(rotation, 0, 359);
             WFCHelper.ForEachSide((side, x, y) =>
             {
                 var neighbourPos = pos;
@@ -181,15 +171,21 @@ public class TileAnalyzer : MonoBehaviour
                     if (!_pattern.ContainsKey(pseudoEntry))
                         _pattern.Add(pseudoEntry, new ProbableNeighbours());
                     var oppositeSide = WFCHelper.GetOppositeSide(side);
-                    _pattern[pseudoEntry].Add(oppositeSide, tile);
-                    return;
+                    _pattern[pseudoEntry].Add(oppositeSide, tile.TileId, tile.GetTileRotation());
                 }
-                var neighbour = _placer.PlacedTiles[neighbourPos];
-
-                var entry = new PatternEntry(tile);
-                if (!_pattern.ContainsKey(entry))
-                    _pattern.Add(entry, new ProbableNeighbours());
-                _pattern[entry].Add(side, neighbour);
+                else
+                {
+                    var neighbour = _placer.PlacedTiles[neighbourPos];
+                    for (int i = 0; i < 360; i += 90)
+                    {
+                        var rotation = (tile.GetTileRotation() + i) % 360;
+                        var entry = new PatternEntry(tile.TileId, rotation);
+                        if (!_pattern.ContainsKey(entry))
+                            _pattern.Add(entry, new ProbableNeighbours());
+                        var neighbourRotation = (neighbour.GetTileRotation() + i) % 360;
+                        _pattern[entry].Add(side, neighbour.TileId, neighbourRotation);
+                    }
+                }
             }, _isEightDirectionAnalyze);
         }
     }
