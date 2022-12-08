@@ -365,7 +365,7 @@ MonoBehaviour:
   _setSeed: 0
   _incrementSeed: 0
   _seed: 0
-  _tryRegenerate: 0
+  _tryRegenerate: 1
   _regenAttempts: 1000
   _useFallbackTile: 1
   _fallBackTileIdx: 2
