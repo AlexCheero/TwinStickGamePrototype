@@ -80,6 +80,7 @@ public class TilePlacer : MonoBehaviour
         marker.position = position;
     }
 
+    private Vector2Int _previousPlacePos;
     void Update()
     {
         if (_snapSize <= 0)
@@ -104,8 +105,9 @@ public class TilePlacer : MonoBehaviour
         //shift marker slightly towards camera so it can be rendered on top of already placed tile
         var markerToCamDirection = (_cam.transform.position - markerPosition).normalized;
         CurrentMarker.position = markerPosition + markerToCamDirection * 0.1f;
-        if (Input.GetMouseButtonDown(0) && isPosValid)
+        if (Input.GetMouseButton(0) && isPosValid && _previousPlacePos != gridPos)
         {
+            _previousPlacePos = gridPos;
             if (Input.GetKey(KeyCode.LeftShift))
                 DeleteTile(markerPosition);
             else
