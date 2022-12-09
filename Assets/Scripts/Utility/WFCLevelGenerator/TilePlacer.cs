@@ -105,7 +105,8 @@ public class TilePlacer : MonoBehaviour
         //shift marker slightly towards camera so it can be rendered on top of already placed tile
         var markerToCamDirection = (_cam.transform.position - markerPosition).normalized;
         CurrentMarker.position = markerPosition + markerToCamDirection * 0.1f;
-        if (Input.GetMouseButton(0) && isPosValid && _previousPlacePos != gridPos)
+        var haveLmbInput = Input.GetMouseButtonDown(0) || Input.GetMouseButton(0) && _previousPlacePos != gridPos;
+        if (isPosValid && haveLmbInput)
         {
             _previousPlacePos = gridPos;
             if (Input.GetKey(KeyCode.LeftShift))
@@ -157,10 +158,7 @@ public class TilePlacer : MonoBehaviour
     private void DeleteTile(Vector3 position)
     {
         if (!PlacedTiles.ContainsKey(position))
-        {
-            Debug.Log("wrong position");
             return;
-        }
         
         Destroy(PlacedTiles[position].gameObject);
         PlacedTiles.Remove(position);
