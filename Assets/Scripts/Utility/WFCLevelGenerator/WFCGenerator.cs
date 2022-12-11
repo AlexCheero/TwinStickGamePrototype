@@ -132,6 +132,8 @@ namespace WFC
         private int _fallBackTileIdx;
         [SerializeField]
         private int _fallBackBorderTileIdx;
+        [SerializeField]
+        private bool _isEightDirectionWave = true;
 
         private Cell[] _grid;
 
@@ -254,7 +256,7 @@ namespace WFC
                                     patternEntries.RemoveAt(j);
                             }
                         }
-                    });
+                    }, _isEightDirectionWave);
                     if (patternEntries.Count == 0 || (patternEntries.Count == 1 && patternEntries[0].Id == -1))
                         Debug.LogError("empty patternEntries for cell " + i + ". on grid init");
                     _grid[i] = new Cell(patternEntries);
@@ -342,7 +344,7 @@ namespace WFC
                 neighbourGridPos.x += x;
                 neighbourGridPos.y += y;
                 RemoveUnavailableTiles(WFCHelper.GridPosToIdx(neighbourGridPos, _placer.Dimension), tileNeighbours[side]);
-            });
+            }, _isEightDirectionWave);
         }
 
         private bool Generate()

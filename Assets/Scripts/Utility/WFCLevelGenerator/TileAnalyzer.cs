@@ -80,9 +80,6 @@ public class TileAnalyzer : MonoBehaviour
 
     static TileAnalyzer() => EntryComparer = new PatternEntryEqualityComparer();
     
-    [SerializeField]
-    private bool _isEightDirectionAnalyze;
-
     private TilePlacer _placer;
     private TilePalette _palette;
     
@@ -187,7 +184,7 @@ public class TileAnalyzer : MonoBehaviour
                         _pattern[entry].Add(rotatedSide, neighbour.TileId, neighbourRotation);
                     }
                 }
-            }, _isEightDirectionAnalyze);
+            });
         }
     }
 }
