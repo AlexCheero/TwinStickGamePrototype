@@ -156,11 +156,13 @@ public class TileAnalyzer : MonoBehaviour
         foreach (var tile in _placer.PlacedTiles.Values)
         {
             var pos = tile.transform.position;
-            WFCHelper.ForEachSide((side, x, y) =>
+            for (int i = 0; i < 8; i++)
             {
+                var bias = WFCHelper.GetNeighbourBias(i);
+                var side = (ETileSide)i;
                 var neighbourPos = pos;
-                neighbourPos.x += x * _placer.SnapSize;
-                neighbourPos.z += y * _placer.SnapSize;
+                neighbourPos.x += bias.x * _placer.SnapSize;
+                neighbourPos.z += bias.y * _placer.SnapSize;
                 if (!_placer.PlacedTiles.ContainsKey(neighbourPos))
                 {
                     var pseudoEntry = PatternEntry.PseudoEntry;
@@ -172,18 +174,18 @@ public class TileAnalyzer : MonoBehaviour
                 else
                 {
                     var neighbour = _placer.PlacedTiles[neighbourPos];
-                    for (int i = 0; i < 4; i++)
+                    for (int j = 0; j < 4; j++)
                     {
-                        var rotation = (tile.GetTileRotation() + i*90) % 360;
+                        var rotation = (tile.GetTileRotation() + j*90) % 360;
                         var entry = new PatternEntry(tile.TileId, rotation);
                         if (!_pattern.ContainsKey(entry))
                             _pattern.Add(entry, new ProbableNeighbours());
-                        var neighbourRotation = (neighbour.GetTileRotation() + i*90) % 360;
-                        var rotatedSide = WFCHelper.TurnSide(side, i * 2);
+                        var neighbourRotation = (neighbour.GetTileRotation() + j*90) % 360;
+                        var rotatedSide = WFCHelper.TurnSide(side, j * 2);
                         _pattern[entry].Add(rotatedSide, neighbour.TileId, neighbourRotation);
                     }
                 }
-            });
+            }
         }
     }
 }

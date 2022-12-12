@@ -5,20 +5,7 @@ using WFC;
 
 public static class WFCHelper
 {
-    public static void ForEachSide(Action<ETileSide, int, int> action, bool isEightDirection = true)
-    {
-        for (int i = 0; i < 8; i++)
-        {
-            if (!isEightDirection && i % 2 != 0)
-                continue;
-            
-            var side = (ETileSide)i;
-            var x = i % 3 - 1;
-            var y = i / 3 - 1;
-
-            action(side, x, y);
-        }
-    }
+    public static Vector2Int GetNeighbourBias(int i) => new Vector2Int(i % 3 - 1, i / 3 - 1);
     
     public static Vector2Int IdxToGridPos(int idx, int dim) =>
         new Vector2Int
