@@ -396,7 +396,7 @@ namespace WFC
             for (int i = 0; i < _grid.Length; i++)
             {
                 bool suitableEntropy = _grid[i].Entropy < lowestEntropy;
-                suitableEntropy |= _useRandom && _grid[i].Entropy == lowestEntropy && Random.value > 0.5f;
+                suitableEntropy |= _useRandom && Mathf.Abs(_grid[i].Entropy - lowestEntropy) < float.Epsilon && Random.value > 0.5f;
                 if (!_grid[i].IsCollapsed &&
                     _grid[i].ProbableEntries.Count > 0 &&
                     suitableEntropy)

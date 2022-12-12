@@ -25,7 +25,7 @@ public class ProbableNeighbours
         var neighboursOnSide = Neighbours[side];
         var neighbourIdx = neighboursOnSide.FindIndex(neighbour => neighbour.Entry.Id == neighbourId &&
                                                              Mathf.Abs(neighbour.Entry.YRotation - neighbourRotation) <
-                                                             PatternEntryEqualityComparer.RotationTolerance);
+                                                             float.Epsilon);
         
         if (neighbourIdx < 0)
         {
@@ -42,9 +42,8 @@ public class ProbableNeighbours
 
 public class PatternEntryEqualityComparer : IEqualityComparer<PatternEntry>
 {
-    public const float RotationTolerance = 0.01f;
     public bool Equals(PatternEntry x, PatternEntry y) => 
-        x.Id == y.Id && Mathf.Abs(x.YRotation - y.YRotation) < RotationTolerance;
+        x.Id == y.Id && Mathf.Abs(x.YRotation - y.YRotation) < float.Epsilon;
 
     public int GetHashCode(PatternEntry obj)
     {
