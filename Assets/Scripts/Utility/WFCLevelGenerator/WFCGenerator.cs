@@ -55,7 +55,7 @@ namespace WFC
             _collapseState = ECollapseState.NotCollapsed;
         }
 
-        public void TryCollapse(bool useRandom)
+        public bool TryCollapse(bool useRandom)
         {
             var weight = 0.0f;
             ProbableEntry selectedEntry = default;
@@ -72,16 +72,19 @@ namespace WFC
             if (weight == 0)
             {
                 _collapseState = ECollapseState.NotCollapsed;
-                return;
+                return false;
             }
 
             ProbableEntries[0] = selectedEntry;
+            ProbableEntries.RemoveRange(1, ProbableEntries.Count - 1);
             _collapseState = ECollapseState.Collapsed;
+            return true;
         }
 
         public void CollapseManually(int id, float rotation)
         {
             ProbableEntries[0] = new ProbableEntry(new PatternEntry { Id = id, YRotation = rotation }, 1);
+            ProbableEntries.RemoveRange(1, ProbableEntries.Count - 1);
             _collapseState = ECollapseState.CollapsedManually;
         }
 
@@ -281,10 +284,11 @@ namespace WFC
 
         private void GenerateStep(int idx)
         {
+            if (!_grid[idx].TryCollapse(_useRandom))
+                return;
+            
             var gridPos = WFCHelper.IdxToGridPos(idx, _placer.Dimension);
-            _grid[idx].TryCollapse(_useRandom);
-            if (_grid[idx].IsCollapsed)
-                UpdateNeighbours(_grid[idx].Entry, gridPos);
+            UpdateNeighbours(_grid[idx].Entry, gridPos);
         }
 
         private void PlaceTile(int idx)
