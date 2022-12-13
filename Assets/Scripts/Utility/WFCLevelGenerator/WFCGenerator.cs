@@ -109,24 +109,21 @@ namespace WFC
         //public int Entropy => ProbableEntries.Count;
         
         //TODO: recheck the Shannon entropy formula
-        public float Entropy
+        public float GetEntropy()
         {
-            get
+            var totalWeight = ProbableEntries.Sum(entry => entry.Weight);
+            var entropy = 0.0f;
+            for (int i = 0; i < ProbableEntries.Count; i++)
             {
-                var totalWeight = ProbableEntries.Sum(entry => entry.Weight);
-                var entropy = 0.0f;
-                for (int i = 1; i < ProbableEntries.Count; i++)
+                var weight = ProbableEntries[i].Weight;
+                if (weight > 0)
                 {
-                    var weight = ProbableEntries[i].Weight;
-                    if (weight > 0)
-                    {
-                        var p = weight / totalWeight;
-                        entropy -= p * Mathf.Log(p) / Mathf.Log(2);
-                    }
+                    var p = weight / totalWeight;
+                    entropy -= p * Mathf.Log(p) / Mathf.Log(2);
                 }
-                
-                return entropy;
             }
+                
+            return entropy;
         }
     }
 
@@ -467,14 +464,15 @@ namespace WFC
             float lowestEntropy = float.MaxValue;
             for (int i = 0; i < _grid.Length; i++)
             {
-                bool suitableEntropy = _grid[i].Entropy < lowestEntropy;
-                suitableEntropy |= _useRandom && Mathf.Abs(_grid[i].Entropy - lowestEntropy) < float.Epsilon && Random.value > 0.5f;
+                var entropy = _grid[i].GetEntropy();
+                bool suitableEntropy = entropy < lowestEntropy;
+                suitableEntropy |= _useRandom && Mathf.Abs(entropy - lowestEntropy) < float.Epsilon && Random.value > 0.5f;
                 if (!_grid[i].IsCollapsed &&
                     _grid[i].ProbableEntries.Count > 0 &&
                     suitableEntropy)
                 {
                     lowestEntropyTileIdx = i;
-                    lowestEntropy = _grid[i].Entropy;
+                    lowestEntropy = entropy;
                 }
             }
 
