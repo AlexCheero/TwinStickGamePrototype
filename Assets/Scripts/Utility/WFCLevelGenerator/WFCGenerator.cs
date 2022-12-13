@@ -10,12 +10,30 @@ namespace WFC
     public struct ProbableEntry
     {
         public PatternEntry Entry;
+#if DEBUG
+        private float _weight;
+        public float Weight
+        {
+            get => _weight;
+            set
+            {
+                if (value <= 0)
+                    throw new Exception("Tile weight could not be less or equal to zero");
+                _weight = value;
+            }
+        }
+#else
         public float Weight;
+#endif
 
         public ProbableEntry(PatternEntry entry, float weight)
         {
             Entry = entry;
+#if DEBUG
+            _weight = weight;
+#else
             Weight = weight;
+#endif
         }
     }
     
@@ -139,6 +157,7 @@ namespace WFC
         private bool _isEightDirectionWave = true;
 
         private Cell[] _grid;
+        private Queue<int> _updateQueue;
 
         private TileAnalyzer _analyzer;
         private TilePlacer _placer;
@@ -153,6 +172,8 @@ namespace WFC
             _placer.OnPlaced += OnTilePlacedManually;
             _fallBackTileIdx = Mathf.Clamp(_fallBackTileIdx, 0, _palette.Palette.Count - 1);
             _fallBackBorderTileIdx = Mathf.Clamp(_fallBackBorderTileIdx, 0, _palette.Palette.Count - 1);
+            
+            _updateQueue = new Queue<int>();
         }
 
         void OnDestroy()
@@ -278,7 +299,7 @@ namespace WFC
                 if (!_grid[i].IsCollapsedManually)
                     continue;
                 var gridPos = WFCHelper.IdxToGridPos(i, _placer.Dimension);
-                UpdateNeighbours(_grid[i].Entry, gridPos);
+                UpdateNeighbours(gridPos);
             }
         }
 
@@ -288,7 +309,62 @@ namespace WFC
                 return;
             
             var gridPos = WFCHelper.IdxToGridPos(idx, _placer.Dimension);
-            UpdateNeighbours(_grid[idx].Entry, gridPos);
+            UpdateNeighbours(gridPos);
+        }
+
+        private void UpdateNeighbours(Vector2Int gridPos)
+        {
+            AddNeighboursToUpdateQueue(gridPos);
+            var ctr = 0;
+            while (_updateQueue.Count > 0 && ctr++ < 500)
+            {
+                var queuedIdx = _updateQueue.Dequeue();
+                if (UpdateCell(queuedIdx))
+                    AddNeighboursToUpdateQueue(WFCHelper.IdxToGridPos(queuedIdx, _placer.Dimension));
+            }
+            Debug.Log("cell update attempts: " + ctr + ", queue: " + _updateQueue.Count);
+            
+        }
+        
+        private void AddNeighboursToUpdateQueue(Vector2Int gridPos)
+        {
+            for (int i = 0; i < 8; i++)
+            {
+                if (!_isEightDirectionWave && i % 2 != 0)
+                    continue;
+                var bias = WFCHelper.GetNeighbourBias(i);
+                var neighbourPos = gridPos + bias;
+                var neighbourIdx = WFCHelper.GridPosToIdx(neighbourPos, _placer.Dimension);
+                if (neighbourIdx > 0 && !_updateQueue.Contains(neighbourIdx))
+                    _updateQueue.Enqueue(neighbourIdx);
+            }
+        }
+
+        private bool UpdateCell(int idx)
+        {
+            var cell = _grid[idx];
+            if (cell.IsCollapsed || cell.ProbableEntries.Count == 0)
+                return false;
+            var pos = WFCHelper.IdxToGridPos(idx, _placer.Dimension);
+            var probableEntries = cell.ProbableEntries;
+            bool removed = false;
+            for (int i = probableEntries.Count - 1; i >= 0; i--)
+            {
+                var newWeight = GetNewWeight(probableEntries[i], pos);
+                if (newWeight <= 0)
+                {
+                    probableEntries.RemoveAt(i);
+                    removed = true;
+                }
+                else
+                {
+                    var entry = probableEntries[i];
+                    entry.Weight = Mathf.Min(entry.Weight, newWeight);
+                    probableEntries[i] = entry;
+                }
+            }
+            
+            return removed;
         }
 
         private void PlaceTile(int idx)
@@ -337,25 +413,10 @@ namespace WFC
             var gridPos = WFCHelper.PosToGridPos(position, _placer.Dimension);
             var idx = WFCHelper.GridPosToIdx(gridPos, _placer.Dimension);
             _grid[idx].CollapseManually(tileId, yRotation);
-            UpdateNeighbours(_grid[idx].Entry, gridPos);
+            UpdateNeighbours(gridPos);
         }
         
-        private void UpdateNeighbours(PatternEntry pEntry, Vector2Int gridPosition)
-        {
-            var tileNeighbours = _analyzer[pEntry].Neighbours;
-            for (int i = 0; i < 8; i++)
-            {
-                if (!_isEightDirectionWave && i % 2 != 0)
-                    continue;
-                
-                var bias = WFCHelper.GetNeighbourBias(i);
-                var side = (ETileSide)i;
-                if (tileNeighbours.ContainsKey(side))
-                    RemoveUnavailableTiles(WFCHelper.GridPosToIdx(gridPosition + bias, _placer.Dimension), tileNeighbours[side]);
-            }
-        }
-
-        private bool IsTileAvailable(PatternEntry pEntry, Vector2Int gridPos)
+        private float GetNewWeight(ProbableEntry pEntry, Vector2Int gridPos)
         {
             for (int i = 0; i < 8; i++)
             {
@@ -367,17 +428,23 @@ namespace WFC
                     continue;
                 var probableEntries = _grid[neighbourIdx].ProbableEntries;
                 var adjacentSide = WFCHelper.GetOppositeSide((ETileSide)i);
-                var availableAtSide = probableEntries.Any(probableEntry =>
+                var availableAtSide = false;
+                for (int j = 0; j < probableEntries.Count; j++)
                 {
-                    var possibleTiles = _analyzer[probableEntry.Entry].Neighbours[adjacentSide];
-                    return possibleTiles.FindIndex(p => TileAnalyzer.EntryComparer.Equals(p.Entry, pEntry)) >= 0;
-                });
+                    var possibleTiles = _analyzer[probableEntries[j].Entry].Neighbours[adjacentSide];
+                    var foundIdx = possibleTiles.FindIndex(p => TileAnalyzer.EntryComparer.Equals(p.Entry, pEntry.Entry));
+                    if (foundIdx < 0)
+                        continue;
+                    pEntry.Weight = Mathf.Min(pEntry.Weight, possibleTiles[foundIdx].Weight);
+                    availableAtSide = true;
+                    break;
+                }
 
                 if (!availableAtSide)
-                    return false;
+                    return -1;
             }
 
-            return true;
+            return pEntry.Weight;
         }
 
         private bool Generate()
@@ -392,34 +459,6 @@ namespace WFC
             }
 
             return notCollapsedCount == 0;
-        }
-
-        private void RemoveUnavailableTiles(int idx, List<ProbableEntry> probableNeighbours)
-        {
-            if (idx < 0 || idx >= _grid.Length)
-                return;
-
-            var probableEntries = _grid[idx].ProbableEntries;
-            if (probableNeighbours.Count == 0)
-            {
-                probableEntries.Clear();
-                return;
-            }
-
-            for (int i = probableEntries.Count - 1; i >= 0; i--)
-            {
-                var probableNeighbourIdx =
-                    probableNeighbours.FindIndex(neighbour =>
-                        TileAnalyzer.EntryComparer.Equals(neighbour.Entry, probableEntries[i].Entry));
-                if (probableNeighbourIdx < 0)
-                    probableEntries.RemoveAt(i);
-                else
-                {
-                    var entry = probableEntries[i];
-                    entry.Weight = Mathf.Min(entry.Weight, probableNeighbours[probableNeighbourIdx].Weight);
-                    probableEntries[i] = entry;
-                }
-            }
         }
 
         private int GetLowestEntropyCellIdx()

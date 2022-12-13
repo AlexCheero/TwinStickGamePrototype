@@ -365,11 +365,12 @@ MonoBehaviour:
   _setSeed: 0
   _incrementSeed: 0
   _seed: 0
-  _tryRegenerate: 1
-  _regenAttempts: 1000
+  _tryRegenerate: 0
+  _regenAttempts: 10
   _useFallbackTile: 1
   _fallBackTileIdx: 2
   _fallBackBorderTileIdx: 1
+  _isEightDirectionWave: 1
 --- !u!4 &1563116671
 Transform:
   m_ObjectHideFlags: 0
@@ -428,4 +429,3 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a2024d38387def34f9fc45c749d6972f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _isEightDirectionAnalyze: 1
