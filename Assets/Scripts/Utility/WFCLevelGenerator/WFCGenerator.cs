@@ -263,7 +263,7 @@ namespace WFC
                         if (!_isEightDirectionWave && j % 2 != 0)
                             continue;
                         
-                        var bias = WFCHelper.GetNeighbourBias(j);
+                        var bias = WFCHelper.BiasPerSide[(ETileSide)j];
                         var neighbourPos = gridPos + bias;
                         if (neighbourPos.x < 0 || neighbourPos.x >= dimension || neighbourPos.y < 0 || neighbourPos.y >= dimension)
                         {
@@ -329,7 +329,7 @@ namespace WFC
             {
                 if (!_isEightDirectionWave && i % 2 != 0)
                     continue;
-                var bias = WFCHelper.GetNeighbourBias(i);
+                var bias = WFCHelper.BiasPerSide[(ETileSide)i];
                 var neighbourPos = gridPos + bias;
                 var neighbourIdx = WFCHelper.GridPosToIdx(neighbourPos, _placer.Dimension);
                 if (neighbourIdx > 0 && !_updateQueue.Contains(neighbourIdx))
@@ -419,12 +419,13 @@ namespace WFC
             {
                 if (!_isEightDirectionWave && i % 2 != 0)
                     continue;
-                var bias = WFCHelper.GetNeighbourBias(i);
+                var side = (ETileSide)i;
+                var bias = WFCHelper.BiasPerSide[side];
                 var neighbourIdx = WFCHelper.GridPosToIdx(gridPos + bias, _placer.Dimension);
                 if (neighbourIdx < 0 || neighbourIdx >= _grid.Length)
                     continue;
                 var probableEntries = _grid[neighbourIdx].ProbableEntries;
-                var adjacentSide = WFCHelper.GetOppositeSide((ETileSide)i);
+                var adjacentSide = WFCHelper.GetOppositeSide(side);
                 var availableAtSide = false;
                 for (int j = 0; j < probableEntries.Count; j++)
                 {

@@ -158,8 +158,8 @@ public class TileAnalyzer : MonoBehaviour
             var pos = tile.transform.position;
             for (int i = 0; i < 8; i++)
             {
-                var bias = WFCHelper.GetNeighbourBias(i);
                 var side = (ETileSide)i;
+                var bias = WFCHelper.BiasPerSide[side];
                 var neighbourPos = pos;
                 neighbourPos.x += bias.x * _placer.SnapSize;
                 neighbourPos.z += bias.y * _placer.SnapSize;

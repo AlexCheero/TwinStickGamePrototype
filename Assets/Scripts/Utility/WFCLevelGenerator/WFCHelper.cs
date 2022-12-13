@@ -1,11 +1,20 @@
-
-using System;
+using System.Collections.Generic;
 using UnityEngine;
 using WFC;
 
 public static class WFCHelper
 {
-    public static Vector2Int GetNeighbourBias(int i) => new Vector2Int(i % 3 - 1, i / 3 - 1);
+    public static Dictionary<ETileSide, Vector2Int> BiasPerSide = new Dictionary<ETileSide, Vector2Int>
+    {
+        { ETileSide.Up, new Vector2Int(0, 1) },
+        { ETileSide.UpRight, new Vector2Int(1, 1) },
+        { ETileSide.Right, new Vector2Int(1, 0) },
+        { ETileSide.DownRight, new Vector2Int(1, -1) },
+        { ETileSide.Down, new Vector2Int(0, -1) },
+        { ETileSide.DownLeft, new Vector2Int(-1, -1) },
+        { ETileSide.Left, new Vector2Int(-1, 0) },
+        { ETileSide.UpLeft, new Vector2Int(-1, 1) }
+    };
     
     public static Vector2Int IdxToGridPos(int idx, int dim) =>
         new Vector2Int
