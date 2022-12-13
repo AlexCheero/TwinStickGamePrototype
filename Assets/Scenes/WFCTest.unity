@@ -400,6 +400,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _snapSize: 1
   _dimension: 10
+  _markerMaterial: {fileID: 2100000, guid: 79f477e66db05114e82613c819d08153, type: 2}
+  _markerColorAlpha: 0.5
 --- !u!114 &1563116673
 MonoBehaviour:
   m_ObjectHideFlags: 0

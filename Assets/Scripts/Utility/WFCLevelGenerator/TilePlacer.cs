@@ -12,6 +12,14 @@ public class TilePlacer : MonoBehaviour
     private float _snapSize = 1.0f;
     [SerializeField]
     private int _dimension;
+    [SerializeField]
+    private Material _markerMaterial;
+    [SerializeField]
+    private float _markerColorAlpha = 0.2f;
+
+    private Color _greenMarkerColor;
+    private Color _redMarkerColor;
+    private Color _yellowMarkerColor;
 
     public float SnapSize => _snapSize;
     public int Dimension => _dimension;
@@ -24,6 +32,14 @@ public class TilePlacer : MonoBehaviour
     public Dictionary<Vector3, Tile> PlacedTiles;
     
     private Transform CurrentMarker => _markers[_currentMarkerIdx];
+
+    void Awake()
+    {
+        _greenMarkerColor = Color.green;
+        _redMarkerColor = Color.red;
+        _yellowMarkerColor = Color.yellow;
+        _greenMarkerColor.a = _redMarkerColor.a = _yellowMarkerColor.a = _markerColorAlpha;
+    }
     
     void Start()
     {
@@ -44,7 +60,10 @@ public class TilePlacer : MonoBehaviour
             var marker = Instantiate(_palette.Palette[i], markersHolder, true);
             marker.name = "marker " + i;
             marker.gameObject.SetActive(false);
-            SetMarkerColor(marker.transform, Color.green);
+            var markerRenderers = marker.GetComponentsInChildren<MeshRenderer>();
+            foreach (var renderer in markerRenderers)
+                renderer.material = _markerMaterial;
+            SetMarkerColor(marker.transform, _greenMarkerColor);
             _markers.Add(marker.transform);
             //Destroy(marker);
         }
@@ -63,14 +82,10 @@ public class TilePlacer : MonoBehaviour
                              new Vector3(halfSnap, 0, halfSnap));
     }
 
-    private void SetMarkerColor(Transform marker, Color color)
+    private void SetMarkerColor(Component marker, Color color)
     {
-        var renderers = marker.GetComponentsInChildren<MeshRenderer>();
-        foreach (var renderer in renderers)
-        {
-            foreach (var mat in renderer.materials)
-                mat.color = color;
-        }
+        foreach (var renderer in marker.GetComponentsInChildren<MeshRenderer>())
+            renderer.material.color = color;
     }
 
     private void CreateBoundaryMarker(Vector3 position)
@@ -96,11 +111,11 @@ public class TilePlacer : MonoBehaviour
         var gridPos = WFCHelper.PosToGridPos(markerPosition, _dimension);
 
         var isPosValid = WFCHelper.IsGridPosValid(gridPos, _dimension);
-        var markerColor = Color.green;
+        var markerColor = _greenMarkerColor;
         if (!isPosValid)
-            markerColor = Color.red;
+            markerColor = _redMarkerColor;
         else if (PlacedTiles.ContainsKey(markerPosition))
-            markerColor = Color.yellow;
+            markerColor = _yellowMarkerColor;
         SetMarkerColor(CurrentMarker, markerColor);
         //shift marker slightly towards camera so it can be rendered on top of already placed tile
         var markerToCamDirection = (_cam.transform.position - markerPosition).normalized;
