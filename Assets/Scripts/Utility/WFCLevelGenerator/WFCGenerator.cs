@@ -426,7 +426,10 @@ namespace WFC
                 var availableAtSide = false;
                 for (int j = 0; j < probableEntries.Count; j++)
                 {
-                    var possibleTiles = _analyzer[probableEntries[j].Entry].Neighbours[adjacentSide];
+                    var probableNeighbours = _analyzer[probableEntries[j].Entry].Neighbours;
+                    if (!probableNeighbours.ContainsKey(adjacentSide))
+                        continue;
+                    var possibleTiles = probableNeighbours[adjacentSide];
                     var foundIdx = possibleTiles.FindIndex(p => TileAnalyzer.EntryComparer.Equals(p.Entry, pEntry.Entry));
                     if (foundIdx < 0)
                         continue;

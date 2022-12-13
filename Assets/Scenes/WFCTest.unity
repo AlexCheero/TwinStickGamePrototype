@@ -365,9 +365,9 @@ MonoBehaviour:
   _setSeed: 0
   _incrementSeed: 0
   _seed: 0
-  _tryRegenerate: 0
+  _tryRegenerate: 1
   _regenAttempts: 10
-  _useFallbackTile: 1
+  _useFallbackTile: 0
   _fallBackTileIdx: 2
   _fallBackBorderTileIdx: 1
   _isEightDirectionWave: 1
@@ -399,7 +399,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _snapSize: 1
-  _dimension: 10
+  _dimension: 22
   _markerMaterial: {fileID: 2100000, guid: 79f477e66db05114e82613c819d08153, type: 2}
   _markerColorAlpha: 0.5
 --- !u!114 &1563116673
@@ -419,6 +419,7 @@ MonoBehaviour:
   - {fileID: 6535702921552860779, guid: 31ab905e2e10aad42aa76f693f36efb1, type: 3}
   - {fileID: 2786480192427450132, guid: 87ee2e16e4845a347b9858c22955b5ab, type: 3}
   - {fileID: 7134829569025165617, guid: 2e6e4027dad75ee47a7f7089ab3c5e76, type: 3}
+  - {fileID: 7226839566278615558, guid: 05eb304085877f948bcfebffd4a660d8, type: 3}
 --- !u!114 &1563116674
 MonoBehaviour:
   m_ObjectHideFlags: 0
