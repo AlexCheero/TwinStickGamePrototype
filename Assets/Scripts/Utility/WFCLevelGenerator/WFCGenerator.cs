@@ -101,8 +101,8 @@ namespace WFC
 
         public void CollapseManually(int id, float rotation)
         {
-            ProbableEntries[0] = new ProbableEntry(new PatternEntry { Id = id, YRotation = rotation }, 1);
-            ProbableEntries.RemoveRange(1, ProbableEntries.Count - 1);
+            ProbableEntries.Clear();
+            ProbableEntries.Add(new ProbableEntry(new PatternEntry { Id = id, YRotation = rotation }, 1));
             _collapseState = ECollapseState.CollapsedManually;
         }
 
