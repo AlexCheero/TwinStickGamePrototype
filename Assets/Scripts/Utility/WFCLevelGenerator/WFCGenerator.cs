@@ -75,26 +75,26 @@ namespace WFC
 
         public bool TryCollapse(bool useRandom)
         {
-            var weight = 0.0f;
-            ProbableEntry selectedEntry = default;
-            foreach (var probableEntry in ProbableEntries)
-            {
-                var shouldChooseTile = probableEntry.Weight > weight;
-                shouldChooseTile |= useRandom && Mathf.Abs(probableEntry.Weight - weight) < float.Epsilon && Random.value > 0.5f;
-                if (!shouldChooseTile)
-                    continue;
-                weight = probableEntry.Weight;
-                selectedEntry = probableEntry;
-            }
-
-            if (weight == 0)
+            if (ProbableEntries.Count == 0)
             {
                 _collapseState = ECollapseState.NotCollapsed;
                 return false;
             }
+            
+            var chance = 0.0f;
+            ProbableEntry selectedEntry = default;
+            foreach (var probableEntry in ProbableEntries)
+            {
+                var newChance = Random.value * probableEntry.Weight;
+                if (newChance > chance || Mathf.Abs(chance - newChance) < float.Epsilon && Random.value > 0.5f)
+                {
+                    chance = Mathf.Max(newChance, chance);
+                    selectedEntry = probableEntry;
+                }
+            }
 
-            ProbableEntries[0] = selectedEntry;
-            ProbableEntries.RemoveRange(1, ProbableEntries.Count - 1);
+            ProbableEntries.Clear();
+            ProbableEntries.Add(selectedEntry);
             _collapseState = ECollapseState.Collapsed;
             return true;
         }
@@ -219,7 +219,6 @@ namespace WFC
                         break;
                     }
                 }
-                Debug.Log("collapsed in " + ctr + " attempts");
 
                 for (int i = 0; i < _grid.Length; i++)
                     PlaceTile(i);
@@ -319,8 +318,6 @@ namespace WFC
                 if (UpdateCell(queuedIdx))
                     AddNeighboursToUpdateQueue(WFCHelper.IdxToGridPos(queuedIdx, _placer.Dimension));
             }
-            Debug.Log("cell update attempts: " + ctr + ", queue: " + _updateQueue.Count);
-            
         }
         
         private void AddNeighboursToUpdateQueue(Vector2Int gridPos)
