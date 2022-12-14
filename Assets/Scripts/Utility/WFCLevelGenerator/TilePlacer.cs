@@ -175,6 +175,7 @@ public class TilePlacer : MonoBehaviour
         if (!PlacedTiles.ContainsKey(position))
             return;
         
+        Debug.LogWarning("this restriction will stay for generation because neighbors not updated");
         Destroy(PlacedTiles[position].gameObject);
         PlacedTiles.Remove(position);
     }
