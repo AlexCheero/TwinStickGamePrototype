@@ -205,7 +205,7 @@ namespace WFC
                     }
 
                     GenerateStep(idx);
-                    PlaceTile(idx);
+                    PlaceTile(idx, false);
                 }
             }
             else
@@ -214,7 +214,7 @@ namespace WFC
             }
 
             if (Input.GetKeyDown(KeyCode.C))
-                Clear(true);
+                Clear(Input.GetKey(KeyCode.LeftShift));
 
             if (Input.GetKeyDown(KeyCode.G))
             {
@@ -232,7 +232,7 @@ namespace WFC
                 }
 
                 for (int i = 0; i < _grid.Length; i++)
-                    PlaceTile(i);
+                    PlaceTile(i, false);
             }
         }
 
@@ -250,8 +250,12 @@ namespace WFC
             for (var i = 0; i < _grid.Length; i++)
             {
                 var cell = _grid[i];
-                if (cell.IsCollapsed)
-                    PlaceTile(i);
+#if DEBUG
+                if (cell.IsCollapsed && !cell.IsCollapsedManually)
+                    Debug.LogError("cell could not be collapsed not manually after grid reiniting");
+#endif
+                if (cell.IsCollapsedManually)
+                    PlaceTile(i, true);
             }
         }
 
@@ -317,13 +321,14 @@ namespace WFC
             }
         }
 
-        private void GenerateStep(int idx)
+        private bool GenerateStep(int idx)
         {
             if (!_grid[idx].TryCollapse(_useRandom))
-                return;
+                return false;
             
             var gridPos = WFCHelper.IdxToGridPos(idx, _placer.Dimension);
             UpdateNeighbours(gridPos);
+            return true;
         }
 
         private void UpdateNeighbours(Vector2Int gridPos)
@@ -379,7 +384,7 @@ namespace WFC
             return removed;
         }
 
-        private void PlaceTile(int idx)
+        private void PlaceTile(int idx, bool manually)
         {
             var cell = _grid[idx];
             bool shouldPlace = cell.IsCollapsed || _useFallbackTile;
@@ -417,11 +422,12 @@ namespace WFC
             if (idx < 0 || idx >= _grid.Length)
                 throw new Exception("wrong idx");
 #endif
-            _placer.PlaceTile(pEntry.Id, WFCHelper.GridPosToPos(gridPos, dimension), pEntry.YRotation);
+            _placer.PlaceTile(pEntry.Id, WFCHelper.GridPosToPos(gridPos, dimension), pEntry.YRotation, manually);
         }
 
         private void OnTilePlacedManually(int tileId, Vector3 position, float yRotation)
         {
+            Debug.Log("OnTilePlacedManually");
             var gridPos = WFCHelper.PosToGridPos(position, _placer.Dimension);
             var idx = WFCHelper.GridPosToIdx(gridPos, _placer.Dimension);
             _grid[idx].CollapseManually(tileId, yRotation);
@@ -465,16 +471,15 @@ namespace WFC
 
         private bool Generate()
         {
-            var notCollapsedCount = _grid.Length;
             var idx = GetLowestEntropyCellIdx();
             while (idx >= 0)
             {
-                GenerateStep(idx);
+                if (!GenerateStep(idx))
+                    return false;
                 idx = GetLowestEntropyCellIdx();
-                notCollapsedCount--;
             }
 
-            return notCollapsedCount == 0;
+            return true;
         }
 
         private int GetLowestEntropyCellIdx()

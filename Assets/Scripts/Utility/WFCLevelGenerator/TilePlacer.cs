@@ -155,7 +155,7 @@ public class TilePlacer : MonoBehaviour
         return snapped * sign;
     }
 
-    public void PlaceTile(int idx, Vector3 position, float yRotation, bool manually = false)
+    public void PlaceTile(int idx, Vector3 position, float yRotation, bool manually)
     {
         if (PlacedTiles.ContainsKey(position))
             DeleteTile(position);
