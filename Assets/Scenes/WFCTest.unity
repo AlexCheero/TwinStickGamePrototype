@@ -399,7 +399,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _snapSize: 1
-  _dimension: 22
+  _dimension: 12
   _markerMaterial: {fileID: 2100000, guid: 79f477e66db05114e82613c819d08153, type: 2}
   _markerColorAlpha: 0.5
 --- !u!114 &1563116673
@@ -420,6 +420,7 @@ MonoBehaviour:
   - {fileID: 2786480192427450132, guid: 87ee2e16e4845a347b9858c22955b5ab, type: 3}
   - {fileID: 7134829569025165617, guid: 2e6e4027dad75ee47a7f7089ab3c5e76, type: 3}
   - {fileID: 7226839566278615558, guid: 05eb304085877f948bcfebffd4a660d8, type: 3}
+  - {fileID: 7284505450539938735, guid: 89cddbde2fdc79346a2de6718aaf7749, type: 3}
 --- !u!114 &1563116674
 MonoBehaviour:
   m_ObjectHideFlags: 0
