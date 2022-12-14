@@ -187,19 +187,30 @@ namespace WFC
             InitGrid(true);
         }
 
+        private float _timeSinceLastStep;
+        private float _stepDelay = 0.3f;
         void Update()
         {
-            if (Input.GetKeyDown(KeyCode.S))
+            if (Input.GetKey(KeyCode.S))
             {
-                var idx = GetLowestEntropyCellIdx();
-                if (idx < 0)
+                if (Time.time - _timeSinceLastStep > _stepDelay)
                 {
-                    Clear(false);
-                    idx = GetLowestEntropyCellIdx();
-                }
+                    _stepDelay = Mathf.Max(0.07f, _stepDelay - 0.02f);
+                    _timeSinceLastStep = Time.time;
+                    var idx = GetLowestEntropyCellIdx();
+                    if (idx < 0)
+                    {
+                        Clear(false);
+                        idx = GetLowestEntropyCellIdx();
+                    }
 
-                GenerateStep(idx);
-                PlaceTile(idx);
+                    GenerateStep(idx);
+                    PlaceTile(idx);
+                }
+            }
+            else
+            {
+                _stepDelay = 0.3f;
             }
 
             if (Input.GetKeyDown(KeyCode.C))
