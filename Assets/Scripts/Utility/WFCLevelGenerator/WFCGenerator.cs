@@ -246,6 +246,13 @@ namespace WFC
             }
             _placer.Clear();
             InitGrid(clearManuallyCollapsed);
+            
+            for (var i = 0; i < _grid.Length; i++)
+            {
+                var cell = _grid[i];
+                if (cell.IsCollapsed)
+                    PlaceTile(i);
+            }
         }
 
         private bool IsBorderTile(int idx, int dim)
