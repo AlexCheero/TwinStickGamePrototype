@@ -158,7 +158,10 @@ public class TilePlacer : MonoBehaviour
     public void PlaceTile(int idx, Vector3 position, float yRotation, bool manually)
     {
         if (PlacedTiles.ContainsKey(position))
+        {
+            //TODO: this restriction will stay for generation because neighbors not updated
             DeleteTile(position);
+        }
         
         var prototype = _palette.Palette[idx];
         var tile = Instantiate(prototype, position, prototype.transform.rotation);
@@ -175,7 +178,7 @@ public class TilePlacer : MonoBehaviour
         if (!PlacedTiles.ContainsKey(position))
             return;
         
-        Debug.LogWarning("this restriction will stay for generation because neighbors not updated");
+        //TODO: this restriction will stay for generation because neighbors not updated
         Destroy(PlacedTiles[position].gameObject);
         PlacedTiles.Remove(position);
     }

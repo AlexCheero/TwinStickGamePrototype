@@ -427,7 +427,6 @@ namespace WFC
 
         private void OnTilePlacedManually(int tileId, Vector3 position, float yRotation)
         {
-            Debug.Log("OnTilePlacedManually");
             var gridPos = WFCHelper.PosToGridPos(position, _placer.Dimension);
             var idx = WFCHelper.GridPosToIdx(gridPos, _placer.Dimension);
             _grid[idx].CollapseManually(tileId, yRotation);
