@@ -55,5 +55,10 @@ public static class WFCHelper
 
     public static ETileSide GetOppositeSide(ETileSide side) => TurnSide(side, 4);
     
-    public static float GetTileRotation(this Tile tile) => tile.transform.eulerAngles.y % 360;
+    public static float GetTileRotation(this Tile tile)
+    {
+        var clampedRotation = tile.transform.eulerAngles.y % 360;
+        var positiveRotation = clampedRotation < 0 ? 360 + clampedRotation : clampedRotation;
+        return positiveRotation;
+    }
 }

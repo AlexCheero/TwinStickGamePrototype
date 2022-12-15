@@ -129,16 +129,20 @@ public class TilePlacer : MonoBehaviour
             else
                 PlaceTile(_currentMarkerIdx, markerPosition, CurrentMarker.gameObject.transform.eulerAngles.y, true);
         }
-        if (Input.GetMouseButtonDown(1))
+
+        var mouseWheelDelta = Input.GetAxis("Mouse ScrollWheel");
+        if (mouseWheelDelta != 0)
         {
+            var mwdSign = (int)Mathf.Sign(mouseWheelDelta);
             if (Input.GetKey(KeyCode.LeftShift))
             {
-                CurrentMarker.gameObject.transform.Rotate(Vector3.up, 90.0f);
+                CurrentMarker.gameObject.transform.Rotate(Vector3.up, mwdSign*90.0f);
             }
             else
             {
                 CurrentMarker.gameObject.SetActive(false);
-                _currentMarkerIdx = (_currentMarkerIdx + 1) % _markers.Count;
+                var clampedIdx = (_currentMarkerIdx + mwdSign) % _markers.Count;
+                _currentMarkerIdx = clampedIdx < 0 ? _markers.Count + clampedIdx : clampedIdx;
                 CurrentMarker.gameObject.SetActive(true);
             }
         }
