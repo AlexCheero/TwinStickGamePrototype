@@ -9,7 +9,14 @@ public class TileEditorCameraController : MonoBehaviour
      
     private float _yaw = 0f;
     private float _pitch = 0f;
-         
+
+    void Start()
+    {
+        var eulers = transform.eulerAngles;
+        _pitch = eulers.x;
+        _yaw = eulers.y;
+    }
+    
     void Update ()
     {
         if (!Input.GetMouseButton(1))
