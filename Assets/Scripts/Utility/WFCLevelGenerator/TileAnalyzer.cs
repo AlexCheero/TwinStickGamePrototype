@@ -138,8 +138,60 @@ public class TileAnalyzer : MonoBehaviour
             MiscUtils.WriteStringToFile(PatternFilePath, patternJson, false);
             Debug.Log("Pattern saved at: " + PatternFilePath);
         }
+
         if (Input.GetKeyDown(KeyCode.L))
-            LoadPattern(PatternFilePath);
+        {
+            if (Input.GetKey(KeyCode.LeftShift))
+            {
+                var presetJson = MiscUtils.ReadStringFromFile(Application.persistentDataPath + "/preset");
+                var preset = JsonConvert.DeserializeObject<Preset>(presetJson);
+                if (_placer.Dimension != preset.Dimension)
+                {
+                    Debug.LogError("can't load preset due to dimension mismatch");
+                }
+                else
+                {
+                    foreach (var presetEntry in preset.Entries)
+                    {
+                        var gridPos = presetEntry.Item1;
+                        var patternEntry = presetEntry.Item2;
+                        _placer.PlaceTile(patternEntry.Id, WFCHelper.GridPosToPos(gridPos, preset.Dimension), patternEntry.YRotation, true);
+                    }
+                }
+            }
+            else
+                LoadPattern(PatternFilePath);
+        }
+        if (Input.GetKeyDown(KeyCode.P))
+            SavePreset(Application.persistentDataPath + "/preset");
+    }
+
+    private struct Preset
+    {
+        public int Dimension;
+        public List<Tuple<Vector2Int, PatternEntry>> Entries;
+    }
+    
+    private void SavePreset(string path)
+    {
+        var dimension = _placer.Dimension;
+        var placedEntries = new List<Tuple<Vector2Int, PatternEntry>>();
+        foreach (var placedTile in _placer.PlacedTiles)
+        {
+            var gridPos = WFCHelper.PosToGridPos(placedTile.Key, dimension);
+            var entry = new PatternEntry(placedTile.Value.TileId, placedTile.Value.GetTileRotation());
+            placedEntries.Add(Tuple.Create(gridPos, entry));
+        }
+        
+        var pattern = new Preset
+        {
+            Dimension = dimension,
+            Entries = placedEntries
+        };
+
+        var patternJson = JsonConvert.SerializeObject(pattern);
+        MiscUtils.WriteStringToFile(path, patternJson, false);
+        Debug.Log("Preset saved at: " + path);
     }
 
     private void LoadPattern(string path)
