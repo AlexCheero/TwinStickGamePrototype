@@ -131,7 +131,8 @@ public class TileAnalyzer : MonoBehaviour
         
         if (Input.GetKeyDown(KeyCode.A))
         {
-            _pattern.Clear();
+            if (!Input.GetKey(KeyCode.LeftShift))
+                _pattern.Clear();
             Analyze();
             var patternList = PatternDictToList(_pattern);
             var patternJson = JsonConvert.SerializeObject(patternList);
