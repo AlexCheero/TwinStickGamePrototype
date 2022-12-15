@@ -218,7 +218,8 @@ public class TileAnalyzer : MonoBehaviour
                 var neighbourPos = pos;
                 neighbourPos.x += bias.x * _placer.SnapSize;
                 neighbourPos.z += bias.y * _placer.SnapSize;
-                if (!_placer.PlacedTiles.ContainsKey(neighbourPos))
+                var gridPos = WFCHelper.PosToGridPos(neighbourPos, _placer.Dimension);
+                if (gridPos.x < 0 || gridPos.x >= _placer.Dimension || gridPos.y < 0 || gridPos.y >= _placer.Dimension)
                 {
                     var pseudoEntry = PatternEntry.PseudoEntry;
                     if (!_pattern.ContainsKey(pseudoEntry))
@@ -226,7 +227,7 @@ public class TileAnalyzer : MonoBehaviour
                     var oppositeSide = WFCHelper.GetOppositeSide(side);
                     _pattern[pseudoEntry].Add(oppositeSide, tile.TileId, tile.GetTileRotation());
                 }
-                else
+                else if (_placer.PlacedTiles.ContainsKey(neighbourPos))
                 {
                     var neighbour = _placer.PlacedTiles[neighbourPos];
                     for (int j = 0; j < 4; j++)
