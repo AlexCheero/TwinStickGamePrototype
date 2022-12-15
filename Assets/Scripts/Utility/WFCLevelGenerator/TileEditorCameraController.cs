@@ -1,35 +1,41 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class TileEditorCameraController : MonoBehaviour
 {
-    public float lookSpeedH = 2f;
-    public float lookSpeedV = 2f;
-    public float zoomSpeed = 2f;
-    public float dragSpeed = 6f;
+    public float LookSpeedH = 2f;
+    public float LookSpeedV = 2f;
+    public float MoveSpeed = 10f;
+    public float FastMoveSpeed = 20f;
      
-    private float yaw = 0f;
-    private float pitch = 0f;
+    private float _yaw = 0f;
+    private float _pitch = 0f;
          
     void Update ()
     {
-        //Look around with Right Mouse
-        if (Input.GetMouseButton(1))
+        if (!Input.GetMouseButton(1))
+            return;
+        
+        _yaw += LookSpeedH * Input.GetAxis("Mouse X");
+        _pitch -= LookSpeedV * Input.GetAxis("Mouse Y");
+        transform.eulerAngles = new Vector3(_pitch, _yaw, 0f);
+
+        var translation = Vector3.zero;
+        if (Input.GetKey(KeyCode.S))
+            translation += Vector3.back;
+        if (Input.GetKey(KeyCode.W))
+            translation += Vector3.forward;
+        if (Input.GetKey(KeyCode.D))
+            translation += Vector3.right;
+        if (Input.GetKey(KeyCode.A))
+            translation += Vector3.left;
+        if (Input.GetKey(KeyCode.Q))
+            translation += Vector3.down;
+        if (Input.GetKey(KeyCode.E))
+            translation += Vector3.up;
+        if (translation.sqrMagnitude > 0)
         {
-            yaw += lookSpeedH * Input.GetAxis("Mouse X");
-            pitch -= lookSpeedV * Input.GetAxis("Mouse Y");
-     
-            transform.eulerAngles = new Vector3(pitch, yaw, 0f);
+            var translationDelta = Time.deltaTime * (Input.GetKey(KeyCode.LeftShift) ? FastMoveSpeed : MoveSpeed);
+            transform.Translate(translation * translationDelta, Space.Self);
         }
-     
-        //drag camera around with Middle Mouse
-        if (Input.GetMouseButton(2))
-        {
-            transform.Translate(-Input.GetAxisRaw("Mouse X") * Time.deltaTime * dragSpeed,   -Input.GetAxisRaw("Mouse Y") * Time.deltaTime * dragSpeed, 0);
-        }
-     
-        //Zoom in and out with Mouse Wheel
-        transform.Translate(0, 0, Input.GetAxis("Mouse ScrollWheel") * zoomSpeed, Space.Self);
     }
 }

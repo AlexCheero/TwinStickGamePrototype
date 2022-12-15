@@ -126,6 +126,9 @@ public class TileAnalyzer : MonoBehaviour
 
     void Update()
     {
+        if (Input.GetMouseButton(1))
+            return;
+        
         if (Input.GetKeyDown(KeyCode.A))
         {
             _pattern.Clear();

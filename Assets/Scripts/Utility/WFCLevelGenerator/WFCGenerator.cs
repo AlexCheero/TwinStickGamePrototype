@@ -191,6 +191,9 @@ namespace WFC
         private float _stepDelay = 0.3f;
         void Update()
         {
+            if (Input.GetMouseButton(1))
+                return;
+            
             if (Input.GetKey(KeyCode.S))
             {
                 if (Time.time - _timeSinceLastStep > _stepDelay)

@@ -98,6 +98,9 @@ public class TilePlacer : MonoBehaviour
     private Vector2Int _previousPlacePos;
     void Update()
     {
+        if (Input.GetMouseButton(1))
+            return;
+        
         if (_snapSize <= 0)
             return;
        
