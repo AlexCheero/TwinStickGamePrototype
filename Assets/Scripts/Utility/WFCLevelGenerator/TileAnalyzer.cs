@@ -246,6 +246,7 @@ public class TileAnalyzer : MonoBehaviour
                 else if (_placer.PlacedTiles.ContainsKey(neighbourPos))
                 {
                     var neighbour = _placer.PlacedTiles[neighbourPos];
+                    //TODO: refactor all the stuff with tile rotations of different tile types here and in SavePreset too
                     switch (tile.RotationType)
                     {
                         case ETileRotation.No:
@@ -286,7 +287,9 @@ public class TileAnalyzer : MonoBehaviour
                                 
                                 var rotatedSide = WFCHelper.TurnSide(side, j * 2);
                                 _pattern[entry].Add(rotatedSide, neighbour.TileId, neighbourRotation);
-                                neighbourRotation = (neighbourRotation + 180) % 360;
+
+                                if (neighbour.RotationType == ETileRotation.Four)
+                                    neighbourRotation = (neighbourRotation + 180) % 360;
                                 _pattern[entry].Add(WFCHelper.GetOppositeSide(rotatedSide), neighbour.TileId, neighbourRotation);
                             }
                             break;
