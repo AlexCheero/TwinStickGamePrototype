@@ -45,6 +45,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   TileId: 1
+  RotationType: 2
 --- !u!1 &2597206990580686306
 GameObject:
   m_ObjectHideFlags: 0

@@ -14,9 +14,17 @@ namespace WFC
         Left,
         UpLeft
     }
+
+    public enum ETileRotation
+    {
+        No,
+        Two,
+        Four
+    }
     
     public class Tile : MonoBehaviour
     {
         public int TileId;
+        public ETileRotation RotationType;
     }
 }

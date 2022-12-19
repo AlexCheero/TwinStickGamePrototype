@@ -180,7 +180,22 @@ public class TileAnalyzer : MonoBehaviour
         foreach (var placedTile in _placer.PlacedTiles)
         {
             var gridPos = WFCHelper.PosToGridPos(placedTile.Key, dimension);
-            var entry = new PatternEntry(placedTile.Value.TileId, placedTile.Value.GetTileRotation());
+            float rotation;
+            switch (placedTile.Value.RotationType)
+            {
+                case ETileRotation.No:
+                    rotation = 0;
+                    break;
+                case ETileRotation.Two:
+                    rotation = placedTile.Value.GetTileRotation() % 180;
+                    break;
+                case ETileRotation.Four:
+                     rotation = placedTile.Value.GetTileRotation() % 360;
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+            var entry = new PatternEntry(placedTile.Value.TileId, rotation);
             placedEntries.Add(Tuple.Create(gridPos, entry));
         }
         
@@ -231,15 +246,72 @@ public class TileAnalyzer : MonoBehaviour
                 else if (_placer.PlacedTiles.ContainsKey(neighbourPos))
                 {
                     var neighbour = _placer.PlacedTiles[neighbourPos];
-                    for (int j = 0; j < 4; j++)
+                    switch (tile.RotationType)
                     {
-                        var rotation = (tile.GetTileRotation() + j*90) % 360;
-                        var entry = new PatternEntry(tile.TileId, rotation);
-                        if (!_pattern.ContainsKey(entry))
-                            _pattern.Add(entry, new ProbableNeighbours());
-                        var neighbourRotation = (neighbour.GetTileRotation() + j*90) % 360;
-                        var rotatedSide = WFCHelper.TurnSide(side, j * 2);
-                        _pattern[entry].Add(rotatedSide, neighbour.TileId, neighbourRotation);
+                        case ETileRotation.No:
+                            {
+                                var entry = new PatternEntry(tile.TileId, 0);
+                                if (!_pattern.ContainsKey(entry))
+                                    _pattern.Add(entry, new ProbableNeighbours());
+                                for (int j = 0; j < 4; j++)
+                                {
+                                    var neighbourRotation = neighbour.RotationType switch
+                                    {
+                                        ETileRotation.No => 0,
+                                        ETileRotation.Two => (neighbour.GetTileRotation() + j * 90) % 180,
+                                        ETileRotation.Four => (neighbour.GetTileRotation() + j * 90) % 360,
+                                        _ => throw new ArgumentOutOfRangeException()
+                                    };
+                                    
+                                    var rotatedSide = WFCHelper.TurnSide(side, j * 2);
+                                    _pattern[entry].Add(rotatedSide, neighbour.TileId, neighbourRotation);
+                                }
+                            }
+                            break;
+                        case ETileRotation.Two:
+                            for (int j = 0; j < 2; j++)
+                            {
+                                var rotation = (tile.GetTileRotation() + j*90) % 180;
+                                var entry = new PatternEntry(tile.TileId, rotation);
+                                if (!_pattern.ContainsKey(entry))
+                                    _pattern.Add(entry, new ProbableNeighbours());
+                                
+                                var neighbourRotation = neighbour.RotationType switch
+                                {
+                                    ETileRotation.No => 0,
+                                    ETileRotation.Two => (neighbour.GetTileRotation() + j * 90) % 180,
+                                    ETileRotation.Four => (neighbour.GetTileRotation() + j * 90) % 360,
+                                    _ => throw new ArgumentOutOfRangeException()
+                                };
+                                
+                                var rotatedSide = WFCHelper.TurnSide(side, j * 2);
+                                _pattern[entry].Add(rotatedSide, neighbour.TileId, neighbourRotation);
+                                neighbourRotation = (neighbourRotation + 180) % 360;
+                                _pattern[entry].Add(WFCHelper.GetOppositeSide(rotatedSide), neighbour.TileId, neighbourRotation);
+                            }
+                            break;
+                        case ETileRotation.Four:
+                            for (int j = 0; j < 4; j++)
+                            {
+                                var rotation = (tile.GetTileRotation() + j*90) % 360;
+                                var entry = new PatternEntry(tile.TileId, rotation);
+                                if (!_pattern.ContainsKey(entry))
+                                    _pattern.Add(entry, new ProbableNeighbours());
+
+                                var neighbourRotation = neighbour.RotationType switch
+                                {
+                                    ETileRotation.No => 0,
+                                    ETileRotation.Two => (neighbour.GetTileRotation() + j * 90) % 180,
+                                    ETileRotation.Four => (neighbour.GetTileRotation() + j * 90) % 360,
+                                    _ => throw new ArgumentOutOfRangeException()
+                                };
+
+                                var rotatedSide = WFCHelper.TurnSide(side, j * 2);
+                                _pattern[entry].Add(rotatedSide, neighbour.TileId, neighbourRotation);
+                            }
+                            break;
+                        default:
+                            throw new ArgumentOutOfRangeException();
                     }
                 }
             }
