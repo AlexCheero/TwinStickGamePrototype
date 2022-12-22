@@ -17,11 +17,11 @@ public class GenerateLevelSystem : EcsSystem
     public override void Tick(EcsWorld world)
     {
         var generatorObject = GameObject.Find("WFCGenerator");
-        generatorObject.GetComponent<TileAnalyzer>().LoadPreset();
+        //generatorObject.GetComponent<TileAnalyzer>().LoadPreset();
         generatorObject.GetComponent<WFCGenerator>().GenerateLevel();
 
-        var playerSpawn = GameObject.FindObjectOfType<PlayerSpawn>();
-        var spawnPosition = playerSpawn.transform.position;
+        var levelDimension = generatorObject.GetComponent<TilePlacer>().Dimension;
+        var spawnPosition = WFCHelper.GridPosToPos(new Vector2Int(levelDimension - 3, levelDimension - 3), levelDimension);
         spawnPosition.y += 1.0f;
 
         foreach (var id in world.Enumerate(_playerFilterId))

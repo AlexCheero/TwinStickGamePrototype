@@ -41183,13 +41183,41 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4706963278870356305, guid: 0d9ed5f242ff6e24ea36430504c2a3a8, type: 3}
+      propertyPath: _doorTileIdx
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4706963278870356305, guid: 0d9ed5f242ff6e24ea36430504c2a3a8, type: 3}
+      propertyPath: _wallTileIdx
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4706963278870356305, guid: 0d9ed5f242ff6e24ea36430504c2a3a8, type: 3}
+      propertyPath: _centerTileIdx
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4706963278870356305, guid: 0d9ed5f242ff6e24ea36430504c2a3a8, type: 3}
+      propertyPath: _useGlobalWeights
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4706963278870356305, guid: 0d9ed5f242ff6e24ea36430504c2a3a8, type: 3}
+      propertyPath: _doorsPerBearingWall
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4706963278870356305, guid: 0d9ed5f242ff6e24ea36430504c2a3a8, type: 3}
+      propertyPath: _shouldGenerateBearingWall
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4706963278870356306, guid: 0d9ed5f242ff6e24ea36430504c2a3a8, type: 3}
       propertyPath: m_Name
       value: WFCGenerator
       objectReference: {fileID: 0}
+    - target: {fileID: 4706963278870356398, guid: 0d9ed5f242ff6e24ea36430504c2a3a8, type: 3}
+      propertyPath: Palette.Array.size
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 4706963278870356399, guid: 0d9ed5f242ff6e24ea36430504c2a3a8, type: 3}
       propertyPath: _dimension
-      value: 102
+      value: 57
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0d9ed5f242ff6e24ea36430504c2a3a8, type: 3}

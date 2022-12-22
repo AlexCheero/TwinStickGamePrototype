@@ -323,6 +323,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 3987217286928927278, guid: afdaccde24de5d641aa7bff0a01df071, type: 3}
+      propertyPath: Palette.Array.size
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 3987217286928927279, guid: afdaccde24de5d641aa7bff0a01df071, type: 3}
       propertyPath: _dimension
       value: 27
@@ -372,8 +376,36 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3987217286928927441, guid: afdaccde24de5d641aa7bff0a01df071, type: 3}
+      propertyPath: _doorTileIdx
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 3987217286928927441, guid: afdaccde24de5d641aa7bff0a01df071, type: 3}
+      propertyPath: _wallTileIdx
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3987217286928927441, guid: afdaccde24de5d641aa7bff0a01df071, type: 3}
+      propertyPath: _centerTileIdx
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3987217286928927441, guid: afdaccde24de5d641aa7bff0a01df071, type: 3}
+      propertyPath: _regenAttempts
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 3987217286928927441, guid: afdaccde24de5d641aa7bff0a01df071, type: 3}
       propertyPath: _useFallbackTile
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3987217286928927441, guid: afdaccde24de5d641aa7bff0a01df071, type: 3}
+      propertyPath: _useGlobalWeights
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3987217286928927441, guid: afdaccde24de5d641aa7bff0a01df071, type: 3}
+      propertyPath: _doorsPerBearingWall
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3987217286928927441, guid: afdaccde24de5d641aa7bff0a01df071, type: 3}
+      propertyPath: _shouldGenerateBearingWall
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3987217286928927442, guid: afdaccde24de5d641aa7bff0a01df071, type: 3}
       propertyPath: m_Name

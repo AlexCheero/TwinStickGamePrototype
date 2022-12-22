@@ -56,14 +56,26 @@ namespace WFC
         private int _regenAttempts = 1000;
         [SerializeField]
         private bool _useFallbackTile;
+        
+        [Header("FALLBACK TILES")]
         [SerializeField]
         private int _fallBackTileIdx;
         [SerializeField]
-        private int _fallBackBorderTileIdx;
+        private int _wallTileIdx;
+        [SerializeField]
+        private int _centerTileIdx;
+        [SerializeField]
+        private int _doorTileIdx;
+        
+        [Header("")]
         [SerializeField]
         private bool _isEightDirectionWave = true;
         [SerializeField]
         private bool _useGlobalWeights;
+        [SerializeField]
+        private bool _shouldGenerateBearingWall;
+        [SerializeField]
+        private int _doorsPerBearingWall = 2;
 
         private Cell[] _grid;
         private Queue<int> _updateQueue;
@@ -80,7 +92,6 @@ namespace WFC
 
             _placer.OnPlaced += OnTilePlacedManually;
             _fallBackTileIdx = Mathf.Clamp(_fallBackTileIdx, 0, _palette.Palette.Count - 1);
-            _fallBackBorderTileIdx = Mathf.Clamp(_fallBackBorderTileIdx, 0, _palette.Palette.Count - 1);
             
             _updateQueue = new Queue<int>();
         }
@@ -141,6 +152,10 @@ namespace WFC
         public void GenerateLevel()
         {
             Clear(false);
+
+            if (_shouldGenerateBearingWall)
+                GenerateBearingWall();
+            
             var ctr = 0;
             while (!Generate() && _tryRegenerate)
             {
@@ -155,6 +170,35 @@ namespace WFC
 
             for (int i = 0; i < _grid.Length; i++)
                 PlaceTile(i, false);
+        }
+
+        private void GenerateBearingWall()
+        {
+            var halfDim = _placer.Dimension / 2;
+            var doorPlaceNum = halfDim / _doorsPerBearingWall - 1;
+            for (int i = 0; i < halfDim; i++)
+            {
+                bool isDoor = (halfDim - i) % doorPlaceNum == 0;
+                if (i % 2 != 0 && !isDoor)
+                    continue;
+                
+                //_doorsPerBearingWall
+                
+                var idx = WFCHelper.GridPosToIdx(new Vector2Int(halfDim + i, halfDim), _placer.Dimension);
+                var idx2 = WFCHelper.GridPosToIdx(new Vector2Int(halfDim - i, halfDim), _placer.Dimension);
+                var idx3 = WFCHelper.GridPosToIdx(new Vector2Int(halfDim, halfDim + i), _placer.Dimension);
+                var idx4 = WFCHelper.GridPosToIdx(new Vector2Int(halfDim, halfDim - i), _placer.Dimension);
+
+                var tileIdx = isDoor ? _doorTileIdx : _wallTileIdx;
+                
+                _grid[idx].CollapseManually(tileIdx, 0);
+                _grid[idx2].CollapseManually(tileIdx, 0);
+                _grid[idx3].CollapseManually(tileIdx, 90);
+                _grid[idx4].CollapseManually(tileIdx, 90);
+            }
+            
+            var centerIdx = WFCHelper.GridPosToIdx(new Vector2Int(halfDim, halfDim), _placer.Dimension);
+            _grid[centerIdx].CollapseManually(_centerTileIdx, 0);
         }
 
         private void Clear(bool clearManuallyCollapsed)
@@ -327,7 +371,7 @@ namespace WFC
             {
                 if (IsBorderTile(idx, dimension))
                 {
-                    pEntry.Id = _fallBackBorderTileIdx;
+                    pEntry.Id = _fallBackTileIdx;
                     if (gridPos.x == 0)
                         pEntry.YRotation = 90;
                     else if (gridPos.x == dimension - 1)
