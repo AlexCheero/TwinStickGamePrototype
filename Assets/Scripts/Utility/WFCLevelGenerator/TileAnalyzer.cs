@@ -57,17 +57,20 @@ public struct PatternEntry
 {
     public int Id;
     public float YRotation;
+    public float Weight;
 
     public static readonly PatternEntry PseudoEntry = new PatternEntry
     {
         Id = -1,
         YRotation = 0,
+        Weight = 0
     };
     
     public PatternEntry(int tileId, float yRotation)
     {
         Id = tileId;
         YRotation = yRotation % 360;
+        Weight = 1;
     }
 }
 
@@ -85,25 +88,36 @@ public class TileAnalyzer : MonoBehaviour
     [NonSerialized]
     private PatternDict _pattern;
 
+    [NonSerialized]
+    public Dictionary<int, float> GlobalWeights;
+
     public ProbableNeighbours this[PatternEntry e] => _pattern[e];
     public bool IsPatternInited => _pattern != null;
     public bool Contains(PatternEntry e) => _pattern.ContainsKey(e);
     public ICollection<PatternEntry> Keys => _pattern.Keys;
 
-    private PatternList PatternDictToList(PatternDict dict)
+    private PatternList PatternDictsToList(PatternDict dict)
     {
         var list = new PatternList(dict.Count);
         foreach (var pair in dict)
-            list.Add(Tuple.Create(pair.Key, pair.Value));
+        {
+            var entry = pair.Key;
+            entry.Weight = GlobalWeights[entry.Id];
+            list.Add(Tuple.Create(entry, pair.Value));
+        }
         return list;
     }
 
-    private PatternDict PatternListToDict(PatternList list)
+    private (PatternDict, Dictionary<int, float>) PatternListToDicts(PatternList list)
     {
         var dict = new PatternDict(list.Count, EntryComparer);
+        var weights = new Dictionary<int, float>();
         foreach (var tuple in list)
+        {
             dict[tuple.Item1] = tuple.Item2;
-        return dict;
+            weights[tuple.Item1.Id] = tuple.Item1.Weight;
+        }
+        return (dict, weights);
     }
 
     private string PatternFilePath;
@@ -120,6 +134,7 @@ public class TileAnalyzer : MonoBehaviour
 
         //_pattern init should be in Start when all duplicates are already removed from palette
         _pattern = new Dictionary<PatternEntry, ProbableNeighbours>(_palette.Palette.Count, EntryComparer);
+        GlobalWeights = new Dictionary<int, float>();
 
         LoadPattern(PatternFilePath);
     }
@@ -137,7 +152,7 @@ public class TileAnalyzer : MonoBehaviour
             if (!Input.GetKey(KeyCode.LeftShift))
                 _pattern.Clear();
             Analyze();
-            var patternList = PatternDictToList(_pattern);
+            var patternList = PatternDictsToList(_pattern);
             var patternJson = JsonConvert.SerializeObject(patternList);
             MiscUtils.WriteStringToFile(PatternFilePath, patternJson, false);
             Debug.Log("Pattern saved at: " + PatternFilePath);
@@ -224,7 +239,7 @@ public class TileAnalyzer : MonoBehaviour
         else
         {
             var list = JsonConvert.DeserializeObject<List<Tuple<PatternEntry, ProbableNeighbours>>>(patternJson);
-            _pattern = PatternListToDict(list);
+            (_pattern, GlobalWeights) = PatternListToDicts(list);
         }
     }
 
@@ -253,6 +268,7 @@ public class TileAnalyzer : MonoBehaviour
                 {
                     var neighbour = _placer.PlacedTiles[neighbourPos];
                     //TODO: refactor all the stuff with tile rotations of different tile types here and in SavePreset too
+                    float globalWeight = GlobalWeights.ContainsKey(tile.TileId) ? GlobalWeights[tile.TileId] : 0;
                     switch (tile.RotationType)
                     {
                         case ETileRotation.No:
@@ -260,6 +276,7 @@ public class TileAnalyzer : MonoBehaviour
                                 var entry = new PatternEntry(tile.TileId, 0);
                                 if (!_pattern.ContainsKey(entry))
                                     _pattern.Add(entry, new ProbableNeighbours());
+                                GlobalWeights[tile.TileId] = globalWeight + 1;
                                 for (int j = 0; j < 4; j++)
                                 {
                                     var neighbourRotation = neighbour.RotationType switch
@@ -276,13 +293,14 @@ public class TileAnalyzer : MonoBehaviour
                             }
                             break;
                         case ETileRotation.Two:
+                            GlobalWeights[tile.TileId] = globalWeight + 0.5f;
                             for (int j = 0; j < 2; j++)
                             {
                                 var rotation = (tile.GetTileRotation() + j*90) % 180;
                                 var entry = new PatternEntry(tile.TileId, rotation);
                                 if (!_pattern.ContainsKey(entry))
                                     _pattern.Add(entry, new ProbableNeighbours());
-                                
+
                                 var neighbourRotation = neighbour.RotationType switch
                                 {
                                     ETileRotation.No => 0,
@@ -300,6 +318,7 @@ public class TileAnalyzer : MonoBehaviour
                             }
                             break;
                         case ETileRotation.Four:
+                            GlobalWeights[tile.TileId] = globalWeight + 0.25f;
                             for (int j = 0; j < 4; j++)
                             {
                                 var rotation = (tile.GetTileRotation() + j*90) % 360;

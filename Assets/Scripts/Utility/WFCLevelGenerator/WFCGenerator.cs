@@ -36,96 +36,6 @@ namespace WFC
 #endif
         }
     }
-    
-    public class Cell
-    {
-        private enum ECollapseState
-        {
-            NotCollapsed,
-            Collapsed,
-            CollapsedManually
-        }
-        
-        public readonly List<ProbableEntry> ProbableEntries;
-        
-        private ECollapseState _collapseState;
-        
-#if DEBUG
-        public bool FallbackUsed;
-#endif
-
-        public PatternEntry Entry => ProbableEntries.Count > 0 ? ProbableEntries[0].Entry : new PatternEntry();
-
-        public bool IsCollapsed => _collapseState == ECollapseState.Collapsed ||
-                                   _collapseState == ECollapseState.CollapsedManually;
-
-        public bool IsCollapsedManually => _collapseState == ECollapseState.CollapsedManually;
-        
-        public Cell(IEnumerable<PatternEntry> entries)
-        {
-            ProbableEntries = new List<ProbableEntry>();
-            foreach (var entry in entries)
-            {
-                if (TileAnalyzer.EntryComparer.Equals(entry, PatternEntry.PseudoEntry))
-                    continue;
-                ProbableEntries.Add(new ProbableEntry(entry, 1));
-            }
-            _collapseState = ECollapseState.NotCollapsed;
-        }
-
-        public bool TryCollapse(bool useRandom)
-        {
-            if (ProbableEntries.Count == 0)
-            {
-                _collapseState = ECollapseState.NotCollapsed;
-                return false;
-            }
-            
-            var chance = 0.0f;
-            ProbableEntry selectedEntry = default;
-            foreach (var probableEntry in ProbableEntries)
-            {
-                var newChance = Random.value * probableEntry.Weight;
-                if (newChance > chance || Mathf.Abs(chance - newChance) < float.Epsilon && Random.value > 0.5f)
-                {
-                    chance = Mathf.Max(newChance, chance);
-                    selectedEntry = probableEntry;
-                }
-            }
-
-            ProbableEntries.Clear();
-            ProbableEntries.Add(selectedEntry);
-            _collapseState = ECollapseState.Collapsed;
-            return true;
-        }
-
-        public void CollapseManually(int id, float rotation)
-        {
-            ProbableEntries.Clear();
-            ProbableEntries.Add(new ProbableEntry(new PatternEntry { Id = id, YRotation = rotation }, 1));
-            _collapseState = ECollapseState.CollapsedManually;
-        }
-
-        //public int Entropy => ProbableEntries.Count;
-        
-        //TODO: recheck the Shannon entropy formula
-        public float GetEntropy()
-        {
-            var totalWeight = ProbableEntries.Sum(entry => entry.Weight);
-            var entropy = 0.0f;
-            for (int i = 0; i < ProbableEntries.Count; i++)
-            {
-                var weight = ProbableEntries[i].Weight;
-                if (weight > 0)
-                {
-                    var p = weight / totalWeight;
-                    entropy -= p * Mathf.Log(p) / Mathf.Log(2);
-                }
-            }
-                
-            return entropy;
-        }
-    }
 
     [RequireComponent(typeof(TileAnalyzer))]
     [RequireComponent(typeof(TilePlacer))]
@@ -152,6 +62,8 @@ namespace WFC
         private int _fallBackBorderTileIdx;
         [SerializeField]
         private bool _isEightDirectionWave = true;
+        [SerializeField]
+        private bool _useGlobalWeights;
 
         private Cell[] _grid;
         private Queue<int> _updateQueue;
@@ -332,8 +244,16 @@ namespace WFC
 
         private bool GenerateStep(int idx)
         {
-            if (!_grid[idx].TryCollapse(_useRandom))
-                return false;
+            if (_useGlobalWeights)
+            {
+                if (!_grid[idx].TryCollapseWithGlobalWeights(_useRandom, _analyzer.GlobalWeights))
+                    return false;
+            }
+            else
+            {
+                if (!_grid[idx].TryCollapse(_useRandom))
+                    return false;
+            }
             
             var gridPos = WFCHelper.IdxToGridPos(idx, _placer.Dimension);
             UpdateNeighbours(gridPos);
@@ -496,7 +416,9 @@ namespace WFC
             float lowestEntropy = float.MaxValue;
             for (int i = 0; i < _grid.Length; i++)
             {
-                var entropy = _grid[i].GetEntropy();
+                var entropy = _useGlobalWeights
+                    ? _grid[i].GetGlobalEntropy(_analyzer.GlobalWeights)
+                    : _grid[i].GetEntropy();
                 bool suitableEntropy = entropy < lowestEntropy;
                 suitableEntropy |= _useRandom && Mathf.Abs(entropy - lowestEntropy) < float.Epsilon && Random.value > 0.5f;
                 if (!_grid[i].IsCollapsed &&
