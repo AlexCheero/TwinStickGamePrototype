@@ -126,6 +126,9 @@ public class TileAnalyzer : MonoBehaviour
 
     void Update()
     {
+        if (_placer.IsInGame)
+            return;
+        
         if (Input.GetMouseButton(1))
             return;
         
@@ -143,23 +146,7 @@ public class TileAnalyzer : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.L))
         {
             if (Input.GetKey(KeyCode.LeftShift))
-            {
-                var presetJson = MiscUtils.ReadStringFromFile(Application.persistentDataPath + "/preset");
-                var preset = JsonConvert.DeserializeObject<Preset>(presetJson);
-                if (_placer.Dimension != preset.Dimension)
-                {
-                    Debug.LogError("can't load preset due to dimension mismatch");
-                }
-                else
-                {
-                    foreach (var presetEntry in preset.Entries)
-                    {
-                        var gridPos = presetEntry.Item1;
-                        var patternEntry = presetEntry.Item2;
-                        _placer.PlaceTile(patternEntry.Id, WFCHelper.GridPosToPos(gridPos, preset.Dimension), patternEntry.YRotation, true);
-                    }
-                }
-            }
+                LoadPreset();
             else
                 LoadPattern(PatternFilePath);
         }
@@ -171,6 +158,25 @@ public class TileAnalyzer : MonoBehaviour
     {
         public int Dimension;
         public List<Tuple<Vector2Int, PatternEntry>> Entries;
+    }
+
+    public void LoadPreset()
+    {
+        var presetJson = MiscUtils.ReadStringFromFile(Application.persistentDataPath + "/preset");
+        var preset = JsonConvert.DeserializeObject<Preset>(presetJson);
+        // if (_placer.Dimension != preset.Dimension)
+        // {
+        //     Debug.LogError("can't load preset due to dimension mismatch");
+        // }
+        // else
+        {
+            foreach (var presetEntry in preset.Entries)
+            {
+                var gridPos = presetEntry.Item1;
+                var patternEntry = presetEntry.Item2;
+                _placer.PlaceTile(patternEntry.Id, WFCHelper.GridPosToPos(gridPos, preset.Dimension), patternEntry.YRotation, true);
+            }
+        }
     }
     
     private void SavePreset(string path)

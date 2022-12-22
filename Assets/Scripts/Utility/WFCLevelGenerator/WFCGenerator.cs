@@ -191,52 +191,58 @@ namespace WFC
         private float _stepDelay = 0.3f;
         void Update()
         {
+            if (_placer.IsInGame)
+                return;
+            
             if (Input.GetMouseButton(1))
                 return;
             
-            if (Input.GetKey(KeyCode.S))
-            {
-                if (Time.time - _timeSinceLastStep > _stepDelay)
-                {
-                    _stepDelay = Mathf.Max(0.07f, _stepDelay - 0.02f);
-                    _timeSinceLastStep = Time.time;
-                    var idx = GetLowestEntropyCellIdx();
-                    if (idx < 0)
-                    {
-                        Clear(false);
-                        idx = GetLowestEntropyCellIdx();
-                    }
-
-                    GenerateStep(idx);
-                    PlaceTile(idx, false);
-                }
-            }
-            else
-            {
-                _stepDelay = 0.3f;
-            }
+            // if (Input.GetKey(KeyCode.S))
+            // {
+            //     if (Time.time - _timeSinceLastStep > _stepDelay)
+            //     {
+            //         _stepDelay = Mathf.Max(0.07f, _stepDelay - 0.02f);
+            //         _timeSinceLastStep = Time.time;
+            //         var idx = GetLowestEntropyCellIdx();
+            //         if (idx < 0)
+            //         {
+            //             Clear(false);
+            //             idx = GetLowestEntropyCellIdx();
+            //         }
+            //
+            //         GenerateStep(idx);
+            //         PlaceTile(idx, false);
+            //     }
+            // }
+            // else
+            // {
+            //     _stepDelay = 0.3f;
+            // }
 
             if (Input.GetKeyDown(KeyCode.C))
                 Clear(Input.GetKey(KeyCode.LeftShift));
 
             if (Input.GetKeyDown(KeyCode.G))
-            {
-                Clear(false);
-                var ctr = 0;
-                while (!Generate() && _tryRegenerate)
-                {
-                    InitGrid(false);
-                    ctr++;
-                    if (ctr >= _regenAttempts)
-                    {
-                        Debug.LogWarning("collapse attempts exceeded");
-                        break;
-                    }
-                }
+                GenerateLevel();
+        }
 
-                for (int i = 0; i < _grid.Length; i++)
-                    PlaceTile(i, false);
+        public void GenerateLevel()
+        {
+            Clear(false);
+            var ctr = 0;
+            while (!Generate() && _tryRegenerate)
+            {
+                InitGrid(false);
+                ctr++;
+                if (ctr >= _regenAttempts)
+                {
+                    Debug.LogWarning("collapse attempts exceeded");
+                    break;
+                }
             }
+
+            for (int i = 0; i < _grid.Length; i++)
+                PlaceTile(i, false);
         }
 
         private void Clear(bool clearManuallyCollapsed)

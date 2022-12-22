@@ -47,6 +47,8 @@ public class TilePlacer : MonoBehaviour
         _palette = GetComponent<TilePalette>();
         PlacedTiles = new Dictionary<Vector3, Tile>();
 
+        if (IsInGame)
+            return;
         const string markersHolderName = "markers";
         var markersHolder = transform.Find(markersHolderName);
         if (markersHolder == null)
@@ -95,9 +97,13 @@ public class TilePlacer : MonoBehaviour
         marker.position = position;
     }
 
+    public bool IsInGame;
     private Vector2Int _previousPlacePos;
     void Update()
     {
+        if (IsInGame)
+            return;
+        
         if (Input.GetMouseButton(1))
             return;
         
