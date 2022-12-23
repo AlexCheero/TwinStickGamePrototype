@@ -41,14 +41,10 @@ public class GenerateLevelSystem : EcsSystem
 
             var settingsMaterials = settings.Materials;
             DisplayMaze(data, settingsDigits.Width, settingsDigits.Height, settingsMaterials.FloorMat, settingsMaterials.WallMat);
-            var startPos = FindStartPosition(data);
-            var playerPos = new Vector3(startPos.y * settingsDigits.Width, .5f, startPos.x * settingsDigits.Width);
-            world.GetComponent<Transform>(playerId).position = playerPos;
+            var playerTransform = world.GetComponent<Transform>(playerId);
+            playerTransform.gameObject.SetActive(true);
+            playerTransform.position = FindStartPosition(data, settingsDigits.Width);
             
-            //PlaceStartTrigger(startPos, settingsDigits.Width, settingsMaterials.StartMat);
-            //var endPos = FindGoalPosition(data);
-            //PlaceGoalTrigger(endPos, settingsDigits.Width, settingsMaterials.EndMat);
-
             break;
         }
     }
@@ -78,7 +74,7 @@ public class GenerateLevelSystem : EcsSystem
         mr.materials = new Material[2] {mat1, mat2};
     }
     
-    private Vector2Int FindStartPosition(int[,] data)
+    private Vector3 FindStartPosition(int[,] data, float width)
     {
         int rMax = data.GetUpperBound(0);
         int cMax = data.GetUpperBound(1);
@@ -88,52 +84,11 @@ public class GenerateLevelSystem : EcsSystem
             for (int j = 0; j <= cMax; j++)
             {
                 if (data[i, j] == 0)
-                    return new Vector2Int(i, j);
+                    return new Vector3(j * width, .5f, i * width);
             }
         }
 
         Debug.LogError("can't find proper start position");
-        return Vector2Int.zero;
+        return Vector3.zero;
     }
-
-    // private Vector2Int FindGoalPosition(int[,] data)
-    // {
-    //     int rMax = data.GetUpperBound(0);
-    //     int cMax = data.GetUpperBound(1);
-    //
-    //     // loop top to bottom, right to left
-    //     for (int i = rMax; i >= 0; i--)
-    //     {
-    //         for (int j = cMax; j >= 0; j--)
-    //         {
-    //             if (data[i, j] == 0)
-    //                 return new Vector2Int(i, j);
-    //         }
-    //     }
-    //     
-    //     Debug.LogError("can't find proper goal position");
-    //     return Vector2Int.zero;
-    // }
-
-    private void PlaceStartTrigger(Vector2Int pos, float w, Material mat)
-    {
-        GameObject go = GameObject.CreatePrimitive(PrimitiveType.Cube);
-        go.transform.position = new Vector3(pos.y * w, .5f, pos.x * w);
-        go.name = "Start Trigger";
-        go.tag = "Generated";
-
-        go.GetComponent<BoxCollider>().isTrigger = true;
-        go.GetComponent<MeshRenderer>().sharedMaterial = mat;
-    }
-
-    // private void PlaceGoalTrigger(Vector2Int pos, float w, Material mat)
-    // {
-    //     GameObject go = GameObject.CreatePrimitive(PrimitiveType.Cube);
-    //     go.transform.position = new Vector3(pos.y * w, .5f, pos.x * w);
-    //     go.name = "Treasure";
-    //     go.tag = "Generated";
-    //
-    //     go.GetComponent<BoxCollider>().isTrigger = true;
-    //     go.GetComponent<MeshRenderer>().sharedMaterial = mat;
-    // }
 }

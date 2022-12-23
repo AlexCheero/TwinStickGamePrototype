@@ -25270,7 +25270,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3910811949241216722, guid: 01424304433e58946acc87cc21a18eb6, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4399504548403639400, guid: 01424304433e58946acc87cc21a18eb6, type: 3}
       propertyPath: m_RootOrder
@@ -35755,7 +35755,7 @@ MonoBehaviour:
         UnityObject: {fileID: 0}
         IsHiddenInEditor: 0
       UnityObject: {fileID: 0}
-      IsExpanded: 1
+      IsExpanded: 0
     - ComponentName: Tags.Projectile
       Fields: []
       UnityObject: {fileID: 0}
@@ -35768,7 +35768,7 @@ MonoBehaviour:
         UnityObject: {fileID: 0}
         IsHiddenInEditor: 0
       UnityObject: {fileID: 0}
-      IsExpanded: 1
+      IsExpanded: 0
     - ComponentName: Tags.DeleteOnCollision
       Fields: []
       UnityObject: {fileID: 0}
@@ -35781,7 +35781,7 @@ MonoBehaviour:
         UnityObject: {fileID: 0}
         IsHiddenInEditor: 0
       UnityObject: {fileID: 0}
-      IsExpanded: 1
+      IsExpanded: 0
     - ComponentName: UnityEngine.Transform
       Fields: []
       UnityObject: {fileID: 1944603342}
