@@ -1,0 +1,38 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9fc43bbe74684903848d32a2b5a858bc, type: 3}
+  m_Name: LevelSettings
+  m_EditorClassIdentifier: 
+  Digits:
+    GapX: 2
+    GapY: 2
+    Width: 3.75
+    Height: 3.75
+    Rows: 17
+    Cols: 17
+    PlacementThreshold: 0.5
+  Materials:
+    FloorMat: {fileID: 2100000, guid: 2019d743bc0984ba1b81150901d44455, type: 2}
+    WallMat: {fileID: 2100000, guid: a36a45d20a42a4a0695e782d8b69409e, type: 2}
+    StartMat: {fileID: 2100000, guid: c8296ee06001c4d39b0f615626264b85, type: 2}
+    EndMat: {fileID: 2100000, guid: c5b8154923bae4fedbbb1f1aca66fd98, type: 2}
+  GapX: 2
+  GapY: 2
+  Width: 3.75
+  Height: 3.75
+  Rows: 17
+  Cols: 17
+  PlacementThreshold: 0.5
+  FloorMat: {fileID: 2100000, guid: 2019d743bc0984ba1b81150901d44455, type: 2}
+  WallMat: {fileID: 2100000, guid: a36a45d20a42a4a0695e782d8b69409e, type: 2}
+  StartMat: {fileID: 2100000, guid: c8296ee06001c4d39b0f615626264b85, type: 2}
+  EndMat: {fileID: 2100000, guid: c5b8154923bae4fedbbb1f1aca66fd98, type: 2}

@@ -232,6 +232,11 @@ namespace Components
     {
         public UtilityCurves curves;
     }
+
+    struct LevelSettingsComponent
+    {
+        public LevelSettings Settings;
+    }
 }
 
 namespace Tags

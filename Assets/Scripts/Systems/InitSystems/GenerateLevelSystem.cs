@@ -1,35 +1,94 @@
+using Components;
 using ECS;
 using Tags;
 using UnityEngine;
-using WFC;
 
 //choose system type here
 [System(ESystemCategory.Init)]
 public class GenerateLevelSystem : EcsSystem
 {
-    private int _playerFilterId;
+    private readonly int _filterId;
+    private readonly int _playerFilterId;
 
     public GenerateLevelSystem(EcsWorld world)
     {
+        _filterId = world.RegisterFilter(new BitMask(Id<LevelSettingsComponent>()));
         _playerFilterId = world.RegisterFilter(new BitMask(Id<PlayerTag>(), Id<Transform>()));
     }
 
     public override void Tick(EcsWorld world)
     {
-        var generatorObject = GameObject.Find("WFCGenerator");
-        //generatorObject.GetComponent<TileAnalyzer>().LoadPreset();
-        generatorObject.GetComponent<WFCGenerator>().GenerateLevel();
+        DisposeOldMaze();
 
-        var levelDimension = generatorObject.GetComponent<TilePlacer>().Dimension;
-        var spawnPosition = WFCHelper.GridPosToPos(new Vector2Int(levelDimension - 3, levelDimension - 3), levelDimension);
-        spawnPosition.y += 1.0f;
-
+        int playerId = -1;
         foreach (var id in world.Enumerate(_playerFilterId))
         {
-            var transform = world.GetComponent<Transform>(id);
-            transform.position = spawnPosition;
-            transform.gameObject.SetActive(true);
+            playerId = id;
             break;
         }
+        
+        foreach (var id in world.Enumerate(_filterId))
+        {
+            var settings = world.GetComponent<LevelSettingsComponent>(id).Settings;
+            
+            var settingsDigits = settings.Digits;
+            if (settingsDigits.Rows % 2 == 0 && settingsDigits.Cols % 2 == 0)
+                Debug.LogError("Odd numbers work better for dungeon size.");
+
+            DisposeOldMaze();
+
+            var data = MazeDataGenerator.FromDimensions(settingsDigits);
+
+            var settingsMaterials = settings.Materials;
+            DisplayMaze(data, settingsDigits.Width, settingsDigits.Height, settingsMaterials.FloorMat, settingsMaterials.WallMat);
+            var playerTransform = world.GetComponent<Transform>(playerId);
+            playerTransform.gameObject.SetActive(true);
+            playerTransform.position = FindStartPosition(data, settingsDigits.Width);
+            
+            break;
+        }
+    }
+    
+    private void DisposeOldMaze()
+    {
+        var objects = GameObject.FindGameObjectsWithTag("Generated");
+        foreach (var go in objects) {
+            GameObject.Destroy(go);
+        }
+    }
+    
+    private void DisplayMaze(int[,] data, float w, float h, Material mat1, Material mat2)
+    {
+        GameObject go = new GameObject();
+        go.transform.position = Vector3.zero;
+        go.name = "Procedural Maze";
+        go.tag = "Generated";
+
+        MeshFilter mf = go.AddComponent<MeshFilter>();
+        mf.mesh = MazeMeshGenerator.FromData(data, w, h);
+
+        MeshCollider mc = go.AddComponent<MeshCollider>();
+        mc.sharedMesh = mf.mesh;
+
+        MeshRenderer mr = go.AddComponent<MeshRenderer>();
+        mr.materials = new Material[2] {mat1, mat2};
+    }
+    
+    private Vector3 FindStartPosition(int[,] data, float width)
+    {
+        int rMax = data.GetUpperBound(0);
+        int cMax = data.GetUpperBound(1);
+
+        for (int i = 0; i <= rMax; i++)
+        {
+            for (int j = 0; j <= cMax; j++)
+            {
+                if (data[i, j] == 0)
+                    return new Vector3(j * width, .5f, i * width);
+            }
+        }
+
+        Debug.LogError("can't find proper start position");
+        return Vector3.zero;
     }
 }

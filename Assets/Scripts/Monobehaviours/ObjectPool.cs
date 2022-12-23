@@ -115,7 +115,7 @@ public class ObjectPool : MonoBehaviour
         //TODO: check if items is copy of _prototype
 
         if (_firstAvailable == 0)
-            throw new Exception("pool have no active items but something is returned");
+            throw new Exception("pool have no active items but something is returned: " + item.name);
 #endif
         item.gameObject.SetActive(false);
         item.transform.parent = transform;
