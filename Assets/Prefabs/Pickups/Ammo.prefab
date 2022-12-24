@@ -114,14 +114,6 @@ MonoBehaviour:
       Fields: []
       UnityObject: {fileID: 0}
       IsExpanded: 0
-    - ComponentName: Tags.Pickup
-      Fields: []
-      UnityObject: {fileID: 0}
-      IsExpanded: 0
-    - ComponentName: UnityEngine.Transform
-      Fields: []
-      UnityObject: {fileID: 2124944598898896205}
-      IsExpanded: 0
     - ComponentName: Components.Ammo
       Fields:
       - TypeName: System.Int32
@@ -135,4 +127,12 @@ MonoBehaviour:
         UnityObject: {fileID: 0}
         IsHiddenInEditor: 0
       UnityObject: {fileID: 0}
-      IsExpanded: 1
+      IsExpanded: 0
+    - ComponentName: Tags.Pickup
+      Fields: []
+      UnityObject: {fileID: 0}
+      IsExpanded: 0
+    - ComponentName: UnityEngine.Transform
+      Fields: []
+      UnityObject: {fileID: 2124944598898896205}
+      IsExpanded: 0

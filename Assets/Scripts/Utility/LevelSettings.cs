@@ -38,4 +38,6 @@ public class LevelSettings : ScriptableObject
     };
 
     public LevelSettingsMaterials Materials;
+
+    public EntityView[] Loot;
 }

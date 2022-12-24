@@ -124,7 +124,6 @@ MonoBehaviour:
         Name: health
         ValueRepresentation: 50
         UnityObject: {fileID: 0}
-        Preset: {fileID: 0}
         IsHiddenInEditor: 0
       UnityObject: {fileID: 0}
       IsExpanded: 0

@@ -1,8 +1,10 @@
+using System;
 using System.Collections.Generic;
 using Components;
 using ECS;
 using Tags;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 //choose system type here
 [System(ESystemCategory.Init)]
@@ -69,6 +71,13 @@ public class GenerateLevelSystem : EcsSystem
         go.GetComponent<MeshRenderer>().sharedMaterial = settingsMaterials.EndMat;
         goalView.InitAsEntity(world);
         world.Add<LevelExit>(goalView.Id);
+
+        foreach (var lootPrefab in settings.Loot)
+        {
+            var loot = GameObject.Instantiate(lootPrefab, GetRandomFreePoint(data, settingsDigits.Width),
+                Quaternion.identity);
+            loot.InitAsEntity(world);
+        }
     }
     
     private void DisposeOldMaze()
@@ -95,6 +104,53 @@ public class GenerateLevelSystem : EcsSystem
         MeshRenderer mr = go.AddComponent<MeshRenderer>();
         mr.materials = new Material[3] {mat1, mat2, mat3};
     }
+
+    private Vector3 GetRandomFreePoint(int[,] data, float width)
+    {
+        int rMax = data.GetUpperBound(0);
+        int cMax = data.GetUpperBound(1);
+
+        var rowOffset = Random.Range(0, rMax + 1);
+        var row = -1;
+        for (int i = 0; i <= rMax; i++)
+        {
+            row = (rowOffset + i) % (rMax + 1);
+            bool haveFreePointsInRow = false;
+            for (int j = 0; j <= cMax; j++)
+            {
+                if (data[row, j] != 0)
+                    continue;
+                haveFreePointsInRow = true;
+                break;
+            }
+            
+            if (haveFreePointsInRow)
+                break;
+        }
+
+#if DEBUG
+        if (row < 0)
+            throw new Exception("can't find free row");
+#endif
+
+        var colOffset = Random.Range(0, cMax + 1);
+        var col = -1;
+        for (int j = 0; j <= cMax; j++)
+        {
+            col = (colOffset + j) % (cMax + 1);
+            if (data[row, col] == 0)
+                break;
+        }
+        
+#if DEBUG
+        if (row < 0)
+            throw new Exception("can't find free column");
+#endif
+
+        data[row, col] = 2;//TODO: magick number for placed loot. use enum or something like this instead
+        
+        return GetPositionByMazeCoordinates(col, row, width);
+    }
     
     private Vector3 FindGoalPosition(int[,] data, float width)
     {
@@ -106,7 +162,7 @@ public class GenerateLevelSystem : EcsSystem
             for (int j = 0; j <= cMax; j++)
             {
                 if (data[i, j] == 0)
-                    return new Vector3(j * width, .5f, i * width);
+                    return GetPositionByMazeCoordinates(j, i, width);
             }
         }
 
@@ -114,7 +170,7 @@ public class GenerateLevelSystem : EcsSystem
         return Vector3.zero;
     }
     
-    private static Vector3 FindStartPosition(int[,] data, float width)
+    private Vector3 FindStartPosition(int[,] data, float width)
     {
         int rMax = data.GetUpperBound(0);
         int cMax = data.GetUpperBound(1);
@@ -125,13 +181,16 @@ public class GenerateLevelSystem : EcsSystem
             for (int j = cMax; j >= 0; j--)
             {
                 if (data[i, j] == 0)
-                    return new Vector3(j * width, .5f, i * width);
+                    return GetPositionByMazeCoordinates(j, i, width);
             }
         }
         
         Debug.LogError("can't find proper goal position");
         return Vector3.zero;
     }
+
+    private Vector3 GetPositionByMazeCoordinates(int col, int row, float width) =>
+        new Vector3(col * width, .5f, row * width);
     
     private int[,] FromDimensions(LevelSettingsDigits levelDigits)
     {

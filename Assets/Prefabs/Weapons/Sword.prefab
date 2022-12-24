@@ -159,7 +159,6 @@ MonoBehaviour:
         Name: damage
         ValueRepresentation: 20
         UnityObject: {fileID: 0}
-        Preset: {fileID: 0}
         IsHiddenInEditor: 0
       UnityObject: {fileID: 0}
       IsExpanded: 0
@@ -169,7 +168,6 @@ MonoBehaviour:
         Name: distance
         ValueRepresentation: 5
         UnityObject: {fileID: 0}
-        Preset: {fileID: 0}
         IsHiddenInEditor: 0
       UnityObject: {fileID: 0}
       IsExpanded: 0
@@ -179,7 +177,6 @@ MonoBehaviour:
         Name: angle
         ValueRepresentation: 120
         UnityObject: {fileID: 0}
-        Preset: {fileID: 0}
         IsHiddenInEditor: 0
       UnityObject: {fileID: 0}
       IsExpanded: 0
@@ -189,13 +186,11 @@ MonoBehaviour:
         Name: previousAttackTime
         ValueRepresentation: 
         UnityObject: {fileID: 0}
-        Preset: {fileID: 0}
         IsHiddenInEditor: 1
       - TypeName: System.Single
         Name: attackCD
         ValueRepresentation: 0.7
         UnityObject: {fileID: 0}
-        Preset: {fileID: 0}
         IsHiddenInEditor: 0
       UnityObject: {fileID: 0}
       IsExpanded: 0
@@ -205,13 +200,11 @@ MonoBehaviour:
         Name: position
         ValueRepresentation: -0,3 0,1 0
         UnityObject: {fileID: 0}
-        Preset: {fileID: 0}
         IsHiddenInEditor: 0
       - TypeName: UnityEngine.Vector3
         Name: rotation
         ValueRepresentation: 0 -90 180
         UnityObject: {fileID: 0}
-        Preset: {fileID: 0}
         IsHiddenInEditor: 0
       UnityObject: {fileID: 0}
       IsExpanded: 0
@@ -221,7 +214,6 @@ MonoBehaviour:
         Name: icon
         ValueRepresentation: 
         UnityObject: {fileID: 21300000, guid: d4fc665f6a860dd4f8d21675d67dc30d, type: 3}
-        Preset: {fileID: 0}
         IsHiddenInEditor: 0
       UnityObject: {fileID: 0}
       IsExpanded: 0

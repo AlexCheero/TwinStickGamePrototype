@@ -5497,82 +5497,75 @@ MonoBehaviour:
     Metas:
     - ComponentName: Tags.Pickup
       Fields: []
-      UnityComponent: {fileID: 0}
+      UnityObject: {fileID: 0}
       IsExpanded: 0
     - ComponentName: Tags.MeleeWeapon
       Fields: []
-      UnityComponent: {fileID: 0}
+      UnityObject: {fileID: 0}
       IsExpanded: 0
     - ComponentName: Tags.Weapon
       Fields: []
-      UnityComponent: {fileID: 0}
+      UnityObject: {fileID: 0}
       IsExpanded: 0
     - ComponentName: Components.DamageComponent
       Fields:
       - TypeName: System.Single
         Name: damage
         ValueRepresentation: 10
-        UnityComponent: {fileID: 0}
-        Preset: {fileID: 0}
+        UnityObject: {fileID: 0}
         IsHiddenInEditor: 0
-      UnityComponent: {fileID: 0}
-      IsExpanded: 1
+      UnityObject: {fileID: 0}
+      IsExpanded: 0
     - ComponentName: Components.ReachComponent
       Fields:
       - TypeName: System.Single
         Name: distance
         ValueRepresentation: 5
-        UnityComponent: {fileID: 0}
-        Preset: {fileID: 0}
+        UnityObject: {fileID: 0}
         IsHiddenInEditor: 0
-      UnityComponent: {fileID: 0}
-      IsExpanded: 1
+      UnityObject: {fileID: 0}
+      IsExpanded: 0
     - ComponentName: Components.AttackAngle
       Fields:
       - TypeName: System.Single
         Name: angle
         ValueRepresentation: 120
-        UnityComponent: {fileID: 0}
-        Preset: {fileID: 0}
+        UnityObject: {fileID: 0}
         IsHiddenInEditor: 0
-      UnityComponent: {fileID: 0}
-      IsExpanded: 1
+      UnityObject: {fileID: 0}
+      IsExpanded: 0
     - ComponentName: Components.AttackCooldown
       Fields:
       - TypeName: System.Single
         Name: previousAttackTime
         ValueRepresentation: 
-        UnityComponent: {fileID: 0}
-        Preset: {fileID: 0}
+        UnityObject: {fileID: 0}
         IsHiddenInEditor: 1
       - TypeName: System.Single
         Name: attackCD
-        ValueRepresentation: 0.1
-        UnityComponent: {fileID: 0}
-        Preset: {fileID: 0}
+        ValueRepresentation: 1
+        UnityObject: {fileID: 0}
         IsHiddenInEditor: 0
-      UnityComponent: {fileID: 0}
+      UnityObject: {fileID: 0}
       IsExpanded: 1
-    - ComponentName: UnityEngine.Transform
-      Fields: []
-      UnityComponent: {fileID: 4710816682801042463}
-      IsExpanded: 0
     - ComponentName: Components.GripTransform
       Fields:
       - TypeName: UnityEngine.Vector3
         Name: position
         ValueRepresentation: 0 0,5 0
-        UnityComponent: {fileID: 0}
-        Preset: {fileID: 0}
+        UnityObject: {fileID: 0}
         IsHiddenInEditor: 0
       - TypeName: UnityEngine.Vector3
         Name: rotation
         ValueRepresentation: 0 0 90
-        UnityComponent: {fileID: 0}
-        Preset: {fileID: 0}
+        UnityObject: {fileID: 0}
         IsHiddenInEditor: 0
-      UnityComponent: {fileID: 0}
-      IsExpanded: 1
+      UnityObject: {fileID: 0}
+      IsExpanded: 0
+    - ComponentName: UnityEngine.Transform
+      Fields: []
+      UnityObject: {fileID: 4710816682801042463}
+      IsExpanded: 0
 --- !u!1 &1982581365190004737
 GameObject:
   m_ObjectHideFlags: 0

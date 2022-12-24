@@ -26,3 +26,10 @@ MonoBehaviour:
     TransparentMat: {fileID: 2100000, guid: b222ee53ec237054eab7ff2395da0433, type: 2}
     StartMat: {fileID: 2100000, guid: c8296ee06001c4d39b0f615626264b85, type: 2}
     EndMat: {fileID: 2100000, guid: c5b8154923bae4fedbbb1f1aca66fd98, type: 2}
+  Loot:
+  - {fileID: 4214281606244760530, guid: 6ec6e508c743f5a42a95f86cbdb55bff, type: 3}
+  - {fileID: 6250620609213967809, guid: 915d18669ccfc82409daac8610938a4a, type: 3}
+  - {fileID: 6232603082350834029, guid: fc266583f022c4245aefb9ebf100fdc7, type: 3}
+  - {fileID: 5549390437488027151, guid: 48e3dd12fd1620d4f9503177d68a937a, type: 3}
+  - {fileID: 3469522513105118961, guid: 4ac05fc8c1ee36544b2d9f9b43cbb7e6, type: 3}
+  - {fileID: 7827552257392514615, guid: 6a30a2a7e2194104cbb15fc2ad12e5e2, type: 3}

@@ -167,10 +167,6 @@ MonoBehaviour:
         UnityObject: {fileID: 21300000, guid: d39ea670fea64d545a9cdec13baed457, type: 3}
         IsHiddenInEditor: 0
       UnityObject: {fileID: 0}
-      IsExpanded: 1
-    - ComponentName: UnityEngine.Transform
-      Fields: []
-      UnityObject: {fileID: 7073475716119748181}
       IsExpanded: 0
     - ComponentName: Components.Ammo
       Fields:
@@ -185,4 +181,8 @@ MonoBehaviour:
         UnityObject: {fileID: 0}
         IsHiddenInEditor: 0
       UnityObject: {fileID: 0}
-      IsExpanded: 1
+      IsExpanded: 0
+    - ComponentName: UnityEngine.Transform
+      Fields: []
+      UnityObject: {fileID: 7073475716119748181}
+      IsExpanded: 0
