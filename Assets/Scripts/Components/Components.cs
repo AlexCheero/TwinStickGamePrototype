@@ -237,6 +237,12 @@ namespace Components
     {
         public LevelSettings Settings;
     }
+
+    struct RandomCountRange
+    {
+        public int min;
+        public int max;
+    }
 }
 
 namespace Tags

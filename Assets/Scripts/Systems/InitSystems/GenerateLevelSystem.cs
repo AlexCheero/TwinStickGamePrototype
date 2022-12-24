@@ -74,9 +74,20 @@ public class GenerateLevelSystem : EcsSystem
 
         foreach (var lootPrefab in settings.Loot)
         {
-            var loot = GameObject.Instantiate(lootPrefab, GetRandomFreePoint(data, settingsDigits.Width),
-                Quaternion.identity);
-            loot.InitAsEntity(world);
+            lootPrefab.InitAsEntity(world);
+            var count = 1;
+            if (world.Have<RandomCountRange>(lootPrefab.Id))
+            {
+                var countRange = world.GetComponent<RandomCountRange>(lootPrefab.Id);
+                count = Random.Range(countRange.min, countRange.max + 1);
+            }
+            world.Delete(lootPrefab.Id);
+            for (int i = 0; i < count; i++)
+            {
+                var loot = GameObject.Instantiate(lootPrefab, GetRandomFreePoint(data, settingsDigits.Width),
+                    Quaternion.identity);
+                loot.InitAsEntity(world);
+            }
         }
     }
     

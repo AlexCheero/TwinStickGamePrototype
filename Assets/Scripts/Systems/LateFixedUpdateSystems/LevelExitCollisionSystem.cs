@@ -50,7 +50,7 @@ public class LevelExitCollisionSystem : EcsSystem
             }
             
             MiscUtils.AddScore(Constants.PointsForGoalCompletion);
-            SceneManager.LoadScene("ProceduralLevel");
+            SceneManager.LoadScene(Constants.ProceduralLevel);
             break;
         }
     }

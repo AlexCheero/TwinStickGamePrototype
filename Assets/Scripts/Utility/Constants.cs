@@ -17,6 +17,7 @@
 
     public const string MainMenu = "MainMenu";
     public const string SampleScene = "SampleScene";
+    public const string ProceduralLevel = "ProceduralLevel";
 
     #endregion
 }

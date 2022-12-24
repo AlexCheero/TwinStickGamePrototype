@@ -131,3 +131,17 @@ MonoBehaviour:
       Fields: []
       UnityObject: {fileID: 5851322906573314816}
       IsExpanded: 0
+    - ComponentName: Components.RandomCountRange
+      Fields:
+      - TypeName: System.Int32
+        Name: min
+        ValueRepresentation: 0
+        UnityObject: {fileID: 0}
+        IsHiddenInEditor: 0
+      - TypeName: System.Int32
+        Name: max
+        ValueRepresentation: 3
+        UnityObject: {fileID: 0}
+        IsHiddenInEditor: 0
+      UnityObject: {fileID: 0}
+      IsExpanded: 1
