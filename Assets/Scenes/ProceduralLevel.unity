@@ -5193,7 +5193,7 @@ MonoBehaviour:
         UnityObject: {fileID: 11400000, guid: a9314d59158a56d4d94104f2d0e9b2a8, type: 2}
         IsHiddenInEditor: 0
       UnityObject: {fileID: 0}
-      IsExpanded: 1
+      IsExpanded: 0
 --- !u!4 &42949371
 Transform:
   m_ObjectHideFlags: 0
@@ -40859,14 +40859,14 @@ MonoBehaviour:
   - HealthPickupCollisionSystem
   - AmmoPickupCollisionSystem
   - WeaponPickupCollisionSystem
-  - LevelExitCollsionSystem
+  - LevelExitCollisionSystem
   - CollisionCleanupSystem
   - DeleteDeadSystem
-  _initSwitches: 0101010100010101010101010101010101010101
-  _updateSwitches: 010101010101010101010101010101010101010001010101010101010101010101010101010101010101
+  _initSwitches: 010101010001010101010101010101010101010101
+  _updateSwitches: 01010101010101010101010101010101010101000001010101010101010101010101010101010101010101
   _lateUpdateSwitches: 0101010101
   _fixedUpdateSwitches: 01010101
-  _lateFixedUpdateSwitches: 0101010101010101
+  _lateFixedUpdateSwitches: 010101010101010101
 --- !u!4 &2020709258
 Transform:
   m_ObjectHideFlags: 0

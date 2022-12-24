@@ -18,6 +18,7 @@ public struct LevelSettingsMaterials
 {
     public Material FloorMat;
     public Material WallMat;
+    public Material TransparentMat;
     public Material StartMat;
     public Material EndMat;
 }

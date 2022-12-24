@@ -10,15 +10,32 @@ public class GenerateLevelSystem : EcsSystem
 {
     private readonly int _filterId;
     private readonly int _playerFilterId;
+    private readonly int _exitFilterId;
 
     public GenerateLevelSystem(EcsWorld world)
     {
         _filterId = world.RegisterFilter(new BitMask(Id<LevelSettingsComponent>()));
         _playerFilterId = world.RegisterFilter(new BitMask(Id<PlayerTag>(), Id<Transform>()));
+        _exitFilterId = world.RegisterFilter(new BitMask(Id<LevelExit>(), Id<Transform>()), new BitMask(Id<DeadTag>()));
     }
 
     public override void Tick(EcsWorld world)
     {
+        int settingsId = -1;
+        foreach (var id in world.Enumerate(_filterId))
+        {
+            settingsId = id;
+            break;
+        }
+        if (settingsId < 0)
+            return;
+        
+        foreach (var id in world.Enumerate(_exitFilterId))
+        {
+            world.GetComponent<Transform>(id).gameObject.SetActive(false);
+            world.Add<DeadTag>(id);
+        }
+        
         DisposeOldMaze();
 
         int playerId = -1;
@@ -28,34 +45,30 @@ public class GenerateLevelSystem : EcsSystem
             break;
         }
         
-        foreach (var id in world.Enumerate(_filterId))
-        {
-            var settings = world.GetComponent<LevelSettingsComponent>(id).Settings;
+        var settings = world.GetComponent<LevelSettingsComponent>(settingsId).Settings;
             
-            var settingsDigits = settings.Digits;
-            if (settingsDigits.Rows % 2 == 0 && settingsDigits.Cols % 2 == 0)
-                Debug.LogError("Odd numbers work better for dungeon size.");
+        var settingsDigits = settings.Digits;
+        if (settingsDigits.Rows % 2 == 0 && settingsDigits.Cols % 2 == 0)
+            Debug.LogError("Odd numbers work better for dungeon size.");
 
-            DisposeOldMaze();
+        DisposeOldMaze();
 
-            var data = FromDimensions(settingsDigits);
+        var data = FromDimensions(settingsDigits);
 
-            var settingsMaterials = settings.Materials;
-            DisplayMaze(data, settingsDigits.Width, settingsDigits.Height, settingsMaterials.FloorMat, settingsMaterials.WallMat);
-            var playerTransform = world.GetComponent<Transform>(playerId);
-            playerTransform.gameObject.SetActive(true);
-            playerTransform.position = FindStartPosition(data, settingsDigits.Width);
+        var settingsMaterials = settings.Materials;
+        DisplayMaze(data, settingsDigits.Width, settingsDigits.Height, settingsMaterials.FloorMat,
+            settingsMaterials.WallMat, settingsMaterials.TransparentMat);
+        var playerTransform = world.GetComponent<Transform>(playerId);
+        playerTransform.gameObject.SetActive(true);
+        playerTransform.position = FindStartPosition(data, settingsDigits.Width);
             
-            GameObject go = GameObject.CreatePrimitive(PrimitiveType.Cube);
-            var goalView = go.AddComponent<EntityView>();
-            goalView.transform.position = FindGoalPosition(data, settingsDigits.Width);
-            go.GetComponent<BoxCollider>().isTrigger = true;
-            go.GetComponent<MeshRenderer>().sharedMaterial = settingsMaterials.EndMat;
-            goalView.InitAsEntity(world);
-            world.Add<LevelExit>(goalView.Id);
-            
-            break;
-        }
+        GameObject go = GameObject.CreatePrimitive(PrimitiveType.Cube);
+        var goalView = go.AddComponent<EntityView>();
+        goalView.transform.position = FindGoalPosition(data, settingsDigits.Width);
+        go.GetComponent<BoxCollider>().isTrigger = true;
+        go.GetComponent<MeshRenderer>().sharedMaterial = settingsMaterials.EndMat;
+        goalView.InitAsEntity(world);
+        world.Add<LevelExit>(goalView.Id);
     }
     
     private void DisposeOldMaze()
@@ -66,7 +79,7 @@ public class GenerateLevelSystem : EcsSystem
         }
     }
     
-    private void DisplayMaze(int[,] data, float w, float h, Material mat1, Material mat2)
+    private void DisplayMaze(int[,] data, float w, float h, Material mat1, Material mat2, Material mat3)
     {
         GameObject go = new GameObject();
         go.transform.position = Vector3.zero;
@@ -80,10 +93,10 @@ public class GenerateLevelSystem : EcsSystem
         mc.sharedMesh = mf.mesh;
 
         MeshRenderer mr = go.AddComponent<MeshRenderer>();
-        mr.materials = new Material[2] {mat1, mat2};
+        mr.materials = new Material[3] {mat1, mat2, mat3};
     }
     
-    private Vector3 FindStartPosition(int[,] data, float width)
+    private Vector3 FindGoalPosition(int[,] data, float width)
     {
         int rMax = data.GetUpperBound(0);
         int cMax = data.GetUpperBound(1);
@@ -101,7 +114,7 @@ public class GenerateLevelSystem : EcsSystem
         return Vector3.zero;
     }
     
-    private static Vector3 FindGoalPosition(int[,] data, float width)
+    private static Vector3 FindStartPosition(int[,] data, float width)
     {
         int rMax = data.GetUpperBound(0);
         int cMax = data.GetUpperBound(1);
@@ -160,9 +173,10 @@ public class GenerateLevelSystem : EcsSystem
         List<Vector2> newUVs = new List<Vector2>();
 
         // multiple materials for floors and walls
-        maze.subMeshCount = 2;
+        maze.subMeshCount = 3;
         List<int> floorTriangles = new List<int>();
         List<int> wallTriangles = new List<int>();
+        List<int> wallUpTriangles = new List<int>();
 
         int rMax = data.GetUpperBound(0);
         int cMax = data.GetUpperBound(1);
@@ -173,7 +187,15 @@ public class GenerateLevelSystem : EcsSystem
             for (int j = 0; j <= cMax; j++)
             {
                 if (data[i, j] == 1)
+                {
+                    // wall up surface
+                    AddQuad(Matrix4x4.TRS(
+                        new Vector3(j * width, height, i * width),
+                        Quaternion.LookRotation(Vector3.up),
+                        new Vector3(width, width, 1)
+                    ), newVertices, newUVs, wallUpTriangles);
                     continue;
+                }
                 // floor
                 AddQuad(Matrix4x4.TRS(
                     new Vector3(j * width, 0, i * width),
@@ -182,11 +204,11 @@ public class GenerateLevelSystem : EcsSystem
                 ), newVertices, newUVs, floorTriangles);
 
                 // ceiling
-                AddQuad(Matrix4x4.TRS(
-                    new Vector3(j * width, height, i * width),
-                    Quaternion.LookRotation(Vector3.down),
-                    new Vector3(width, width, 1)
-                ), newVertices, newUVs, floorTriangles);
+                // AddQuad(Matrix4x4.TRS(
+                //     new Vector3(j * width, height, i * width),
+                //     Quaternion.LookRotation(Vector3.down),
+                //     new Vector3(width, width, 1)
+                // ), newVertices, newUVs, floorTriangles);
 
 
                 // walls on sides next to blocked grid cells
@@ -234,6 +256,7 @@ public class GenerateLevelSystem : EcsSystem
         
         maze.SetTriangles(floorTriangles.ToArray(), 0);
         maze.SetTriangles(wallTriangles.ToArray(), 1);
+        maze.SetTriangles(wallUpTriangles.ToArray(), 2);
 
         maze.RecalculateNormals();
 
