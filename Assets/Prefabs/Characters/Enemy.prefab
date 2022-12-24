@@ -782,15 +782,6 @@ MonoBehaviour:
         IsHiddenInEditor: 0
       UnityObject: {fileID: 0}
       IsExpanded: 0
-    - ComponentName: Components.TargetEntityComponent
-      Fields:
-      - TypeName: EntityView
-        Name: target
-        ValueRepresentation: 
-        UnityObject: {fileID: 0}
-        IsHiddenInEditor: 0
-      UnityObject: {fileID: 0}
-      IsExpanded: 0
     - ComponentName: Components.DefaultWeapon
       Fields:
       - TypeName: EntityPreset
@@ -799,7 +790,7 @@ MonoBehaviour:
         UnityObject: {fileID: 11400000, guid: 9f3956faf2ec2944e902deadab675db9, type: 2}
         IsHiddenInEditor: 0
       UnityObject: {fileID: 0}
-      IsExpanded: 1
+      IsExpanded: 0
     - ComponentName: Components.NextWaypointIdx
       Fields:
       - TypeName: System.Int32
@@ -830,7 +821,16 @@ MonoBehaviour:
         UnityObject: {fileID: 0}
         IsHiddenInEditor: 0
       UnityObject: {fileID: 0}
-      IsExpanded: 1
+      IsExpanded: 0
+    - ComponentName: Components.ImpactEffect
+      Fields:
+      - TypeName: System.String
+        Name: poolName
+        ValueRepresentation: BloodEffectPool
+        UnityObject: {fileID: 0}
+        IsHiddenInEditor: 0
+      UnityObject: {fileID: 0}
+      IsExpanded: 0
     - ComponentName: UnityEngine.Transform
       Fields: []
       UnityObject: {fileID: 2341018601984709614}
@@ -843,15 +843,20 @@ MonoBehaviour:
       Fields: []
       UnityObject: {fileID: 2879561023896923301}
       IsExpanded: 0
-    - ComponentName: Components.ImpactEffect
+    - ComponentName: Components.RandomCountRange
       Fields:
-      - TypeName: System.String
-        Name: poolName
-        ValueRepresentation: BloodEffectPool
+      - TypeName: System.Int32
+        Name: min
+        ValueRepresentation: 1
+        UnityObject: {fileID: 0}
+        IsHiddenInEditor: 0
+      - TypeName: System.Int32
+        Name: max
+        ValueRepresentation: 5
         UnityObject: {fileID: 0}
         IsHiddenInEditor: 0
       UnityObject: {fileID: 0}
-      IsExpanded: 1
+      IsExpanded: 0
 --- !u!1 &3625167423135340734
 GameObject:
   m_ObjectHideFlags: 0

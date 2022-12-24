@@ -13,12 +13,14 @@ public class GenerateLevelSystem : EcsSystem
     private readonly int _filterId;
     private readonly int _playerFilterId;
     private readonly int _exitFilterId;
+    private readonly int _enemyFilterId;
 
     public GenerateLevelSystem(EcsWorld world)
     {
         _filterId = world.RegisterFilter(new BitMask(Id<LevelSettingsComponent>()));
         _playerFilterId = world.RegisterFilter(new BitMask(Id<PlayerTag>(), Id<Transform>()));
         _exitFilterId = world.RegisterFilter(new BitMask(Id<LevelExit>(), Id<Transform>()), new BitMask(Id<DeadTag>()));
+        _enemyFilterId = world.RegisterFilter(new BitMask(Id<EnemyTag>()));
     }
 
     public override void Tick(EcsWorld world)
@@ -73,21 +75,32 @@ public class GenerateLevelSystem : EcsSystem
         world.Add<LevelExit>(goalView.Id);
 
         foreach (var lootPrefab in settings.Loot)
+            PlaceLevelObjects(lootPrefab, world, data, settingsDigits.Width);
+        foreach (var enemyPrefab in settings.Enemies)
+            PlaceLevelObjects(enemyPrefab, world, data, settingsDigits.Width);
+
+        var playerView = playerTransform.GetComponent<EntityView>();
+        foreach (var id in world.Enumerate(_enemyFilterId))
+            world.Add(id, new TargetEntityComponent { target = playerView });
+    }
+
+    private void PlaceLevelObjects(EntityView levelObjectPrefab, EcsWorld world, int[,] data, float width)
+    {
+        levelObjectPrefab.InitAsEntity(world);
+        var count = 1;
+        if (world.Have<RandomCountRange>(levelObjectPrefab.Id))
         {
-            lootPrefab.InitAsEntity(world);
-            var count = 1;
-            if (world.Have<RandomCountRange>(lootPrefab.Id))
-            {
-                var countRange = world.GetComponent<RandomCountRange>(lootPrefab.Id);
-                count = Random.Range(countRange.min, countRange.max + 1);
-            }
-            world.Delete(lootPrefab.Id);
-            for (int i = 0; i < count; i++)
-            {
-                var loot = GameObject.Instantiate(lootPrefab, GetRandomFreePoint(data, settingsDigits.Width),
-                    Quaternion.identity);
-                loot.InitAsEntity(world);
-            }
+            var countRange = world.GetComponent<RandomCountRange>(levelObjectPrefab.Id);
+            count = Random.Range(countRange.min, countRange.max + 1);
+        }
+        world.Delete(levelObjectPrefab.Id);
+        for (int i = 0; i < count; i++)
+        {
+            var lootPosition = Vector3.zero;
+            if (!GetRandomFreePoint(data, width, ref lootPosition))
+                return;
+            var loot = GameObject.Instantiate(levelObjectPrefab, lootPosition, Quaternion.identity);
+            loot.InitAsEntity(world);
         }
     }
     
@@ -116,7 +129,7 @@ public class GenerateLevelSystem : EcsSystem
         mr.materials = new Material[3] {mat1, mat2, mat3};
     }
 
-    private Vector3 GetRandomFreePoint(int[,] data, float width)
+    private bool GetRandomFreePoint(int[,] data, float width, ref Vector3 point)
     {
         int rMax = data.GetUpperBound(0);
         int cMax = data.GetUpperBound(1);
@@ -139,10 +152,11 @@ public class GenerateLevelSystem : EcsSystem
                 break;
         }
 
-#if DEBUG
         if (row < 0)
-            throw new Exception("can't find free row");
-#endif
+        {
+            Debug.LogError("can't find free row");
+            return false;
+        }
 
         var colOffset = Random.Range(0, cMax + 1);
         var col = -1;
@@ -160,7 +174,8 @@ public class GenerateLevelSystem : EcsSystem
 
         data[row, col] = 2;//TODO: magick number for placed loot. use enum or something like this instead
         
-        return GetPositionByMazeCoordinates(col, row, width);
+        point = GetPositionByMazeCoordinates(col, row, width);
+        return true;
     }
     
     private Vector3 FindGoalPosition(int[,] data, float width)
