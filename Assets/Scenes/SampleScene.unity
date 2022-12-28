@@ -5724,14 +5724,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 2879561023896923306, guid: ef7e0a32fdb06a8499b7a48c0f7fba6e, type: 3}
-      propertyPath: Data.Metas.Array.data[7].Fields.Array.data[0].UnityObject
-      value: 
-      objectReference: {fileID: 1237610121}
-    - target: {fileID: 2879561023896923306, guid: ef7e0a32fdb06a8499b7a48c0f7fba6e, type: 3}
-      propertyPath: Data.Metas.Array.data[7].Fields.Array.data[0].UnityComponent
-      value: 
-      objectReference: {fileID: 1237610121}
     - target: {fileID: 3114002401536837972, guid: ef7e0a32fdb06a8499b7a48c0f7fba6e, type: 3}
       propertyPath: m_Name
       value: Enemy (5)
@@ -6104,14 +6096,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 2879561023896923306, guid: ef7e0a32fdb06a8499b7a48c0f7fba6e, type: 3}
-      propertyPath: Data.Metas.Array.data[7].Fields.Array.data[0].UnityObject
-      value: 
-      objectReference: {fileID: 1237610121}
-    - target: {fileID: 2879561023896923306, guid: ef7e0a32fdb06a8499b7a48c0f7fba6e, type: 3}
-      propertyPath: Data.Metas.Array.data[7].Fields.Array.data[0].UnityComponent
-      value: 
-      objectReference: {fileID: 1237610121}
     - target: {fileID: 3114002401536837972, guid: ef7e0a32fdb06a8499b7a48c0f7fba6e, type: 3}
       propertyPath: m_Name
       value: Enemy (4)
@@ -11267,14 +11251,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 2879561023896923306, guid: ef7e0a32fdb06a8499b7a48c0f7fba6e, type: 3}
-      propertyPath: Data.Metas.Array.data[7].Fields.Array.data[0].UnityObject
-      value: 
-      objectReference: {fileID: 1237610121}
-    - target: {fileID: 2879561023896923306, guid: ef7e0a32fdb06a8499b7a48c0f7fba6e, type: 3}
-      propertyPath: Data.Metas.Array.data[7].Fields.Array.data[0].UnityComponent
-      value: 
-      objectReference: {fileID: 1237610121}
     - target: {fileID: 3114002401536837972, guid: ef7e0a32fdb06a8499b7a48c0f7fba6e, type: 3}
       propertyPath: m_Name
       value: Enemy (6)
@@ -33380,14 +33356,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 2879561023896923306, guid: ef7e0a32fdb06a8499b7a48c0f7fba6e, type: 3}
-      propertyPath: Data.Metas.Array.data[7].Fields.Array.data[0].UnityObject
-      value: 
-      objectReference: {fileID: 1237610121}
-    - target: {fileID: 2879561023896923306, guid: ef7e0a32fdb06a8499b7a48c0f7fba6e, type: 3}
-      propertyPath: Data.Metas.Array.data[7].Fields.Array.data[0].UnityComponent
-      value: 
-      objectReference: {fileID: 1237610121}
     - target: {fileID: 3114002401536837972, guid: ef7e0a32fdb06a8499b7a48c0f7fba6e, type: 3}
       propertyPath: m_Name
       value: Enemy (2)
@@ -38696,14 +38664,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 2879561023896923306, guid: ef7e0a32fdb06a8499b7a48c0f7fba6e, type: 3}
-      propertyPath: Data.Metas.Array.data[7].Fields.Array.data[0].UnityObject
-      value: 
-      objectReference: {fileID: 1237610121}
-    - target: {fileID: 2879561023896923306, guid: ef7e0a32fdb06a8499b7a48c0f7fba6e, type: 3}
-      propertyPath: Data.Metas.Array.data[7].Fields.Array.data[0].UnityComponent
-      value: 
-      objectReference: {fileID: 1237610121}
     - target: {fileID: 3114002401536837972, guid: ef7e0a32fdb06a8499b7a48c0f7fba6e, type: 3}
       propertyPath: m_Name
       value: Enemy (3)
@@ -39330,14 +39290,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 2879561023896923306, guid: ef7e0a32fdb06a8499b7a48c0f7fba6e, type: 3}
-      propertyPath: Data.Metas.Array.data[7].Fields.Array.data[0].UnityObject
-      value: 
-      objectReference: {fileID: 1237610121}
-    - target: {fileID: 2879561023896923306, guid: ef7e0a32fdb06a8499b7a48c0f7fba6e, type: 3}
-      propertyPath: Data.Metas.Array.data[7].Fields.Array.data[0].UnityComponent
-      value: 
-      objectReference: {fileID: 1237610121}
     - target: {fileID: 3114002401536837972, guid: ef7e0a32fdb06a8499b7a48c0f7fba6e, type: 3}
       propertyPath: m_Name
       value: Enemy (1)
@@ -44442,7 +44394,6 @@ MonoBehaviour:
   - HealthPickupCollisionSystem
   - AmmoPickupCollisionSystem
   - WeaponPickupCollisionSystem
-  - LevelExitCollsionSystem
   - CollisionCleanupSystem
   - DeleteDeadSystem
   _initSwitches: 01010100010101010101010101010101010101
@@ -45220,7 +45171,31 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2879561023896923306, guid: ef7e0a32fdb06a8499b7a48c0f7fba6e, type: 3}
-      propertyPath: Data.Metas.Array.data[7].Fields.Array.data[0].UnityObject
+      propertyPath: Data.Metas.Array.size
+      value: 18
+      objectReference: {fileID: 0}
+    - target: {fileID: 2879561023896923306, guid: ef7e0a32fdb06a8499b7a48c0f7fba6e, type: 3}
+      propertyPath: Data.Metas.Array.data[17].IsExpanded
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2879561023896923306, guid: ef7e0a32fdb06a8499b7a48c0f7fba6e, type: 3}
+      propertyPath: Data.Metas.Array.data[17].ComponentName
+      value: Components.TargetEntityComponent
+      objectReference: {fileID: 0}
+    - target: {fileID: 2879561023896923306, guid: ef7e0a32fdb06a8499b7a48c0f7fba6e, type: 3}
+      propertyPath: Data.Metas.Array.data[17].Fields.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2879561023896923306, guid: ef7e0a32fdb06a8499b7a48c0f7fba6e, type: 3}
+      propertyPath: Data.Metas.Array.data[17].Fields.Array.data[0].Name
+      value: target
+      objectReference: {fileID: 0}
+    - target: {fileID: 2879561023896923306, guid: ef7e0a32fdb06a8499b7a48c0f7fba6e, type: 3}
+      propertyPath: Data.Metas.Array.data[17].Fields.Array.data[0].TypeName
+      value: EntityView
+      objectReference: {fileID: 0}
+    - target: {fileID: 2879561023896923306, guid: ef7e0a32fdb06a8499b7a48c0f7fba6e, type: 3}
+      propertyPath: Data.Metas.Array.data[17].Fields.Array.data[0].UnityObject
       value: 
       objectReference: {fileID: 1237610121}
     - target: {fileID: 3114002401536837972, guid: ef7e0a32fdb06a8499b7a48c0f7fba6e, type: 3}
