@@ -20617,7 +20617,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3910811949241216722, guid: 01424304433e58946acc87cc21a18eb6, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4399504548403639400, guid: 01424304433e58946acc87cc21a18eb6, type: 3}
       propertyPath: m_RootOrder
@@ -41051,8 +41051,8 @@ MonoBehaviour:
   - LevelExitCollisionSystem
   - CollisionCleanupSystem
   - DeleteDeadSystem
-  _initSwitches: 010101010001010101010101010101010101010101
-  _updateSwitches: 01010101010101010101010101010101010101000001010101010101010101010101010101010101010101
+  _initSwitches: 01010101000101010101010101010101010101010101
+  _updateSwitches: 0101010101010101010101010101010101010100000101010101010101010101010101010101010101010101
   _lateUpdateSwitches: 0101010101
   _fixedUpdateSwitches: 01010101
   _lateFixedUpdateSwitches: 010101010101010101
