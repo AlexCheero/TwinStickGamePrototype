@@ -52,7 +52,7 @@ sealed class PlayerMovementSystem : EcsSystem
 
         foreach (var id in world.Enumerate(_playerFilterId))
         {
-            world.GetComponentByRef<PlayerVelocityComponent>(id).velocity =
+            world.GetComponent<PlayerVelocityComponent>(id).velocity =
                 moveDir * world.GetComponent<SpeedComponent>(id).speed;
         }
     }

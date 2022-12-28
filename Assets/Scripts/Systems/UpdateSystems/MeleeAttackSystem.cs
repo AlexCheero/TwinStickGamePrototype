@@ -100,7 +100,7 @@ public class MeleeAttackSystem : EcsSystem
                     var ownerId = world.GetComponent<Owner>(id).entity.GetId();
                     if (world.Have<PlayerDirectionComponent>(ownerId))
                     {
-                        ref var ownerDirection = ref world.GetComponentByRef<PlayerDirectionComponent>(ownerId).direction;
+                        ref var ownerDirection = ref world.GetComponent<PlayerDirectionComponent>(ownerId).direction;
                         ownerDirection = (targetPos - position).normalized;
                         ownerDirection.y = 0;
                     }

@@ -20,7 +20,7 @@ public class PlayerAttackSystem : EcsSystem
 
         foreach (var id in world.Enumerate(_filterId))
         {
-            var weaponEntity = world.GetComponentByRef<CurrentWeapon>(id).entity;
+            var weaponEntity = world.GetComponent<CurrentWeapon>(id).entity;
 #if DEBUG
             if (!world.IsEntityValid(weaponEntity))
                 throw new System.Exception("invalid weapon entity");

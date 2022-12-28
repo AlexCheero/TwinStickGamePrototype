@@ -26,10 +26,10 @@ public class WeaponPickupCollisionSystem : EcsSystem
                 world.Have<PlayerTag>(collidedId))
             {
                 var weaponEntity = world.GetById(id);
-                world.GetOrAddComponentRef<CurrentWeapon>(collidedId).entity = weaponEntity;
+                world.GetOrAddComponent<CurrentWeapon>(collidedId).entity = weaponEntity;
                 var attackReach = world.Have<ReachComponent>(id) ? world.GetComponent<ReachComponent>(id).distance : float.PositiveInfinity;
-                world.GetOrAddComponentRef<AttackReachComponent>(collidedId).distance = attackReach;
-                world.GetOrAddComponentRef<Owner>(id).entity = collidedEntity;
+                world.GetOrAddComponent<AttackReachComponent>(collidedId).distance = attackReach;
+                world.GetOrAddComponent<Owner>(id).entity = collidedEntity;
 
                 var weaponTransform = world.GetComponent<Transform>(id);
                 var weaponCollider = weaponTransform.gameObject.GetComponent<Collider>();
@@ -57,7 +57,7 @@ public class WeaponPickupCollisionSystem : EcsSystem
 
                 if (world.Have<Weaponry>(collidedId))
                 {
-                    ref var weaponry = ref world.GetComponentByRef<Weaponry>(collidedId);
+                    ref var weaponry = ref world.GetComponent<Weaponry>(collidedId);
                     if (world.Have<MeleeWeapon>(id))
                         weaponry.melee = weaponEntity;
                     else if (world.Have<RangedWeapon>(id))

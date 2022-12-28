@@ -21,7 +21,7 @@ public class ApplyDamageSystem : EcsSystem
     {
         foreach (var id in world.Enumerate(_filterId))
         {
-            world.GetComponentByRef<HealthComponent>(id).health -=
+            world.GetComponent<HealthComponent>(id).health -=
                 world.GetComponent<DamageComponent>(id).damage;
             world.Remove<DamageComponent>(id);
 

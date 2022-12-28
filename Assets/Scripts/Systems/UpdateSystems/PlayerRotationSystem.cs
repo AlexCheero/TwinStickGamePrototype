@@ -56,7 +56,7 @@ public class PlayerRotationSystem : EcsSystem
         if ((point - transform.position).sqrMagnitude < 0.3f)
             return;
 
-        ref var direction = ref world.GetComponentByRef<PlayerDirectionComponent>(id).direction;
+        ref var direction = ref world.GetComponent<PlayerDirectionComponent>(id).direction;
         direction = point - transform.position;
         direction.y = 0;
         direction.Normalize();
@@ -65,7 +65,7 @@ public class PlayerRotationSystem : EcsSystem
 
     private void MoveRotation(EcsWorld world, int id)
     {
-        ref var direction = ref world.GetComponentByRef<PlayerDirectionComponent>(id).direction;
+        ref var direction = ref world.GetComponent<PlayerDirectionComponent>(id).direction;
         var velocity = world.GetComponent<PlayerVelocityComponent>(id).velocity;
         if (velocity.sqrMagnitude > float.Epsilon)
             direction = velocity.normalized;

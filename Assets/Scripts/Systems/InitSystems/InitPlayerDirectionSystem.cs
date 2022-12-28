@@ -17,6 +17,6 @@ public class InitPlayerDirectionSystem : EcsSystem
     public override void Tick(EcsWorld world)
     {
         foreach (var id in world.Enumerate(_filterId))
-            world.GetComponentByRef<PlayerDirectionComponent>(id).direction = world.GetComponent<Transform>(id).forward;
+            world.GetComponent<PlayerDirectionComponent>(id).direction = world.GetComponent<Transform>(id).forward;
     }
 }

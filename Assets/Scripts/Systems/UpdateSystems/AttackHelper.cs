@@ -7,7 +7,7 @@ public static class AttackHelper
 {
     public static bool CheckAndUpdateAttackCooldown(EcsWorld world, int id)
     {
-        ref var attackCD = ref world.GetComponentByRef<AttackCooldown>(id);
+        ref var attackCD = ref world.GetComponent<AttackCooldown>(id);
         var nextAttackTime = attackCD.previousAttackTime + attackCD.attackCD;
         var isCooldownExpired = Time.time >= nextAttackTime;
         if (isCooldownExpired)

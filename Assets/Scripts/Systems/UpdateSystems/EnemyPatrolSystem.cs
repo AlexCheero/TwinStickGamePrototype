@@ -26,7 +26,7 @@ public class EnemyPatrolSystem : EcsSystem
         foreach (var id in world.Enumerate(_filterId))
         {
             var position = world.GetComponent<Transform>(id).position;
-            ref var nextWaypointIdx = ref world.GetComponentByRef<NextWaypointIdx>(id).idx;
+            ref var nextWaypointIdx = ref world.GetComponent<NextWaypointIdx>(id).idx;
             var nextWaypointPos = WaypointsManager.WaypointPositions[nextWaypointIdx];
             var navAgent = world.GetComponent<NavMeshAgent>(id);
             var reach = navAgent.stoppingDistance;

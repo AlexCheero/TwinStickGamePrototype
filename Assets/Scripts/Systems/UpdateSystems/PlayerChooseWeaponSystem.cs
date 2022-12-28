@@ -20,7 +20,7 @@ public class PlayerChooseWeaponSystem : EcsSystem
     {
         foreach (var id in world.Enumerate(_filterId))
         {
-            ref var currentWeapon = ref world.GetComponentByRef<CurrentWeapon>(id);
+            ref var currentWeapon = ref world.GetComponent<CurrentWeapon>(id);
             var weaponry = world.GetComponent<Weaponry>(id);
             var currentWeaponId = currentWeapon.entity.GetId();
             if (Input.GetKeyDown(KeyCode.Alpha1))

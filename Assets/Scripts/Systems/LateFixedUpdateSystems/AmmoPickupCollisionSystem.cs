@@ -55,7 +55,7 @@ public class AmmoPickupCollisionSystem : EcsSystem
                 if (!world.IsEntityValid(weaponEntity))
                     continue;
                 var weaponId = weaponEntity.GetId();
-                world.GetComponentByRef<Ammo>(weaponId).amount += world.GetComponent<Ammo>(id).amount;
+                world.GetComponent<Ammo>(weaponId).amount += world.GetComponent<Ammo>(id).amount;
                 world.Add<DeadTag>(id);
             }
         }

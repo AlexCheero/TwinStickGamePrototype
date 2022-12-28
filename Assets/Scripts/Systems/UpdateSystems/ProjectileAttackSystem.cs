@@ -34,7 +34,7 @@ public class ProjectileAttackSystem : EcsSystem
             if (!AttackHelper.CheckAndUpdateAttackCooldown(world, id))
                 continue;
             
-            ref var ammo = ref world.GetComponentByRef<Ammo>(id).amount;
+            ref var ammo = ref world.GetComponent<Ammo>(id).amount;
             if (ammo == 0)
                 continue;
 #if DEBUG

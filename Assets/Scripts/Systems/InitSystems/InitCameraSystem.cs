@@ -15,6 +15,6 @@ public class InitCameraSystem : EcsSystem
     public override void Tick(EcsWorld world)
     {
         foreach (var id in world.Enumerate(_camFilterId))
-            world.GetComponentByRef<CameraSettingsComponent>(id).direction.Normalize();
+            world.GetComponent<CameraSettingsComponent>(id).direction.Normalize();
     }
 }
