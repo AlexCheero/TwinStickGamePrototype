@@ -1,6 +1,5 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 public class MainMenu : MonoBehaviour
@@ -28,11 +27,11 @@ public class MainMenu : MonoBehaviour
     private void OnStartNewGameClicked()
     {
         PlayerPrefs.SetInt(Constants.SCORE_KEY, 0);
-        SceneManager.LoadScene(Constants.SampleScene);
+        SceneManager.LoadScene(Constants.ProceduralLevel);
     }
     
     private void OnContinueGameClicked()
     {
-        SceneManager.LoadScene(Constants.SampleScene);
+        SceneManager.LoadScene(Constants.ProceduralLevel);
     }
 }
