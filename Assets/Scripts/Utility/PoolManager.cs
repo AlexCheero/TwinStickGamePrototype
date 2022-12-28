@@ -4,14 +4,14 @@ using UnityEngine;
 
 public static class PoolManager
 {
-    private static Dictionary<string, ObjectPool> _pools = new Dictionary<string, ObjectPool>();
+    private static readonly Dictionary<string, ObjectPool> _pools = new Dictionary<string, ObjectPool>();
 
     public static ObjectPool Get(string name)
     {
-        if (!_pools.ContainsKey(name))
+        if (!_pools.ContainsKey(name) || _pools[name] == null)
         {
             var pool = GameObject.Find(name).GetComponent<ObjectPool>();
-            _pools.Add(name, pool);
+            _pools[name] = pool;
         }
 
         return _pools[name];
