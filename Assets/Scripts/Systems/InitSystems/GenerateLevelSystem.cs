@@ -4,6 +4,7 @@ using Components;
 using ECS;
 using Tags;
 using UnityEngine;
+using UnityEngine.AI;
 using Random = UnityEngine.Random;
 
 //choose system type here
@@ -73,6 +74,9 @@ public class GenerateLevelSystem : EcsSystem
         go.GetComponent<MeshRenderer>().sharedMaterial = settingsMaterials.EndMat;
         goalView.InitAsEntity(world);
         world.Add<LevelExit>(goalView.Id);
+
+        var nms = GameObject.FindObjectOfType<NavMeshSurface>();
+        nms.BuildNavMesh();
 
         foreach (var lootPrefab in settings.Loot)
             PlaceLevelObjects(lootPrefab, world, data, settingsDigits.Width);

@@ -1,3 +1,4 @@
 {
-	"name": "Scripts"
+	"name": "Scripts",
+	"references":[ "GUID:8c4dd21966739024fbd72155091d199e" ]
 }
