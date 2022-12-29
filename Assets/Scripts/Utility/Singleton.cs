@@ -13,6 +13,8 @@ public class Singleton<T> : MonoBehaviour where T : MonoBehaviour
         }
     }
 
+    public static bool IsCreated => _instance != null;
+
     protected virtual void Awake()
     {
 #if DEBUG
@@ -20,5 +22,11 @@ public class Singleton<T> : MonoBehaviour where T : MonoBehaviour
             throw new System.Exception(GetType().FullName + " instance already created!");
 #endif
         _instance = this as T;
+        Init();
+    }
+
+    protected virtual void Init()
+    {
+        
     }
 }

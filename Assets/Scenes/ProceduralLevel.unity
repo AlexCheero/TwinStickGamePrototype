@@ -162,7 +162,7 @@ MonoBehaviour:
         UnityObject: {fileID: 11400000, guid: a9314d59158a56d4d94104f2d0e9b2a8, type: 2}
         IsHiddenInEditor: 0
       UnityObject: {fileID: 0}
-      IsExpanded: 0
+      IsExpanded: 1
 --- !u!4 &42949371
 Transform:
   m_ObjectHideFlags: 0
@@ -41077,6 +41077,7 @@ MonoBehaviour:
   - InitHealthUISliderSystem
   - InitPlayerDirectionSystem
   - InitLevelGoalSystem
+  - InitPlayerFromStashSystem
   _updateSystemTypeNames:
   - CleanupTargetEntitySystem
   - PlayerMovementSystem
@@ -41111,7 +41112,7 @@ MonoBehaviour:
   - LevelExitCollisionSystem
   - CollisionCleanupSystem
   - DeleteDeadSystem
-  _initSwitches: 01010101000101010101010101010101010101010101
+  _initSwitches: 0101010100010101010101010101010101010101010101
   _updateSwitches: 0101010101010101010101010101010101010100000101010101010101010101010101010101010101010101
   _lateUpdateSwitches: 0101010101
   _fixedUpdateSwitches: 01010101

@@ -5499,14 +5499,6 @@ MonoBehaviour:
       Fields: []
       UnityObject: {fileID: 0}
       IsExpanded: 0
-    - ComponentName: Tags.MeleeWeapon
-      Fields: []
-      UnityObject: {fileID: 0}
-      IsExpanded: 0
-    - ComponentName: Tags.Weapon
-      Fields: []
-      UnityObject: {fileID: 0}
-      IsExpanded: 0
     - ComponentName: Components.DamageComponent
       Fields:
       - TypeName: System.Single
@@ -5575,11 +5567,19 @@ MonoBehaviour:
         IsHiddenInEditor: 0
       - TypeName: System.Int32
         Name: max
-        ValueRepresentation: 1
+        ValueRepresentation: 0
         UnityObject: {fileID: 0}
         IsHiddenInEditor: 0
       UnityObject: {fileID: 0}
       IsExpanded: 1
+    - ComponentName: Tags.MeleeWeapon
+      Fields: []
+      UnityObject: {fileID: 0}
+      IsExpanded: 0
+    - ComponentName: Tags.Weapon
+      Fields: []
+      UnityObject: {fileID: 0}
+      IsExpanded: 0
 --- !u!1 &1982581365190004737
 GameObject:
   m_ObjectHideFlags: 0

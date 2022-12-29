@@ -6,7 +6,7 @@ using UnityEngine;
 [System(ESystemCategory.LateFixedUpdate)]
 public class WeaponPickupCollisionSystem : EcsSystem
 {
-    private int _filterId;
+    private readonly int _filterId;
 
     public WeaponPickupCollisionSystem(EcsWorld world)
     {
@@ -20,52 +20,9 @@ public class WeaponPickupCollisionSystem : EcsSystem
     {
         foreach (var id in world.Enumerate(_filterId))
         {
-            var collidedEntity = world.GetComponent<CollisionWith>(id).entity;
-            var collidedId = collidedEntity.GetId();
-            if (world.IsEntityValid(collidedEntity) &&
-                world.Have<PlayerTag>(collidedId))
-            {
-                var weaponEntity = world.GetById(id);
-                world.GetOrAddComponent<CurrentWeapon>(collidedId).entity = weaponEntity;
-                var attackReach = world.Have<ReachComponent>(id) ? world.GetComponent<ReachComponent>(id).distance : float.PositiveInfinity;
-                world.GetOrAddComponent<AttackReachComponent>(collidedId).distance = attackReach;
-                world.GetOrAddComponent<Owner>(id).entity = collidedEntity;
-
-                var weaponTransform = world.GetComponent<Transform>(id);
-                var weaponCollider = weaponTransform.gameObject.GetComponent<Collider>();
-                if (weaponCollider != null)
-                    weaponCollider.enabled = false;
-
-                var playerTransform = world.GetComponent<Transform>(collidedId);
-                var gunHolder = MiscUtils.FindGrandChildByName(playerTransform, "GunHolder");
-                foreach (Transform gun in gunHolder)
-                    gun.gameObject.SetActive(false);
-
-                weaponTransform.SetParent(gunHolder);
-
-                if (world.Have<GripTransform>(id))
-                {
-                    var gripTransform = world.GetComponent<GripTransform>(id);
-                    weaponTransform.localPosition = gripTransform.position;
-                    weaponTransform.localEulerAngles = gripTransform.rotation;
-                }
-                else
-                {
-                    weaponTransform.localPosition = Vector3.zero;
-                    weaponTransform.localEulerAngles = Vector3.zero;
-                }
-
-                if (world.Have<Weaponry>(collidedId))
-                {
-                    ref var weaponry = ref world.GetComponent<Weaponry>(collidedId);
-                    if (world.Have<MeleeWeapon>(id))
-                        weaponry.melee = weaponEntity;
-                    else if (world.Have<RangedWeapon>(id))
-                        weaponry.ranged = weaponEntity;
-                    else if (world.Have<ProjectileWeapon>(id))
-                        weaponry.throwable = weaponEntity;
-                }
-            }
+            var collidedId = world.GetComponent<CollisionWith>(id).entity.GetId();
+            if (world.Have<PlayerTag>(collidedId))
+                WeaponHelper.TakeWeapon(world, collidedId, id);
         }
     }
 }

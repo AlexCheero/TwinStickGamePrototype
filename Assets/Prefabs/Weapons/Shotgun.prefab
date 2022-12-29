@@ -141,10 +141,6 @@ MonoBehaviour:
         IsHiddenInEditor: 0
       UnityObject: {fileID: 0}
       IsExpanded: 0
-    - ComponentName: Tags.Weapon
-      Fields: []
-      UnityObject: {fileID: 0}
-      IsExpanded: 0
     - ComponentName: Components.GripTransform
       Fields:
       - TypeName: UnityEngine.Vector3
@@ -190,7 +186,7 @@ MonoBehaviour:
       Fields:
       - TypeName: System.Int32
         Name: min
-        ValueRepresentation: 0
+        ValueRepresentation: 1
         UnityObject: {fileID: 0}
         IsHiddenInEditor: 0
       - TypeName: System.Int32
@@ -200,3 +196,7 @@ MonoBehaviour:
         IsHiddenInEditor: 0
       UnityObject: {fileID: 0}
       IsExpanded: 1
+    - ComponentName: Tags.Weapon
+      Fields: []
+      UnityObject: {fileID: 0}
+      IsExpanded: 0

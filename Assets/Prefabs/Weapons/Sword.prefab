@@ -106,8 +106,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3508236843181602259}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 20.42, y: 1.05, z: 11.67}
+  m_LocalRotation: {x: -0.7071068, y: 0.000000030908623, z: 0.7071068, w: -0.000000030908623}
+  m_LocalPosition: {x: -0.3, y: 0.1, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4328175729415152043}
@@ -146,10 +146,6 @@ MonoBehaviour:
       UnityObject: {fileID: 0}
       IsExpanded: 0
     - ComponentName: Tags.MeleeWeapon
-      Fields: []
-      UnityObject: {fileID: 0}
-      IsExpanded: 0
-    - ComponentName: Tags.Weapon
       Fields: []
       UnityObject: {fileID: 0}
       IsExpanded: 0
@@ -225,7 +221,7 @@ MonoBehaviour:
       Fields:
       - TypeName: System.Int32
         Name: min
-        ValueRepresentation: 0
+        ValueRepresentation: 1
         UnityObject: {fileID: 0}
         IsHiddenInEditor: 0
       - TypeName: System.Int32
@@ -235,3 +231,7 @@ MonoBehaviour:
         IsHiddenInEditor: 0
       UnityObject: {fileID: 0}
       IsExpanded: 1
+    - ComponentName: Tags.Weapon
+      Fields: []
+      UnityObject: {fileID: 0}
+      IsExpanded: 0

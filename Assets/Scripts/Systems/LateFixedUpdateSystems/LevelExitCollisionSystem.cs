@@ -27,13 +27,6 @@ public class LevelExitCollisionSystem : EcsSystem
                 return;
         }
 
-        int levelSettingsId = -1;
-        foreach (var id in world.Enumerate(_levelSettingsFilterId))
-        {
-            levelSettingsId = id;
-            break;
-        }
-
         foreach (var id in world.Enumerate(_filterId))
         {
             var collidedId = world.GetComponent<CollisionWith>(id).entity.GetId();
@@ -42,16 +35,43 @@ public class LevelExitCollisionSystem : EcsSystem
                 Debug.Log("something collided level exit");
                 continue;
             }
-            
-            if (levelSettingsId < 0)
-            {
-                Debug.LogError("level settings not found");
-                return;
-            }
+
+            SaveStash(world, collidedId);
             
             MiscUtils.AddScore(Constants.PointsForGoalCompletion);
             SceneManager.LoadScene(Constants.ProceduralLevel);
             break;
         }
+    }
+
+    private void SaveStash(EcsWorld world, int playerId)
+    {
+        var stashHolder = EntityStashHolder.Instance;
+        stashHolder.Health = world.GetComponent<HealthComponent>(playerId).health;
+        
+        var weaponry = world.GetComponent<Weaponry>(playerId);
+        StashWeapon(world, EWeaponType.Melee, weaponry.melee);
+        StashWeapon(world, EWeaponType.Ranged, weaponry.ranged);
+        StashWeapon(world, EWeaponType.Projectile, weaponry.throwable);
+        stashHolder.CurrentWeaponType = GetCurrentWeaponType(world, playerId);
+    }
+
+    private void StashWeapon(EcsWorld world, EWeaponType type, Entity entity)
+    {
+        if (!world.IsEntityValid(entity))
+            return;
+        var stashHolder = EntityStashHolder.Instance;
+        stashHolder.Weapons[type] = world.GetComponent<Prototype>(entity.GetId()).prefab;
+    }
+
+    private EWeaponType GetCurrentWeaponType(EcsWorld world, int playerId)
+    {
+        var currentWeaponId = world.GetComponent<CurrentWeapon>(playerId).entity.GetId();
+
+        if (world.Have<RangedWeapon>(currentWeaponId))
+            return EWeaponType.Ranged;
+        if (world.Have<ProjectileWeapon>(currentWeaponId))
+            return EWeaponType.Projectile;
+        return EWeaponType.Melee;
     }
 }

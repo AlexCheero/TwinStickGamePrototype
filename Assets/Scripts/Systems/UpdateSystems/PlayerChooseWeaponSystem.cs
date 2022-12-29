@@ -22,43 +22,54 @@ public class PlayerChooseWeaponSystem : EcsSystem
         {
             ref var currentWeapon = ref world.GetComponent<CurrentWeapon>(id);
             var weaponry = world.GetComponent<Weaponry>(id);
-            var currentWeaponId = currentWeapon.entity.GetId();
             if (Input.GetKeyDown(KeyCode.Alpha1))
-            {
-                if (!world.Have<MeleeWeapon>(currentWeaponId) && world.IsEntityValid(weaponry.melee))
-                {
-                    if (world.Have<Transform>(currentWeaponId))
-                        world.GetComponent<Transform>(currentWeaponId).gameObject.SetActive(false);
-                    currentWeapon.entity = weaponry.melee;
-                    currentWeaponId = weaponry.melee.GetId();
-                    if (world.Have<Transform>(currentWeaponId))
-                        world.GetComponent<Transform>(currentWeaponId).gameObject.SetActive(true);
-                }
-            }
+                ChooseMelee(world, ref currentWeapon, weaponry);
             else if (Input.GetKeyDown(KeyCode.Alpha2))
-            {
-                if (!world.Have<RangedWeapon>(currentWeaponId) && world.IsEntityValid(weaponry.ranged))
-                {
-                    if (world.Have<Transform>(currentWeaponId))
-                        world.GetComponent<Transform>(currentWeaponId).gameObject.SetActive(false);
-                    currentWeapon.entity = weaponry.ranged;
-                    currentWeaponId = weaponry.ranged.GetId();
-                    if (world.Have<Transform>(currentWeaponId))
-                        world.GetComponent<Transform>(currentWeaponId).gameObject.SetActive(true);
-                }
-            }
+                ChooseRanged(world, ref currentWeapon, weaponry);
             else if (Input.GetKeyDown(KeyCode.Alpha3))
-            {
-                if (!world.Have<ProjectileWeapon>(currentWeaponId) && world.IsEntityValid(weaponry.throwable))
-                {
-                    if (world.Have<Transform>(currentWeaponId))
-                        world.GetComponent<Transform>(currentWeaponId).gameObject.SetActive(false);
-                    currentWeapon.entity = weaponry.throwable;
-                    currentWeaponId = weaponry.throwable.GetId();
-                    if (world.Have<Transform>(currentWeaponId))
-                        world.GetComponent<Transform>(currentWeaponId).gameObject.SetActive(true);
-                }
-            }
+                ChooseProjectile(world, ref currentWeapon, weaponry);
         }
+    }
+
+    public static void ChooseMelee(EcsWorld world, ref CurrentWeapon currentWeapon, Weaponry weaponry)
+    {
+        var currentWeaponId = currentWeapon.entity.GetId();
+        if (world.Have<MeleeWeapon>(currentWeaponId) || !world.IsEntityValid(weaponry.melee))
+            return;
+        
+        if (world.Have<Transform>(currentWeaponId))
+            world.GetComponent<Transform>(currentWeaponId).gameObject.SetActive(false);
+        currentWeapon.entity = weaponry.melee;
+        currentWeaponId = weaponry.melee.GetId();
+        if (world.Have<Transform>(currentWeaponId))
+            world.GetComponent<Transform>(currentWeaponId).gameObject.SetActive(true);
+    }
+    
+    public static void ChooseRanged(EcsWorld world, ref CurrentWeapon currentWeapon, Weaponry weaponry)
+    {
+        var currentWeaponId = currentWeapon.entity.GetId();
+        if (world.Have<RangedWeapon>(currentWeaponId) || !world.IsEntityValid(weaponry.ranged))
+            return;
+        
+        if (world.Have<Transform>(currentWeaponId))
+            world.GetComponent<Transform>(currentWeaponId).gameObject.SetActive(false);
+        currentWeapon.entity = weaponry.ranged;
+        currentWeaponId = weaponry.ranged.GetId();
+        if (world.Have<Transform>(currentWeaponId))
+            world.GetComponent<Transform>(currentWeaponId).gameObject.SetActive(true);
+    }
+    
+    public static void ChooseProjectile(EcsWorld world, ref CurrentWeapon currentWeapon, Weaponry weaponry)
+    {
+        var currentWeaponId = currentWeapon.entity.GetId();
+        if (world.Have<ProjectileWeapon>(currentWeaponId) || !world.IsEntityValid(weaponry.throwable))
+            return;
+        
+        if (world.Have<Transform>(currentWeaponId))
+            world.GetComponent<Transform>(currentWeaponId).gameObject.SetActive(false);
+        currentWeapon.entity = weaponry.throwable;
+        currentWeaponId = weaponry.throwable.GetId();
+        if (world.Have<Transform>(currentWeaponId))
+            world.GetComponent<Transform>(currentWeaponId).gameObject.SetActive(true);
     }
 }

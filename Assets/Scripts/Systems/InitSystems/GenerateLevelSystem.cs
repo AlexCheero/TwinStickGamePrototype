@@ -105,6 +105,7 @@ public class GenerateLevelSystem : EcsSystem
                 return;
             var loot = GameObject.Instantiate(levelObjectPrefab, lootPosition, Quaternion.identity);
             loot.InitAsEntity(world);
+            world.Add(loot.Id, new Prototype { prefab = levelObjectPrefab });
         }
     }
     

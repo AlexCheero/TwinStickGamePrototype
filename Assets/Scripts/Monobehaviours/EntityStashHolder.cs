@@ -1,16 +1,29 @@
 
 using System.Collections.Generic;
-using ECS;
 
+public enum EWeaponType
+{
+    Melee,
+    Ranged,
+    Projectile
+}
+
+//TODO: rename to PlayerStashHolder
 public class EntityStashHolder : Singleton<EntityStashHolder>
 {
-    public Dictionary<int, IComponentStash> PlayerStash;
-    public Dictionary<int, IComponentStash> MeleeStash;
+    public float Health;
+    public EWeaponType CurrentWeaponType;
+    public Dictionary<EWeaponType, EntityView> Weapons;
 
-    void Start()
+    public EntityView Melee => GetWeaponViewByType(EWeaponType.Melee);
+    public EntityView Ranged => GetWeaponViewByType(EWeaponType.Ranged);
+    public EntityView Projectile => GetWeaponViewByType(EWeaponType.Projectile);
+    
+    private EntityView GetWeaponViewByType(EWeaponType type) => Weapons.ContainsKey(type) ? Weapons[type] : null;
+
+    protected override void Init()
     {
         DontDestroyOnLoad(this);
-        PlayerStash ??= new Dictionary<int, IComponentStash>();
-        MeleeStash ??= new Dictionary<int, IComponentStash>();
+        Weapons ??= new Dictionary<EWeaponType, EntityView>();
     }
 }

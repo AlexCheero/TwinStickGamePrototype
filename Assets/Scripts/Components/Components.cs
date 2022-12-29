@@ -131,7 +131,7 @@ namespace Components
         public EAmmoType type;
     }
 
-    struct CurrentWeapon
+    public struct CurrentWeapon
     {
         public Entity entity;
     }
@@ -195,7 +195,7 @@ namespace Components
         public Vector3 rotation;
     }
 
-    struct Weaponry
+    public struct Weaponry
     {
         [HiddenInspector]
         public Entity melee;
@@ -242,6 +242,11 @@ namespace Components
     {
         public int min;
         public int max;
+    }
+
+    struct Prototype
+    {
+        public EntityView prefab;
     }
 }
 

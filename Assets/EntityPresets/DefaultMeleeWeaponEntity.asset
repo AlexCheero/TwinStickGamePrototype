@@ -24,27 +24,20 @@ MonoBehaviour:
         Name: previousAttackTime
         ValueRepresentation: 
         UnityObject: {fileID: 0}
-        Preset: {fileID: 0}
         IsHiddenInEditor: 1
       - TypeName: System.Single
         Name: attackCD
         ValueRepresentation: 0.5
         UnityObject: {fileID: 0}
-        Preset: {fileID: 0}
         IsHiddenInEditor: 0
       UnityObject: {fileID: 0}
       IsExpanded: 1
-    - ComponentName: Tags.Weapon
-      Fields: []
-      UnityObject: {fileID: 0}
-      IsExpanded: 0
     - ComponentName: Components.DamageComponent
       Fields:
       - TypeName: System.Single
         Name: damage
         ValueRepresentation: 10
         UnityObject: {fileID: 0}
-        Preset: {fileID: 0}
         IsHiddenInEditor: 0
       UnityObject: {fileID: 0}
       IsExpanded: 1
@@ -54,7 +47,6 @@ MonoBehaviour:
         Name: distance
         ValueRepresentation: 2.5
         UnityObject: {fileID: 0}
-        Preset: {fileID: 0}
         IsHiddenInEditor: 0
       UnityObject: {fileID: 0}
       IsExpanded: 1
@@ -64,7 +56,6 @@ MonoBehaviour:
         Name: angle
         ValueRepresentation: 120
         UnityObject: {fileID: 0}
-        Preset: {fileID: 0}
         IsHiddenInEditor: 0
       UnityObject: {fileID: 0}
       IsExpanded: 1
@@ -78,7 +69,10 @@ MonoBehaviour:
         Name: icon
         ValueRepresentation: 
         UnityObject: {fileID: 21300000, guid: 66e6e6e4cf779e14a92d812a87cb5326, type: 3}
-        Preset: {fileID: 0}
         IsHiddenInEditor: 0
       UnityObject: {fileID: 0}
       IsExpanded: 1
+    - ComponentName: Tags.Weapon
+      Fields: []
+      UnityObject: {fileID: 0}
+      IsExpanded: 0

@@ -847,16 +847,16 @@ MonoBehaviour:
       Fields:
       - TypeName: System.Int32
         Name: min
-        ValueRepresentation: 1
+        ValueRepresentation: 0
         UnityObject: {fileID: 0}
         IsHiddenInEditor: 0
       - TypeName: System.Int32
         Name: max
-        ValueRepresentation: 5
+        ValueRepresentation: 0
         UnityObject: {fileID: 0}
         IsHiddenInEditor: 0
       UnityObject: {fileID: 0}
-      IsExpanded: 0
+      IsExpanded: 1
 --- !u!1 &3625167423135340734
 GameObject:
   m_ObjectHideFlags: 0
