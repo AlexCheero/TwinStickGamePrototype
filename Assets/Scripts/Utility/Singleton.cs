@@ -7,10 +7,8 @@ public class Singleton<T> : MonoBehaviour where T : MonoBehaviour
     {
         get
         {
-#if DEBUG
             if (_instance == null)
-                throw new System.Exception("no instance of " + typeof(T).FullName + " created!");
-#endif
+                _instance = new GameObject(typeof(T).Name).AddComponent<T>();
             return _instance;
         }
     }
