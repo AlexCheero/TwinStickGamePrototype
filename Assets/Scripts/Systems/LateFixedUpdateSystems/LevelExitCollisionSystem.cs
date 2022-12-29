@@ -1,7 +1,6 @@
 using Components;
 using ECS;
 using Tags;
-using UnityEngine;
 using UnityEngine.SceneManagement;
 
 //choose system type here
@@ -10,13 +9,11 @@ public class LevelExitCollisionSystem : EcsSystem
 {
     private readonly int _goalFilterId;
     private readonly int _filterId;
-    private readonly int _levelSettingsFilterId;
 
     public LevelExitCollisionSystem(EcsWorld world)
     {
         _goalFilterId = world.RegisterFilter(new BitMask(Id<LevelGoal>()));
         _filterId = world.RegisterFilter(new BitMask(Id<LevelExit>(), Id<CollisionWith>()));
-        _levelSettingsFilterId = world.RegisterFilter(new BitMask(Id<LevelSettingsComponent>()));
     }
 
     public override void Tick(EcsWorld world)
@@ -31,10 +28,7 @@ public class LevelExitCollisionSystem : EcsSystem
         {
             var collidedId = world.GetComponent<CollisionWith>(id).entity.GetId();
             if (!world.Have<PlayerTag>(collidedId))
-            {
-                Debug.Log("something collided level exit");
                 continue;
-            }
 
             SaveStash(world, collidedId);
             
