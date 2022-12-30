@@ -248,6 +248,14 @@ namespace Components
     {
         public EntityView prefab;
     }
+
+    struct PlayerSight
+    {
+        public Vector3 Start;
+        public Vector3 End;
+        public Vector3 Normal;
+        public EntityView SightedView;
+    }
 }
 
 namespace Tags

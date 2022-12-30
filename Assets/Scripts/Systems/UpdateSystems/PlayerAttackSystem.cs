@@ -6,11 +6,11 @@ using UnityEngine;
 [System(ESystemCategory.Update)]
 public class PlayerAttackSystem : EcsSystem
 {
-    private int _filterId;
+    private readonly int _filterId;
 
     public PlayerAttackSystem(EcsWorld world)
     {
-        _filterId = world.RegisterFilter(new BitMask(Id<PlayerTag>(), Id<CurrentWeapon>(), Id<Transform>()));
+        _filterId = world.RegisterFilter(new BitMask(Id<PlayerTag>(), Id<CurrentWeapon>(), Id<PlayerSight>()));
     }
 
     public override void Tick(EcsWorld world)
@@ -32,20 +32,8 @@ public class PlayerAttackSystem : EcsSystem
                 throw new System.Exception("please clean Attack component from weapon");
 #endif
 
-            var transform = world.GetComponent<Transform>(id);
-            Vector3 attackPosition;
-            if (world.Have<Collider>(id))
-            {
-                var bounds = world.GetComponent<Collider>(id).bounds;
-                attackPosition = bounds.center;
-                //3/4 upper part of collider
-                attackPosition.y += bounds.extents.y / 2;
-            }
-            else
-            {
-                attackPosition = transform.position;
-            }
-            world.Add(weaponId, new AttackEvent { position = attackPosition, direction = transform.forward });
+            var sight = world.GetComponent<PlayerSight>(id);
+            world.Add(weaponId, new AttackEvent { position = sight.Start, direction = (sight.End - sight.Start).normalized });
         }
     }
 }

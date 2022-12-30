@@ -41212,6 +41212,8 @@ MonoBehaviour:
   - PlayerMovementSystem
   - CameraFollowSystem
   - PlayerRotationSystem
+  - PlayerEntityDetectionSystem
+  - LaserPointerSystem
   - EnemyFollowSystem
   - HealthSystem
   - LifeTimeSystem
@@ -41228,7 +41230,6 @@ MonoBehaviour:
   - HealthUISliderSystem
   - WeaponUISystem
   - CheckGoalCompletionSystem
-  - LaserPointerSystem
   _lateUpdateSystemTypeNames:
   - ParticlesCleanupSystem
   - DeleteDeadSystem
@@ -41243,7 +41244,7 @@ MonoBehaviour:
   - CollisionCleanupSystem
   - DeleteDeadSystem
   _initSwitches: 0101010100010101010101010101010101010101010101
-  _updateSwitches: 010101010101010101010101010101010101010001010101010101010101010101010101010101010101010101
+  _updateSwitches: 01010101010101010101010101010101010101010100010101010101010101010101010101010101010101010101
   _lateUpdateSwitches: 0101010101
   _fixedUpdateSwitches: 01010101
   _lateFixedUpdateSwitches: 010101010101010101

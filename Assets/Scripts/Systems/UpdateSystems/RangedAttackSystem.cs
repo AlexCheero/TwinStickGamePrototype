@@ -38,6 +38,10 @@ public class RangedAttackSystem : EcsSystem
             ammo--;
 
             var ownerId = world.GetComponent<Owner>(id).entity.GetId();
+            if (!world.Have<PlayerSight>(ownerId))
+                continue;
+            var sight = world.GetComponent<PlayerSight>(ownerId);
+            
             if (world.Have<Animator>(ownerId))
             {
                 var animator = world.GetComponent<Animator>(ownerId);
@@ -45,19 +49,10 @@ public class RangedAttackSystem : EcsSystem
                 AttackHelper.PlayAttackAnimationState(animator, playTime, "IsFiring");
             }
 
-            Ray ray = new Ray(attack.position, attack.direction);
-#if DEBUG
-            Debug.DrawRay(attack.position, attack.direction * 100, Color.red, 5.0f);
-#endif
-            RaycastHit hit;
-            if (!Physics.Raycast(ray, out hit))
+            if (sight.SightedView == null)
                 continue;
-
-            var targetView = hit.collider.gameObject.GetComponent<EntityView>();
-            if (targetView == null)
-                continue;
-
-            var targetEntity = targetView.Entity;
+            
+            var targetEntity = sight.SightedView.Entity;
             if (!world.IsEntityValid(targetEntity))
                 continue;
 
@@ -66,7 +61,7 @@ public class RangedAttackSystem : EcsSystem
                 continue;
 
             world.Add(targetEntityId, world.GetComponent<DamageComponent>(id));
-            world.Add(targetEntityId, new Impact { position = hit.point, normal = hit.normal });
+            world.Add(targetEntityId, new Impact { position = sight.End, normal = sight.Normal });
         }
     }
 }
