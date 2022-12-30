@@ -221,7 +221,7 @@ MonoBehaviour:
       Fields:
       - TypeName: System.Int32
         Name: min
-        ValueRepresentation: 1
+        ValueRepresentation: 0
         UnityObject: {fileID: 0}
         IsHiddenInEditor: 0
       - TypeName: System.Int32

@@ -5567,7 +5567,7 @@ MonoBehaviour:
         IsHiddenInEditor: 0
       - TypeName: System.Int32
         Name: max
-        ValueRepresentation: 0
+        ValueRepresentation: 1
         UnityObject: {fileID: 0}
         IsHiddenInEditor: 0
       UnityObject: {fileID: 0}
