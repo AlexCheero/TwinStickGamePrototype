@@ -35,13 +35,13 @@ public class InitPlayerFromStashSystem : EcsSystem
             switch (stashHolder.CurrentWeaponType)
             {
                 case EWeaponType.Melee:
-                    PlayerChooseWeaponSystem.ChooseMelee(world, ref currentWeapon, weaponry);
+                    WeaponHelper.ChooseMelee(world, ref currentWeapon, weaponry);
                     break;
                 case EWeaponType.Ranged:
-                    PlayerChooseWeaponSystem.ChooseRanged(world, ref currentWeapon, weaponry);
+                    WeaponHelper.ChooseRanged(world, ref currentWeapon, weaponry);
                     break;
                 case EWeaponType.Projectile:
-                    PlayerChooseWeaponSystem.ChooseProjectile(world, ref currentWeapon, weaponry);
+                    WeaponHelper.ChooseProjectile(world, ref currentWeapon, weaponry);
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();
@@ -49,13 +49,15 @@ public class InitPlayerFromStashSystem : EcsSystem
         }
     }
 
-    private void InitAndTakeWeapon(EcsWorld world, EntityView weaponView, int playerId)
+    private void InitAndTakeWeapon(EcsWorld world, WeaponStashData weaponStash, int playerId)
     {
-        if (weaponView == null)
+        if (weaponStash.Prefab == null)
             return;
         
-        var weapon = GameObject.Instantiate(weaponView);
+        var weapon = GameObject.Instantiate(weaponStash.Prefab);
         weapon.InitAsEntity(world);
+        if (world.Have<Ammo>(weapon.Id))
+            world.GetComponent<Ammo>(weapon.Id).amount = weaponStash.Ammo;
         WeaponHelper.TakeWeapon(world, playerId, weapon.Id);
     }
 }

@@ -1,3 +1,4 @@
+using System;
 using Components;
 using ECS;
 using Tags;
@@ -47,25 +48,30 @@ public class LevelExitCollisionSystem : EcsSystem
         StashWeapon(world, EWeaponType.Melee, weaponry.melee);
         StashWeapon(world, EWeaponType.Ranged, weaponry.ranged);
         StashWeapon(world, EWeaponType.Projectile, weaponry.throwable);
-        stashHolder.CurrentWeaponType = GetCurrentWeaponType(world, playerId);
+        
+        var currentWeaponId = world.GetComponent<CurrentWeapon>(playerId).entity.GetId();
+        stashHolder.CurrentWeaponType = WeaponHelper.GetWeaponType(world, currentWeaponId);
     }
 
     private void StashWeapon(EcsWorld world, EWeaponType type, Entity entity)
     {
         if (!world.IsEntityValid(entity))
             return;
+        var id = entity.GetId();
+        if (!world.Have<Prototype>(id))
+            return;
+#if DEBUG
+        var actualType = WeaponHelper.GetWeaponType(world, id);
+        if (type != actualType)
+            throw new Exception("Weapon type mismatch!");
+#endif
+        
         var stashHolder = EntityStashHolder.Instance;
-        stashHolder.Weapons[type] = world.GetComponent<Prototype>(entity.GetId()).prefab;
-    }
-
-    private EWeaponType GetCurrentWeaponType(EcsWorld world, int playerId)
-    {
-        var currentWeaponId = world.GetComponent<CurrentWeapon>(playerId).entity.GetId();
-
-        if (world.Have<RangedWeapon>(currentWeaponId))
-            return EWeaponType.Ranged;
-        if (world.Have<ProjectileWeapon>(currentWeaponId))
-            return EWeaponType.Projectile;
-        return EWeaponType.Melee;
+        var weaponStash = new WeaponStashData
+        {
+            Prefab = world.GetComponent<Prototype>(id).prefab,
+            Ammo = world.Have<Ammo>(id) ? world.GetComponent<Ammo>(id).amount : 0
+        };
+        stashHolder.WeaponPrefabs[type] = weaponStash;
     }
 }

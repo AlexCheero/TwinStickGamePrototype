@@ -8,22 +8,28 @@ public enum EWeaponType
     Projectile
 }
 
+public struct WeaponStashData
+{
+    public EntityView Prefab;
+    public int Ammo;
+}
+
 //TODO: rename to PlayerStashHolder
 public class EntityStashHolder : Singleton<EntityStashHolder>
 {
     public float Health;
     public EWeaponType CurrentWeaponType;
-    public Dictionary<EWeaponType, EntityView> Weapons;
+    public Dictionary<EWeaponType, WeaponStashData> WeaponPrefabs;
 
-    public EntityView Melee => GetWeaponViewByType(EWeaponType.Melee);
-    public EntityView Ranged => GetWeaponViewByType(EWeaponType.Ranged);
-    public EntityView Projectile => GetWeaponViewByType(EWeaponType.Projectile);
+    public WeaponStashData Melee => GetWeaponViewByType(EWeaponType.Melee);
+    public WeaponStashData Ranged => GetWeaponViewByType(EWeaponType.Ranged);
+    public WeaponStashData Projectile => GetWeaponViewByType(EWeaponType.Projectile);
     
-    private EntityView GetWeaponViewByType(EWeaponType type) => Weapons.ContainsKey(type) ? Weapons[type] : null;
+    private WeaponStashData GetWeaponViewByType(EWeaponType type) => WeaponPrefabs.ContainsKey(type) ? WeaponPrefabs[type] : default;
 
     protected override void Init()
     {
         DontDestroyOnLoad(this);
-        Weapons ??= new Dictionary<EWeaponType, EntityView>();
+        WeaponPrefabs ??= new Dictionary<EWeaponType, WeaponStashData>();
     }
 }
