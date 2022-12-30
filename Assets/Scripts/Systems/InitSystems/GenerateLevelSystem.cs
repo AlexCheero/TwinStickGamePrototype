@@ -193,7 +193,10 @@ public class GenerateLevelSystem : EcsSystem
             for (int j = 0; j <= cMax; j++)
             {
                 if (data[i, j] == 0)
+                {
+                    data[i, j] = 1;
                     return GetPositionByMazeCoordinates(j, i, width);
+                }
             }
         }
 
@@ -212,7 +215,10 @@ public class GenerateLevelSystem : EcsSystem
             for (int j = cMax; j >= 0; j--)
             {
                 if (data[i, j] == 0)
+                {
+                    data[i, j] = 1;
                     return GetPositionByMazeCoordinates(j, i, width);
+                }
             }
         }
         
