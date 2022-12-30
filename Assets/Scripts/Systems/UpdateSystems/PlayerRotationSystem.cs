@@ -6,15 +6,16 @@ using UnityEngine;
 [System(ESystemCategory.Update)]
 public class PlayerRotationSystem : EcsSystem
 {
-    private int _camFilterId;
-    private int _playerFilterId;
+    private readonly int _camFilterId;
+    private readonly int _playerFilterId;
 
     public PlayerRotationSystem(EcsWorld world)
     {
         _camFilterId = world.RegisterFilter(new BitMask(Id<CameraTag>(), Id<Camera>()));
         _playerFilterId = world.RegisterFilter(new BitMask(Id<PlayerTag>(), Id<PlayerDirectionComponent>(), Id<Transform>()));
     }
-
+    
+    
     public override void Tick(EcsWorld world)
     {
         //TODO: cache
@@ -37,13 +38,13 @@ public class PlayerRotationSystem : EcsSystem
             Entity weaponEntity = world.Have<CurrentWeapon>(id) ? world.GetComponent<CurrentWeapon>(id).entity : EntityExtension.NullEntity;
             bool isMoveRotation = world.Have<PlayerVelocityComponent>(id) && world.IsEntityValid(weaponEntity) &&
                                   world.Have<MeleeWeapon>(weaponEntity.GetId());
-            if (isMoveRotation)
-                MoveRotation(world, id);
-            else
+            // if (isMoveRotation)
+            //     MoveRotation(world, id);
+            // else
                 TargetableRotation(world, id, ray);
         }
     }
-
+    
     private void TargetableRotation(EcsWorld world, int id, Ray ray)
     {
         var transform = world.GetComponent<Transform>(id);
