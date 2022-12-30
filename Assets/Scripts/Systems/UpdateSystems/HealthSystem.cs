@@ -25,7 +25,11 @@ public class HealthSystem : EcsSystem
             if (world.Have<EnemyTag>(id))
                 MiscUtils.AddScore(Constants.PointsPerKill);
             else if (world.Have<PlayerTag>(id))
+            {
+                if (EntityStashHolder.IsCreated)
+                    Object.Destroy(EntityStashHolder.Instance);
                 SceneManager.LoadScene(Constants.MainMenu);
+            }
         }
     }
 }

@@ -26,6 +26,8 @@ public class MainMenu : MonoBehaviour
 
     private void OnStartNewGameClicked()
     {
+        if (EntityStashHolder.IsCreated)
+            Destroy(EntityStashHolder.Instance);
         PlayerPrefs.SetInt(Constants.SCORE_KEY, 0);
         SceneManager.LoadScene(Constants.ProceduralLevel);
     }
