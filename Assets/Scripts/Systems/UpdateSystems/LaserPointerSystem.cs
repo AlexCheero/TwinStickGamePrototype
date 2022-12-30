@@ -15,7 +15,7 @@ public class LaserPointerSystem : EcsSystem
         _camFilterId = world.RegisterFilter(new BitMask(Id<CameraTag>(), Id<Camera>()));
     }
 
-    private LineRenderer lr;
+    private LineRenderer lpObject;
     public override void Tick(EcsWorld world)
     {
         //TODO: cache
@@ -41,37 +41,53 @@ public class LaserPointerSystem : EcsSystem
             var lpStart = bounds.center;
             //3/4 upper part of collider
             lpStart.y += bounds.extents.y / 2;
-            lr ??= GameObject.FindObjectOfType<LineRenderer>();
-            var green = Color.green;
-            var red = Color.red;
-            var isCastHit = Physics.Raycast(ray, out var hitInfo);
-            if (isCastHit && hitInfo.collider.GetComponent<EntityView>() != null)
+            var lpEnd = lpStart;
+            
+            lpObject ??= GameObject.FindObjectOfType<LineRenderer>();
+            var color =
+#if DEBUG
+                Color.magenta;
+#else
+                Color.red;
+#endif
+
+            var hits = Physics.RaycastAll(ray);
+            EntityView hittedEntity = null;
+            Vector3 entityHitPoint = default;
+            for (int i = 0; i < hits.Length; i++)
             {
-                ray = new Ray(lpStart, hitInfo.point - lpStart);
+                hittedEntity = hits[i].collider.GetComponent<EntityView>();
+                entityHitPoint = hits[i].point;
+                if (hittedEntity != null)
+                    break;
+            }
+            
+            if (hittedEntity != null)
+            {
+                ray = new Ray(lpStart, entityHitPoint - lpStart);
                 Physics.Raycast(ray, out var hitInfo2);
                         
-                var lpEnd = hitInfo2.point;
+                lpEnd = hitInfo2.point;
 
-                lr.SetPosition(0, lpStart);
-                lr.SetPosition(1, lpEnd);
-                lr.startColor = green;
-                lr.endColor = green;
+                color = Color.green;
             }
             else
             {
                 const float freeLpLength = 1000;
-                var lpEnd = lpStart + transform.forward * freeLpLength;
+                var forward = transform.forward;
+                lpEnd = lpStart + forward * freeLpLength;
 
-                ray = new Ray(lpStart, transform.forward);
+                ray = new Ray(lpStart, forward);
                 if (Physics.Raycast(ray, out var hitInfo2))
                     lpEnd = hitInfo2.point;
                 
-                lr.SetPosition(0, lpStart);
-                lr.SetPosition(1, lpEnd);
-                
-                lr.startColor = red;
-                lr.endColor = red;
+                color = Color.red;
             }
+            
+            lpObject.SetPosition(0, lpStart);
+            lpObject.SetPosition(1, lpEnd);
+            lpObject.startColor = color;
+            lpObject.endColor = color;
         }
     }
 }
