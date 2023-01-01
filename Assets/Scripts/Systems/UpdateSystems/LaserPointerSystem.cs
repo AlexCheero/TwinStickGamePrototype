@@ -10,19 +10,21 @@ public class LaserPointerSystem : EcsSystem
 
     public LaserPointerSystem(EcsWorld world)
     {
-        _filterId = world.RegisterFilter(new BitMask(Id<PlayerSight>()));
+        _filterId = world.RegisterFilter(new BitMask(Id<PlayerSight>(), Id<CurrentWeapon>()));
     }
 
-    private LineRenderer lpObject;
     public override void Tick(EcsWorld world)
     {
-        lpObject ??= GameObject.FindObjectOfType<LineRenderer>();
         foreach (var id in world.Enumerate(_filterId))
         {
+            var currWeaponId = world.GetComponent<CurrentWeapon>(id).entity.GetId();
+            if (!world.Have<LaserPointer>(currWeaponId))
+                continue;
+            var lpObject = world.GetComponent<LaserPointer>(currWeaponId).laser;
             var sight = world.GetComponent<PlayerSight>(id);
-            lpObject.SetPosition(0, sight.Start);
+            lpObject.SetPosition(0, lpObject.transform.position);
             lpObject.SetPosition(1, sight.End);
-            var color = sight.SightedView != null ? Color.green : Color.red;
+            var color = sight.SightedView != null ? Color.red : Color.green;
             lpObject.startColor = color;
             lpObject.endColor = color;
         }

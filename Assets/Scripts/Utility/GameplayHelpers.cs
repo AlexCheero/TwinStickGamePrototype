@@ -56,14 +56,9 @@ public static class WeaponHelper
             else if (world.Have<ProjectileWeapon>(weaponId))
                 weaponry.throwable = weaponEntity;
         }
-
-        // if (world.Have<Prototype>(weaponId))
-        // {
-        //     var key = world.GetComponent<Weapon>(weaponId).id;
-        //     var stashedWeapons = EntityStashHolder.Instance.Weapons;
-        //     if (!stashedWeapons.ContainsKey(key))
-        //         stashedWeapons.Add(key, world.GetComponent<Prototype>(weaponId).prefab);
-        // }
+        
+        if (world.Have<LaserPointer>(weaponId))
+            world.GetComponent<LaserPointer>(weaponId).laser.gameObject.SetActive(true);
     }
     
     public static void ChooseMelee(EcsWorld world, ref CurrentWeapon currentWeapon, Weaponry weaponry)
@@ -92,6 +87,9 @@ public static class WeaponHelper
         currentWeaponId = weaponry.ranged.GetId();
         if (world.Have<Transform>(currentWeaponId))
             world.GetComponent<Transform>(currentWeaponId).gameObject.SetActive(true);
+        
+        if (world.Have<LaserPointer>(currentWeaponId))
+            world.GetComponent<LaserPointer>(currentWeaponId).laser.gameObject.SetActive(true);
     }
     
     public static void ChooseProjectile(EcsWorld world, ref CurrentWeapon currentWeapon, Weaponry weaponry)

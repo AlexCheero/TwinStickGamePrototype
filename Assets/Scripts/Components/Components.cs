@@ -265,6 +265,11 @@ namespace Components
     {
         public Vector3 offset;
     }
+
+    struct LaserPointer
+    {
+        public LineRenderer laser;
+    }
 }
 
 namespace Tags
