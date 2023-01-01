@@ -6,12 +6,12 @@ using UnityEngine;
 [System(ESystemCategory.Update)]
 public class MeleeAttackSystem : EcsSystem
 {
-    private int _startAttackFilterId;
-    private int _tagFallThroughFilterId;
-    private int _filterId;
+    private readonly int _startAttackFilterId;
+    private readonly int _tagFallThroughFilterId;
+    private readonly int _filterId;
 
     private const int OverlapsCount = 16;
-    private Collider[] _overlapResults;
+    private readonly Collider[] _overlapResults;
 
     public MeleeAttackSystem(EcsWorld world)
     {
