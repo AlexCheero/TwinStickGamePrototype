@@ -1,6 +1,5 @@
 using Components;
 using ECS;
-using Tags;
 using UnityEngine;
 
 //choose system type here

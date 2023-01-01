@@ -76,19 +76,8 @@ public class MeleeAttackSystem : EcsSystem
 
             for (int i = 0; i < overlapCount; i++)
             {
-                Vector3 targetPos;
-                var collider = _overlapResults[i].transform.GetComponent<Collider>();
-                if (collider != null)
-                {
-                    var bounds = collider.bounds;
-                    targetPos = bounds.center;
-                    //3/4 upper part of collider
-                    targetPos.y += bounds.extents.y / 2;
-                }
-                else
-                {
-                    targetPos = _overlapResults[i].transform.position;
-                }
+                var targetPos = _overlapResults[i].transform.position;
+                targetPos.y = position.y;
                 
                 if (Physics.Raycast(position, targetPos - position, out RaycastHit hit, attackDistance) &&
                     hit.collider == _overlapResults[i])

@@ -256,6 +256,11 @@ namespace Components
         public Vector3 Normal;
         public EntityView SightedView;
     }
+
+    struct ViewOffset
+    {
+        public Vector3 offset;
+    }
 }
 
 namespace Tags

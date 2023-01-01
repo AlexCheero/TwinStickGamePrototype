@@ -24,20 +24,7 @@ public class AnimEventListener : MonoBehaviour
     {
         if (!_view.Have<MeleeAttackEvent>())
         {
-            Vector3 attackPosition;
-            var collider = GetComponent<Collider>();
-            if (collider != null)
-            {
-                var bounds = collider.bounds;
-                attackPosition = bounds.center;
-                //3/4 upper part of collider
-                attackPosition.y += bounds.extents.y / 2;
-            }
-            else
-            {
-                attackPosition = transform.position;
-            }
-            
+            var attackPosition = transform.position + _view.GetEcsComponent<ViewOffset>().offset;
             _view.Add(new MeleeAttackEvent { position = attackPosition, direction = transform.forward });
         }
     }

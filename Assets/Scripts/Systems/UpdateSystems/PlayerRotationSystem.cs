@@ -1,3 +1,4 @@
+using System;
 using Components;
 using ECS;
 using Tags;
@@ -28,7 +29,7 @@ public class PlayerRotationSystem : EcsSystem
 
 #if DEBUG
         if (cam == null)
-            throw new System.Exception("can't find camera entity");
+            throw new Exception("can't find camera entity");
 #endif
 
         Ray ray = cam.ScreenPointToRay(Input.mousePosition);
@@ -38,27 +39,33 @@ public class PlayerRotationSystem : EcsSystem
             Entity weaponEntity = world.Have<CurrentWeapon>(id) ? world.GetComponent<CurrentWeapon>(id).entity : EntityExtension.NullEntity;
             bool isMoveRotation = world.Have<PlayerVelocityComponent>(id) && world.IsEntityValid(weaponEntity) &&
                                   world.Have<MeleeWeapon>(weaponEntity.GetId());
-            // if (isMoveRotation)
-            //     MoveRotation(world, id);
-            // else
+            if (isMoveRotation)
+                MoveRotation(world, id);
+            else
                 TargetableRotation(world, id, ray);
         }
     }
     
     private void TargetableRotation(EcsWorld world, int id, Ray ray)
     {
+#if DEBUG
+        if (!world.Have<ViewOffset>(id))
+            throw new Exception("entity have no ViewOffset");
+#endif
         var transform = world.GetComponent<Transform>(id);
-        var t = (transform.position.y - ray.origin.y) / ray.direction.y;
+        var start = transform.position + world.GetComponent<ViewOffset>(id).offset;
+        
+        var t = (start.y - ray.origin.y) / ray.direction.y;
         var x = ray.origin.x + t * ray.direction.x;
         var z = ray.origin.z + t * ray.direction.z;
 
-        var point = new Vector3(x, transform.position.y, z);
+        var point = new Vector3(x, start.y, z);
         //don't rotate if mouse points to player to prevent jerking
-        if ((point - transform.position).sqrMagnitude < 0.3f)
+        if ((point - start).sqrMagnitude < 0.3f)
             return;
 
         ref var direction = ref world.GetComponent<PlayerDirectionComponent>(id).direction;
-        direction = point - transform.position;
+        direction = point - start;
         direction.y = 0;
         direction.Normalize();
         transform.forward = direction;

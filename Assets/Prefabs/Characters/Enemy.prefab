@@ -857,6 +857,10 @@ MonoBehaviour:
         IsHiddenInEditor: 0
       UnityObject: {fileID: 0}
       IsExpanded: 1
+    - ComponentName: UnityEngine.Collider
+      Fields: []
+      UnityObject: {fileID: 2879561023896923305}
+      IsExpanded: 0
 --- !u!1 &3625167423135340734
 GameObject:
   m_ObjectHideFlags: 0

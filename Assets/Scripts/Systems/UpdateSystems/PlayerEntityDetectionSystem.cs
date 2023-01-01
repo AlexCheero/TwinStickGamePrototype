@@ -12,7 +12,7 @@ public class PlayerEntityDetectionSystem : EcsSystem
 
     public PlayerEntityDetectionSystem(EcsWorld world)
     {
-        _filterId = world.RegisterFilter(new BitMask(Id<PlayerTag>(), Id<Transform>(), Id<Collider>()));
+        _filterId = world.RegisterFilter(new BitMask(Id<PlayerTag>(), Id<Transform>(), Id<ViewOffset>()));
         _camFilterId = world.RegisterFilter(new BitMask(Id<CameraTag>(), Id<Camera>()));
     }
 
@@ -36,11 +36,7 @@ public class PlayerEntityDetectionSystem : EcsSystem
         foreach (var id in world.Enumerate(_filterId))
         {
             var transform = world.GetComponent<Transform>(id);
-            
-            var bounds = world.GetComponent<Collider>(id).bounds;
-            var start = bounds.center;
-            //3/4 upper part of collider
-            start.y += bounds.extents.y / 2;
+            var start = transform.position + world.GetComponent<ViewOffset>(id).offset;
             var end = start;
 
             var hits = Physics.RaycastAll(cameraRay);
@@ -70,7 +66,10 @@ public class PlayerEntityDetectionSystem : EcsSystem
                 end = start + forward * freeLpLength;
                 var ray = new Ray(start, forward);
                 if (Physics.Raycast(ray, out var hitInfo2))
+                {
+                    hittedEntity = hitInfo2.collider.GetComponent<EntityView>();
                     end = hitInfo2.point;
+                }
             }
             
             sight.Start = start;
