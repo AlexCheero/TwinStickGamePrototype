@@ -17,6 +17,7 @@ public class EnemyVisionSystem : EcsSystem
                 Id<Transform>(),
                 Id<ViewAngle>(),
                 Id<ViewDistance>(),
+                Id<ViewOffset>(),
                 Id<TargetEntityComponent>()
                 ),
             new BitMask(Id<SeenEnemyTag>())
@@ -28,8 +29,10 @@ public class EnemyVisionSystem : EcsSystem
         foreach (var id in world.Enumerate(_filterId))
         {
             var transform = world.GetComponent<Transform>(id);
-            var position = transform.position;
-            var targetPosition = world.GetComponent<TargetEntityComponent>(id).target.transform.position;
+            var viewOffset = world.GetComponent<ViewOffset>(id).offset;
+            var position = transform.position + viewOffset;
+            var targetView = world.GetComponent<TargetEntityComponent>(id).target;
+            var targetPosition = targetView.transform.position + viewOffset;
             var sqrDistance = (targetPosition - position).sqrMagnitude;
             var viewDistance = world.GetComponent<ViewDistance>(id).distance;
             if (sqrDistance > viewDistance * viewDistance)
@@ -38,8 +41,14 @@ public class EnemyVisionSystem : EcsSystem
             var toTargetDir = (targetPosition - position).normalized;
             var angleToTarget = Vector3.Angle(transform.forward, toTargetDir);
             var viewAngle = world.GetComponent<ViewAngle>(id).angle;
-            if (angleToTarget <= viewAngle / 2)
+
+            bool isProperAngle = angleToTarget <= viewAngle / 2;
+            bool isCastHit = Physics.Raycast(position, targetPosition - position, out var hit, viewDistance);
+            bool isTargetSighted = isProperAngle && isCastHit && hit.collider.gameObject == targetView.gameObject;
+            if (isTargetSighted)
+            {
                 world.Add<SeenEnemyTag>(id);
+            }
         }
     }
 }
