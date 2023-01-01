@@ -52,7 +52,7 @@ public class PlayerEntityDetectionSystem : EcsSystem
                     break;
             }
             
-            ref var sight = ref world.GetOrAddComponent<PlayerSight>(id);
+            ref var sight = ref world.GetComponent<PlayerSight>(id);
             if (hittedEntity != null && Physics.Raycast(new Ray(start, entityHitPoint - start), out var hitInfo))
             {
                 hittedEntity = hitInfo.collider.GetComponent<EntityView>();

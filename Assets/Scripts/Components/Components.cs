@@ -251,9 +251,13 @@ namespace Components
 
     struct PlayerSight
     {
+        [HiddenInspector]
         public Vector3 Start;
+        [HiddenInspector]
         public Vector3 End;
+        [HiddenInspector]
         public Vector3 Normal;
+        [HiddenInspector]
         public EntityView SightedView;
     }
 

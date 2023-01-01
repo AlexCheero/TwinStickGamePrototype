@@ -1288,6 +1288,30 @@ MonoBehaviour:
         IsHiddenInEditor: 0
       UnityObject: {fileID: 0}
       IsExpanded: 1
+    - ComponentName: Components.PlayerSight
+      Fields:
+      - TypeName: UnityEngine.Vector3
+        Name: Start
+        ValueRepresentation: 
+        UnityObject: {fileID: 0}
+        IsHiddenInEditor: 1
+      - TypeName: UnityEngine.Vector3
+        Name: End
+        ValueRepresentation: 
+        UnityObject: {fileID: 0}
+        IsHiddenInEditor: 1
+      - TypeName: UnityEngine.Vector3
+        Name: Normal
+        ValueRepresentation: 
+        UnityObject: {fileID: 0}
+        IsHiddenInEditor: 1
+      - TypeName: EntityView
+        Name: SightedView
+        ValueRepresentation: 
+        UnityObject: {fileID: 0}
+        IsHiddenInEditor: 1
+      UnityObject: {fileID: 0}
+      IsExpanded: 0
 --- !u!1 &4079052989807219141
 GameObject:
   m_ObjectHideFlags: 0
