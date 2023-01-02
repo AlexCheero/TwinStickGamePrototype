@@ -3,7 +3,7 @@ using ECS;
 using Tags;
 using UnityEngine;
 
-[System(ESystemCategory.Update)]
+[System(ESystemCategory.LateUpdate)]
 public class CameraFollowSystem : EcsSystem
 {
     private int _filterId;

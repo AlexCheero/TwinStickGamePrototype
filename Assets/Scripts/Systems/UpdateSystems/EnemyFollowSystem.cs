@@ -16,8 +16,7 @@ public class EnemyFollowSystem : EcsSystem
                 Id<EnemyTag>(),
                 Id<NavMeshAgent>(),
                 Id<TargetEntityComponent>(),
-                Id<SeenEnemyTag>(),
-                Id<Transform>()
+                Id<SeenEnemyTag>()
                 ));
     }
 
@@ -31,10 +30,6 @@ public class EnemyFollowSystem : EcsSystem
             const float sqrMargin = 0.1f;
             if ((navAgent.destination - targetPostion).sqrMagnitude > sqrMargin)
                 navAgent.SetDestination(targetPostion);
-            
-            var transform = world.GetComponent<Transform>(id);
-            var direction = (targetPostion - transform.position).normalized;
-            transform.rotation = Quaternion.LookRotation(direction);
         }
     }
 }
